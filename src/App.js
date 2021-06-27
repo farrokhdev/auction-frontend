@@ -1,6 +1,6 @@
 import React from "react";
 // Redirect
-import { Router, HashRouter, Route, Switch} from "react-router-dom";
+import { Router, HashRouter, Route, Switch ,Redirect} from "react-router-dom";
 import { createHashHistory } from "history";
 import {connect} from 'react-redux';
 import Home from "./Views/Home";
@@ -33,7 +33,7 @@ function App(props) {
       <HashRouter>
         <Router history={createHashHistory()}>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/verification-code" component={VerificationCode}/>
             <Route exact path="/reset-password" component={Resetpassword} />
@@ -42,13 +42,13 @@ function App(props) {
             <Route exact path="/sign-up" component={Signup} />
             <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
-            {/* {props.auth.is_logged_in ?  */}
+            {props.auth.is_logged_in ? 
             
             <>
               <Route exact path="/panel" component={Panel} />
               <Route exact path="/panel-profile" component={UserPanelProfile} />
               <Route exact path="/register" component={Register} />
-              <Route exact path="/financial-information" component={Financialinformation}/>
+              <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
               <Route exact path="/signing-contract" component={SigningContract} />
               <Route exact path="/wallet" component={Wallet} />
@@ -57,7 +57,7 @@ function App(props) {
             
             </>:  
             
-            {/* <Redirect to = {{pathname : "/login"}} />}  */}
+             <Redirect to = {{pathname : "/login"}} />}
 
           </Switch>
         </Router>
