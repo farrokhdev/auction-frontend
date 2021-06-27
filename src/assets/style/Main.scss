@@ -2459,23 +2459,38 @@ p a {
 }
 
 .signup-container .s-footer-block {
-  margin-top: 30px;
+  margin-top: 30px ;
 }
 
+.btn-google-login svg{
+  display: none !important;
+}
+
+.btn-google-login div{
+ margin-right: 0px !important;
+ background: rgb(255, 255, 255);
+ padding: 0px !important;
+ border-radius: 0px !important;
+}
+.btn-google-login span{
+ padding: 0px 20px 0px 0px;
+ font-weight: 500;
+}
 .btn-google {
-  width: 100%;
-  box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
-  height: 40px;
-  border-radius: 20px;
-  text-align: center;
-  padding: 10px;
-  display: block;
-  background: url("../../images/google.svg") no-repeat 10px center
-    var(--bs-white);
-  /* background: url("../img/google.svg") no-repeat 10px center var(--bs-white); */
-  background-size: 20px;
-  font-size: 13px;
-  color: var(--darkgray);
+ width: 100% ;
+ box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1) !important;
+ height: 40px ;
+ border-radius: 20px !important;
+ text-align: center !important;
+ padding: 10px !important ;
+ display: block !important;
+ background: url("../../images/google.svg") no-repeat 10px center
+   var(--bs-white) !important;
+ /* background: url("../img/google.svg") no-repeat 10px center var(--bs-white); */
+ background-size: 20px !important;
+ font-size: 13px !important;
+ color: var(--darkgray) !important;
+ font-family :"IRANSans_light", sans-serif !important;
 }
 
 .signup-container .btn-google {
