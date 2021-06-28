@@ -2046,7 +2046,7 @@ p a {
 }
 
 .detail-block-header .search-input {
-  width: 300px;
+  width: 280px;
 }
 
 .btn-bookmark {
@@ -2547,6 +2547,13 @@ p a {
 .default-input {
   border-radius: 20px !important;
   font-family: "IRANSans_light", sans-serif;
+}
+
+@media(max-width : '575px'){
+  .default-input::placeholder{
+    font-size: 11px !important;
+  }
+  
 }
 
 .input-group {
