@@ -22,7 +22,7 @@ import VerificationCode from "./Views/VerificationCode";
 import Artworks from "./Views/Artworks";
 import Auctions from "./Views/Auctions";
 import AddArtWorks from "./Views/AddArtWorks";
-
+import SingleArtworkPage from './Views/SingleArtworkPage'
 import "bootstrap/dist/css/bootstrap.css";
 
 function App(props) {
@@ -43,6 +43,7 @@ function App(props) {
             <Route exact path="/sign-up" component={Signup} />
             <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
+            <Route exact path="/artworks/:id" component={SingleArtworkPage} />
             {props.auth.is_logged_in ? 
             
             <>
