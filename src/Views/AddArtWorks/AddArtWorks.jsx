@@ -7,6 +7,7 @@ import { CheckCircleTwoTone, LoadingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import 'antd/dist/antd.css';
 
+
 function AddArtWorks(props) {
     const [Categories, setCategories] = useState("");
     const [ChildCategories, setChildCategories] = useState("");
@@ -66,10 +67,26 @@ function AddArtWorks(props) {
                     setCoreUpload(resp.data.data.result)
                     setUploading(true)
                     axios.put(resp.data.data.result.upload_url, e.target.files[0])
-                        .then(resp => {
-                            if (resp.status === 200) {
-                                setUploaded(true)
-                                setUploading(false)
+                        .then(resp1 => {
+                            if (resp1.status === 200) {
+                            axios.post(`${BASE_URL}/core/media/photos/`, {
+                                "media_path": resp.data.data.result.upload_url,
+                                "type": "image",
+                                "bucket_name": "image",
+                                "file_key": resp.data.data.result.file_key
+                            })
+                                .then(resp2=>{
+                                    if(resp2.data.code === 201){
+                                        setCoreUpload(resp2.data.data.result)
+                                        setUploaded(true)
+                                        setUploading(false)
+                                        console.log(resp2.data.data.result)
+                                    }
+                                })
+                                .catch(err=>{
+                                    console.log("Error Message" , err.response);
+                                    setUploading(false)
+                                })
                             }
                         })
                         .catch(err => {
@@ -124,7 +141,6 @@ function AddArtWorks(props) {
 
     return (
         <div dir="rtl">
-            <Header/>
 
             {/**Main**/}
             <div className="panel-body">
@@ -322,7 +338,6 @@ function AddArtWorks(props) {
             </div>
             {/**Main**/}
 
-            <Footer/>
         </div>
     );
 }

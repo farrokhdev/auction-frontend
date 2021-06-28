@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 
@@ -16,92 +16,119 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Maintitle from "../../components/main title for all";
 import Sidebar from "../../components/side-bar";
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
 
 function Auctions() {
+
+  const [Auctions, setAuctions] = useState("");
+  const [pageSize, setPageSize] = useState(9);
+
+  const getProducts = (page_size=pageSize) => {
+    axios.get(`${BASE_URL}/sale/auctions/`)
+        .then(resp => {
+          if (resp.data.code === 200) {
+            setAuctions(resp.data.data.result)
+          }
+
+        })
+        .catch(err => {
+          console.error(err);
+        })
+  }
+
+  useEffect(() => {
+    getProducts()
+
+  }, [])
+
   return (
     <div dir="rtl">
       <Header />
       <main class="innercontent" id="all-auctions">
         <div class="container innercontainer">
-          <Maintitle />
+          <Maintitle title={'حراجی'} />
           <div class="row">
             <Sidebar />
             <div class="col-lg-9">
-              <div class="row-blocks">
-                <div class="row">
-                  <div class="col-md-4">
-                    <Link to="/" class="bg-shadow tr-shadow10">
-                      <img src={slider1} width="500" height="500" alt="" />
-                    </Link>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="block-head row">
-                      <div class="col-xl-3 col-sm-4 col-3">
+              {Auctions && Auctions.length >= 1 ? Auctions.map((item, key) => {
+                    return (
+                        <div key={key} class="row-blocks">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <Link to="/" class="bg-shadow tr-shadow10">
+                                <img src={slider1} width="500" height="500" alt=""/>
+                              </Link>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="block-head row">
+                                <div class="col-xl-3 col-sm-4 col-3">
                         <span class="category-icon live-icon">
-                          <span class="d-none d-md-inline-block">حراج</span>{" "}
-                          زنده
+                          <span class="d-none d-md-inline-block">حراج</span>{item.is_live_streaming ? "زنده" : ""}
+
                         </span>
-                      </div>
-                      <div class="col-xl-9 col-sm-8 col-9 textalign-left">
-                        <FontAwesomeIcon icon={faBell} />
-                        <span class="reminder-icon ">یادآوری</span>
-                        <button type="button" class="link-source">
+                                </div>
+                                <div class="col-xl-9 col-sm-8 col-9 textalign-left">
+                                  <FontAwesomeIcon icon={faBell}/>
+                                  <span class="reminder-icon ">یادآوری</span>
+                                  <button type="button" class="link-source">
                           <span>
                             <span class="d-none d-sm-inline-block">
                               مشاهده{" "}
                             </span>
                             آثار (<span>25</span>)
                           </span>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="block-main">
-                      <Link to="/">
-                        <h5 class="default">
-                          فقط بصورت آنلاین زندگی کنید ، کتابهای عتیقه ، هنرهای
-                          تزئینی و تصاویر
-                        </h5>
-                      </Link>
-                      <div class="block-detail">
-                        <h6 class="default">هنر معاصر</h6>
-                        <Link to="/" class="default">
-                          <h6 class="default gray50">گالری آرتیبیشن</h6>
-                        </Link>
-                      </div>
-                    </div>
-                    <div class="block-footer row">
-                      <div class="col-sm-5">
-                        <div
-                          class="jumbotron countdown show end date-show"
-                          data-Date="2021/06/05 16:09:00"
-                        >
-                          <div class="running">
-                            <timer>
-                              <span class="days"></span>:
-                              <span class="hours"></span>:
-                              <span class="minutes"></span>
-                              <span class="show-text"></span>
-                            </timer>
-                            <div class="break"></div>
-                          </div>
-                          <div class="ended">
-                            <div class="text">حراج به پایان رسید</div>
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="block-main">
+                                <Link to="/">
+                                  <h5 class="default">
+                                    {item.text}
+                                  </h5>
+                                </Link>
+                                <div class="block-detail">
+                                  <h6 class="default">{item.title}</h6>
+                                  <Link to="/" class="default">
+                                    <h6 class="default gray50">گالری آرتیبیشن</h6>
+                                  </Link>
+                                </div>
+                              </div>
+                              <div class="block-footer row">
+                                <div class="col-sm-5">
+                                  <div
+                                      class="jumbotron countdown show end date-show"
+                                      data-Date="2021/06/05 16:09:00"
+                                  >
+                                    <div class="running">
+                                      <timer>
+                                        <span class="days"></span>:
+                                        <span class="hours"></span>:
+                                        <span class="minutes"></span>
+                                        <span class="show-text"></span>
+                                      </timer>
+                                      <div class="break"></div>
+                                    </div>
+                                    <div class="ended">
+                                      <div class="text">حراج به پایان رسید</div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-7 textalign-left">
+                                  <button type="button" class="btn btn-gray ms-2">
+                                    <FontAwesomeIcon icon={faEye}/>
+                                    مشاهده زنده
+                                  </button>
+                                  <button type="button" class="btn btn-main join">
+                                    عضویت در حراج
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-sm-7 textalign-left">
-                        <button type="button" class="btn btn-gray ms-2">
-                          <FontAwesomeIcon icon={faEye} />
-                          مشاهده زنده
-                        </button>
-                        <button type="button" class="btn btn-main join">
-                          عضویت در حراج
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    )
+                  }) : ""}
               <div class="row-blocks">
                 <div class="row">
                   <div class="col-md-4">

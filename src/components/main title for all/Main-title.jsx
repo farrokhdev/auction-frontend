@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Maintitle() {
+function Maintitle(props) {
   return (
     <>
       <div class="row sm-mrgb50">
         <div class="col-6">
           <div class="main-title d-inline-flex">
-            <h2 class="default titr">حراج‌ها</h2>
+            <h2 class="default titr">{props.title}</h2>
             <ul class="breadcrumb-cs">
               <li>
                 <Link to="/">صفحه اصلی</Link>
               </li>
-              <li class="active">حراج‌ها</li>
+              <li class="active">{props.title}</li>
             </ul>
           </div>
         </div>
