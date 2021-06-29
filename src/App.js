@@ -21,7 +21,9 @@ import RegistersetPassword from "./Views/RegisterSetPassword";
 import VerificationCode from "./Views/VerificationCode";
 import Artworks from "./Views/Artworks";
 import Auctions from "./Views/Auctions";
-
+import AuctionsList from "./Views/AuctionsList";
+import AddArtWorks from "./Views/AddArtWorks";
+import SingleArtworkPage from './Views/SingleArtworkPage'
 import "bootstrap/dist/css/bootstrap.css";
 
 function App(props) {
@@ -42,6 +44,7 @@ function App(props) {
             <Route exact path="/sign-up" component={Signup} />
             <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
+            <Route exact path="/artworks/:id" component={SingleArtworkPage} />
             {props.auth.is_logged_in ? 
             
             <>
@@ -54,7 +57,9 @@ function App(props) {
               <Route exact path="/wallet" component={Wallet} />
               <Route exact path="/reagent" component={Reagent} />
               <Route exact path="/auctions" component={Auctions} />
-            
+              <Route exact path="/auctions-list" component={AuctionsList} />
+              <Route exact path="/add-artworks" component={AddArtWorks} />
+
             </>:  
             
               <Redirect to = {{pathname : "/login"}} />} 
