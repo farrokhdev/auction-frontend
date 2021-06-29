@@ -5,7 +5,7 @@ import axios from "axios";
 // import {withRouter} from "react-router-dom"
 import { BASE_URL } from "../../utils/index";
 import {setToken} from "../../utils/utils";
-import AuthContext from "../../context/AuthContext";
+// import AuthContext from "../../context/AuthContext";
 import {setPhoneNumber} from '../../redux/reducers/auth/auth.actions';
 import {connect} from 'react-redux';
 
