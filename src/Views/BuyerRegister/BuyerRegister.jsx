@@ -4,7 +4,7 @@ import Content from "./Content";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 
-function Register() {
+function BuyerRegister() {
   return (
     <div dir="rtl">
       <Header />
@@ -14,4 +14,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default BuyerRegister;

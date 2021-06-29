@@ -19,7 +19,7 @@ function Passwordrecovery(props) {
   const handleRequestPasswordRecovery = (value)=>{
 
     let payload ={
-      "mobile" : username,
+      "user_name" : username,
     }
     axios.post(`${BASE_URL}/account/sendotp/` ,payload)
       .then(res=>{
@@ -27,7 +27,7 @@ function Passwordrecovery(props) {
 
         if(res.data.code === 200){
           setToken(res.data.data.result);
-          props.setPhoneNumber({username : payload.mobile})
+          props.setPhoneNumber({username : payload.user_name})
           setTimeout(() => {
             window.location.href ="#/confirm-mobile-number"
           }, 1000);
