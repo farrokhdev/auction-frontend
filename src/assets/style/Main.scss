@@ -2889,10 +2889,10 @@ main {
 }
 
 .panel-main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: var(--bgcolor);
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  background-color: var(--bgcolor) !important;
 }
 
 .panel-container {
