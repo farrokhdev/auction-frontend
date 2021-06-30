@@ -5,8 +5,6 @@ import { createHashHistory } from "history";
 import {connect} from 'react-redux';
 import Home from "./Views/Home";
 import Login from "./Views/Login";
-import Panel from "./components/profile";
-import UserPanelProfile from "./components/userpanel";
 import BuyerRegister from "./Views/BuyerRegister";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
@@ -24,6 +22,7 @@ import Auctions from "./Views/Auctions";
 import AuctionsList from "./Views/AuctionsList";
 import AddArtWorks from "./Views/AddArtWorks";
 import SingleArtworkPage from './Views/SingleArtworkPage'
+import PanelProfile from "./Views/PanleProfile";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App(props) {
@@ -48,10 +47,9 @@ function App(props) {
             {props.auth.is_logged_in ? 
             
             <>
-              <Route exact path="/panel" component={Panel} />
-              <Route exact path="/panel-profile" component={UserPanelProfile} />
-              <Route exact path="/buyer-register" component={BuyerRegister} />
-              <Route exact path="/financial-information/" component={Financialinformation}/>
+              <Route exact path="/panel-profile" component={PanelProfile} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
               <Route exact path="/signing-contract" component={SigningContract} />
               <Route exact path="/wallet" component={Wallet} />
