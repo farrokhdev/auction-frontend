@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import Home from "./Views/Home";
 import Login from "./Views/Login";
 import UserPanelProfile from "./components/userpanel";
-import Register from "./Views/Register";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
 import Signup from "./Views/Signup";
@@ -24,6 +23,7 @@ import AuctionsList from "./Views/AuctionsList";
 import AddArtWorks from "./Views/AddArtWorks";
 import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
+import BuyerRegister from "./Views/BuyerRegister";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App(props) {
@@ -49,7 +49,7 @@ function App(props) {
             
             <>
               <Route exact path="/panel-profile" component={PanelProfile} />
-              <Route exact path="/register" component={Register} />
+              <Route exact path="/buyer-register" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
               <Route exact path="/signing-contract" component={SigningContract} />
