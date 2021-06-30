@@ -30,7 +30,7 @@ function Login(props) {
           setToken(resp.data.data.result);
           props.setPhoneNumber({username : payload.id})
           props.loginSuccess({userName : payload.id})
-          window.location.href = "#/home"
+          window.location.href = "#/artworks"
       }
       })
       .catch(err=>{

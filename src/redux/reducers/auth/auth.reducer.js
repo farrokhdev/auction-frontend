@@ -74,8 +74,9 @@ const authReducer = (state = initial_state , {type , payload})=> {
         case types.CLEAR_STORAGE:
         console.log('CLEAR_STORAGE')
         removeToken()
+            window.localStorage.clear();
             return {
-                ...state,
+                initial_state,
                 pending: false ,
                 data: null,
                 error: null,

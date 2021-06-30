@@ -30,6 +30,7 @@ import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCre
 import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
 import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
 import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
+import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 
 function App(props) {
 
@@ -40,19 +41,19 @@ function App(props) {
       <HashRouter>
         <Router history={createHashHistory()}>
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/verification-code" component={VerificationCode}/>
-            <Route exact path="/reset-password" component={Resetpassword} />
-            <Route exact path="/register-set-password" component={RegistersetPassword}/>
-            <Route exact path="/password-recovery" component={Passwordrecovery} />
-            <Route exact path="/sign-up" component={Signup} />
-            <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
+            {!props.auth.is_logged_in && <Route exact path="/" component={Login}/>}
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/verification-code" component={VerificationCode}/>
+              <Route exact path="/reset-password" component={Resetpassword} />
+              <Route exact path="/register-set-password" component={RegistersetPassword}/>
+              <Route exact path="/password-recovery" component={Passwordrecovery} />
+              <Route exact path="/sign-up" component={Signup} />
+              <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
             <Route exact path="/artworks/:id" component={SingleArtworkPage} />
-            {props.auth.is_logged_in ? 
-            
+            {props.auth.is_logged_in ?
             <>
+              <Route exact path="/" component={Artworks} />
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/user-panel-create-auctions-basic-information" component={UserPanelCreateAuctionsBasicInformation}/>
               <Route exact path="/user-panel-create-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>
@@ -69,11 +70,16 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
+
               <Route exact path="/home" component={AfterLoginPage} />
+
+              <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
+
 
             </>:  
             
               <Redirect to = {{pathname : "/login"}} />} 
+
 
           </Switch>
         </Router>

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import Header from "../../components/header";
 import Footer from "../../components/footer";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 import moment from 'jalali-moment'
+import HeaderPanel from "../../components/HeaderPanel";
+import PanelSidebar from "../../components/PanelSidebar";
 
 function AuctionsList() {
 
@@ -33,9 +34,10 @@ function AuctionsList() {
 
 
   return (
-      <div dir="rtl">
-          <Header/>
-
+      <div>
+          <HeaderPanel/>
+          <div className="panel-main">
+          <PanelSidebar/>
           {/**Main**/}
           <div className="panel-body">
               <div className="panel-container">
@@ -90,7 +92,7 @@ function AuctionsList() {
                                           </td>
                                       </tr>
                                   )
-                              }) :""}
+                                }) :""}
                               </tbody>
                           </table>
                       </div>
@@ -98,9 +100,8 @@ function AuctionsList() {
                   </div>
               </div>
           </div>
+          </div>
           {/**Main**/}
-
-          <Footer/>
       </div>
   );
 }
