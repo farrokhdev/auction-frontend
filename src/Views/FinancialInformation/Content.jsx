@@ -2,9 +2,9 @@ import React,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
-import {setToken} from "../../utils/utils";
-import {setProfile} from "../../redux/reducers/auth/auth.actions";
-import {connect} from "react-redux";
+// import {setToken} from "../../utils/utils";
+// import {setProfile} from "../../redux/reducers/auth/auth.actions";
+// import {connect} from "react-redux";
 
 
 function Content(props) {
@@ -12,16 +12,30 @@ function Content(props) {
   const [CardNumber, setCardNumber] = useState("");
   const [AccountNumber, setAccountNumber] = useState("");
   const [ShebaNumber, setShebaNumber] = useState("");
-  const [Data, setData] = useState({})
+  const [Id, setId] = useState("")
+  const [ProfileInfo, setProfileInfo] = useState({})
+  const [HasNew, setHasNew] = useState(true)
+
 
   useEffect(()=>{
-    // console.log( "Params",props.match.params.id);
+    // console.log( "Params",id);
     axios.get(`${BASE_URL}/accounting/bankprofile/`)
     .then(resp=>{
-      console.log("Financial Information" , resp.data.data.result.results);
-      if(resp.data.code===200){
-        setData(resp.data.data.result)
 
+      console.log("Financial Informationnnn" , resp.data.data.result.bank_name);
+      if(resp.data.code===200){
+        let response = resp.data.data.result[0];
+        // console.log("Get Data ", Object.keys(response).length);
+        if(Object.keys(response).length > 0 ){
+          setHasNew(false)
+        }
+
+        setProfileInfo(response)
+        setBankName(response.bank_name)
+        setCardNumber(response.card_number)
+        setAccountNumber(response.account_number)
+        setShebaNumber(response.sheba_number)
+        setId(response.id)
       }
 
     })
@@ -31,31 +45,52 @@ function Content(props) {
   },[])
 
 
-  let handleRequestFinancialInformation = (id)=>{
-    console.log("send Financial Information");
+  let handleRequestFinancialInformation = (e)=>{
+    e.preventDefault();
+    
     let payload = {
-
       "bank_name":BankName ,
       "card_number": CardNumber,
       "account_number": AccountNumber,
       "sheba_number": ShebaNumber,
+      "Id" : Id,
+    
     }
     console.log(payload)
-    axios.put(`${BASE_URL}/accounting/bankprofile/`, payload)
-      .then(resp=>{
-        // console.log("financial information" , resp);
-        if(resp.data.code === 201){
-          // setToken(resp.data.data.result);
-          props.setProfile(resp.data.data.result.results);
 
-          setTimeout(() => {
-            window.location.href = "#/works-of-interest"
-          }, 700);
+    if(HasNew){
+
+     
+       axios.post(`${BASE_URL}/accounting/bankprofile/`, payload)
+         .then(resp=>{
+           // console.log("financial information" , resp);
+ 
+               if(resp.data.code === 201){
+                 setProfileInfo(resp.data.data.result)
+                 setTimeout(() => {
+                   window.location.href = "#/works-of-interest"
+                 }, 700);
+             }
+          
+         })
+       
+         .catch(err=>{
+           console.log("Error Message" , err);
+         })
+      
+    }else{
+      if(payload.bank_name && payload.card_number && payload.sheba_number && payload.account_number){
+        axios.put(`${BASE_URL}/accounting/bankprofile/${Id}/`,payload)
+        .then(resp=>{
+            if(resp.data.code === 200){
+              setProfileInfo(resp.data.data.result)
+              setTimeout(() => {
+                window.location.href = "#/works-of-interest"
+              }, 700);
+            }
+        })
       }
-      })
-      .catch(err=>{
-        console.log("Error Message" , err);
-      })
+    }
   }
   return (
     <div dir="rtl">
@@ -114,7 +149,11 @@ function Content(props) {
                     type="text"
                     class="default-input"
                     placeholder="نام بانک مورد نظر خود را وارد نمایید."
-                    defaultValue={Data?.bank_name}
+                    // defaultValue={ProfileInfo?.bank_name}
+                    Value={ProfileInfo?.bank_name}
+                    
+
+
                   />
                 </div>
               </div>
@@ -123,10 +162,10 @@ function Content(props) {
                   <label class="default-lable">شماره کارت</label>
                   <input
                     onChange={(e)=>setCardNumber(e.target.value)}
-                    type="text"
+                    type="number"
                     class="default-input"
                     placeholder="شماره کارت را وارد نمایید"
-                    defaultValue={Data?.card_number}
+                    Value={ProfileInfo?.card_number}
                   />
                 </div>
               </div>
@@ -135,10 +174,10 @@ function Content(props) {
                   <label class="default-lable">شماره حساب</label>
                   <input
                     onChange={(e)=> setAccountNumber(e.target.value)}
-                    type="text"
+                    type="number"
                     class="default-input"
                     placeholder="شماره حساب را وارد نمایید."
-                    defaultValue={Data?.account_number}
+                    Value={ProfileInfo?.account_number}
                   />
                 </div>
               </div>
@@ -150,7 +189,8 @@ function Content(props) {
                     type="text"
                     class="default-input" 
                     placeholder="IR" 
-                    defaultValue={Data?.sheba_number}
+                    Value={ProfileInfo?.sheba_number}
+                  
                     />
                 </div>
               </div>
@@ -178,14 +218,14 @@ function Content(props) {
               </div>
             </div>
             <div class="button-group">
-              <Link to="/register">
+              <Link to="/buyer-register">
                 <button type="button" class="btn-gray">
                   بازگشت
                 </button>
               </Link>
                 <button
                   onClick={handleRequestFinancialInformation}
-                  type="button" class="btn-default">
+                  type="submit" class="btn-default">
                   ادامه
                 </button>
               <Link to="/works-of-interest">

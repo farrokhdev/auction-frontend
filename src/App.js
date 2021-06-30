@@ -61,7 +61,7 @@ function App(props) {
 
             </>:  
             
-             <Redirect to = {{pathname : "/login"}} />}
+              <Redirect to = {{pathname : "/login"}} />} 
 
           </Switch>
         </Router>

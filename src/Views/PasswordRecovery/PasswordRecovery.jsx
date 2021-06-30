@@ -5,7 +5,7 @@ import axios from "axios";
 // import {withRouter} from "react-router-dom"
 import { BASE_URL } from "../../utils/index";
 import {setToken} from "../../utils/utils";
-import AuthContext from "../../context/AuthContext";
+// import AuthContext from "../../context/AuthContext";
 import {setPhoneNumber} from '../../redux/reducers/auth/auth.actions';
 import {connect} from 'react-redux';
 
@@ -19,7 +19,7 @@ function Passwordrecovery(props) {
   const handleRequestPasswordRecovery = (value)=>{
 
     let payload ={
-      "mobile" : username,
+      "user_name" : username,
     }
     axios.post(`${BASE_URL}/account/sendotp/` ,payload)
       .then(res=>{
@@ -27,7 +27,7 @@ function Passwordrecovery(props) {
 
         if(res.data.code === 200){
           setToken(res.data.data.result);
-          props.setPhoneNumber({username : payload.mobile})
+          props.setPhoneNumber({username : payload.user_name})
           setTimeout(() => {
             window.location.href ="#/confirm-mobile-number"
           }, 1000);

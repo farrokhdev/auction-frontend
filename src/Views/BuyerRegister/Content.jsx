@@ -1,11 +1,11 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
-import {setToken} from "../../utils/utils";
-import {createuser} from "../../redux/reducers/auth/auth.actions";
-import {connect} from "react-redux";
-import { useEffect } from "react";
+// import {setToken} from "../../utils/utils";
+// import {setPhoneNumber} from "../../redux/reducers/auth/auth.actions";
+// import {connect} from "react-redux";
+
 
 
 
@@ -22,6 +22,7 @@ function Content(props) {
   const [PostalCode, setPostalCode] = useState("");
   const [Address, setAddress] = useState("");
   const [ProfileInfo, setProfileInfo] = useState({});
+
 
 
   const handleConfrimMobile = ()=>{
@@ -44,13 +45,13 @@ function Content(props) {
       if(resp.data.code===200){
         let res=resp.data.data.result
         setProfileInfo(resp.data.data.result)
-        setFirstName(res.first_name)
-        setLastName(res.last_name)
-        setMobile(res.mobile)
-        setISConfrimEmail(res.email)
-        setNationalCode(res.national_code)
-        setPostalCode(res.postal_code)
-        setAddress(res.address)
+        // setFirstName(res.first_name)
+        // setLastName(res.last_name)
+        // setMobile(res.mobile)
+        // setISConfrimEmail(res.email)
+        // setNationalCode(res.national_code)
+        // setPostalCode(res.postal_code)
+        // setAddress(res.address)
       }
 
     })
@@ -59,13 +60,13 @@ function Content(props) {
     })
   },[])
 
-  let handleRequestInformation = (id)=>{
+  let handleRequestInformation = ()=>{
     console.log(FirstName)
     let payload = {
 
       "first_name": FirstName,
       "last_name": LastName,
-      "email" : Email,
+      // "email" : Email,
       "postal_code": PostalCode,
       "national_code" : NationalCode,
       "address": Address,
@@ -73,26 +74,25 @@ function Content(props) {
 
     console.log(payload)
     
-    if(payload.first_name && payload.last_name && payload.address && payload.postal_code && payload.national_code){
-
-      axios.put(`${BASE_URL}/account/profile/`, payload)
-        .then(resp=>{
-          console.log("personal Information" , resp);
-          console.log("Mobile" , resp.data.data.result.username);
-          if(resp.data.code === 200){
+    
+    axios.put(`${BASE_URL}/account/profile/`, payload)
+    .then(resp=>{
+      console.log("personal Information" , resp);
+      console.log("Mobile" , resp.data.data.result.username);
+      if(resp.data.code === 200){
+        if(payload.first_name && payload.last_name && payload.address && payload.postal_code && payload.national_code){ 
             // setToken(resp.data.data.result);
-            setProfileInfo(resp.data.data.result)
-            
-  
+            // setProfileInfo(resp.data.data.result)
+            // setFirstName(res.first_name)
             setTimeout(() => {
-              window.location.href = `#/financial-information/${id}`
+              window.location.href = "#/financial-information/"
             }, 700);
+            }
         }
         })
         .catch(err=>{
           console.log("Error Message" , err);
         })
-    }
   }
   
  
@@ -158,6 +158,7 @@ function Content(props) {
                     className="default-input"
                     placeholder="نام خود را وارد نمایید."
                     defaultValue={ProfileInfo?.first_name}
+                    // required
                   />
                 </div>
               </div>
@@ -170,6 +171,7 @@ function Content(props) {
                     className="default-input"
                     placeholder="نام خانوادگی خود را وارد نمایید."
                     defaultValue={ProfileInfo?.last_name}
+                    // required
                   />
                 </div>
               </div>
@@ -181,6 +183,7 @@ function Content(props) {
                     type="tel"
                     className="default-input"
                     value={ProfileInfo?.mobile}
+                    // required
                     // placeholder="شماره موبایل مورد نظر را وارد نمایید."
                     // disabled={true}
                   />
@@ -205,6 +208,7 @@ function Content(props) {
                     className="default-input"
                     placeholder="ایمیل خود را وارد نمایید."
                     value={ProfileInfo?.email}
+                    // required
                   />
                   <button hidden={ISConfrimEmail}>
                     {! ProfileInfo?.email ?
@@ -228,6 +232,7 @@ function Content(props) {
                     className="default-input"
                     placeholder="کد ملی خود را وارد نمایید."
                     defaultValue={ProfileInfo?.national_code}
+                    // required
                   />
                 </div>
               </div>
@@ -240,6 +245,7 @@ function Content(props) {
                     className="default-input"
                     placeholder="کد پستی خود را وارد نمایید."
                     defaultValue={ProfileInfo?.postal_code}
+                    // required
                   />
                 </div>
               </div>
@@ -248,7 +254,7 @@ function Content(props) {
                   <label className="default-lable">آدرس</label>
                   <input
                     onChange={(e)=>setAddress(e.target.value)}
-                    
+                    // required
                     // rows="3"
                     className="default-input"
                     placeholder="آدرس خود را وارد نمایید."
@@ -259,7 +265,7 @@ function Content(props) {
             </div>
             <div className="button-group">
                 <button
-                  onClick={()=>handleRequestInformation(ProfileInfo?.id)}
+                  onClick={handleRequestInformation}
                   type="submit"
                   className="btn-default">
                   ادامه
@@ -279,8 +285,8 @@ export default Content;
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
-//       // setPhoneNumber : (data) => dispatch(setPhoneNumber(data)),
-//       createuser : (data) => dispatch(createuser(data)),
+//       setPhoneNumber : (data) => dispatch(setPhoneNumber(data)),
+
 //   }
 // }
 

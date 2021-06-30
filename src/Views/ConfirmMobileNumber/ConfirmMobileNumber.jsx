@@ -6,6 +6,7 @@ import axios from "axios";
 // import {withRouter} from "react-router-dom"
 import { BASE_URL } from "../../utils/index";
 import {setToken} from "../../utils/utils";
+import {setPhoneNumber} from '../../redux/reducers/auth/auth.actions';
 // import AuthContext from "../../context/AuthContext";
 import {connect} from 'react-redux';
 import { getOtp } from "../../redux/reducers/auth/auth.actions";
@@ -19,11 +20,11 @@ function ConfirmMobileNumber(props) {
 
   const handleRequestConfrimMobile = (value)=>{
     let payload={
-      "mobile": props.auth.username,
+      "user_name": props.auth.username,
       "verify_code": verify_code,
     }
 
-    axios.post(`${BASE_URL}/account/approve-mobile/` , payload)
+    axios.post(`${BASE_URL}/account/approve/` , payload)
       .then(res=>{
         console.log("Confrim-Mobile" , res);
 

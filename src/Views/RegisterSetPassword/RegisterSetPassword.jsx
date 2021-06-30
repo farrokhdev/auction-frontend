@@ -21,7 +21,7 @@ function RegistersetPassword(props) {
   const [PasswordCheck, setPasswordCheck] = useState("");
   const handleRequestSetPassword = (value)=>{
     let payload ={
-      "mobile": props.auth.username,
+      "user_name": props.auth.username,
       "verify_code": props.auth.otp,
       "password" : Password,
       "password_check" : PasswordCheck,

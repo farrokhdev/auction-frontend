@@ -14,10 +14,10 @@ function VerificationCode(props) {
   const handleRequestVerifyCode = (value)=>{
     
     let payload ={
-      "mobile" : props.auth.username,
+      "user_name" :  props.auth.username,
       "verify_code" : verify_code,
     }
-    axios.post(`${BASE_URL}/account/approve-mobile/` ,payload)
+    axios.post(`${BASE_URL}/account/approve/` ,payload)
       .then(res=>{
         console.log("Verification",res);
 
