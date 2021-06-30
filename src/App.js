@@ -5,7 +5,6 @@ import { createHashHistory } from "history";
 import {connect} from 'react-redux';
 import Home from "./Views/Home";
 import Login from "./Views/Login";
-// import UserPanelProfile from "./components/userpanel";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
 import Signup from "./Views/Signup";
@@ -25,6 +24,12 @@ import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
 import BuyerRegister from "./Views/BuyerRegister";
 import "bootstrap/dist/css/bootstrap.css";
+import UserPanelCreateAuctionsBasicInformation from "./Views/UserPanelCreateAuctionsOnlineAuctionNew Basic Information";
+import UserPanelCreateAuctionsOnlineAuctionDate from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionDate";
+import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionOfferRange";
+import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
+import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
+import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 
 function App(props) {
 
@@ -49,6 +54,12 @@ function App(props) {
             
             <>
               <Route exact path="/panel-profile" component={PanelProfile} />
+              <Route exact path="/user-panel-create-auctions-basic-information" component={UserPanelCreateAuctionsBasicInformation}/>
+              <Route exact path="/user-panel-create-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>
+              <Route exact path="/user-panel-create-auctions-online-auction-offer-range" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>
+              <Route exact path="/user-panel-create-auctions-online-auction-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>
+              <Route exact path="/user-panel-create-auctions-online-auction-buyer-validation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>
+              <Route exact path="/user-panel-create-auctions-online-auction-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>
               <Route exact path="/buyer-register" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
