@@ -6,7 +6,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function UserPanelCreateAuctionsOnlineAuctionBuyerValidation() {
     return (
-        <div dir="rtl">
+        <div>
               <HeaderPanel/>
           <div className="panel-main">
           <PanelSidebar/>  

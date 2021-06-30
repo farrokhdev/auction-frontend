@@ -8,6 +8,7 @@ import {clearStorage} from "../../redux/reducers/auth/auth.actions";
 
 function HeaderPanel() {
   const dispatch=useDispatch();
+
     return (
         
              <header>
@@ -68,3 +69,17 @@ function HeaderPanel() {
 }
 
 export default HeaderPanel; 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//       changeTitlePagePanel :(data) => dispatch(changeTitlePagePanel(data))
+//   }
+// }
+
+// const mapStateToProps = (store) => {
+//   return {
+//       panel : store.panelReducer,
+//   }
+// }
+
+
+// export default connect(mapStateToProps , mapDispatchToProps)(HeaderPanel)

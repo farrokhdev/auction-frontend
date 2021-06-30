@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 function UserPanelCreateAuctionsOnlineAuctionCurrency() {
     return (
-        <div dir="rtl">
+        <div>
              <HeaderPanel/>
             <div className="panel-main">
             <PanelSidebar/>

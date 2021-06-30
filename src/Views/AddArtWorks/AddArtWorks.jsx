@@ -6,6 +6,8 @@ import {BASE_URL} from "../../utils";
 import { CheckCircleTwoTone, LoadingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import 'antd/dist/antd.css';
+import HeaderPanel from "../../components/HeaderPanel";
+import PanelSidebar from "../../components/PanelSidebar";
 
 
 function AddArtWorks(props) {
@@ -140,8 +142,10 @@ function AddArtWorks(props) {
     }
 
     return (
-        <div dir="rtl">
-
+        <div>
+            <HeaderPanel/>
+            <div className="panel-main">
+            <PanelSidebar/>
             {/**Main**/}
             <div className="panel-body">
                 <div className="panel-container">
@@ -155,10 +159,10 @@ function AddArtWorks(props) {
                                             onChange={handleMainCategories} required={true}>
                                         <option disabled selected>انتخاب کنید</option>
                                         { Categories && Categories.length >= 1  ? Categories.map((item, key) => {
-                                                return (
-                                                    <option
-                                                        key={key}
-                                                        value={item?.id}>
+                                            return (
+                                                <option
+                                                key={key}
+                                                value={item?.id}>
                                                         {item?.title}
                                                     </option>
                                                 )
@@ -188,14 +192,14 @@ function AddArtWorks(props) {
                                         { ChildCategories.length >= 1  ? ChildCategories.map((item, key) => {
                                             return (
                                                 <option
-                                                    key={key}
-                                                    value={item?.id}>
+                                                key={key}
+                                                value={item?.id}>
                                                     {item?.title}
                                                 </option>
                                             )
                                         }) :
-                                            <option disabled>هیچ</option>
-                                        }
+                                        <option disabled>هیچ</option>
+                                    }
                                     </select>
                                 </div>
                             </div>
@@ -230,7 +234,7 @@ function AddArtWorks(props) {
                                     <input
                                         onChange={(e)=>setNumber(e.target.value)}
                                         type="number" className="default-input" placeholder="شماره اثر را وارد نمایید."
-                                           value={Number}/>
+                                        value={Number}/>
                                 </div>
                             </div>
                             <div className="col-xl-6">
@@ -334,7 +338,7 @@ function AddArtWorks(props) {
                         </div>
                     </div>
                 </div>
-
+            </div>
             </div>
             {/**Main**/}
 

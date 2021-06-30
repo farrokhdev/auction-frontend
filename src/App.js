@@ -30,6 +30,7 @@ import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCre
 import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
 import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
 import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
+import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 
 function App(props) {
 
@@ -69,8 +70,12 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
-            </>:
-              <Redirect to = {{pathname : "/login"}} />}
+              <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
+
+            </>:  
+            
+              <Redirect to = {{pathname : "/login"}} />} 
+
 
           </Switch>
         </Router>

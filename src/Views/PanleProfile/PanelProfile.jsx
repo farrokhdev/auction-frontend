@@ -26,6 +26,7 @@ function PanelProfile() {
     const [activeKey, setActiveKey] = useState("1")
     const [data, setData] = useState({})
 
+
     function callback(key) {
         console.log(key);
         setActiveKey(key)
@@ -46,11 +47,11 @@ function PanelProfile() {
             })
     }
     return (
-        <div dir="rtl">
+        <div>
             <HeaderPanel/>
             <main>
                 <div className="panel-main">
-                    <PanelSidebar/>
+                    <PanelSidebar />
                     <div className="panel-body">
                         <div className="panel-container">
                             <Tabs activeKey={activeKey} onChange={callback} className="nav nav-tabs main-tab" unmountInactiveTabs={true}>

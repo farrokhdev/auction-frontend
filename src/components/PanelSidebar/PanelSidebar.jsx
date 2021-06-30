@@ -29,7 +29,7 @@ function PanelSidebar() {
               />
             </Link>
             <ul className="panel-list">
-              <li className="active">
+              <li className="active" >
                 <Link to="/panel-profile">
                   <FontAwesomeIcon icon={faPen} /> پروفایل
                 </Link>
@@ -72,6 +72,11 @@ function PanelSidebar() {
               <li>
                 <Link to="/">
                   <FontAwesomeIcon icon={faWallet} /> مشاوره فروش
+                </Link>
+              </li>
+              <li>
+                <Link to="/panel-artwork-list" >
+                  <FontAwesomeIcon icon={faWallet} /> لیست آثار
                 </Link>
               </li>
               <li>
