@@ -15,6 +15,8 @@ function EditPanelProfile(props) {
         form.setFieldsValue(data)
     },[data])
 
+    
+
   const sendData = (values) => {
       setLoading(true)
     axios.put(`${BASE_URL}${EDIT_PROFILE}`,values)
