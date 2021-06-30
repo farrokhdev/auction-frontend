@@ -6,12 +6,13 @@ import auction from "../../images/auction.svg";
 import help from "../../images/help.svg";
 import login from "../../images/login.svg";
 import Search from "./Search";
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {clearStorage} from '../../redux/reducers/auth/auth.actions'
 import { Link } from "react-router-dom";
+import {removeToken} from "../../utils/utils";
 
 function Header(props) {
-
+  const dispatch = useDispatch()
 
 const handleRedirect = () => {
 
@@ -189,13 +190,20 @@ const handleRedirect = () => {
                     </Link>
                   </li>
                   <li className="nav-item ">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/panel-profile">
                       <img
                         src={login}
                         width="13"
                         height="13"
                         alt="ورود به اسمارت آکشن"
                       />
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/" onClick={()=>{
+                      dispatch(clearStorage())
+                    }}>
+                      خروج
                     </Link>
                   </li>
                 </ul>

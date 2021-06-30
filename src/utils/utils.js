@@ -51,6 +51,7 @@ export function Token() {
 
 export function removeToken() {
     cookie.remove('token', {path: '/'});
+    cookie.remove('refresh', {path: '/'});
 }
 
 export function getTokenObject() {

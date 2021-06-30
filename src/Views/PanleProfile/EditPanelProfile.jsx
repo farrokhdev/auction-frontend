@@ -4,22 +4,27 @@ import TextArea from "antd/es/input/TextArea";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import {EDIT_PROFILE} from "../../utils/constant"
-function EditPanelProfile() {
+function EditPanelProfile(props) {
     const [form] = Form.useForm();
     const [loading,setLoading]=useState(false)
+    const {data} = props;
     const onFinish = (values) => {
         sendData(values)
     }
     useEffect(()=>{
-        getData()
-    },[])
+        form.setFieldsValue(data)
+    },[data])
+
+
+
   const sendData = (values) => {
       setLoading(true)
     axios.put(`${BASE_URL}${EDIT_PROFILE}`,values)
         .then(resp => {
             setLoading(false)
           if (resp.data.code === 200) {
-            message.success("رمز عبور شما با موفقیت ویرایش شد")
+
+              message.success("پروفایل شما با موفقیت ویرایش شد")
           }
         })
         .catch(err => {
@@ -28,21 +33,22 @@ function EditPanelProfile() {
             message.error("دوباره تلاش کنید")
         })
   }
-    const getData = () => {
-        setLoading(true)
-        axios.get(`${BASE_URL}${EDIT_PROFILE}`)
-            .then(resp => {
-                setLoading(false)
-                if ((resp.data.code === 200) && resp.data?.data?.result) {
-                    form.setFieldsValue(resp.data.data.result)
-                }
-            })
-            .catch(err => {
-                setLoading(false)
-                console.error(err);
-                message.error("صفحه را دوباره لود کنید")
-            })
-    }
+
+    // const getData = () => {
+    //     setLoading(true)
+    //     axios.get(`${BASE_URL}${EDIT_PROFILE}`)
+    //         .then(resp => {
+    //             setLoading(false)
+    //             if ((resp.data.code === 200) && resp.data?.data?.result) {
+    //
+    //             }
+    //         })
+    //         .catch(err => {
+    //             setLoading(false)
+    //             console.error(err);
+    //             message.error("صفحه را دوباره لود کنید")
+    //         })
+    // }
     return (
         <Spin spinning={loading}>
         <Form onFinish={onFinish}
