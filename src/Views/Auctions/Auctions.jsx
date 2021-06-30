@@ -45,35 +45,35 @@ function Auctions() {
   return (
     <div dir="rtl">
       <Header />
-      <main class="innercontent" id="all-auctions">
-        <div class="container innercontainer">
+      <main className="innercontent" id="all-auctions">
+        <div className="container innercontainer">
           <Maintitle title={'حراجی'} />
-          <div class="row">
+          <div className="row">
             <Sidebar />
-            <div class="col-lg-9">
+            <div className="col-lg-9">
               {Auctions && Auctions.length >= 1 ? Auctions.map((item, key) => {
                     return (
-                        <div key={key} class="row-blocks">
-                          <div class="row">
-                            <div class="col-md-4">
-                              <Link to="/" class="bg-shadow tr-shadow10">
+                        <div key={key} className="row-blocks">
+                          <div className="row">
+                            <div className="col-md-4">
+                              <Link to="/" className="bg-shadow tr-shadow10">
                                 <img src={slider1} width="500" height="500" alt=""/>
                               </Link>
                             </div>
-                            <div class="col-md-8">
-                              <div class="block-head row">
-                                <div class="col-xl-3 col-sm-4 col-3">
-                        <span class="category-icon live-icon">
-                          <span class="d-none d-md-inline-block">حراج</span>{item.is_live_streaming ? "زنده" : ""}
+                            <div className="col-md-8">
+                              <div className="block-head row">
+                                <div className="col-xl-3 col-sm-4 col-3">
+                        <span className="category-icon live-icon">
+                          <span className="d-none d-md-inline-block">حراج</span>{item.is_live_streaming ? "زنده" : ""}
 
                         </span>
                                 </div>
-                                <div class="col-xl-9 col-sm-8 col-9 textalign-left">
+                                <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                                   <FontAwesomeIcon icon={faBell}/>
-                                  <span class="reminder-icon ">یادآوری</span>
-                                  <button type="button" class="link-source">
+                                  <span className="reminder-icon ">یادآوری</span>
+                                  <button type="button" className="link-source">
                           <span>
-                            <span class="d-none d-sm-inline-block">
+                            <span className="d-none d-sm-inline-block">
                               مشاهده{" "}
                             </span>
                             آثار (<span>25</span>)
@@ -81,45 +81,45 @@ function Auctions() {
                                   </button>
                                 </div>
                               </div>
-                              <div class="block-main">
+                              <div className="block-main">
                                 <Link to="/">
-                                  <h5 class="default">
+                                  <h5 className="default">
                                     {item.text}
                                   </h5>
                                 </Link>
-                                <div class="block-detail">
-                                  <h6 class="default">{item.title}</h6>
-                                  <Link to="/" class="default">
-                                    <h6 class="default gray50">گالری آرتیبیشن</h6>
+                                <div className="block-detail">
+                                  <h6 className="default">{item.title}</h6>
+                                  <Link to="/" className="default">
+                                    <h6 className="default gray50">گالری آرتیبیشن</h6>
                                   </Link>
                                 </div>
                               </div>
-                              <div class="block-footer row">
-                                <div class="col-sm-5">
+                              <div className="block-footer row">
+                                <div className="col-sm-5">
                                   <div
-                                      class="jumbotron countdown show end date-show"
+                                      className="jumbotron countdown show end date-show"
                                       data-Date="2021/06/05 16:09:00"
                                   >
-                                    <div class="running">
+                                    <div className="running">
                                       <timer>
-                                        <span class="days"></span>:
-                                        <span class="hours"></span>:
-                                        <span class="minutes"></span>
-                                        <span class="show-text"></span>
+                                        <span className="days"></span>:
+                                        <span className="hours"></span>:
+                                        <span className="minutes"></span>
+                                        <span className="show-text"></span>
                                       </timer>
-                                      <div class="break"></div>
+                                      <div className="break"></div>
                                     </div>
-                                    <div class="ended">
-                                      <div class="text">حراج به پایان رسید</div>
+                                    <div className="ended">
+                                      <div className="text">حراج به پایان رسید</div>
                                     </div>
                                   </div>
                                 </div>
-                                <div class="col-sm-7 textalign-left">
-                                  <button type="button" class="btn btn-gray ms-2">
+                                <div className="col-sm-7 textalign-left">
+                                  <button type="button" className="btn btn-gray ms-2">
                                     <FontAwesomeIcon icon={faEye}/>
                                     مشاهده زنده
                                   </button>
-                                  <button type="button" class="btn btn-main join">
+                                  <button type="button" className="btn btn-main join">
                                     عضویت در حراج
                                   </button>
                                 </div>
@@ -129,27 +129,27 @@ function Auctions() {
                         </div>
                     )
                   }) : ""}
-              <div class="row-blocks">
-                <div class="row">
-                  <div class="col-md-4">
-                    <Link to="/" class="bg-shadow tr-shadow10">
+              <div className="row-blocks">
+                <div className="row">
+                  <div className="col-md-4">
+                    <Link to="/" className="bg-shadow tr-shadow10">
                       <img src={pic7} width="493" height="621" alt="" />
                     </Link>
                   </div>
-                  <div class="col-md-8">
-                    <div class="block-head row">
-                      <div class="col-xl-3 col-sm-4 col-3">
-                        <span class="category-icon online-icon">
-                          <span class="d-none d-md-inline-block">حراج</span>{" "}
+                  <div className="col-md-8">
+                    <div className="block-head row">
+                      <div className="col-xl-3 col-sm-4 col-3">
+                        <span className="category-icon online-icon">
+                          <span className="d-none d-md-inline-block">حراج</span>{" "}
                           آنلاین
                         </span>
                       </div>
-                      <div class="col-xl-9 col-sm-8 col-9 textalign-left">
+                      <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                         <FontAwesomeIcon icon={faBell} />
-                        <span class="reminder-icon">یادآوری</span>
-                        <button type="button" class="link-source">
+                        <span className="reminder-icon">یادآوری</span>
+                        <button type="button" className="link-source">
                           <span>
-                            <span class="d-none d-sm-inline-block">
+                            <span className="d-none d-sm-inline-block">
                               مشاهده{" "}
                             </span>
                             آثار (<span>10</span>)
@@ -157,45 +157,45 @@ function Auctions() {
                         </button>
                       </div>
                     </div>
-                    <div class="block-main">
+                    <div className="block-main">
                       <Link to="/">
-                        <h5 class="default">
+                        <h5 className="default">
                           هنرهای تزئینی و تصاویر عتیقه ، کتاب
                         </h5>
                       </Link>
-                      <div class="block-detail">
-                        <h6 class="default">هنرهای تجسمی</h6>
-                        <Link to="/" class="default">
-                          <h6 class="default gray50">هان گالری</h6>
+                      <div className="block-detail">
+                        <h6 className="default">هنرهای تجسمی</h6>
+                        <Link to="/" className="default">
+                          <h6 className="default gray50">هان گالری</h6>
                         </Link>
                       </div>
                     </div>
-                    <div class="block-footer row">
-                      <div class="col-sm-5">
+                    <div className="block-footer row">
+                      <div className="col-sm-5">
                         <div
-                          class="jumbotron countdown show start date-show"
+                          className="jumbotron countdown show start date-show"
                           data-Date="2021/06/05 16:09:00"
                         >
-                          <div class="running">
+                          <div className="running">
                             <timer>
-                              <span class="days"></span>:
-                              <span class="hours"></span>:
-                              <span class="minutes"></span>
-                              <span class="show-text"></span>
+                              <span className="days"></span>:
+                              <span className="hours"></span>:
+                              <span className="minutes"></span>
+                              <span className="show-text"></span>
                             </timer>
-                            <div class="break"></div>
+                            <div className="break"></div>
                           </div>
-                          <div class="ended">
-                            <div class="text">حراج به پایان رسید</div>
+                          <div className="ended">
+                            <div className="text">حراج به پایان رسید</div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-7 textalign-left">
-                        <button type="button" class="btn btn-gray ms-2">
+                      <div className="col-sm-7 textalign-left">
+                        <button type="button" className="btn btn-gray ms-2">
                           <FontAwesomeIcon icon={faEye} />
                           مشاهده زنده
                         </button>
-                        <button type="button" class="btn btn-lightpink">
+                        <button type="button" className="btn btn-lightpink">
                           ثبت پیشنهاد
                         </button>
                       </div>
@@ -203,27 +203,27 @@ function Auctions() {
                   </div>
                 </div>
               </div>
-              <div class="row-blocks">
-                <div class="row">
-                  <div class="col-md-4">
-                    <Link to="/" class="bg-shadow tr-shadow10">
+              <div className="row-blocks">
+                <div className="row">
+                  <div className="col-md-4">
+                    <Link to="/" className="bg-shadow tr-shadow10">
                       <img src={pic2} width="998" height="880" alt="" />
                     </Link>
                   </div>
-                  <div class="col-md-8">
-                    <div class="block-head row">
-                      <div class="col-xl-3 col-sm-4 col-3">
-                        <span class="category-icon timed-icon">
-                          <span class="d-none d-md-inline-block">حراج</span>
+                  <div className="col-md-8">
+                    <div className="block-head row">
+                      <div className="col-xl-3 col-sm-4 col-3">
+                        <span className="category-icon timed-icon">
+                          <span className="d-none d-md-inline-block">حراج</span>
                           مدت‌دار{" "}
                         </span>
                       </div>
-                      <div class="col-xl-9 col-sm-8 col-9 textalign-left">
+                      <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                         <FontAwesomeIcon icon={faBell} />
-                        <span class="reminder-icon">یادآوری</span>
-                        <button type="button" class="link-source">
+                        <span className="reminder-icon">یادآوری</span>
+                        <button type="button" className="link-source">
                           <span>
-                            <span class="d-none d-sm-inline-block">
+                            <span className="d-none d-sm-inline-block">
                               مشاهده{" "}
                             </span>
                             آثار (<span>24</span>)
@@ -231,38 +231,38 @@ function Auctions() {
                         </button>
                       </div>
                     </div>
-                    <div class="block-main">
+                    <div className="block-main">
                       <Link to="/">
-                        <h5 class="default">
+                        <h5 className="default">
                           Tranquility and Deep Silence in Pure Nature
                         </h5>
                       </Link>
-                      <div class="block-detail">
-                        <h6 class="default">Modern art</h6>
-                        <Link to="/" class="default">
-                          <h6 class="default gray50">گالری آرتیبیشن</h6>
+                      <div className="block-detail">
+                        <h6 className="default">Modern art</h6>
+                        <Link to="/" className="default">
+                          <h6 className="default gray50">گالری آرتیبیشن</h6>
                         </Link>
                       </div>
                     </div>
-                    <div class="block-footer row">
-                      <div class="col-sm-5">
-                        <div class="auction-calender date-show">
-                          <div class="auction-date">
-                            <span class="start-date">7خرداد</span>
-                            <span class="end-date">9 خرداد</span>
+                    <div className="block-footer row">
+                      <div className="col-sm-5">
+                        <div className="auction-calender date-show">
+                          <div className="auction-date">
+                            <span className="start-date">7خرداد</span>
+                            <span className="end-date">9 خرداد</span>
                           </div>
-                          <div class="auction-time">
-                            <span class="start-time">10</span>
-                            <span class="end-time">22</span>
+                          <div className="auction-time">
+                            <span className="start-time">10</span>
+                            <span className="end-time">22</span>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-7 textalign-left">
-                        <button type="button" class="btn btn-gray ms-2">
+                      <div className="col-sm-7 textalign-left">
+                        <button type="button" className="btn btn-gray ms-2">
                           <FontAwesomeIcon icon={faEye} />
                           View auction
                         </button>
-                        <button type="button" class="btn btn-main join">
+                        <button type="button" className="btn btn-main join">
                           عضویت در حراج
                         </button>
                       </div>
@@ -270,27 +270,27 @@ function Auctions() {
                   </div>
                 </div>
               </div>
-              <div class="row-blocks">
-                <div class="row">
-                  <div class="col-md-4">
-                    <Link to="/" class="bg-shadow tr-shadow10">
+              <div className="row-blocks">
+                <div className="row">
+                  <div className="col-md-4">
+                    <Link to="/" className="bg-shadow tr-shadow10">
                       <img src={pic6} width="570" height="470" alt="" />
                     </Link>
                   </div>
-                  <div class="col-md-8">
-                    <div class="block-head row">
-                      <div class="col-xl-3 col-sm-4 col-3">
-                        <span class="category-icon live-icon">
-                          <span class="d-none d-md-inline-block">حراج</span>{" "}
+                  <div className="col-md-8">
+                    <div className="block-head row">
+                      <div className="col-xl-3 col-sm-4 col-3">
+                        <span className="category-icon live-icon">
+                          <span className="d-none d-md-inline-block">حراج</span>{" "}
                           زنده
                         </span>
                       </div>
-                      <div class="col-xl-9 col-sm-8 col-9 textalign-left">
+                      <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                         <FontAwesomeIcon icon={faBell} />
-                        <span class="reminder-icon">یادآوری</span>
-                        <button type="button" class="link-source">
+                        <span className="reminder-icon">یادآوری</span>
+                        <button type="button" className="link-source">
                           <span>
-                            <span class="d-none d-sm-inline-block">
+                            <span className="d-none d-sm-inline-block">
                               مشاهده{" "}
                             </span>
                             آثار (<span>25</span>)
@@ -298,46 +298,46 @@ function Auctions() {
                         </button>
                       </div>
                     </div>
-                    <div class="block-main">
+                    <div className="block-main">
                       <Link to="/">
-                        <h5 class="default">
+                        <h5 className="default">
                           فقط بصورت آنلاین زندگی کنید ، کتابهای عتیقه ، هنرهای
                           تزئینی و تصاویر
                         </h5>
                       </Link>
-                      <div class="block-detail">
-                        <h6 class="default">هنر معاصر</h6>
-                        <Link to="/" class="default">
-                          <h6 class="default gray50">گالری آرتیبیشن</h6>
+                      <div className="block-detail">
+                        <h6 className="default">هنر معاصر</h6>
+                        <Link to="/" className="default">
+                          <h6 className="default gray50">گالری آرتیبیشن</h6>
                         </Link>
                       </div>
                     </div>
-                    <div class="block-footer row">
-                      <div class="col-sm-5">
+                    <div className="block-footer row">
+                      <div className="col-sm-5">
                         <div
-                          class="jumbotron countdown show end date-show"
+                          className="jumbotron countdown show end date-show"
                           data-Date="2021/06/05 16:09:00"
                         >
-                          <div class="running">
+                          <div className="running">
                             <timer>
-                              <span class="days"></span>:
-                              <span class="hours"></span>:
-                              <span class="minutes"></span>
-                              <span class="show-text"></span>
+                              <span className="days"></span>:
+                              <span className="hours"></span>:
+                              <span className="minutes"></span>
+                              <span className="show-text"></span>
                             </timer>
-                            <div class="break"></div>
+                            <div className="break"></div>
                           </div>
-                          <div class="ended">
-                            <div class="text">حراج به پایان رسید</div>
+                          <div className="ended">
+                            <div className="text">حراج به پایان رسید</div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-7 textalign-left">
-                        <button type="button" class="btn btn-gray ms-2">
+                      <div className="col-sm-7 textalign-left">
+                        <button type="button" className="btn btn-gray ms-2">
                           <FontAwesomeIcon icon={faEye} />
                           مشاهده زنده
                         </button>
-                        <button type="button" class="btn btn-main join">
+                        <button type="button" className="btn btn-main join">
                           عضویت در حراج
                         </button>
                       </div>
@@ -345,27 +345,27 @@ function Auctions() {
                   </div>
                 </div>
               </div>
-              <div class="row-blocks">
-                <div class="row">
-                  <div class="col-md-4">
-                    <Link to="/" class="bg-shadow tr-shadow10">
+              <div className="row-blocks">
+                <div className="row">
+                  <div className="col-md-4">
+                    <Link to="/" className="bg-shadow tr-shadow10">
                       <img src={pic7} width="493" height="621" alt="" />
                     </Link>
                   </div>
-                  <div class="col-md-8">
-                    <div class="block-head row">
-                      <div class="col-xl-3 col-sm-4 col-3">
-                        <span class="category-icon online-icon">
-                          <span class="d-none d-md-inline-block">حراج</span>{" "}
+                  <div className="col-md-8">
+                    <div className="block-head row">
+                      <div className="col-xl-3 col-sm-4 col-3">
+                        <span className="category-icon online-icon">
+                          <span className="d-none d-md-inline-block">حراج</span>{" "}
                           آنلاین
                         </span>
                       </div>
-                      <div class="col-xl-9 col-sm-8 col-9 textalign-left">
+                      <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                         <FontAwesomeIcon icon={faBell} />
-                        <span class="reminder-icon">یادآوری</span>
-                        <button type="button" class="link-source">
+                        <span className="reminder-icon">یادآوری</span>
+                        <button type="button" className="link-source">
                           <span>
-                            <span class="d-none d-sm-inline-block">
+                            <span className="d-none d-sm-inline-block">
                               مشاهده{" "}
                             </span>
                             آثار (<span>10</span>)
@@ -373,45 +373,45 @@ function Auctions() {
                         </button>
                       </div>
                     </div>
-                    <div class="block-main">
+                    <div className="block-main">
                       <Link to="/">
-                        <h5 class="default">
+                        <h5 className="default">
                           هنرهای تزئینی و تصاویر عتیقه ، کتاب
                         </h5>
                       </Link>
-                      <div class="block-detail">
-                        <h6 class="default">هنرهای تجسمی</h6>
-                        <Link to="/" class="default">
-                          <h6 class="default gray50">هان گالری</h6>
+                      <div className="block-detail">
+                        <h6 className="default">هنرهای تجسمی</h6>
+                        <Link to="/" className="default">
+                          <h6 className="default gray50">هان گالری</h6>
                         </Link>
                       </div>
                     </div>
-                    <div class="block-footer row">
-                      <div class="col-sm-5">
+                    <div className="block-footer row">
+                      <div className="col-sm-5">
                         <div
-                          class="jumbotron countdown show start date-show"
+                          className="jumbotron countdown show start date-show"
                           data-Date="2021/06/05 16:09:00"
                         >
-                          <div class="running">
+                          <div className="running">
                             <timer>
-                              <span class="days"></span>:
-                              <span class="hours"></span>:
-                              <span class="minutes"></span>
-                              <span class="show-text"></span>
+                              <span className="days"></span>:
+                              <span className="hours"></span>:
+                              <span className="minutes"></span>
+                              <span className="show-text"></span>
                             </timer>
-                            <div class="break"></div>
+                            <div className="break"></div>
                           </div>
-                          <div class="ended">
-                            <div class="text">حراج به پایان رسید</div>
+                          <div className="ended">
+                            <div className="text">حراج به پایان رسید</div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-7 textalign-left">
-                        <button type="button" class="btn btn-gray ms-2">
+                      <div className="col-sm-7 textalign-left">
+                        <button type="button" className="btn btn-gray ms-2">
                           <FontAwesomeIcon icon={faEye} />
                           مشاهده زنده
                         </button>
-                        <button type="button" class="btn btn-main join">
+                        <button type="button" className="btn btn-main join">
                           عضویت در حراج
                         </button>
                       </div>
@@ -420,32 +420,32 @@ function Auctions() {
                 </div>
               </div>
               <nav aria-label="Page navigation">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <Link class="page-link" to="/" aria-label="Previous"></Link>
+                <ul className="pagination">
+                  <li className="page-item">
+                    <Link className="page-link" to="/" aria-label="Previous"></Link>
                   </li>
-                  <li class="page-item">
-                    <Link class="page-link" to="/">
+                  <li className="page-item">
+                    <Link className="page-link" to="/">
                       1
                     </Link>
                   </li>
-                  <li class="page-item active" aria-current="page">
-                    <Link class="page-link" to="/">
+                  <li className="page-item active" aria-current="page">
+                    <Link className="page-link" to="/">
                       2
                     </Link>
                   </li>
-                  <li class="page-item">
-                    <Link class="page-link" to="/">
+                  <li className="page-item">
+                    <Link className="page-link" to="/">
                       3
                     </Link>
                   </li>
-                  <li class="page-item">
-                    <Link class="page-link" to="/">
+                  <li className="page-item">
+                    <Link className="page-link" to="/">
                       4
                     </Link>
                   </li>
-                  <li class="page-item">
-                    <Link class="page-link" to="/" aria-label="Next"></Link>
+                  <li className="page-item">
+                    <Link className="page-link" to="/" aria-label="Next"></Link>
                   </li>
                 </ul>
               </nav>
