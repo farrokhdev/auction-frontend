@@ -15,7 +15,7 @@ function EditPanelProfile(props) {
         form.setFieldsValue(data)
     },[data])
 
-    
+
 
   const sendData = (values) => {
       setLoading(true)

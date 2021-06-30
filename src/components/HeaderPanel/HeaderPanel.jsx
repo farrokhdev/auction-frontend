@@ -2,8 +2,12 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import logowhite from "../../images/logo-white.png";
 import loginactive from "../../images/login-active.png";
+import {removeToken} from "../../utils/utils";
+import {useDispatch} from "react-redux";
+import {clearStorage} from "../../redux/reducers/auth/auth.actions";
 
 function HeaderPanel() {
+  const dispatch=useDispatch();
     return (
         
              <header>
@@ -34,18 +38,26 @@ function HeaderPanel() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/">
-                    <img
-                      src={loginactive}
-                      width="30"
-                      height="30"
-                      alt="ورود به اسمارت آکشن"
-                    />
-                    <span className="d-none d-lg-inline-block ">
-                      نیما حیدری
-                    </span>
+                  <Link className="nav-link" to="/" onClick={()=>{
+                    dispatch(clearStorage())
+                  }}>
+                    خروج
                   </Link>
                 </li>
+
+                {/*<li className="nav-item">*/}
+                {/*  <Link className="nav-link text-dark" to="/">*/}
+                {/*    <img*/}
+                {/*      src={loginactive}*/}
+                {/*      width="30"*/}
+                {/*      height="30"*/}
+                {/*      alt="ورود به اسمارت آکشن"*/}
+                {/*    />*/}
+                {/*    <span className="d-none d-lg-inline-block ">*/}
+                {/*      نیما حیدری*/}
+                {/*    </span>*/}
+                {/*  </Link>*/}
+                {/*</li>*/}
               </ul>
             </div>
           </div>
