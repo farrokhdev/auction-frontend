@@ -4,7 +4,7 @@ import PanelSidebar from '../../components/PanelSidebar';
 import {Link} from "react-router-dom";
 function UserPanelCreateAuctionsOnlineAuctionConditions() {
     return (
-        <div dir="rtl">
+        <div>
              <HeaderPanel/>
            <div className="panel-main">
           <PanelSidebar/>

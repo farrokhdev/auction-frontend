@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 function UserPanelCreateAuctionsOnlineAuctionBasicInformation() {
 
     return (       
-        <div dir="rtl">
+        <div>
           <HeaderPanel/>
           <div className="panel-main">
 

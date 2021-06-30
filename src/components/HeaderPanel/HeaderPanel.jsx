@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logowhite from "../../images/logo-white.png";
 import loginactive from "../../images/login-active.png";
 
-function HeaderPanel() {
+function HeaderPanel({titlepage}) {
     return (
         
              <header>
@@ -56,3 +56,17 @@ function HeaderPanel() {
 }
 
 export default HeaderPanel; 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//       changeTitlePagePanel :(data) => dispatch(changeTitlePagePanel(data))
+//   }
+// }
+
+// const mapStateToProps = (store) => {
+//   return {
+//       panel : store.panelReducer,
+//   }
+// }
+
+
+// export default connect(mapStateToProps , mapDispatchToProps)(HeaderPanel)

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function UserPanelCreateAuctionsOnlineAuctionDate() {
     return (
-        <div dir="rtl">
+        <div>
            <HeaderPanel/>
            <div className="panel-main">
           <PanelSidebar/>    

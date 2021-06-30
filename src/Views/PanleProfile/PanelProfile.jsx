@@ -21,18 +21,17 @@ import {Tabs} from "antd";
 function PanelProfile() {
     const {TabPane} = Tabs;
     const [activeKey, setActiveKey] = useState("1")
-
     function callback(key) {
         console.log(key);
         setActiveKey(key)
     }
 
     return (
-        <div dir="rtl">
+        <div>
             <HeaderPanel/>
             <main>
                 <div className="panel-main">
-                    <PanelSidebar/>
+                    <PanelSidebar />
                     <div className="panel-body">
                         <div className="panel-container">
                             <Tabs activeKey={activeKey} onChange={callback} className="nav nav-tabs main-tab" unmountInactiveTabs={true}>
