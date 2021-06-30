@@ -2,9 +2,11 @@
 
 #ide 
 /.vscode
+/.idea
 
 # dependencies
 /node_modules
+/need
 /.pnp
 .pnp.js
 

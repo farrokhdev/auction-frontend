@@ -3,12 +3,7 @@ import React from 'react'
 function EditPhoneNumberPanelProfile() {
     return (
         <>
-                       <div
-                    className="tab-pane fade"
-                    id="profiletab3"
-                    role="tabpanel"
-                    aria-labelledby="profiletab3-tab"
-                  >
+                       <div>
                     <div className="row">
                       <div className="col-md-6">
                         <div className="input-group">

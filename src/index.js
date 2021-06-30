@@ -6,6 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {PersistGate} from 'redux-persist/integration/react';
 import "./assets/style/Main.scss";
+import "./assets/style/style.scss";
 import "./i18n";
 
 ReactDOM.render(

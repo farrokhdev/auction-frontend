@@ -5,7 +5,7 @@ import { createHashHistory } from "history";
 import {connect} from 'react-redux';
 import Home from "./Views/Home";
 import Login from "./Views/Login";
-import UserPanelProfile from "./components/userpanel";
+// import UserPanelProfile from "./components/userpanel";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
 import Signup from "./Views/Signup";

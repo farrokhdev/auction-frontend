@@ -3,12 +3,7 @@ import React from 'react'
 function EditEmailPanelProfile() {
     return (
         <>
-                     <div
-                    className="tab-pane fade"
-                    id="profiletab4"
-                    role="tabpanel"
-                    aria-labelledby="profiletab4-tab"
-                  >
+                     <div>
                     <div className="row">
                       <div className="col-md-6">
                         <div className="input-group ">
@@ -57,7 +52,7 @@ function EditEmailPanelProfile() {
                         </button>
                       </div>
                     </div>
-                  </div>   
+                  </div>
         </>
     )
 }
