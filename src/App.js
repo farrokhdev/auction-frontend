@@ -48,7 +48,7 @@ function App(props) {
             
             <>
               <Route exact path="/panel-profile" component={PanelProfile} />
-              <Route exact path="/register" component={Register} />
+              <Route exact path="/buyer-register" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
               <Route exact path="/signing-contract" component={SigningContract} />
