@@ -5,7 +5,7 @@ import { createHashHistory } from "history";
 import {connect} from 'react-redux';
 import Home from "./Views/Home";
 import Login from "./Views/Login";
-import BuyerRegister from "./Views/BuyerRegister";
+import UserPanelProfile from "./components/userpanel";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
 import Signup from "./Views/Signup";
@@ -23,6 +23,7 @@ import AuctionsList from "./Views/AuctionsList";
 import AddArtWorks from "./Views/AddArtWorks";
 import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
+import BuyerRegister from "./Views/BuyerRegister";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App(props) {
