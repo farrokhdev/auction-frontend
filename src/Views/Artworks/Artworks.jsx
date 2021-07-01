@@ -10,17 +10,38 @@ import Maintitle from "../../components/main title for all";
 import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
+import queryString from 'query-string';
+import { date } from "language-tags";
+import momentJalaali from 'moment-jalaali';
+
 
 function Artworks() {
 
   const [Products, setProducts] = useState("");
-  const [pageSize, setPageSize] = useState(9);
+  const [countProducts, setCountProducts] = useState(0)
+  // const [pageSize, setPageSize] = useState(5);
+  const [params, setParams] = useState({
+      page : 1,
+      page_size : 9,
+      search : '',
+      category : [],
+      date_after : '',
+      date_before : '',
+      date_before : '',
+      ordering : '',
+      auction_houses__home_auction_name : [],
+      auctions__type : [],
+  })
 
-  const getProducts = (page_size=pageSize) => {
-    axios.get(`${BASE_URL}/sale/product/?page_size=${page_size}`)
+  console.log("params", params);
+
+  const queries = queryString.stringify(params);
+  const getProducts = () => {
+    axios.get(`${BASE_URL}/sale/product/?${queries}`)
         .then(resp => {
           if (resp.data.code === 200) {
             setProducts(resp.data.data.result)
+            setCountProducts(resp.data.data.count)
           }
 
         })
@@ -32,17 +53,101 @@ function Artworks() {
   useEffect(() => {
     getProducts()
 
-  }, [])
+  }, [params])
+
+  const handeSelectPage = (e) => {
+    console.log("Log Of Pagination", e);
+    setParams({
+      ...params , page : e
+    })
+}
+
+  const handleSearchProducts = (value) => {
+    setParams({
+      ...params , search : value
+    })
+  }  
+  
+  const handleSetCategory = (value) => {
+      setParams({
+        ...params , category : value
+      })
+  }
+
+  const handleSetHomeAuction = (value) => {
+    setParams({
+      ...params , auction_houses__home_auction_name : value
+    })
+}  
+
+const handleSetHomeAuctionSelect = (value) => {
+    setParams({
+      ...params , auction_houses__home_auction_name : value
+    })
+}
+
+  const handleSetType = (value) => {
+    setParams({
+      ...params , auctions__type : value
+    })
+  } 
+  
+  const handleSetOrdering = (value) => {
+    setParams({
+      ...params , ordering : value
+    })
+  }
+
+  const handleSetDate = (dateFrom , dateTo) => {
+    setParams({
+      ...params , 
+        date_after : momentJalaali(dateFrom).format(`YYYY-jMM-jDD`) ,
+        date_before : momentJalaali(dateTo).format(`YYYY-jMM-jDD`)
+    })
+
+  }
+
+  
+  const convertToEn = (value)=>{
+
+    switch (value) {
+
+      case "ONLINE":
+        return <span className="category-icon online-icon">آنلاین</span>
+      case "LIVE":
+        return <span className="category-icon live-icon">زنده</span>
+
+      case "PERIODIC":
+          return <span className="category-icon timed-icon">مدت دار</span>
+
+      case "HIDDEN":
+          return <span className="category-icon firstoffer-icon">اولین پیشنهاد</span>
+
+      case "SECOND_HIDDEN":
+          return  <span className="category-icon secondoffer-icon">دومین پیشنهاد</span>    
+  
+    }
+}
+
 
 
   return (
-    <div dir="rtl">
+    <div style={{overflow : 'hidden'}} >
       <Header />
       <main class="innercontent" id="all-artworks">
         <div class="container innercontainer">
-          <Maintitle title={'محصولات'} />
+          <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} />
           <div class="row">
-            <Sidebar />
+            <Sidebar 
+                params={params}
+                setParams={setParams}
+                handleSetHomeAuction={handleSetHomeAuction}
+                handleSearchProducts={handleSearchProducts}
+                handleSetCategory={handleSetCategory}
+                handleSetType={handleSetType}
+                handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
+                handleSetDate={handleSetDate}
+              />
             <div class="col-lg-9">
               <div class="row row-cols-md-3 row-cols-2">
                 {Products && Products.length >= 1 ? Products.map((item, key) => {
@@ -51,7 +156,7 @@ function Artworks() {
                         <Link to="#" class="artwork-block">
                           <div className="artwork-img">
                             <img
-                                src={item.media.exact_url}
+                                src={item.media.exact_url ? item.media.exact_url : ''}
                                 width="998"
                                 height="880"
                                 alt=""
@@ -61,12 +166,13 @@ function Artworks() {
                         <span className="category-save">
                           <FontAwesomeIcon icon={faBookmark}/>
                         </span>
-                              <span className="category-icon live-icon">زنده</span>
+                            {convertToEn(item?.auctions ? item?.auctions[0] : '')}
+                              {/* <span className="category-icon live-icon">زنده</span> */}
                             </div>
                           </div>
                           <div className="block-body text-center">
-                            <h6 className="default gray50 ">{item.persian_artist_name}</h6>
-                            <h4 className="default">{item.artwork_title}</h4>
+                            <h6 className="default gray50 ">{item?.persian_artist_name}</h6>
+                            <h4 className="default">{item?.artwork_title}</h4>
                             <div className="auction-calender">
                               <div className="auction-date">
                                 <span className="start-date">7 خرداد</span>
@@ -79,7 +185,7 @@ function Artworks() {
                             <div className="price-block">
                               <span>قیمت پایه:</span>
                               <span className="price">
-                          {item.price}<span className="price-unit">تومان</span>
+                          {item?.price}<span className="price-unit">تومان</span>
                         </span>
                             </div>
                           </div>
@@ -97,11 +203,13 @@ function Artworks() {
                   onShowSizeChange={(current, pageSize) => {
                     getProducts(pageSize)
                   }}
-                  onChange={(current, pageSize) => {
-                    console.log(current, pageSize)
-                  }}
+                  // onChange={(current, pageSize) => {
+                  //   console.log(current, pageSize)
+                    
+                  // }}
+                  onChange={(e) => handeSelectPage(e)}
                   defaultCurrent={1}
-                  total={500}
+                  total={countProducts}
                   pageSizeOptions={[9, 18, 36, 48]}
                   defaultPageSize={9}
               />
