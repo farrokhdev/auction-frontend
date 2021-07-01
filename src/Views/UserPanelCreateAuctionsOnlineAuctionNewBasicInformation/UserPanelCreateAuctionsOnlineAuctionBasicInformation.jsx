@@ -123,7 +123,7 @@ function UserPanelCreateAuctionsOnlineAuctionBasicInformation() {
                     <div class="col-12">
                         <div class="button-group">
                             <button type="button" class="btn-gray">لغو</button>
-                            <Link to="/user-panel-create-auctions-date">
+                            <Link to="/panel-auctions-date">
                             <button type="button" class="btn-default">ادامه</button>
                             </Link>
 

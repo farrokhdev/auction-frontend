@@ -8,13 +8,12 @@ import {setToken} from "../../utils/utils";
 // import AuthContext from "../../context/AuthContext";
 import {setPhoneNumber} from '../../redux/reducers/auth/auth.actions';
 import {connect} from 'react-redux';
+import {Form, Input,message} from "antd";
 
 function Passwordrecovery(props) {
-  // const TodosContext = useContext(AuthContext);
-
-  // const [userName, setuserName] = useState("");
-
   const [username, setUsername] = useState("");
+  const [form] = Form.useForm();
+
 
   const handleRequestPasswordRecovery = (value)=>{
 
@@ -30,11 +29,13 @@ function Passwordrecovery(props) {
           props.setPhoneNumber({username : payload.user_name})
           setTimeout(() => {
             window.location.href ="#/confirm-mobile-number"
+          message.success("کد تایید ارسال شد")
           }, 1000);
           // history.push("/confirm-mobile-number")
         }
       })
       .catch(err=>{
+        message.error("دوباره تلاش کنید")
         console.log("Can not Login" , err);
       })
   }
@@ -50,7 +51,7 @@ function Passwordrecovery(props) {
           <Link to="/" className="logo">
             <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
           </Link>
-          <form className="login-block">
+          <Form className="login-block" form={form}>
             <div className="main-title">
               <h4 className="default titr">بازیابی گذرواژه</h4>
             </div>
@@ -58,7 +59,23 @@ function Passwordrecovery(props) {
               <p className="mb-0">
                 <strong> تلفن همراه یا ایمیل</strong>
               </p>
-              <input
+              <Form.Item
+                className="w-100"
+                name="user-name"
+                rules={[
+                    {
+                      required: true,
+                      message: "تکمیل این فیلد ضروری است",
+                    }
+                    
+            ]}>
+                <Input className="default-input"
+                    onChange={(e)=>{
+                      setUsername(e.target.value)
+                    }}
+                  placeholder="شماره تلفن یا ایمیل خود را وارد کنید"/>
+              </Form.Item>
+              {/* <input
                 onChange={(e)=>{
                   setUsername(e.target.value)
                   // TodosContext.setmobile(e.target.value)
@@ -66,7 +83,7 @@ function Passwordrecovery(props) {
                 type="text"
                 className="default-input"
                 placeholder="شماره تلفن یا ایمیل خود را وارد کنید"
-              />
+              /> */}
             </div>
             <div className="btn-container pt-5">
                 <button
@@ -78,7 +95,7 @@ function Passwordrecovery(props) {
               {/* <Link to="/confirm-mobile-number">
               </Link> */}
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </>
