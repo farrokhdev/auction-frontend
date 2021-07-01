@@ -44,10 +44,14 @@ function Sidebar({handleSearchProducts , handleSetCategory , params , handleSetT
 
 
   function onChange(dates, dateStrings) {
-    // console.log('From: ', dates[0], ', to: ', dates[1]);
+    // console.log('From: ', dates, ', to: ', dates);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
     // console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-    handleSetDate(dates[0], dates[1]);
+    // handleSetDate(dates ? dates[0] : {}, dates ? dates[1] :{} );
+    handleSetDate(dateStrings ? dateStrings[0] : {} , dateStrings ? dateStrings[1] :{} );
   }
+
+
 
   return (
     <>
