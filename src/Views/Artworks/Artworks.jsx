@@ -13,7 +13,7 @@ import {BASE_URL} from "../../utils";
 import queryString from 'query-string';
 import { date } from "language-tags";
 import momentJalaali from 'moment-jalaali';
-
+import moment from 'jalali-moment'
 
 function Artworks() {
 
@@ -99,10 +99,14 @@ const handleSetHomeAuctionSelect = (value) => {
   }
 
   const handleSetDate = (dateFrom , dateTo) => {
+
+    // console.log(moment(dateFrom , 'YYYY-MM-DD').format(`YYYY-jMM-jDD`));
     setParams({
       ...params , 
-        date_after : momentJalaali(dateFrom).format(`YYYY-jMM-jDD`) ,
-        date_before : momentJalaali(dateTo).format(`YYYY-jMM-jDD`)
+        // date_after : moment( (dateFrom ,  'YYYY-MM-DD').format(`YYYY-jMM-jDD`) ),
+        // date_before : momentJalaali(dateTo ? dateTo : {}).format(`YYYY-jMM-jDD`)    
+        date_after : '2021-01-05',
+        date_before : '2021-03-07'
     })
 
   }
@@ -166,7 +170,7 @@ const handleSetHomeAuctionSelect = (value) => {
                         <span className="category-save">
                           <FontAwesomeIcon icon={faBookmark}/>
                         </span>
-                            {convertToEn(item?.auctions ? item?.auctions[0] : '')}
+                            {convertToEn(item?.auctions ? item?.auctions[0]?.type : '')}
                               {/* <span className="category-icon live-icon">زنده</span> */}
                             </div>
                           </div>
