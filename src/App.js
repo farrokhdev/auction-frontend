@@ -24,7 +24,7 @@ import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
 import BuyerRegister from "./Views/BuyerRegister";
 import "bootstrap/dist/css/bootstrap.css";
-import UserPanelCreateAuctionsBasicInformation from "./Views/UserPanelCreateAuctionsOnlineAuctionNew Basic Information";
+import UserPanelCreateAuctionsBasicInformation from "./Views/UserPanelCreateAuctionsOnlineAuctionNewBasicInformation";
 import UserPanelCreateAuctionsOnlineAuctionDate from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionDate";
 import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionOfferRange";
 import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
@@ -55,12 +55,12 @@ function App(props) {
             <>
               <Route exact path="/" component={Artworks} />
               <Route exact path="/panel-profile" component={PanelProfile} />
-              <Route exact path="/user-panel-create-auctions-basic-information" component={UserPanelCreateAuctionsBasicInformation}/>
-              <Route exact path="/user-panel-create-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>
-              <Route exact path="/user-panel-create-auctions-online-auction-offer-range" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>
-              <Route exact path="/user-panel-create-auctions-online-auction-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>
-              <Route exact path="/user-panel-create-auctions-online-auction-buyer-validation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>
-              <Route exact path="/user-panel-create-auctions-online-auction-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>
+              <Route exact path="/panel-auctions-information" component={UserPanelCreateAuctionsBasicInformation}/>
+              <Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>
+              <Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>
+              <Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>
+              <Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>
+              <Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>
               <Route exact path="/buyer-register" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
