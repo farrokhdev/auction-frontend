@@ -10,6 +10,7 @@ import { BASE_URL } from "../../utils/index";
 import {setToken ,Token} from "../../utils/utils";
 // import AuthContext from "../../context/AuthContext";
 import {connect} from 'react-redux';
+import {Form, Input,message} from "antd";
 
 
 function RegistersetPassword(props) {
@@ -19,6 +20,8 @@ function RegistersetPassword(props) {
 
   const [Password, setPassword] = useState("");
   const [PasswordCheck, setPasswordCheck] = useState("");
+  const [form] = Form.useForm();
+
   const handleRequestSetPassword = (value)=>{
     let payload ={
       "user_name": props.auth.username,
@@ -36,11 +39,13 @@ function RegistersetPassword(props) {
         setToken(res.data.data.result);
         setTimeout(() => {
           window.location.href = "#/login"
+          message.success("رمز عبور با موفقیت تغییر یافت")
         }, 1000);
         // history.push("/login")
       }
     })
     .catch(err=>{
+      message.error("مقادیر ورودی یکسان نیستند")
       console.log("Error Message as Confrim-Mobile" , err);
     })
 
@@ -52,11 +57,11 @@ function RegistersetPassword(props) {
         className="container innercontainer align-items-center"
         id="login-page"
       >
-        <div className="login-container">
+        <Form className="login-container">
           <Link to="/" className="logo">
             <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
           </Link>
-          <form className="login-block">
+          <div className="login-block">
             <div className="main-title">
               <h3 className="default titr">گذرواژه</h3>
             </div>
@@ -64,7 +69,51 @@ function RegistersetPassword(props) {
               <p className="mb-0"> 
                 <strong>گذرواژه</strong>
               </p>
-              <input
+              <Form.Item
+                className="w-100"
+                name="password"
+                
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  },
+                  {
+                    min: 8,
+                    message: "حداقل 8 کارکتر مورد نیاز است",
+                }
+            ]}>
+                <Input className="default-input"
+                    type="password"
+                    onChange={(e)=>{
+                      setPassword(e.target.value)
+                    }}
+                  placeholder="گذرواژه خود را وارد کنید"/>
+              </Form.Item>
+              <p className="mb-0">
+                <strong>تکرار گذرواژه</strong>
+              </p>
+              <Form.Item
+                className="w-100"
+                name="confrimpassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  },
+                  {
+                    min: 8,
+                    message: "حداقل 8 کارکتر مورد نیاز است",
+                }
+            ]}>
+                <Input className="default-input"
+                   type="password"
+                   onChange={(e)=>{
+                    setPasswordCheck(e.target.value)
+                  }}
+                  placeholder="گذرواژه خود را تکرار کنید"/>
+              </Form.Item>
+              {/* <input
                 onChange={(e)=>{
                   setPassword(e.target.value)
                 }}
@@ -84,7 +133,7 @@ function RegistersetPassword(props) {
                 type="password"
                 className="default-input"
                 placeholder="گذرواژه خود را تکرار کنید"
-              />
+              /> */}
             </div>
             <div className="btn-container pt-5">
                 <button
@@ -96,8 +145,8 @@ function RegistersetPassword(props) {
               {/* <Link to="/">
               </Link> */}
             </div>
-          </form>
-        </div>
+          </div>
+        </Form>
       </div>
     </>
   );

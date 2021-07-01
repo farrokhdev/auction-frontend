@@ -75,7 +75,7 @@ function UserPanelCreateAuctionsOnlineAuctionConditions() {
                     <div class="row">
                         <div class="col-12">
                             <div class="button-group">
-                                <Link to="/user-panel-create-auctions-online-auction-buyer-validation">
+                                <Link to="/panel-auctions-buyervalidation">
                                 <button type="button" class="btn-gray">بازگشت</button>
                                 </Link>
 

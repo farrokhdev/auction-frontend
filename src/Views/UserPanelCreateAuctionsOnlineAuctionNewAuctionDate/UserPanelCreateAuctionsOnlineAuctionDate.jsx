@@ -97,10 +97,10 @@ function UserPanelCreateAuctionsOnlineAuctionDate() {
                     <div className="row">
                         <div className="col-12">
                             <div className="button-group">
-                                <Link to="/user-panel-create-auctions-basic-information">
+                                <Link to="/panel-auctions-information">
                                 <button type="button" className="btn-gray">بازگشت</button>
                                 </Link>
-                                <Link to="/user-panel-create-auctions-online-auction-offer-range">
+                                <Link to="/panel-auctions-offerrange">
                                 <button type="button" className="btn-default">ادامه</button>
                                 </Link>
                             </div>
