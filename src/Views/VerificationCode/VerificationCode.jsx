@@ -6,10 +6,13 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/index";
 import {setToken} from "../../utils/utils";
 import {connect} from 'react-redux';
+import {Form, Input,message} from "antd";
 
 function VerificationCode(props) {
   
-  const [verify_code, setverify_code] = useState("")
+  const [verify_code, setverify_code] = useState("");
+  const [form] = Form.useForm();
+
 
   const handleRequestVerifyCode = (value)=>{
     
@@ -24,7 +27,7 @@ function VerificationCode(props) {
         if(res.data.code === 200){
           setToken(res.data.data.result);
           window.location.href = "#/login"
-          
+          message.success("لطفا وارد شوید")
           // setTimeout(() => {
           //   window.location.href = "#/register-set-password";
           // }, 1000);
@@ -32,6 +35,7 @@ function VerificationCode(props) {
         }
       })
       .catch(err=>{
+        message.error("کد نامعتبر است")
         console.log("Can not Login" , err);
       })
   }
@@ -42,7 +46,7 @@ function VerificationCode(props) {
         className="container innercontainer align-items-center"
         id="login-page"
       >
-        <form className="login-container">
+        <Form className="login-container" form={form}>
           <Link to="/" className="logo">
             <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
           </Link>
@@ -52,14 +56,34 @@ function VerificationCode(props) {
           </h5>
           <div className="login-block">
             <div className="main-title"></div>
-            <div className="input-group">
+            <Form.Item
+                className="w-100"
+                name="username"
+                
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  },
+                  {
+                    min: 4,
+                    message: "حداقل 4 کارکتر مورد نیاز است",
+                }
+              
+            ]}>
+                <Input className="default-input"
+                    type="number"
+                    onChange={(e)=>{setverify_code(e.target.value)}}
+                  placeholder="کد تایید را وارد کنید"/>
+              </Form.Item>
+            {/* <div className="input-group">
               <input
               onChange={(e)=>{setverify_code(e.target.value)}}
                 type="password"
                 className="default-input"
                 placeholder="کد تایید را وارد کنید"
               />
-            </div>
+            </div> */}
             <div className="text-center pt-5">
                 <button
                 onClick={handleRequestVerifyCode} 
@@ -71,7 +95,7 @@ function VerificationCode(props) {
               </Link> */}
             </div>
           </div>
-        </form>
+        </Form>
       </div>
     </>
   );

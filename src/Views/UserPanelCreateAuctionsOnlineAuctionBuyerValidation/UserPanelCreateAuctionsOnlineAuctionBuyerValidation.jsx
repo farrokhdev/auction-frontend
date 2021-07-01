@@ -137,10 +137,10 @@ function UserPanelCreateAuctionsOnlineAuctionBuyerValidation() {
                     <div className="row">
                         <div className="col-12">
                             <div className="button-group">
-                                <Link to="/user-panel-create-auctions-online-auction-currency">
+                                <Link to="/panel-auctions-currency">
                                 <button type="button" className="btn-gray">بازگشت</button>
                                 </Link>
-                                <Link to="/user-panel-create-auctions-online-auction-conditions">
+                                <Link to="/panel-auctions-conditions">
                                 <button type="button" className="btn-default">ادامه</button>
                                 </Link>
                             </div>

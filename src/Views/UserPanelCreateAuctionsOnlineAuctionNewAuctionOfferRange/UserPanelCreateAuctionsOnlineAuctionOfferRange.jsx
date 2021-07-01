@@ -110,10 +110,10 @@ function UserPanelCreateAuctionsOnlineAuctionOfferRange() {
                     <div className="row">
                         <div className="col-12">
                             <div className="button-group">
-                                <Link to="/user-panel-create-auctions-date">
+                                <Link to="/panel-auctions-date">
                                 <button type="button" className="btn-gray">بازگشت</button>
                                 </Link>
-                                <Link to="/user-panel-create-auctions-online-auction-currency">
+                                <Link to="/panel-auctions-currency">
                                 <button type="button" className="btn-default">ادامه</button>
                                 </Link>
                             </div>
