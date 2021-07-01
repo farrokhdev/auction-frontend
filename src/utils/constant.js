@@ -2,4 +2,11 @@ module.exports={
     EDIT_PROFILE:"/account/profile/",
     CHANGE_PASSWORD:"/account/change-password/",
     ACCOUNT_APPROVE:"/account/approve/",
+    ACCOUNT_BANK_INFO:"/accounting/bankprofile/",
+    LIST_PRODUCTS:"/sale/product/",
+    LIST_AUCTIONS:"/sale/auctions/",
+    JOIN_AUCTION:"/sale/join-auction/",
+    ACCOUNT_WALLET:"/accounting/wallet/me/",
+    TRANSACTION:"/accounting/transaction/",
+    ACCOUNT_BANK_Edit:id=>`/accounting/bankprofile/${id}/`,
 }

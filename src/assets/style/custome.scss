@@ -1,0 +1,26 @@
+.active-style-menu{
+color: #fff !important;
+}
+.default-box-choose{
+  border: 1px solid #e6007e;
+  border-radius:100px;
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  color: #e6007e;
+  background-color: #fff;
+}
+.chooseartwork-custome{
+  height: 75vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.search-input{
+   .ant-select-selector{
+border-radius: 100px !important;
+     min-width: 300px;
+  }
+  .ant-select-selection-item{
+
+  }
+}
