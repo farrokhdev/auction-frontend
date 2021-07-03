@@ -10,13 +10,12 @@ import {setPhoneNumber} from '../../redux/reducers/auth/auth.actions';
 // import AuthContext from "../../context/AuthContext";
 import {connect} from 'react-redux';
 import { getOtp } from "../../redux/reducers/auth/auth.actions";
+import {Form, Input, message} from "antd";
+
 
 function ConfirmMobileNumber(props) {
-
-  // const TodosContext = useContext(AuthContext);
-
-  // const [mobile, setmobile] = useState("");
   const [verify_code, setverify_code] = useState("");
+  const [form] = Form.useForm();
 
   const handleRequestConfrimMobile = (value)=>{
     let payload={
@@ -33,11 +32,13 @@ function ConfirmMobileNumber(props) {
           props.getOtp({otp : verify_code})
           setTimeout(() => {
             window.location.href = "#/register-set-password"
+            message.success("گذر واژه جدید را وارد کنید")
           }, 1000);
           // history.push("/register-set-password")
         }
       })
       .catch(err=>{
+        message.error("کد نامعتبر است")
         console.log("Error Message as Confrim-Mobile" , err);
       })
   }
@@ -49,7 +50,7 @@ function ConfirmMobileNumber(props) {
         className="container innercontainer align-items-center"
         id="login-page"
       >
-        <div className="login-container">
+        <Form className="login-container" form={form}>
           <Link to="/" className="logo">
             <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
           </Link>
@@ -61,13 +62,27 @@ function ConfirmMobileNumber(props) {
               <p className="mb-0">
                 <strong>کد تایید</strong>
               </p>
-              <input
+              <Form.Item
+                className="w-100"
+                name="user-name"
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  }
+            ]}>
+                <Input className="default-input"
+                    onChange={(e)=>setverify_code(e.target.value)
+                  }
+                  placeholder="کد تایید خود را وارد کنید"/>
+              </Form.Item>
+              {/* <input
                 onChange={(e)=>setverify_code(e.target.value)
                 }
                 type="text"
                 className="default-input"
                 placeholder="کد تایید خود را وارد کنید"
-              />
+              /> */}
             </div>
             <div className="btn-container pt-5">
                 <button
@@ -86,7 +101,7 @@ function ConfirmMobileNumber(props) {
               </Link>
             </div>
           </div>
-        </div>
+        </Form>
       </div>
     </>
   );

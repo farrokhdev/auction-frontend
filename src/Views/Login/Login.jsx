@@ -7,12 +7,13 @@ import {setPhoneNumber , loginSuccess} from '../../redux/reducers/auth/auth.acti
 import { BASE_URL } from "../../utils/index";
 import {setToken} from "../../utils/utils";
 import {connect} from 'react-redux';
+import { Form, Input,message} from "antd";
 
 function Login(props) {
 
   const [userName, setuserName] = useState("");
   const [Password, setPassword] = useState("");
-
+  const [form] = Form.useForm();
 
 
 
@@ -30,10 +31,12 @@ function Login(props) {
           setToken(resp.data.data.result);
           props.setPhoneNumber({username : payload.id})
           props.loginSuccess({userName : payload.id})
+          message.success("به اسمارت آکشن خوش آمدید")
           window.location.href = "#/artworks"
       }
       })
       .catch(err=>{
+        message.error("کاربری با این مشخصات یافت نشد")
         console.log("error message",err);
       })
   }
@@ -42,15 +45,14 @@ function Login(props) {
   return (
     <>
       <div
-        dir="rtl"
         className="container innercontainer align-items-center"
         id="login-page"
       >
-        <form className="login-container">
+        <Form className="login-container" form={form}>
           <Link to="/" className="logo">
             <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
           </Link>
-          <div className="login-block">
+          <div className="login-block" >
             <div className="main-title">
               <h2 className="default titr">ورود</h2>
             </div>
@@ -59,26 +61,41 @@ function Login(props) {
               <Link to="/"> قوانین </Link> و <Link to="/"> شرایط استفاده </Link>
               را پذیرفته‌اید.
             </p>
-            <div className="input-group">
-              <input
-                 onChange={(e) => {
-                  setuserName(e.target.value);
-                }}
-                type="text"
-                className="default-input"
-                placeholder="شماره همراه یا ایمیل"
-              />
-            </div>
-            <div className="input-group">
-              <input
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                type="password"
-                className="default-input"
-                placeholder="رمز عبور"
-              />
-            </div>
+            <Form.Item
+                className="w-100"
+                name="user-name"
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  }
+            ]}>
+                <Input className="default-input"
+                   onChange={(e) => {
+                     setuserName(e.target.value);
+                  }}
+                  placeholder="شماره همراه یا ایمیل"/>
+              </Form.Item>
+              <Form.Item
+                  className="w-100"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "تکمیل این فیلد ضروری است",
+                    },
+                    {
+                      min: 8,
+                      message: "حداقل 8 کارکتر مورد نیاز است",
+                  }
+              ]}>
+                  <Input className="default-input"
+                      type="password"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    placeholder="رمز عبور"/>
+                </Form.Item>
             <div className="btn-container">
               <button
                 type="submit"
@@ -109,7 +126,7 @@ function Login(props) {
             هنوز ثبت نام نکرده‌اید؟
             <Link to="/sign-up"> اینجا کلیک کنید.</Link>
           </p>
-        </form>
+        </Form>
       </div>
     </>
   );

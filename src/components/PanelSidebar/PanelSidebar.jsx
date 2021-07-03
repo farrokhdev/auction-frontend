@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import {NavLink as NavLinkRouter} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPen,
@@ -20,84 +20,89 @@ function PanelSidebar() {
     return (
         <>
         <div className="panel-sidebar">
-            <Link to="/" className="d-md-none d-block">
+            <NavLinkRouter activeClassName="active-style-menu" to="/" className="d-md-none d-block">
               <img
                 src="img/logo-white.png"
                 width="139"
                 height="30"
                 alt="اسمارت آکشن"
               />
-            </Link>
+            </NavLinkRouter>
             <ul className="panel-list">
-              <li className="active" >
-                <Link to="/panel-profile">
+              <li  >
+                <NavLinkRouter activeClassName="active-style-menu"   to="/panel-profile">
                   <FontAwesomeIcon icon={faPen} /> پروفایل
-                </Link>
+                </NavLinkRouter>
               </li>
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faGavel} /> حراج‌های من*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
               <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faGavel} /> حراج‌های من
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
+                <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
                   <FontAwesomeIcon icon={faPlusCircle} /> حراج‌های ساخته‌شده
-                </Link>
+                </NavLinkRouter>
               </li>
               <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من
-                </Link>
+                <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">
+                  <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج
+                </NavLinkRouter>
               </li>
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faBell} /> یادآوری‌ها*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faWallet} /> کیف پول*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faWallet} /> مشاوره فروش*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
               <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faBell} /> یادآوری‌ها
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faWallet} /> کیف پول
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faWallet} /> مشاوره فروش
-                </Link>
-              </li>
-              <li>
-                <Link to="/panel-artwork-list" >
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
-                </Link>
+                </NavLinkRouter>
               </li>
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
+              {/*    <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
               <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FontAwesomeIcon icon={faSignOutAlt} /> خروج
-                </Link>
+                <NavLinkRouter to="/">
+                  <FontAwesomeIcon icon={faSignOutAlt} /> خروج از پروفایل
+                </NavLinkRouter>
               </li>
             </ul>
           </div>    

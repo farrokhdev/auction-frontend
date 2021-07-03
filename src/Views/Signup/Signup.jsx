@@ -9,6 +9,7 @@ import {setToken} from "../../utils/utils";
 import {setProfile} from "../../redux/reducers/auth/auth.actions";
 import {connect} from "react-redux";
 import GoogleLogin from "react-google-login";
+import {Form, Input,message} from "antd";
 
 function Signup(props) {
 
@@ -17,6 +18,7 @@ function Signup(props) {
   const [userName, setuserName] = useState("");
   const [Password, setPassword] = useState("");
   const [confirmedPassword, setconfirmedPassword] = useState("");
+  const [form] = Form.useForm();
 
 
 
@@ -38,10 +40,15 @@ function Signup(props) {
 
           setTimeout(() => {
             window.location.href = "#/verification-code"
+            message.success("کد تایید ارسال شد")
           }, 700);
       }
       })
       .catch(err=>{
+        message.error("دوباره تلاش کنید")
+        // message.error("تمام فیلدها تکمیل نشده است")
+        // message.error("رمز عبور همخوانی ندارد")
+        // message.error("کاربری با این شماره موبایل ثبت شده است")
         console.log("Error Message" , err);
       })
   }
@@ -68,9 +75,9 @@ function Signup(props) {
   return (
     <div dir="rtl">
       <Header newStyle={{ boxShadow: " none" }} />
-      <div class="container containercs align-items-center" id="signup-page">
+      <Form class="container containercs align-items-center" id="signup-page" form={form}>
         <div class="inner-cover signup">
-          <form class="signup-container">
+          <div class="signup-container">
             <div class="login-block">
               <div class="main-title">
                 <h2 class="default titr">ثبت نام</h2>
@@ -79,7 +86,66 @@ function Signup(props) {
                 با ثبت نام و ورود به سایت شما<Link to="/"> قوانین </Link> و
                 <Link to="/"> شرایط استفاده </Link>را پذیرفته‌اید.
               </p>
-              <div class="input-group">
+              <Form.Item
+                className="w-100"
+                name="username"
+                
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  },
+              
+            ]}>
+                <Input className="default-input"
+                    onChange={(e)=>{
+                      setuserName(e.target.value);
+                    }}
+                  placeholder="شماره همراه یا ایمیل"/>
+              </Form.Item>
+              <Form.Item
+                className="w-100"
+                name="password"
+                
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  },
+                  {
+                    min: 8,
+                    message: "حداقل 8 کارکتر مورد نیاز است",
+                }
+            ]}>
+                <Input className="default-input"
+                    type="password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  placeholder="رمز عبور"/>
+              </Form.Item>
+              <Form.Item
+                className="w-100"
+                name="conftimpassword"
+                
+                rules={[
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  },
+                  {
+                    min: 8,
+                    message: "حداقل 8 کارکتر مورد نیاز است",
+                }
+            ]}>
+                <Input className="default-input"
+                    type="password"
+                    onChange={(e)=>{
+                      setconfirmedPassword(e.target.value);
+                    }}
+                  placeholder="تکرار رمز عبور"/>
+              </Form.Item>
+              {/* <div class="input-group">
                 <input
                   onChange={(e)=>{
                     setuserName(e.target.value);
@@ -106,7 +172,7 @@ function Signup(props) {
                   class="default-input mt-3"
                   placeholder="تکرار رمز عبور"
                 />
-              </div>
+              </div> */}
               <div class="btn-container">
                    <button
                       onClick={handleRequestSignUp}
@@ -139,9 +205,9 @@ function Signup(props) {
             <p class="l-signup">
               قبلا ثبت نام کرده‌اید؟<Link to="/login"> ورود</Link>
             </p>
-          </form>
+          </div>
         </div>
-      </div>
+      </Form>
     </div>
   );
 }

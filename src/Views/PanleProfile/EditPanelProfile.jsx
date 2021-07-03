@@ -128,6 +128,18 @@ function EditPanelProfile(props) {
                             </Form.Item>
                         </div>
                     </div>
+                    <div className="col-md-6">
+                        <div className="input-group">
+                            <label className="default-lable">کدملی</label>
+                            <Form.Item
+                                className="w-100"
+                                name="national_code"
+                             >
+                                <Input className="default-input"
+                                       placeholder="کد ملی خود را وارد نمایید."/>
+                            </Form.Item>
+                        </div>
+                    </div>
                     <div className="col-12">
                         <div className="input-group">
                             <label className="default-lable">آدرس</label>

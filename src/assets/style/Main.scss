@@ -448,7 +448,7 @@ section {
 }
 
 .timed-icon {
-  background: url("../../images/time-icon.svg") no-repeat left center;
+  background: url("../../images/timed-icon.svg") no-repeat left center;
 
   /* background: url("../img/timed-icon.svg") no-repeat left center; */
 }
@@ -674,6 +674,19 @@ select.form-select {
 
 input.default-input {
   padding: 0 20px;
+}
+
+select.default-input{
+  padding: 0 20px !important;
+  background-color: var(--gray95) !important;
+  outline: none !important;
+  border: none !important;
+  height: 34px !important;
+  cursor: pointer !important;
+}
+
+.default-option{
+  border: none !important;
 }
 
 input:focus {
@@ -1964,7 +1977,7 @@ address .province {
   box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.1);
   width: 100%;
   overflow: hidden;
-  padding: 50px 30px 30px;
+  padding: 50px 30px 30px !important;
 }
 
 .login-block p {
