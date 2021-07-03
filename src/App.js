@@ -51,6 +51,7 @@ function App(props) {
               <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
             <Route exact path="/artworks/:id" component={SingleArtworkPage} />
+            <Route exact path="/house-acutions" component={SingleArtworkPage} />
             {props.auth.is_logged_in ?
             <>
               <Route exact path="/" component={Artworks} />

@@ -102,18 +102,20 @@ function Search() {
                     </button>
                   </li>
                   <li className="nav-item" role="presentation">
-                    <button
-                      className="nav-link"
-                      id="tab-41"
-                      data-bs-toggle="tab"
-                      data-bs-target="#catsearch4"
-                      type="button"
-                      role="tab"
-                      aria-controls="tab4"
-                      aria-selected="false"
-                    >
-                      خانه‌های حراج
-                    </button>
+                    <Link to="/house-auctions">
+                      <button
+                        className="nav-link"
+                        id="tab-41"
+                        data-bs-toggle="tab"
+                        data-bs-target="#catsearch4"
+                        type="button"
+                        role="tab"
+                        aria-controls="tab4"
+                        aria-selected="false"
+                      >
+                        خانه‌های حراج
+                      </button>
+                    </Link>
                   </li>
                 </ul>
                 <div
