@@ -30,13 +30,26 @@ function ItemType({id , title  , handleSetType  , params}) {
     return (
         <div class="form-check">
             <input 
-                onClick={(e)=>{ 
+                onClick={(e)=> {
 
-                    if(e.currentTarget.checked){
-                        handleSetType([...params.auctions__type , convertToEn(title)])
-                    }else {
-                        handleSetType( params.auctions__type.filter(item => item !== convertToEn(title)) )
-                    }}}
+                    if (params.auctions__type) {
+                        if (e.currentTarget.checked) {
+                            handleSetType([...params.auctions__type, convertToEn(title)])
+                        } else {
+                            handleSetType(params.auctions__type.filter(item => item !== convertToEn(title)))
+                        }
+                    }
+                    else{
+                        if (e.currentTarget.checked) {
+                            handleSetType([...params.type, convertToEn(title)])
+                        } else {
+                            handleSetType(params.type.filter(item => item !== convertToEn(title)))
+                        }
+                    }
+                }
+
+                }
+
                     
                 class="form-check-input" type="checkbox" value="" id={id} />
             <label class="form-check-label" for={id}>
