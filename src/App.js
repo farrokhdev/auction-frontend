@@ -31,6 +31,7 @@ import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreat
 import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
 import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
+import HouseAuctionsPage from "./Views/HouseAuctionsPage";
 
 function App(props) {
 
@@ -52,6 +53,7 @@ function App(props) {
             <Route exact path="/artworks" component={Artworks} />
             <Route exact path="/artworks/:id" component={SingleArtworkPage} />
             <Route exact path="/house-acutions" component={SingleArtworkPage} />
+
             {props.auth.is_logged_in ?
             <>
               <Route exact path="/" component={Artworks} />
