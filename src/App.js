@@ -3,7 +3,7 @@ import React from "react";
 import { Router, HashRouter, Route, Switch ,Redirect} from "react-router-dom";
 import { createHashHistory } from "history";
 import {connect} from 'react-redux';
-import Home from "./Views/Home";
+import AfterLoginPage from "./Views/AfterLoginPage";
 import Login from "./Views/Login";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
@@ -70,7 +70,11 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
+
+              <Route exact path="/home" component={AfterLoginPage} />
+
               <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
+
 
             </>:  
             
