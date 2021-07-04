@@ -3,7 +3,7 @@ import React from "react";
 import { Router, HashRouter, Route, Switch ,Redirect} from "react-router-dom";
 import { createHashHistory } from "history";
 import {connect} from 'react-redux';
-import Home from "./Views/Home";
+import AfterLoginPage from "./Views/AfterLoginPage";
 import Login from "./Views/Login";
 import Financialinformation from "./Views/FinancialInformation";
 import WorksOfInterest from "./Views/WorksOfInterest";
@@ -31,6 +31,8 @@ import AddAuction from "./Views/AddAuction";
 // import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
 // import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
+import HouseAuctionsPage from "./Views/HouseAuctionsPage";
+import UserPanelWallet from "./Views/UserPanelWallet";
 
 function App(props) {
 
@@ -51,9 +53,10 @@ function App(props) {
               <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
             <Route exact path="/artworks/:id" component={SingleArtworkPage} />
+            <Route exact path="/house-auctions/" component={HouseAuctionsPage} />
             {props.auth.is_logged_in ?
             <>
-              <Route exact path="/" component={Artworks} />
+              <Route exact path="/" component={AfterLoginPage} />
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/panel-add-auction" component={AddAuction}/>
               {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
@@ -70,7 +73,12 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
+              <Route exact path="/panel-wallet" component={UserPanelWallet} />
+
+              {/* <Route exact path="/home" component={AfterLoginPage} /> */}
+
               <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
+
 
             </>:  
             

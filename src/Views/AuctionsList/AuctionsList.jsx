@@ -33,6 +33,23 @@ function AuctionsList() {
 
   }, [])
 
+    function AuctionType(type){
+        switch(type){
+            case "SECOND_HIDDEN":
+                return "دومین پیشنهاد"
+            case "HIDDEN":
+                return "اولین پیشنهاد"
+            case "PERIODIC":
+                return "مدت دار"
+            case "ONLINE":
+                return "آنلاین"
+            case "LIVE  ":
+                return "زنده"
+            default:
+                return ""
+        }
+    }
+
 
   return (
       <div>
@@ -67,7 +84,7 @@ function AuctionsList() {
                                   return (
                                       <tr>
                                           <td>{item.title}</td>
-                                          <td>{item.type}</td>
+                                          <td>{AuctionType(item.type)}</td>
                                           <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
                                           <td>{moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
                                           <td>
