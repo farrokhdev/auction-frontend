@@ -55,7 +55,7 @@ function App(props) {
             <Route exact path="/house-auctions/" component={HouseAuctionsPage} />
             {props.auth.is_logged_in ?
             <>
-              <Route exact path="/" component={Artworks} />
+              <Route exact path="/" component={AfterLoginPage} />
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/panel-auctions-information" component={UserPanelCreateAuctionsBasicInformation}/>
               <Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>
@@ -73,7 +73,7 @@ function App(props) {
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
 
-              <Route exact path="/home" component={AfterLoginPage} />
+              {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
               <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
 
