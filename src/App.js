@@ -32,6 +32,7 @@ import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPan
 import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 import HouseAuctionsPage from "./Views/HouseAuctionsPage";
+import PanelFinancial from "./Views/PanelFinancial";
 
 function App(props) {
 
@@ -63,6 +64,7 @@ function App(props) {
               <Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>
               <Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>
               <Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>
+              <Route exact path="/panel-financial" component={PanelFinancial}/>
               <Route exact path="/buyer-register" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
