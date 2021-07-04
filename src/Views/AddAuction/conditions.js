@@ -28,6 +28,7 @@ const Conditions = (props) => {
         console.log(values,finalData,products)
         sendData(values)
     }
+    
     const sendData = (values) => {
 
         setLoading(true)
