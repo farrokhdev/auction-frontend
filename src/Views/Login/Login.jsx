@@ -32,7 +32,7 @@ function Login(props) {
           props.setPhoneNumber({username : payload.id})
           props.loginSuccess({userName : payload.id})
           message.success("به اسمارت آکشن خوش آمدید")
-          window.location.href = "#/artworks"
+          window.location.href = "#/"
       }
       })
       .catch(err=>{
@@ -70,7 +70,9 @@ function Login(props) {
                     message: "تکمیل این فیلد ضروری است",
                   }
             ]}>
-                <Input className="default-input"
+                <Input 
+                type="number"
+                className="default-input"
                    onChange={(e) => {
                      setuserName(e.target.value);
                   }}
