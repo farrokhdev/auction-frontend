@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, Input, message, Select, Spin} from "antd";
-import DatePicker from 'react-datepicker2';
-import {Link} from "react-router-dom";
+
+import {Redirect} from "react-router-dom";
 import moment from 'moment-jalaali'
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
@@ -22,13 +22,14 @@ const Conditions = (props) => {
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
     const [payment_method, setPayment_method] = useState(false)
+    const [next, setNext] = useState(false)
 
     const onFinish = (values) => {
         setFinalData({...finalData,...values})
         console.log(values,finalData,products)
         sendData(values)
     }
-    
+
     const sendData = (values) => {
 
         setLoading(true)
@@ -47,7 +48,7 @@ const Conditions = (props) => {
                     // const res = resp.data?.data?.result;
                     message.success("اطلاعات حساب شما با موفقیت ثبت شد")
                     // let check = Object.keys(res).some(t => !res[t]);
-                    // setNext(true)
+                    setNext(true)
                     // refreshTable()
                     setSelectComponent(selectComponent + 1)
                     // setIsModalVisible(false)
@@ -58,6 +59,9 @@ const Conditions = (props) => {
                 console.error(err);
                 message.error("دوباره تلاش کنید")
             })
+    }
+    if(next){
+        return <Redirect to="/auctions-list" />
     }
     return (
         <Form onFinish={onFinish}
