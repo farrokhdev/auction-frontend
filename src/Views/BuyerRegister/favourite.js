@@ -99,8 +99,8 @@ const Favourite = (props) => {
                                         // ]}
                                     >
                                         <Meta
-                                            title={item.artwork_title}
-                                            description="This is the description"
+                                            title={item?.artwork_title}
+                                            description={item?.technique}
                                         />
                                     </Card>
                                 </div>
