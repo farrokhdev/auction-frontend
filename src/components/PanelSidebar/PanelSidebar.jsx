@@ -16,7 +16,7 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-function PanelSidebar() {
+function PanelSidebar(props) {
     return (
         <>
         <div className="panel-sidebar">
@@ -94,11 +94,13 @@ function PanelSidebar() {
               {/*    <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial">
+                 <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی
+               </NavLinkRouter>
+              </li>
+
               <li>
                 <NavLinkRouter to="/">
                   <FontAwesomeIcon icon={faSignOutAlt} /> خروج از پروفایل
