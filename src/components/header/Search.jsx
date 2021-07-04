@@ -102,7 +102,7 @@ function Search() {
                     </button>
                   </li>
                   <li className="nav-item" role="presentation">
-                    <Link to="/house-auctions">
+                    <Link to="/house-acutions">
                       <button
                         className="nav-link"
                         id="tab-41"

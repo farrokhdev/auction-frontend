@@ -34,9 +34,9 @@ import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 import HouseAuctionsPage from "./Views/HouseAuctionsPage";
 
 function App(props) {
+  console.log("Login ->> ",props.auth.is_logged_in)
 
   return (
-
 
     <>
       <HashRouter>
@@ -52,10 +52,10 @@ function App(props) {
               <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
             <Route exact path="/artworks/:id" component={SingleArtworkPage} />
-            <Route exact path="/house-acutions" component={SingleArtworkPage} />
 
             {props.auth.is_logged_in ?
             <>
+              <Route exact path="/house-acutions" component={HouseAuctionsPage} />
               <Route exact path="/" component={Artworks} />
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/panel-auctions-information" component={UserPanelCreateAuctionsBasicInformation}/>
