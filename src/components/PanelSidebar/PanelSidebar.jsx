@@ -69,11 +69,11 @@ function PanelSidebar() {
               {/*    <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faWallet} /> کیف پول*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
+                  <FontAwesomeIcon icon={faWallet} /> کیف پول
+                </NavLinkRouter>
+              </li>
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faWallet} /> مشاوره فروش*/}
