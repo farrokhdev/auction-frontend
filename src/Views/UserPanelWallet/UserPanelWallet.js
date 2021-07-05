@@ -4,7 +4,7 @@ import PanelSidebar from '../../components/PanelSidebar';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 
-function UserPanelArtworkList() {
+function UserPanelWallet() {
     const [Wallet, setWallet] = useState("");
 
     const getWallet = () => {
@@ -125,4 +125,4 @@ function UserPanelArtworkList() {
     )
 }
 
-export default UserPanelArtworkList;
+export default UserPanelWallet;
