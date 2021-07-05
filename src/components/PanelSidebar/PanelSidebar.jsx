@@ -74,11 +74,11 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faWallet} /> کیف پول
                 </NavLinkRouter>
               </li>
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faWallet} /> مشاوره فروش*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-advice">
+                  <FontAwesomeIcon icon={faWallet} /> مشاوره فروش
+                </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
@@ -90,7 +90,7 @@ function PanelSidebar(props) {
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
               <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/">
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
                 </NavLinkRouter>
               </li>
