@@ -43,6 +43,11 @@ function PanelSidebar(props) {
                 <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
                   <FontAwesomeIcon icon={faPlusCircle} /> حراج‌های ساخته‌شده
                 </NavLinkRouter>
+              </li>      
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
+                  <FontAwesomeIcon icon={faPlusCircle} /> درخواست خانه حراج 
+                </NavLinkRouter>
               </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">
