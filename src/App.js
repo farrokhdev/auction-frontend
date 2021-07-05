@@ -32,7 +32,11 @@ import AddAuction from "./Views/AddAuction";
 // import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 import HouseAuctionsPage from "./Views/HouseAuctionsPage";
+import PanelFinancial from "./Views/PanelFinancial";
 import UserPanelWallet from "./Views/UserPanelWallet";
+import RequestHouseAuction from "./Views/RequestHouseAuction";
+import UserPanelMessage from "./Views/UserPanelMessage";
+
 
 function App(props) {
 
@@ -58,6 +62,8 @@ function App(props) {
             <>
               <Route exact path="/" component={AfterLoginPage} />
               <Route exact path="/panel-profile" component={PanelProfile} />
+              <Route exact path="/panel-financial" component={PanelFinancial}/>
+              <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
               <Route exact path="/panel-add-auction" component={AddAuction}/>
               {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
               {/*<Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>*/}
@@ -74,6 +80,7 @@ function App(props) {
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
+              <Route exact path="/panel-message" component={UserPanelMessage} />
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 

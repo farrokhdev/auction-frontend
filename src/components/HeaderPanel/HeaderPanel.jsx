@@ -6,7 +6,7 @@ import {removeToken} from "../../utils/utils";
 import {useDispatch} from "react-redux";
 import {clearStorage} from "../../redux/reducers/auth/auth.actions";
 
-function HeaderPanel() {
+function HeaderPanel(props) {
   const dispatch=useDispatch();
 
     return (
@@ -29,7 +29,7 @@ function HeaderPanel() {
               />
             </div>
             <div className="panel-title col-8">
-              <h4 className="default">پروفایل</h4>
+              <h4 className="default">{props?.titlePage}</h4>
             </div>
             <div className="panel-info col-lg-4 col-2">
               <ul className="navbar-nav flex-row-reverse">

@@ -143,7 +143,7 @@ function AddArtWorks(props) {
 
     return (
         <div>
-            <HeaderPanel/>
+            <HeaderPanel title={'افزودن اثر'}/>
             <div className="panel-main">
             <PanelSidebar/>
             {/**Main**/}

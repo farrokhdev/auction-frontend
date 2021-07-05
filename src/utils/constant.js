@@ -12,4 +12,5 @@ module.exports={
     HOME_AUCITONS:"/account/home-auction/",
     CATEGORIE_ACTIVITY:"/sale/category/",
     ADD_AUCTION:"/sale/auctions/",
+    SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
 }
