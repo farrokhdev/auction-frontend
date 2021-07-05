@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import auctionReducer from "./reducers/auction/auction.reducer";
 
 
 const middleware = [thunk];
@@ -15,7 +16,8 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, combineReducers({
     authReducer,
-    profileReducer
+    profileReducer,
+    auctionReducer,
     // panelReducer
 }));
 let store = createStore(

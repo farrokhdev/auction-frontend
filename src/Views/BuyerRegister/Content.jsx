@@ -289,7 +289,7 @@ export default Content;
 
 // const mapStateToProps = (store) => {
 //   return {
-//       auth : store.profileReducer,
+//       auth : store.auctionReducer,
 //       panelReducer : store.panelReducer
 //   }
 // }

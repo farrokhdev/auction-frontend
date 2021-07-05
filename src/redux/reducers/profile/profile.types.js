@@ -1,4 +1,4 @@
-// import profileReducer from "../auth/auth.reducer";
+// import auctionReducer from "../auth/auth.reducer";
 
 export default {
     GET_PROFILE:"GET_PROFILE",
