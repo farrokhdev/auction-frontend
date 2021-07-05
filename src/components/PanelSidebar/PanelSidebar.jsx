@@ -89,11 +89,11 @@ function PanelSidebar() {
               {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
+                  <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
+                </NavLinkRouter>
+              </li>
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی*/}
