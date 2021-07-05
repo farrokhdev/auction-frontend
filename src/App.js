@@ -35,6 +35,8 @@ import HouseAuctionsPage from "./Views/HouseAuctionsPage";
 import PanelFinancial from "./Views/PanelFinancial";
 import UserPanelWallet from "./Views/UserPanelWallet";
 import RequestHouseAuction from "./Views/RequestHouseAuction";
+import UserPanelMessage from "./Views/UserPanelMessage";
+
 
 function App(props) {
 
@@ -78,6 +80,7 @@ function App(props) {
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
+              <Route exact path="/panel-message" component={UserPanelMessage} />
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 

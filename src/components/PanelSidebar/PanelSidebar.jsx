@@ -94,11 +94,11 @@ function PanelSidebar(props) {
               {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/">
+                  <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
+                </NavLinkRouter>
+              </li>
 
               <li>
                <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial">
