@@ -48,7 +48,7 @@ function PanelProfile() {
     }
     return (
         <div>
-            <HeaderPanel/>
+            <HeaderPanel titlePage={"پروفایل"}/>
             <main>
                 <div className="panel-main">
                     <PanelSidebar />

@@ -7,6 +7,7 @@ import { faPen, faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 import moment from 'jalali-moment'
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
+import {Link} from "react-router-dom";
 
 function AuctionsList() {
 
@@ -58,10 +59,11 @@ function AuctionsList() {
           {/**Main**/}
           <div className="panel-body">
               <div className="panel-container">
-                  <button type="button" className="btn btn-default"><FontAwesomeIcon  icon={faPlus} />حراج جدید
-                  </button>
-                  <button type="button" className="btn btn-outline-pink" style={{marginRight:5}}>بارگزاری تفاهم‌نامه
-                  </button>
+                  <Link to="/panel-add-auction">
+                  <button type="button" className="btn btn-default"><FontAwesomeIcon className="pl-2" icon={faPlus} />  حراج جدید
+                  </button></Link>
+                  {/*<button type="button" className="btn btn-outline-pink" style={{marginRight:5}}>بارگزاری تفاهم‌نامه*/}
+                  {/*</button>*/}
                   <div className="col-xxxxl-8 mrgt30">
                       <div className="table-responsive">
                           <table className="panel-table create-auctions table ">

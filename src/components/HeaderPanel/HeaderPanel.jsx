@@ -29,7 +29,7 @@ function HeaderPanel(props) {
               />
             </div>
             <div className="panel-title col-8">
-              <h4 className="default">{props.title}</h4>
+              <h4 className="default">{props?.titlePage}</h4>
             </div>
             <div className="panel-info col-lg-4 col-2">
               <ul className="navbar-nav flex-row-reverse">

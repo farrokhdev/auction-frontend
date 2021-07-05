@@ -6413,3 +6413,24 @@ address.all-info:before {
     width: 33.3333333333%;
   }
 }
+
+
+.ant-notification-notice-message{
+  text-align: right !important;
+  
+  font-size: 0.8rem !important;
+  }
+  
+  .ant-notification-notice-icon-success , .ant-notification-notice-icon-error{
+      position: absolute !important;
+      left: 10px !important;  
+  }
+  
+  
+  .ant-notification-notice-description{
+      text-align: right !important
+  }
+
+  .ant-notification-notice-with-icon .ant-notification-notice-description{
+    margin-left: 20px !important;
+  }
