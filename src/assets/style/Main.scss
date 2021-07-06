@@ -3240,6 +3240,13 @@ input:disabled {
   padding: 5px 15px;
   min-width: 100px;
   border-radius: 50px;
+  // box-shadow: 0 1px 6px #00000029 !important;
+  transition: 0.7s;
+}
+
+.btn-outline-gray:hover {
+  background-color:    var(  --gray15) !important;
+  color: white !important;
 }
 
 .reminder-state.active {

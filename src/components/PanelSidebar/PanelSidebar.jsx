@@ -88,14 +88,22 @@ function PanelSidebar(props) {
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
                 </NavLinkRouter>
+              </li>   
+
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-reminders" >
+                  <FontAwesomeIcon icon={faWallet} /> یادآوری‌ها
+                </NavLinkRouter>
               </li>
+
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
+
               <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/">
+                <NavLinkRouter activeClassName="active-style-menu" to="/messages">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
                 </NavLinkRouter>
               </li>
