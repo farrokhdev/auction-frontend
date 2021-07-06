@@ -16,7 +16,7 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-function PanelSidebar() {
+function PanelSidebar(props) {
     return (
         <>
         <div className="panel-sidebar">
@@ -42,6 +42,11 @@ function PanelSidebar() {
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
                   <FontAwesomeIcon icon={faPlusCircle} /> حراج‌های ساخته‌شده
+                </NavLinkRouter>
+              </li>      
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
+                  <FontAwesomeIcon icon={faPlusCircle} /> درخواست خانه حراج 
                 </NavLinkRouter>
               </li>
               <li>
@@ -69,11 +74,11 @@ function PanelSidebar() {
               {/*    <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faWallet} /> کیف پول*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
+                  <FontAwesomeIcon icon={faWallet} /> کیف پول
+                </NavLinkRouter>
+              </li>
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faWallet} /> مشاوره فروش*/}
@@ -89,16 +94,18 @@ function PanelSidebar() {
               {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/">
+                  <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
+                </NavLinkRouter>
+              </li>
+
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial">
+                 <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی
+               </NavLinkRouter>
+              </li>
+
               <li>
                 <NavLinkRouter to="/">
                   <FontAwesomeIcon icon={faSignOutAlt} /> خروج از پروفایل

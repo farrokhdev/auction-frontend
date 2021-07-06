@@ -42,7 +42,7 @@
   --lightgray: #b1b1b1;
   --darkgray: #1b1b1b;
   --gray95: #f1f1f1;
-  --gray90: #e2e2e2;
+  --gray90: #e0e0de;
   --gray80: #c6c6c6;
   --gray70: #ababab;
   --gray60: #919191;
@@ -672,8 +672,16 @@ select.form-select {
   padding: 7px 20px;
 }
 
+select.form-select.option-hint{
+  color: var(--gray80) !important;
+}
+
 input.default-input {
   padding: 0 20px;
+}
+
+input.default-input::placeholder{
+  color: var(--gray80) !important ;
 }
 
 select.default-input{
@@ -6413,3 +6421,45 @@ address.all-info:before {
     width: 33.3333333333%;
   }
 }
+
+
+.ant-notification-notice-message{
+  text-align: right !important;
+  
+  font-size: 0.8rem !important;
+  }
+  
+  .ant-notification-notice-icon-success , .ant-notification-notice-icon-error{
+      position: absolute !important;
+      left: 10px !important;  
+  }
+  
+  
+  .ant-notification-notice-description{
+      text-align: right !important
+  }  
+  
+  .ant-notification-notice-message{
+      font-size: 1rem !important;
+  }
+
+  @media (max-width : '575px'){
+    .ant-notification-notice-message{
+      font-size : 0.8rem !important;
+    }
+  }
+
+  .ant-notification-notice-with-icon .ant-notification-notice-description{
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+  }
+
+  .ant-select-selector {
+    height: 40px !important;
+    border-radius: 30px !important;
+    background-color: var(--bgcolor) !important;
+    .ant-select-selection-search{
+      display: none !important;
+    }
+
+  }

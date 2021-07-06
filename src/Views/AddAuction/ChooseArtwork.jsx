@@ -5,14 +5,15 @@ import {LIST_PRODUCTS} from "../../utils/constant";
 import {Avatar, Card, Checkbox, message, Spin} from "antd";
 import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons";
 import Meta from "antd/es/card/Meta";
+import {UrlQuery} from "../../utils/utils";
 
 function Chooseartwork(props) {
-    const {selectProduct, setSelectProduct,auction}=props
+    const {selectProduct, setSelectProduct,auction,id}=props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({})
   const [dataCount, setDataCount] = useState(0)
 
-    console.log(selectProduct)
+    // console.log(selectProduct)
 
   useEffect(()=>{
     setSelectProduct([])
@@ -20,7 +21,7 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(`${BASE_URL}${LIST_PRODUCTS}?auctions__id=1`)
+    axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id}))
         .then(resp => {
           setLoading(false)
 

@@ -64,4 +64,24 @@ function Content(props) {
   );
 }
 
+
 export default Content;
+
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//       setPhoneNumber : (data) => dispatch(setPhoneNumber(data)),
+
+//   }
+// }
+
+// const mapStateToProps = (store) => {
+//   return {
+//       auth : store.auctionReducer,
+//       panelReducer : store.panelReducer
+//   }
+// }
+
+
+// export default connect(mapStateToProps , mapDispatchToProps)(Content)
+
