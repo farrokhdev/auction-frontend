@@ -24,14 +24,22 @@ import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
 import BuyerRegister from "./Views/BuyerRegister";
 import "bootstrap/dist/css/bootstrap.css";
-import UserPanelCreateAuctionsBasicInformation from "./Views/UserPanelCreateAuctionsOnlineAuctionNewBasicInformation";
-import UserPanelCreateAuctionsOnlineAuctionDate from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionDate";
-import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionOfferRange";
-import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
-import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
-import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
+import AddAuction from "./Views/AddAuction";
+// import UserPanelCreateAuctionsOnlineAuctionDate from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionDate";
+// import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionOfferRange";
+// import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
+// import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
+// import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 import HouseAuctionsPage from "./Views/HouseAuctionsPage";
+import UserPanelCreateAuctionsTimedaction from "./Views/UserPanelCreateAuctionsTimedaction";
+import PanelFinancial from "./Views/PanelFinancial";
+import UserPanelWallet from "./Views/UserPanelWallet";
+import RequestHouseAuction from "./Views/RequestHouseAuction";
+import UserPanelMessage from "./Views/UserPanelMessage";
+import PanelRemindersPage from "./Views/PanelRemindersPage";
+
+
 
 function App(props) {
   console.log("Login ->> ",props.auth.is_logged_in)
@@ -55,15 +63,21 @@ function App(props) {
 
             {props.auth.is_logged_in ?
             <>
+
               <Route exact path="/house-acutions" component={HouseAuctionsPage} />
-              <Route exact path="/" component={Artworks} />
+
+              <Route exact path="/" component={AfterLoginPage} />
+
               <Route exact path="/panel-profile" component={PanelProfile} />
-              <Route exact path="/panel-auctions-information" component={UserPanelCreateAuctionsBasicInformation}/>
-              <Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>
-              <Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>
-              <Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>
-              <Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>
-              <Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>
+              <Route exact path="/panel-financial" component={PanelFinancial}/>
+              <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
+              <Route exact path="/panel-add-auction" component={AddAuction}/>
+              <Route exact path="/panel-reminders" component={PanelRemindersPage}/>
+              {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
+              {/*<Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>*/}
+              {/*<Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>*/}
+              {/*<Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>*/}
+              {/*<Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>*/}
               <Route exact path="/buyer-register" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
@@ -73,8 +87,11 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
+              <Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>
+              <Route exact path="/panel-wallet" component={UserPanelWallet} />
+              <Route exact path="/panel-message" component={UserPanelMessage} />
 
-              <Route exact path="/home" component={AfterLoginPage} />
+              {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
               <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
 

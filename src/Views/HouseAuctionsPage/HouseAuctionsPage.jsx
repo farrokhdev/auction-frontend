@@ -43,9 +43,11 @@ function HouseAuctionsPage() {
     }
 
     const handleSetCategory = (value) => {
-        setParams({
-          ...params , activity_type : value
-        })
+
+        console.log("House-Auction -> ", value);
+        // setParams({
+        //   ...params , activity_type : value
+        // })
     }
 
     const handleSetSearchFilter = (value) => {

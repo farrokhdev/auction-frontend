@@ -7,11 +7,12 @@ import { faPen, faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 import moment from 'jalali-moment'
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
+import {Link} from "react-router-dom";
 
 function AuctionsList() {
 
   const [Auctions, setAuctions] = useState("");
-  const [pageSize, setPageSize] = useState(9);
+  const [pageSize, setPageSize] = useState(30);
 
 
   const getProducts = (page_size=pageSize) => {
@@ -33,6 +34,7 @@ function AuctionsList() {
   }, [])
 
     function AuctionType(type){
+
         switch(type){
             case "SECOND_HIDDEN":
                 return "دومین پیشنهاد"
@@ -42,7 +44,8 @@ function AuctionsList() {
                 return "مدت دار"
             case "ONLINE":
                 return "آنلاین"
-            case "LIVE  ":
+            case "LIVE":
+
                 return "زنده"
             default:
                 return ""
@@ -58,10 +61,11 @@ function AuctionsList() {
           {/**Main**/}
           <div className="panel-body">
               <div className="panel-container">
-                  <button type="button" className="btn btn-default"><FontAwesomeIcon  icon={faPlus} />حراج جدید
-                  </button>
-                  <button type="button" className="btn btn-outline-pink" style={{marginRight:5}}>بارگزاری تفاهم‌نامه
-                  </button>
+                  <Link to="/panel-add-auction">
+                  <button type="button" className="btn btn-default"><FontAwesomeIcon className="pl-2" icon={faPlus} />  حراج جدید
+                  </button></Link>
+                  {/*<button type="button" className="btn btn-outline-pink" style={{marginRight:5}}>بارگزاری تفاهم‌نامه*/}
+                  {/*</button>*/}
                   <div className="col-xxxxl-8 mrgt30">
                       <div className="table-responsive">
                           <table className="panel-table create-auctions table ">
@@ -83,8 +87,9 @@ function AuctionsList() {
                                       <tr>
                                           <td>{item.title}</td>
                                           <td>{AuctionType(item.type)}</td>
-                                          <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
-                                          <td>{moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
+                                          <td>{moment(item.start_time, 'YYYY/MM/DD').format('DD MMMM YYYY')}</td>
+                                          <td>{moment(item.end_time).isValid() ? moment(item.end_time, 'YYYY/MM/DD').format('DD MMMM YYYY') :''}</td>
+
                                           <td>
                                               <button type="button" className="btn-outline-gray">125 اثر</button>
                                           </td>

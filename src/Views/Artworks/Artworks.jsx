@@ -11,9 +11,6 @@ import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import queryString from 'query-string';
-import { date } from "language-tags";
-import momentJalaali from 'moment-jalaali';
-import moment from 'jalali-moment'
 
 function Artworks() {
 
@@ -31,8 +28,6 @@ function Artworks() {
       auction_houses__home_auction_name : [],
       auctions__type : [],
   })
-
-  console.log("params", params);
 
   const queries = queryString.stringify(params);
   const getProducts = () => {

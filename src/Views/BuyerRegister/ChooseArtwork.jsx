@@ -20,7 +20,7 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(`${BASE_URL}${LIST_PRODUCTS}?search=${e}&auctions__id=${auction}`)
+    axios.get(`${BASE_URL}${LIST_PRODUCTS}?auctions__id=1`)
         .then(resp => {
           setLoading(false)
 
@@ -68,7 +68,7 @@ function Chooseartwork(props) {
           <div className="chooseartwork-custome">
             <div className="row mt-3">
           {
-            data && data.length ? data.map((item,i)=> <div className="col-12 col-md-6 col-lg-4 col-xl-3">
+            data && data.length ? data.map((item,i)=> <div key={i} className="col-12 col-md-6 col-lg-4 col-xl-3">
               <div className="my-3">
                 <Card
                     style={{ width: "100%" }}
@@ -95,7 +95,7 @@ function Chooseartwork(props) {
 
                       }}/>}
                       title={item.artwork_title}
-                      description="This is the description"
+                      description={item?.technique}
                   />
                 </Card>
               </div>

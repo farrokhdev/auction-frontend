@@ -11,4 +11,6 @@ module.exports={
     ACCOUNT_BANK_Edit:id=>`/accounting/bankprofile/${id}/`,
     HOME_AUCITONS:"/account/home-auction/",
     CATEGORIE_ACTIVITY:"/sale/category/",
+    ADD_AUCTION:"/sale/auctions/",
+    SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
 }
