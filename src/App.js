@@ -37,6 +37,7 @@ import PanelFinancial from "./Views/PanelFinancial";
 import UserPanelWallet from "./Views/UserPanelWallet";
 import RequestHouseAuction from "./Views/RequestHouseAuction";
 import UserPanelMessage from "./Views/UserPanelMessage";
+import MyPurchases from "./Views/MyPurchases";
 import PanelRemindersPage from "./Views/PanelRemindersPage";
 
 
@@ -90,6 +91,7 @@ function App(props) {
               <Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
               <Route exact path="/panel-message" component={UserPanelMessage} />
+              <Route exact path="/my-purchases" component={MyPurchases}/>
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
