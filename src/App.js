@@ -32,6 +32,7 @@ import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPan
 import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 import HouseAuctionsPage from "./Views/HouseAuctionsPage";
+import UserPanelCreateAuctionsTimedaction from "./Views/UserPanelCreateAuctionsTimedaction";
 
 function App(props) {
 
@@ -72,6 +73,7 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
+              <Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
