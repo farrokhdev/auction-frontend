@@ -42,9 +42,9 @@ import PanelRemindersPage from "./Views/PanelRemindersPage";
 
 
 function App(props) {
+  console.log("Login ->> ",props.auth.is_logged_in)
 
   return (
-
 
     <>
       <HashRouter>
@@ -60,10 +60,14 @@ function App(props) {
               <Route exact path="/confirm-mobile-number" component={ConfirmMobileNumber}/>
             <Route exact path="/artworks" component={Artworks} />
             <Route exact path="/artworks/:id" component={SingleArtworkPage} />
-            <Route exact path="/house-auctions/" component={HouseAuctionsPage} />
+
             {props.auth.is_logged_in ?
             <>
+
+              <Route exact path="/house-acutions" component={HouseAuctionsPage} />
+
               <Route exact path="/" component={AfterLoginPage} />
+
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/panel-financial" component={PanelFinancial}/>
               <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
