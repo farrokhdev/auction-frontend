@@ -37,6 +37,7 @@ import PanelFinancial from "./Views/PanelFinancial";
 import UserPanelWallet from "./Views/UserPanelWallet";
 import RequestHouseAuction from "./Views/RequestHouseAuction";
 import UserPanelMessage from "./Views/UserPanelMessage";
+import PanelRemindersPage from "./Views/PanelRemindersPage";
 
 
 
@@ -67,6 +68,7 @@ function App(props) {
               <Route exact path="/panel-financial" component={PanelFinancial}/>
               <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
               <Route exact path="/panel-add-auction" component={AddAuction}/>
+              <Route exact path="/panel-reminders" component={PanelRemindersPage}/>
               {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
               {/*<Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>*/}
               {/*<Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>*/}
