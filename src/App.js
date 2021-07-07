@@ -39,8 +39,10 @@ import RequestHouseAuction from "./Views/RequestHouseAuction";
 import UserPanelMessage from "./Views/UserPanelMessage";
 import MyPurchases from "./Views/MyPurchases";
 import PanelRemindersPage from "./Views/PanelRemindersPage";
+import Favorite from "./Views/Favorite/Favorite";
 import SingleHouseAuctionPage from "./Views/SingleHouseAuctionPage";
 import SingleAuctionDetailsPage from "./Views/SingleAuctionDetailsPage";
+
 
 
 
@@ -96,6 +98,7 @@ function App(props) {
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
               <Route exact path="/panel-message" component={UserPanelMessage} />
               <Route exact path="/my-purchases" component={MyPurchases}/>
+              <Route exact path="/favorite" component={Favorite}/>
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
