@@ -40,6 +40,7 @@ import UserPanelMessage from "./Views/UserPanelMessage";
 import MyPurchases from "./Views/MyPurchases";
 import PanelRemindersPage from "./Views/PanelRemindersPage";
 import SingleHouseAuctionPage from "./Views/SingleHouseAuctionPage";
+import SingleAuctionDetailsPage from "./Views/SingleAuctionDetailsPage";
 
 
 
@@ -68,6 +69,7 @@ function App(props) {
 
               <Route exact path="/house-acutions" component={HouseAuctionsPage} />
               <Route exact path="/house-acutions/:id" component={SingleHouseAuctionPage} />
+              <Route exact path="/auction-details/:id" component={SingleAuctionDetailsPage} />
 
               <Route exact path="/" component={AfterLoginPage} />
 
