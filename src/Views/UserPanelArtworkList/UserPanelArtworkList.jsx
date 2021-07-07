@@ -9,7 +9,7 @@ import {Link} from "react-router-dom";
 function UserPanelArtworkList() {
     return (
         <>
-            <HeaderPanel/>
+            <HeaderPanel  titlePage = {"لیست آثار"}/>
             <div className="panel-main">
             <PanelSidebar/>   
             <div className="panel-body">

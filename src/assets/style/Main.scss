@@ -398,9 +398,9 @@ section {
 .main-tab.nav-tabs .nav-link.active,
 .main-tab.nav-tabs .nav-link:focus,
 .main-tab.nav-tabs .nav-link:hover {
-  border: 1px solid transparent;
-  color: var(--darkgray);
-  position: relative;
+  border: 1px solid transparent !important;
+  color: var(--darkgray) !important;
+  position: relative !important;
 }
 
 .main-tab.nav-tabs .nav-link.active {
@@ -1695,11 +1695,11 @@ footer .brdrtop span {
 }
 
 .row-blocks {
-  display: block;
-  position: relative;
-  z-index: 10;
-  padding: 30px 0;
-  border-bottom: 1px solid var(--gray90);
+  display: block !important;
+  position: relative !important;
+  z-index: 10 !important;
+  padding: 30px 0 !important;
+  border-bottom: 1px solid var(--gray90) !important;
 }
 
 .row-blocks:first-child {
