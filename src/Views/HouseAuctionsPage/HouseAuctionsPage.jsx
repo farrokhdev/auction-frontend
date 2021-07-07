@@ -6,6 +6,7 @@ import { BASE_URL } from '../../utils';
 import { CATEGORIE_ACTIVITY, HOME_AUCITONS } from '../../utils/constant';
 import SiderHouseAucitons from './SiderHouseAucitons';
 import queryString from 'query-string';
+import {Link} from 'react-router-dom';
 
 function HouseAuctionsPage() {
 
@@ -45,9 +46,9 @@ function HouseAuctionsPage() {
     const handleSetCategory = (value) => {
 
         console.log("House-Auction -> ", value);
-        // setParams({
-        //   ...params , activity_type : value
-        // })
+        setParams({
+          ...params , activity_type : value
+        })
     }
 
     const handleSetSearchFilter = (value) => {
@@ -124,38 +125,46 @@ return (
 
 
 
-                        {houseAuctionList.length ? houseAuctionList?.map(house => (
+                        {houseAuctionList?.length ? houseAuctionList?.map(house => (
                                  <React.Fragment key={house?.id}>
                                     <div className="col">
                                         <div className="h-block">
-                                            <div className="row">
-                                                <div className="col-xl-5 col-3">
-                                                    <div className="h-block-img">
-                                                        <img src={img} width="159" height="159" alt="smart auction"
-                                                            className="img-fluid" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-xl-7 col-9">
-                                                    <div className="h-block-header">
-                                                        <div className="h-block-title">
-                                                            {/* <h3 className="default">گالری ساربان</h3> */}
-                                                            <h3 className="default">{house?.home_auction_name ? house?.home_auction_name : 'گالری ساربان'}</h3>
-                                                            {/* <h6 className="default">هنرهای تجسمی, ...</h6> */}
-                                                            <h6 className="default">{house?.home_auction_type ? house?.home_auction_type : '---'}</h6>
+
+                                                <div className="row">
+                                                    <div className="col-xl-5 col-3">
+                                                        <div className="h-block-img">
+                                                            <Link to = {`/house-acutions/${house?.id}`}>
+                                                                <img 
+                                                                    src={img} 
+                                                                    width="159" height="159" 
+                                                                    alt="smart auction"
+                                                                    className="img-fluid" 
+                                                                />
+                                                            </Link>
                                                         </div>
-                                                        <button type="button" className="btn-follow">دنبال کردن</button>
                                                     </div>
-                                                    <div className="h-block-info">
-                                                        <a href="+982144258856" className="info-tel all-info">{house?.mobile ? house?.mobile : "---"}</a>
-                                                        {/* <address className="all-info"><span className="province">تهران، </span>میدان
-                                                            هویزه، پلاک 103
-                                                        </address> */}
-                                                        <address className="all-info">
-                                                              {house?.address ? house?.address : '---'}
-                                                        </address>
+                                                    <div className="col-xl-7 col-9">
+                                                        <div className="h-block-header">
+                                                            <div className="h-block-title">
+                                                                {/* <h3 className="default">گالری ساربان</h3> */}
+                                                                <h3 className="default">{house?.home_auction_name ? house?.home_auction_name : 'گالری ساربان'}</h3>
+                                                                {/* <h6 className="default">هنرهای تجسمی, ...</h6> */}
+                                                                <h6 className="default">{house?.home_auction_type ? house?.home_auction_type : '---'}</h6>
+                                                            </div>
+                                                            <button type="button" className="btn-follow">دنبال کردن</button>
+                                                        </div>
+                                                        <div className="h-block-info">
+                                                            <a href="+982144258856" className="info-tel all-info">{house?.mobile ? house?.mobile : "---"}</a>
+                                                            {/* <address className="all-info"><span className="province">تهران، </span>میدان
+                                                                هویزه، پلاک 103
+                                                            </address> */}
+                                                            <address className="all-info">
+                                                                {house?.address ? house?.address : '---'}
+                                                            </address>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </React.Fragment>
