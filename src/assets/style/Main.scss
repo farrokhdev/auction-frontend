@@ -425,6 +425,8 @@ section {
   position: relative;
   font-family: "Font Awesome\ 5 Pro";
   font-size: 16px;
+  height: 34px !important;
+  width: 32px !important;
 }
 
 .artwork-bookmark:before {
@@ -1905,6 +1907,7 @@ address .province {
 
 .ah-block-all-info {
   padding-top: 30px;
+  color: var(--gray90) !important;
 }
 
 .ah-block-all-info address:before {
@@ -3997,6 +4000,10 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-wrap: nowrap;
   align-items: center;
   direction: ltr;
+}
+
+.icon-bookmark{
+  cursor: pointer;
 }
 
 .auction-category {
