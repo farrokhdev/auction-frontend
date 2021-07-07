@@ -48,7 +48,7 @@ return (
                                 <div className="">
 
                                     <div className="d-flex mt-3">
-                                        <FontAwesomeIcon className="mx-2" icon={faGlobe}/>
+                                        <FontAwesomeIcon className="mx-2" icon={faEnvelope}/>
                                         
                                         <a href="#" >www.sarebangallery.com</a>
                                     </div>
@@ -96,163 +96,173 @@ return (
                 </div>
                 
                 <div className="col-lg-9">
-                    <div className="row-blocks">
-                        <div className="row">
-                            <div className="col-md-4">
-                                <div className="bg-shadow tr-shadow10">
-                                    {/* <img src="img/slider1.jpg" width="500" height="500" alt="" /> */}
-                                    <img src={img} width="500" height="500" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-md-8">
-                                <div className="block-head row">
-                                    <div className="col-xl-3 col-sm-4 col-3">
-                                        <span className="category-icon live-icon"><span
-                                                className="d-none d-md-inline-block">حراج</span> زنده</span>
-                                    </div>
-                                    <div className="col-xl-9 col-sm-8 col-9 textalign-left">
-                                        <span className="reminder-icon">یادآوری</span>
-                                        <button type="button" className="link-source">
-                                            <span><span className="d-none d-sm-inline-block">مشاهده </span>آثار
-                                                (<span>25</span>)</span>
-                                        </button>
+
+
+                    <Link to="/auction-details/1">
+                        <div className="row-blocks">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className="bg-shadow tr-shadow10">
+                                        {/* <img src="img/slider1.jpg" width="500" height="500" alt="" /> */}
+                                        <img src={img} width="500" height="500" alt="" />
                                     </div>
                                 </div>
-                                <div className="block-main">
-                                    <h5 className="default">فقط بصورت آنلاین زندگی کنید ، کتابهای عتیقه ، هنرهای تزئینی
-                                        و تصاویر</h5>
-                                    <div className="block-detail">
-                                        <h6 className="default">هنر معاصر</h6>
-                                        <h6 className="default gray50">گالری آرتیبیشن</h6>
-                                    </div>
-                                </div>
-                                <div className="block-footer row">
-                                    <div className="col-sm-5">
-                                        <div className="jumbotron countdown show end date-show"
-                                            data-Date='2021/06/05 16:09:00'>
-                                            <div className="running">
-                                                <timer>
-                                                    <span className="days"></span>:<span className="hours"></span>:<span
-                                                        className="minutes"></span><span className="show-text"></span>
-                                                </timer>
-                                                <div className="break"></div>
-                                            </div>
-                                            <div className="ended">
-                                                <div className="text">حراج به پایان رسید</div>
-                                            </div>
+                                <div className="col-md-8">
+                                    <div className="block-head row">
+                                        <div className="col-xl-3 col-sm-4 col-3">
+                                            <span className="category-icon live-icon"><span
+                                                    className="d-none d-md-inline-block">حراج</span> زنده</span>
+                                        </div>
+                                        <div className="col-xl-9 col-sm-8 col-9 textalign-left">
+                                            <span className="reminder-icon">یادآوری</span>
+                                            <button type="button" className="link-source">
+                                                <span><span className="d-none d-sm-inline-block">مشاهده </span>آثار
+                                                    (<span>25</span>)</span>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className="col-sm-7 textalign-left">
-                                        <button type="button" className="btn btn-gray view">مشاهده زنده</button>
-                                        <button type="button" className="btn btn-main join">عضویت در حراج</button>
+                                    <div className="block-main">
+                                        <h5 className="default">فقط بصورت آنلاین زندگی کنید ، کتابهای عتیقه ، هنرهای تزئینی
+                                            و تصاویر</h5>
+                                        <div className="block-detail">
+                                            <h6 className="default">هنر معاصر</h6>
+                                            <h6 className="default gray50">گالری آرتیبیشن</h6>
+                                        </div>
+                                    </div>
+                                    <div className="block-footer row">
+                                        <div className="col-sm-5">
+                                            <div className="jumbotron countdown show end date-show"
+                                                data-Date='2021/06/05 16:09:00'>
+                                                <div className="running">
+                                                    <timer>
+                                                        <span className="days"></span>:<span className="hours"></span>:<span
+                                                            className="minutes"></span><span className="show-text"></span>
+                                                    </timer>
+                                                    <div className="break"></div>
+                                                </div>
+                                                <div className="ended">
+                                                    <div className="text">حراج به پایان رسید</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-7 textalign-left">
+                                            <button type="button" className="btn btn-gray view">مشاهده زنده</button>
+                                            <button type="button" className="btn btn-main join">عضویت در حراج</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="row-blocks">
-                        <div className="row">
-                            <div className="col-md-4">
-                                <div className="bg-shadow tr-shadow10">
-                                    {/* <img src="img/pic7.jpg" width="493" height="621" alt="" /> */}
-                                    <img src={img} width="493" height="621" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-md-8">
-                                <div className="block-head row">
-                                    <div className="col-xl-3 col-sm-4 col-3">
-                                        <span className="category-icon online-icon"><span
-                                                className="d-none d-md-inline-block">حراج</span> آنلاین</span>
-                                    </div>
-                                    <div className="col-xl-9 col-sm-8 col-9 textalign-left">
-                                        <span className="reminder-icon">یادآوری</span>
-                                        <button type="button" className="link-source">
-                                            <span><span className="d-none d-sm-inline-block">مشاهده </span>آثار
-                                                (<span>10</span>)</span>
-                                        </button>
+                    </Link>
+
+                    <Link to="/auction-details/2">
+                        <div className="row-blocks">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className="bg-shadow tr-shadow10">
+                                        {/* <img src="img/pic7.jpg" width="493" height="621" alt="" /> */}
+                                        <img src={img} width="493" height="621" alt="" />
                                     </div>
                                 </div>
-                                <div className="block-main">
-                                    <h5 className="default">هنرهای تزئینی و تصاویر عتیقه ، کتاب</h5>
-                                    <div className="block-detail">
-                                        <h6 className="default">هنرهای تجسمی</h6>
-                                        <h6 className="default gray50">هان گالری</h6>
-                                    </div>
-                                </div>
-                                <div className="block-footer row">
-                                    <div className="col-sm-5">
-                                        <div className="jumbotron countdown show start date-show"
-                                            data-Date='2021/06/05 16:09:00'>
-                                            <div className="running">
-                                                <timer>
-                                                    <span className="days"></span>:<span className="hours"></span>:<span
-                                                        className="minutes"></span><span className="show-text"></span>
-                                                </timer>
-                                                <div className="break"></div>
-                                            </div>
-                                            <div className="ended">
-                                                <div className="text">حراج به پایان رسید</div>
-                                            </div>
+                                <div className="col-md-8">
+                                    <div className="block-head row">
+                                        <div className="col-xl-3 col-sm-4 col-3">
+                                            <span className="category-icon online-icon"><span
+                                                    className="d-none d-md-inline-block">حراج</span> آنلاین</span>
+                                        </div>
+                                        <div className="col-xl-9 col-sm-8 col-9 textalign-left">
+                                            <span className="reminder-icon">یادآوری</span>
+                                            <button type="button" className="link-source">
+                                                <span><span className="d-none d-sm-inline-block">مشاهده </span>آثار
+                                                    (<span>10</span>)</span>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className="col-sm-7 textalign-left">
-                                        <button type="button" className="btn btn-gray view">مشاهده زنده</button>
-                                        <button type="button" className="btn btn-main join">عضویت در حراج</button>
+                                    <div className="block-main">
+                                        <h5 className="default">هنرهای تزئینی و تصاویر عتیقه ، کتاب</h5>
+                                        <div className="block-detail">
+                                            <h6 className="default">هنرهای تجسمی</h6>
+                                            <h6 className="default gray50">هان گالری</h6>
+                                        </div>
+                                    </div>
+                                    <div className="block-footer row">
+                                        <div className="col-sm-5">
+                                            <div className="jumbotron countdown show start date-show"
+                                                data-Date='2021/06/05 16:09:00'>
+                                                <div className="running">
+                                                    <timer>
+                                                        <span className="days"></span>:<span className="hours"></span>:<span
+                                                            className="minutes"></span><span className="show-text"></span>
+                                                    </timer>
+                                                    <div className="break"></div>
+                                                </div>
+                                                <div className="ended">
+                                                    <div className="text">حراج به پایان رسید</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-7 textalign-left">
+                                            <button type="button" className="btn btn-gray view">مشاهده زنده</button>
+                                            <button type="button" className="btn btn-main join">عضویت در حراج</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="row-blocks">
-                        <div className="row">
-                            <div className="col-md-4">
-                                <div className="bg-shadow tr-shadow10">
-                                    {/* <img src="img/pic2.jpg" width="998" height="880" alt="" /> */}
-                                    <img src={img} width="998" height="880" alt="" />
-                                </div>
-                            </div>
-                            <div className="col-md-8">
-                                <div className="block-head row">
-                                    <div className="col-xl-3 col-sm-4 col-3">
-                                        <span className="category-icon timed-icon"><span
-                                                className="d-none d-md-inline-block">حراج</span>مدت‌دار </span>
-                                    </div>
-                                    <div className="col-xl-9 col-sm-8 col-9 textalign-left">
-                                        <span className="reminder-icon">یادآوری</span>
-                                        <button type="button" className="link-source">
-                                            <span><span className="d-none d-sm-inline-block">مشاهده </span>آثار
-                                                (<span>24</span>)</span>
-                                        </button>
+                    </Link>
+
+                    <Link to="/auction-details/3">
+                        <div className="row-blocks">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className="bg-shadow tr-shadow10">
+                                        {/* <img src="img/pic2.jpg" width="998" height="880" alt="" /> */}
+                                        <img src={img} width="998" height="880" alt="" />
                                     </div>
                                 </div>
-                                <div className="block-main">
-                                    <h5 className="default">Tranquility and Deep Silence in Pure Nature</h5>
-                                    <div className="block-detail">
-                                        <h6 className="default">Modern art</h6>
-                                        <h6 className="default gray50">گالری آرتیبیشن</h6>
-                                    </div>
-                                </div>
-                                <div className="block-footer row">
-                                    <div className="col-sm-5">
-                                        <div className="auction-calender date-show">
-                                            <div className="auction-date">
-                                                <span className="start-date">7 خرداد</span>
-                                                <span className="end-date">9 خرداد</span>
-                                            </div>
-                                            <div className="auction-time">
-                                                <span className="start-time">10</span>
-                                                <span className="end-time">22</span>
-                                            </div>
+                                <div className="col-md-8">
+                                    <div className="block-head row">
+                                        <div className="col-xl-3 col-sm-4 col-3">
+                                            <span className="category-icon timed-icon"><span
+                                                    className="d-none d-md-inline-block">حراج</span>مدت‌دار </span>
+                                        </div>
+                                        <div className="col-xl-9 col-sm-8 col-9 textalign-left">
+                                            <span className="reminder-icon">یادآوری</span>
+                                            <button type="button" className="link-source">
+                                                <span><span className="d-none d-sm-inline-block">مشاهده </span>آثار
+                                                    (<span>24</span>)</span>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className="col-sm-7 textalign-left">
-                                        <button type="button" className="btn btn-gray view">مشاهده زنده</button>
-                                        <button type="button" className="btn btn-main join">عضویت در حراج</button>
+                                    <div className="block-main">
+                                        <h5 className="default">Tranquility and Deep Silence in Pure Nature</h5>
+                                        <div className="block-detail">
+                                            <h6 className="default">Modern art</h6>
+                                            <h6 className="default gray50">گالری آرتیبیشن</h6>
+                                        </div>
+                                    </div>
+                                    <div className="block-footer row">
+                                        <div className="col-sm-5">
+                                            <div className="auction-calender date-show">
+                                                <div className="auction-date">
+                                                    <span className="start-date">7 خرداد</span>
+                                                    <span className="end-date">9 خرداد</span>
+                                                </div>
+                                                <div className="auction-time">
+                                                    <span className="start-time">10</span>
+                                                    <span className="end-time">22</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-7 textalign-left">
+                                            <button type="button" className="btn btn-gray view">مشاهده زنده</button>
+                                            <button type="button" className="btn btn-main join">عضویت در حراج</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
 
                 </div>
             </div>
