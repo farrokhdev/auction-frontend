@@ -79,11 +79,11 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faWallet} /> کیف پول
                 </NavLinkRouter>
               </li>
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faWallet} /> مشاوره فروش*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-advice">
+                  <FontAwesomeIcon icon={faWallet} /> مشاوره فروش
+                </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
@@ -95,15 +95,13 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faWallet} /> یادآوری‌ها
                 </NavLinkRouter>
               </li>
-
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
-
               <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/messages">
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
+                  <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش
+                </NavLinkRouter>
+              </li>
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-messages">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
                 </NavLinkRouter>
               </li>

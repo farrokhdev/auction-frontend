@@ -84,14 +84,14 @@ function AuctionsList() {
                               <tbody>
                               { Auctions && Auctions.length >= 1  ? Auctions.map((item, key) => {
                                   return (
-                                      <tr>
+                                      <tr key={key}>
                                           <td>{item.title}</td>
                                           <td>{AuctionType(item.type)}</td>
-                                          <td>{moment(item.start_time, 'YYYY/MM/DD').format('DD MMMM YYYY')}</td>
-                                          <td>{moment(item.end_time).isValid() ? moment(item.end_time, 'YYYY/MM/DD').format('DD MMMM YYYY') :''}</td>
+                                          <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
+                                          <td>{item.end_time !== "None" ? moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY'): ""}</td>
 
                                           <td>
-                                              <button type="button" className="btn-outline-gray">125 اثر</button>
+                                              <button type="button" className="btn-outline-gray">{item.product.length} اثر</button>
                                           </td>
                                           <td>
                                               <Link to="/panel-Bids">
@@ -126,7 +126,123 @@ function AuctionsList() {
           </div>
           </div>
           {/**Main**/}
+
+          <div className="modal fade" id="auctionBids" tabIndex="-1" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+              <div className="modal-dialog w-800">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <div className="container g-0 d-flex justify-content-between">
+                              <div className="main-title">
+                                  <h2 className="default titr">
+                                      پیشنهادات کالکشن7
+                                  </h2>
+                              </div>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                          </div>
+                      </div>
+                      <div className="modal-body">
+                          <div className="amount-list">
+                              <div className="amount-block">
+                                  <div className="amount-range">رضا شبستری</div>
+                                  <div className="amount-range">
+                                      5,000,000<span className="unit">تومان</span>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">احمد نجفی</div>
+                                  <div className="amount-range">
+                                      4,500,000<span className="unit">تومان</span>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">سپیده مرادی</div>
+                                  <div className="amount-range">
+                                      4,000,000<span className="unit">تومان</span>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">میترا محمدی</div>
+                                  <div className="amount-range">
+                                      3,500,000<span className="unit">تومان</span>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">سایه سمیعی</div>
+                                  <div className="amount-range">
+                                      3,000,000<span className="unit">تومان</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div className="modal fade" id="auctionRequest" tabIndex="-1" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+              <div className="modal-dialog w-800">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <div className="container g-0 d-flex justify-content-between">
+                              <div className="main-title">
+                                  <h2 className="default titr">
+                                      درخواست‌های کالکشن7
+                                  </h2>
+                              </div>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                          </div>
+                      </div>
+                      <div className="modal-body">
+                          <div className="amount-list">
+                              <div className="amount-block">
+                                  <div className="amount-range">رضا شبستری</div>
+                                  <div className="amount-range">
+                                      <button type="button" className="btn btn-default">تایید</button>
+                                      <button type="button" className="btn btn-outline-gray">رد</button>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">احمد نجفی</div>
+                                  <div className="amount-range">
+                                      <button type="button" className="btn btn-default">تایید</button>
+                                      <button type="button" className="btn btn-outline-gray">رد</button>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">سپیده مرادی</div>
+                                  <div className="amount-range">
+                                      <button type="button" className="btn btn-default">تایید</button>
+                                      <button type="button" className="btn btn-outline-gray">رد</button>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">میترا محمدی</div>
+                                  <div className="amount-range">
+                                      <button type="button" className="btn btn-default">تایید</button>
+                                      <button type="button" className="btn btn-outline-gray">رد</button>
+                                  </div>
+                              </div>
+                              <div className="amount-block">
+                                  <div className="amount-range">سایه سمیعی</div>
+                                  <div className="amount-range">
+                                      <button type="button" className="btn btn-default">تایید</button>
+                                      <button type="button" className="btn btn-outline-gray">رد</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
       </div>
+
+
+
+
   );
 }
 
