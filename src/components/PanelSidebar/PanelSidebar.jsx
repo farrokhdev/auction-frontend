@@ -59,43 +59,49 @@ function PanelSidebar(props) {
               {/*    <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/favorite">
+                 <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها
+               </NavLinkRouter>
+              </li>
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faBell} /> یادآوری‌ها*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases">
+                 <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من
+               </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
                   <FontAwesomeIcon icon={faWallet} /> کیف پول
                 </NavLinkRouter>
               </li>
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faWallet} /> مشاوره فروش*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-advice">
+                  <FontAwesomeIcon icon={faWallet} /> مشاوره فروش
+                </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
                 </NavLinkRouter>
-              </li>
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              </li>   
+
               <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/">
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-reminders" >
+                  <FontAwesomeIcon icon={faWallet} /> یادآوری‌ها
+                </NavLinkRouter>
+              </li>
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
+                  <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش
+                </NavLinkRouter>
+              </li>
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
                 </NavLinkRouter>
               </li>

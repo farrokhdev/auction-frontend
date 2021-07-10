@@ -26,7 +26,7 @@ function UserPanelWallet() {
 
     return (
         <>
-            <HeaderPanel/>
+            <HeaderPanel  titlePage = {" کیف پول"}/>
             <div className="panel-main">
                 <PanelSidebar/>
                 <div className="panel-body">

@@ -66,6 +66,10 @@
   --orange: #f7941d;
 }
 
+*{
+  font-family: IRANSans_light, Arial, sans-serif !important;
+}
+
 body,
 html {
   font-family: IRANSans_light, Arial, sans-serif !important;
@@ -398,9 +402,9 @@ section {
 .main-tab.nav-tabs .nav-link.active,
 .main-tab.nav-tabs .nav-link:focus,
 .main-tab.nav-tabs .nav-link:hover {
-  border: 1px solid transparent;
-  color: var(--darkgray);
-  position: relative;
+  border: 1px solid transparent !important;
+  color: var(--darkgray) !important;
+  position: relative !important;
 }
 
 .main-tab.nav-tabs .nav-link.active {
@@ -425,6 +429,8 @@ section {
   position: relative;
   font-family: "Font Awesome\ 5 Pro";
   font-size: 16px;
+  height: 34px !important;
+  width: 32px !important;
 }
 
 .artwork-bookmark:before {
@@ -1695,11 +1701,11 @@ footer .brdrtop span {
 }
 
 .row-blocks {
-  display: block;
-  position: relative;
-  z-index: 10;
-  padding: 30px 0;
-  border-bottom: 1px solid var(--gray90);
+  display: block !important;
+  position: relative !important;
+  z-index: 10 !important;
+  padding: 30px 0 !important;
+  border-bottom: 1px solid var(--gray90) !important;
 }
 
 .row-blocks:first-child {
@@ -1905,6 +1911,7 @@ address .province {
 
 .ah-block-all-info {
   padding-top: 30px;
+  color: var(--gray90) !important;
 }
 
 .ah-block-all-info address:before {
@@ -3240,6 +3247,13 @@ input:disabled {
   padding: 5px 15px;
   min-width: 100px;
   border-radius: 50px;
+  // box-shadow: 0 1px 6px #00000029 !important;
+  transition: 0.7s;
+}
+
+.btn-outline-gray:hover {
+  background-color:    var(  --gray15) !important;
+  color: white !important;
 }
 
 .reminder-state.active {
@@ -3990,6 +4004,10 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-wrap: nowrap;
   align-items: center;
   direction: ltr;
+}
+
+.icon-bookmark{
+  cursor: pointer;
 }
 
 .auction-category {

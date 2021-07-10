@@ -1,15 +1,80 @@
-import React , {useState} from 'react'
+import axios from '../../utils/request';
+import React , {useState , useEffect} from 'react'
 import PaginationComponent from '../../components/PaginationComponent';
 import img from '../../images/logo-1.jpg';
+import { BASE_URL } from '../../utils';
+import { CATEGORIE_ACTIVITY, HOME_AUCITONS } from '../../utils/constant';
+import SiderHouseAucitons from './SiderHouseAucitons';
+import queryString from 'query-string';
+import {Link} from 'react-router-dom';
 
 function HouseAuctionsPage() {
 
-    const [countHousAuction, ] = useState(0)
+    const [houseAuctionList , setHouseAuctionList ] = useState([])
+    const [categoryActivities, setCategoryActivities] = useState([])
+    const [countHousAuction, setCountHousAuction] = useState(0)
+    const [params, setParams] = useState({
+        page : 1,
+        page_size : 10 , 
+        activity_type : [], 
+        search : '' , 
+        ordering : ''
+    })
+
+    console.log("params ->>> ", params);
+    
+    const queries = queryString.stringify(params);
+
+    const getHouseAuction = () => {
+        axios.get(`${BASE_URL}${HOME_AUCITONS}?${queries}`).then(res => {
+            console.log(res.data.data.result)
+            setHouseAuctionList(res.data.data.result)
+            setCountHousAuction(res.data.data.count)
+        }).catch(err => {
+            console.error(err);
+        })
+    }
+    const getCategoryActivity = () => {
+        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}`).then(res => {
+            console.log(res.data.data.result)
+            setCategoryActivities(res.data.data.result)
+        }).catch(err => {
+            console.error(err);
+        })
+    }
+
+    const handleSetCategory = (value) => {
+
+        console.log("House-Auction -> ", value);
+        setParams({
+          ...params , activity_type : value
+        })
+    }
+
+    const handleSetSearchFilter = (value) => {
+        setParams({
+          ...params , search : value
+        })
+    }   
+    
+    const handleSetOrdering = (value) => {
+        setParams({
+          ...params , ordering : value
+        })
+    }
+
+
+    useEffect(() => {
+        getHouseAuction();
+        getCategoryActivity();
+    }, [params])
 
     const handeSelectPage = (e) => {
         console.log("Log Of Pagination", e);
         // setcurrentPage(e)
     }
+
+
 
 return (
 
@@ -35,7 +100,7 @@ return (
                     <span className="d-none d-md-inline-block"> : </span>
                         </span>
                         <ul className="sort-list">
-                            <li>جدیدترین</li>
+                            <li onClick={(e)=>handleSetOrdering(e.target.value)}>جدیدترین</li>
                             <li className="active">نزدیک‌ترین</li>
                             <li>محبوب‌ترین</li>
                             <li>پرفروش‌ترین</li>
@@ -44,166 +109,154 @@ return (
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-3 sidebar" id="left-side">
-                    <button type="button" className="btn-getclose d-block d-lg-none"></button>
-                    <div className="left-side">
-                        <div className="result-box">
-                            <div className="result-title">
-                                <h6 className="default">نتایج:</h6>
-                                <button type="button" className="btn-removeall">پاک کردن همه</button>
-                            </div>
-                            <div className="tags-box">
-                                <a href="#" className="tag-box date">
-                                    <span>3 اردیبهشت - </span>
-                                    <span>6 اردیبهشت</span>
-                                    <button type="button" className="btn-remove"></button>
-                                </a>
-                                <a href="#" className="tag-box date">
-                                    <span>تهران</span>
-                                    <button type="button" className="btn-remove"></button>
-                                </a>
-                                <a href="#" className="tag-box date">
-                                    <span>آرتیبیشن</span>
-                                    <button type="button" className="btn-remove"></button>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="search-box">
-                            <div className="search-input">
-                                <input type="text" className="default-input"
-                                    placeholder="در بیش از 100 حراج جستجو کنید." />
-                                <button type="button" className="btn-search"></button>
-                            </div>
-                            <button type="button" className="btn-lightpink"><i
-                                    className="fal fa-map-marker-alt"></i>جستجو بر اساس محل
-                            </button>
-                        </div>
-                        <div className="accordion main-accordion" id="leftside">
-                            <div className="accordion-item">
-                                <h2 className="accordion-header" id="headingTwo">
-                                    <button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="True" aria-controls="collapseTwo">
-                                        شهرها
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" className="accordion-collapse collapse show"
-                                    aria-labelledby="headingTwo">
-                                    <div className="accordion-body">
-                                        <div className="search-input">
-                                            <input type="text" className="default-input"
-                                                placeholder="شهر مورد نظر را وارد نمایید." />
-                                            <button type="button" className="btn-search"></button>
-                                        </div>
-                                        <div className="list-box">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox1"/>
-                                                <label className="form-check-label" for="checkbox1">
-                                                    اردبیل
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox2"/>
-                                                <label className="form-check-label" for="checkbox2">
-                                                    ایلام
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox3"/>
-                                                <label className="form-check-label" for="checkbox3">
-                                                    بوشهر
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" checked value=""
-                                                    id="checkbox4"/>
-                                                <label className="form-check-label" for="checkbox4">
-                                                    تهران
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox5"/>
-                                                <label className="form-check-label" for="checkbox5">
-                                                    سمنان
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox6"/>
-                                                <label className="form-check-label" for="checkbox6">
-                                                    یزد
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="accordion-item">
-                                <h2 className="accordion-header" id="headingThree">
-                                    <button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="True"
-                                        aria-controls="collapseThree">
-                                        حوزه فعالیت
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" className="accordion-collapse collapse show"
-                                    aria-labelledby="headingThree">
-                                    <div className="accordion-body">
-                                        <div className="list-box">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox11"/>
-                                                <label className="form-check-label" for="checkbox11">
-                                                    نقاشی
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox12"/>
-                                                <label className="form-check-label" for="checkbox12">
-                                                    عکاسی
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox13"/>
-                                                <label className="form-check-label" for="checkbox13">
-                                                    مجسمه سازی
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" checked value=""
-                                                    id="checkbox14"/>
-                                                <label className="form-check-label" for="checkbox14">
-                                                    خطاطی
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox15"/>
-                                                <label className="form-check-label" for="checkbox15">
-                                                    خوشنویسی
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""
-                                                    id="checkbox16"/>
-                                                <label className="form-check-label" for="checkbox16">
-                                                    نقاشی
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-9">
+
+
+     
+            <SiderHouseAucitons 
+                params={params}
+                handleSetCategory={handleSetCategory}
+                categoryActivities={categoryActivities}
+                handleSetSearchFilter={handleSetSearchFilter}
+            />
+
+
+                <div className="col-lg-9 ">
                     <div className="row row-cols-xl-2 row-cols-1">
+
+
+
+                        {houseAuctionList?.length ? houseAuctionList?.map(house => (
+                                 <React.Fragment key={house?.id}>
+                                    <div className="col">
+                                        <div className="h-block">
+
+                                                <div className="row">
+                                                    <div className="col-xl-5 col-3">
+                                                        <div className="h-block-img">
+                                                            <Link to = {`/house-acutions/${house?.id}`}>
+                                                                <img 
+                                                                    src={img} 
+                                                                    width="159" height="159" 
+                                                                    alt="smart auction"
+                                                                    className="img-fluid" 
+                                                                />
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-xl-7 col-9">
+                                                        <div className="h-block-header">
+                                                            <div className="h-block-title">
+                                                                {/* <h3 className="default">گالری ساربان</h3> */}
+                                                                <h3 className="default">{house?.home_auction_name ? house?.home_auction_name : 'گالری ساربان'}</h3>
+                                                                {/* <h6 className="default">هنرهای تجسمی, ...</h6> */}
+                                                                <h6 className="default">{house?.home_auction_type ? house?.home_auction_type : '---'}</h6>
+                                                            </div>
+                                                            <button type="button" className="btn-follow">دنبال کردن</button>
+                                                        </div>
+                                                        <div className="h-block-info">
+                                                            <a href="+982144258856" className="info-tel all-info">{house?.mobile ? house?.mobile : "---"}</a>
+                                                            {/* <address className="all-info"><span className="province">تهران، </span>میدان
+                                                                هویزه، پلاک 103
+                                                            </address> */}
+                                                            <address className="all-info">
+                                                                {house?.address ? house?.address : '---'}
+                                                            </address>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                        )) : ''}
+
+
+                        {/* <div className="col">
+                            <div className="h-block">
+                                <div className="row">
+                                    <div className="col-xl-5 col-3">
+                                        <div className="h-block-img">
+                                            <img src={img} width="159" height="159" alt="smart auction"
+                                                className="img-fluid" />
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-7 col-9">
+                                        <div className="h-block-header">
+                                            <div className="h-block-title">
+                                                <h3 className="default">گالری ساربان</h3>
+                                                <h6 className="default">هنرهای تجسمی, ...</h6>
+                                            </div>
+                                            <button type="button" className="btn-follow">دنبال کردن</button>
+                                        </div>
+                                        <div className="h-block-info">
+                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
+                                            <address className="all-info"><span className="province">تهران، </span>میدان
+                                                هویزه، پلاک 103
+                                            </address>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div className="col">
+                            <div className="h-block">
+                                <div className="row">
+                                    <div className="col-xl-5 col-3">
+                                        <div className="h-block-img">
+                                            <img src={img} width="159" height="159" alt="smart auction"
+                                                className="img-fluid" />
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-7 col-9">
+                                        <div className="h-block-header">
+                                            <div className="h-block-title">
+                                                <h3 className="default">گالری ساربان</h3>
+                                                <h6 className="default">هنرهای تجسمی</h6>
+                                            </div>
+                                            <button type="button" className="btn-follow">دنبال کردن</button>
+                                        </div>
+                                        <div className="h-block-info">
+                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
+                                            <address className="all-info"><span className="province">تهران، </span>میدان
+                                                هویزه، پلاک 103
+                                            </address>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="h-block">
+                                <div className="row">
+                                    <div className="col-xl-5 col-3">
+                                        <div className="h-block-img">
+                                            <img src={img} width="159" height="159" alt="smart auction"
+                                                className="img-fluid" />
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-7 col-9">
+                                        <div className="h-block-header">
+                                            <div className="h-block-title">
+                                                <h3 className="default">گالری ساربان</h3>
+                                                <h6 className="default">هنرهای تجسمی</h6>
+                                            </div>
+                                            <button type="button" className="btn-follow">دنبال کردن</button>
+                                        </div>
+                                        <div className="h-block-info">
+                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
+                                            <address className="all-info"><span className="province">تهران، </span>میدان
+                                                هویزه، پلاک 103
+                                            </address>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                         <div className="col">
                             <div className="h-block">
                                 <div className="row">
@@ -287,91 +340,9 @@ return (
                                 </div>
 
                             </div>
-                        </div>
-                        <div className="col">
-                            <div className="h-block">
-                                <div className="row">
-                                    <div className="col-xl-5 col-3">
-                                        <div className="h-block-img">
-                                            <img src={img} width="159" height="159" alt="smart auction"
-                                                className="img-fluid" />
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-7 col-9">
-                                        <div className="h-block-header">
-                                            <div className="h-block-title">
-                                                <h3 className="default">گالری ساربان</h3>
-                                                <h6 className="default">هنرهای تجسمی, ...</h6>
-                                            </div>
-                                            <button type="button" className="btn-follow">دنبال کردن</button>
-                                        </div>
-                                        <div className="h-block-info">
-                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
-                                            <address className="all-info"><span className="province">تهران، </span>میدان
-                                                هویزه، پلاک 103
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div> */}
 
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="h-block">
-                                <div className="row">
-                                    <div className="col-xl-5 col-3">
-                                        <div className="h-block-img">
-                                            <img src={img} width="159" height="159" alt="smart auction"
-                                                className="img-fluid" />
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-7 col-9">
-                                        <div className="h-block-header">
-                                            <div className="h-block-title">
-                                                <h3 className="default">گالری ساربان</h3>
-                                                <h6 className="default">هنرهای تجسمی</h6>
-                                            </div>
-                                            <button type="button" className="btn-follow">دنبال کردن</button>
-                                        </div>
-                                        <div className="h-block-info">
-                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
-                                            <address className="all-info"><span className="province">تهران، </span>میدان
-                                                هویزه، پلاک 103
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="h-block">
-                                <div className="row">
-                                    <div className="col-xl-5 col-3">
-                                        <div className="h-block-img">
-                                            <img src={img} width="159" height="159" alt="smart auction"
-                                                className="img-fluid" />
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-7 col-9">
-                                        <div className="h-block-header">
-                                            <div className="h-block-title">
-                                                <h3 className="default">گالری ساربان</h3>
-                                                <h6 className="default">هنرهای تجسمی</h6>
-                                            </div>
-                                            <button type="button" className="btn-follow">دنبال کردن</button>
-                                        </div>
-                                        <div className="h-block-info">
-                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
-                                            <address className="all-info"><span className="province">تهران، </span>میدان
-                                                هویزه، پلاک 103
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
 
                     <PaginationComponent count={countHousAuction} handeSelectPage={handeSelectPage} />
