@@ -43,6 +43,11 @@ function PanelSidebar(props) {
                 <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
                   <FontAwesomeIcon icon={faPlusCircle} /> حراج‌های ساخته‌شده
                 </NavLinkRouter>
+              </li>      
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
+                  <FontAwesomeIcon icon={faPlusCircle} /> درخواست خانه حراج 
+                </NavLinkRouter>
               </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">
@@ -54,21 +59,21 @@ function PanelSidebar(props) {
               {/*    <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/favorite">
+                 <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها
+               </NavLinkRouter>
+              </li>
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faBell} /> یادآوری‌ها*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases">
+                 <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من
+               </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
                   <FontAwesomeIcon icon={faWallet} /> کیف پول
@@ -83,6 +88,12 @@ function PanelSidebar(props) {
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
                 </NavLinkRouter>
+              </li>   
+
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-reminders" >
+                  <FontAwesomeIcon icon={faWallet} /> یادآوری‌ها
+                </NavLinkRouter>
               </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
@@ -90,7 +101,7 @@ function PanelSidebar(props) {
                 </NavLinkRouter>
               </li>
               <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-messages">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
                 </NavLinkRouter>
               </li>

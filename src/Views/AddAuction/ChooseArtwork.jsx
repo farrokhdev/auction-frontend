@@ -13,7 +13,7 @@ function Chooseartwork(props) {
   const [data, setData] = useState({})
   const [dataCount, setDataCount] = useState(0)
 
-    console.log(selectProduct)
+    // console.log(selectProduct)
 
   useEffect(()=>{
     setSelectProduct([])

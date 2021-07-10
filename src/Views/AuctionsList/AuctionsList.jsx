@@ -12,7 +12,7 @@ import {Link} from "react-router-dom";
 function AuctionsList() {
 
   const [Auctions, setAuctions] = useState("");
-  const [pageSize, setPageSize] = useState(9);
+  const [pageSize, setPageSize] = useState(30);
 
 
   const getProducts = (page_size=pageSize) => {
@@ -34,6 +34,7 @@ function AuctionsList() {
   }, [])
 
     function AuctionType(type){
+
         switch(type){
             case "SECOND_HIDDEN":
                 return "دومین پیشنهاد"
@@ -43,7 +44,8 @@ function AuctionsList() {
                 return "مدت دار"
             case "ONLINE":
                 return "آنلاین"
-            case "LIVE  ":
+            case "LIVE":
+
                 return "زنده"
             default:
                 return ""
@@ -53,7 +55,7 @@ function AuctionsList() {
 
   return (
       <div>
-          <HeaderPanel/>
+          <HeaderPanel  titlePage = {"حراج‌های ساخته‌شده"}/>
           <div className="panel-main">
           <PanelSidebar/>
           {/**Main**/}
@@ -87,13 +89,16 @@ function AuctionsList() {
                                           <td>{AuctionType(item.type)}</td>
                                           <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
                                           <td>{item.end_time !== "None" ? moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY'): ""}</td>
+
                                           <td>
                                               <button type="button" className="btn-outline-gray">{item.product.length} اثر</button>
                                           </td>
                                           <td>
+                                              <Link to="/panel-Bids">
                                               <button type="button" className="btn-outline-gray" data-bs-toggle="modal"
                                                       data-bs-target="#auctionBids">3 پیشنهاد
                                               </button>
+                                              </Link>
                                           </td>
                                           <td>
                                               <button type="button" className="btn-outline-gray"

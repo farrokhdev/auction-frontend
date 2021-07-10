@@ -36,7 +36,7 @@ const ChooseAuction = (props) => {
     return (
         <div>
             <Select
-                className="search-input"
+                className="search-input costume-select-input"
                 size="large"
                 dropdownClassName="text-right"
                 placeholder="نوع  حراجی را انتخاب کنید"

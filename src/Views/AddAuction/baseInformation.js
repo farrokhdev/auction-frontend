@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Select, Spin} from "antd";
 import DatePicker from 'react-datepicker2';
 import {Link} from "react-router-dom";
 import moment from 'moment-jalaali'
+
 const listAuctionType = [
     {name: "SECOND_HIDDEN", value: "دومین قیمت پیشنهاد با حراج (مخفی)"},
     {name: "HIDDEN", value: "قیمت پیشنهاد با حراج (مخفی)"},
@@ -14,20 +15,29 @@ const listAuctionType = [
 
 const BaseInformation = (props) => {
 
-    const {selectComponent, setSelectComponent,finalData, setFinalData} = props
+    const {selectComponent, setSelectComponent, finalData, setFinalData} = props
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
+    const [type, setType] = useState("")
+
+    useEffect(() => {
+        let listDate={}
+        finalData?.start_time && (listDate["start_time"]=moment(finalData?.start_time))
+        finalData?.end_time && (listDate["end_time"]=moment(finalData?.end_time))
+        finalData?.type && (setType(finalData?.type))
+        form.setFieldsValue({...finalData,...listDate})
+    }, [finalData])
 
     const onFinish = (values) => {
         // console.log(values)
-        setFinalData({...finalData,...values})
-        setSelectComponent(selectComponent+1)
+        setFinalData({...finalData, ...values})
+        setSelectComponent(selectComponent + 1)
     }
+
     return (
         <Form onFinish={onFinish}
               form={form}
-              // initialValues={{start_time:moment("1398-02-02","jYYYY-jMM-jDD")}}
               wrapperCol={{span: 24}}>
             <div className="row">
                 <div className="col-xxxxl-8">
@@ -44,21 +54,22 @@ const BaseInformation = (props) => {
                                             message: "تکمیل این فیلد ضروری است",
                                         },
                                     ]}>
-                                <Select
-                                    className="search-input w-100 fs-6"
-                                    size="large"
-                                    dropdownClassName="text-right"
-                                    placeholder="نوع  حراجی را انتخاب کنید"
-                                    onChange={value => {
-                                    }}
-                                >
-                                    {
-                                        listAuctionType.map((item, index) => (
-                                            <Select.Option value={item.name}
-                                                           key={index}>{item.value}</Select.Option>
-                                        ))
-                                    }
-                                </Select>
+                                    <Select
+                                        className="search-input w-100 fs-6"
+                                        size="large"
+                                        dropdownClassName="text-right"
+                                        placeholder="نوع  حراجی را انتخاب کنید"
+                                        onChange={value => {
+                                            setType(value)
+                                        }}
+                                    >
+                                        {
+                                            listAuctionType.map((item, index) => (
+                                                <Select.Option value={item.name}
+                                                               key={index}>{item.value}</Select.Option>
+                                            ))
+                                        }
+                                    </Select>
                                 </Form.Item>
                             </div>
                         </div>
@@ -76,7 +87,8 @@ const BaseInformation = (props) => {
                                             message: "تکمیل این فیلد ضروری است",
                                         },
                                     ]}>
-                                    <input type="text" className="default-input" placeholder="نام حراج را وارد نمایید."/>
+                                    <input type="text" className="default-input"
+                                           placeholder="نام حراج را وارد نمایید."/>
                                 </Form.Item>
 
                             </div>
@@ -95,7 +107,7 @@ const BaseInformation = (props) => {
                                             message: "تکمیل این فیلد ضروری است",
                                         },
                                     ]}>
-                                    <textarea  className="default-input" placeholder="آدرس حراج را وارد نمایید."/>
+                                    <textarea className="default-input" placeholder="آدرس حراج را وارد نمایید."/>
                                 </Form.Item>
 
                             </div>
@@ -116,19 +128,19 @@ const BaseInformation = (props) => {
                                                     message: "تکمیل این فیلد ضروری است",
                                                 },
                                             ]}>
-                                        <DatePicker
-                                            className="default-input pr-2 mt-2"
-                                            // value={this.state.date}
-                                            timePicker={false}
-                                            isGregorian={false}
-                                            // onChange={this.handleDateChange}
-                                            name="start_time"
-                                            id="start_time"
-                                        />
+                                            <DatePicker
+                                                className="default-input pr-2 mt-2"
+                                                // value={this.state.date}
+                                                timePicker={false}
+                                                isGregorian={false}
+                                                // onChange={this.handleDateChange}
+                                                name="start_time"
+                                                id="start_time"
+                                            />
                                         </Form.Item>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                {type!=='LIVE' && <div className="col-md-6">
                                     <div className="input-group">
                                         <label className="default-lable">تاریخ پایان</label>
                                         <Form.Item
@@ -151,7 +163,7 @@ const BaseInformation = (props) => {
                                             />
                                         </Form.Item>
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>
@@ -159,7 +171,7 @@ const BaseInformation = (props) => {
                         <div className="col-12">
                             <div className="button-group">
                                 {/*<button type="button" className="btn-gray">لغو</button>*/}
-                                    <Button type="button" className="btn-default" htmlType="submit">ادامه</Button>
+                                <Button type="button" className="btn-default" htmlType="submit">ثبت و ادامه</Button>
 
                             </div>
                         </div>

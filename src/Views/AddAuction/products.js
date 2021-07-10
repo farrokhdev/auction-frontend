@@ -101,7 +101,9 @@ const Products = (props) => {
                                     <Meta
                                         title={item?.artwork_title}
                                         description={<div className="d-flex align-items-center justify-content-between">
-                                            <input type="number" className="default-input" placeholder="قیمت..."
+                                            <input type="number" className="default-input"
+                                                   defaultValue={item?.base_price}
+                                                   placeholder="قیمت..."
                                                    onChange={e => {
                                                        // let t= {base_price:e.target.value || 0}
                                                        // let t= data
@@ -130,7 +132,7 @@ const Products = (props) => {
 
                         {products.length ? <button type="button" className="btn-default" onClick={() => {
                             setSelectComponent(selectComponent + 1)
-                        }}> ادامه</button> : ''}
+                        }}> ثبت و ادامه</button> : ''}
                     </div>
                 </div>
             </div>

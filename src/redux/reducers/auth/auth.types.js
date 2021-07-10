@@ -1,4 +1,4 @@
-// import profileReducer from "../auth/auth.reducer";
+// import auctionReducer from "../auth/auth.reducer";
 
 export default {
     REGISTER_START:"REGISTER_START",
