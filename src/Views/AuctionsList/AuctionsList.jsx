@@ -94,9 +94,11 @@ function AuctionsList() {
                                               <button type="button" className="btn-outline-gray">125 اثر</button>
                                           </td>
                                           <td>
+                                              <Link to="/panel-Bids">
                                               <button type="button" className="btn-outline-gray" data-bs-toggle="modal"
                                                       data-bs-target="#auctionBids">3 پیشنهاد
                                               </button>
+                                              </Link>
                                           </td>
                                           <td>
                                               <button type="button" className="btn-outline-gray"
