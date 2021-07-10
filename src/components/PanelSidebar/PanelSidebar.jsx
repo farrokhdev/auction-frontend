@@ -84,11 +84,11 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faWallet} /> لیست آثار
                 </NavLinkRouter>
               </li>
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
+                  <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش
+                </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
