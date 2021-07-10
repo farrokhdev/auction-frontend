@@ -101,7 +101,7 @@ function PanelSidebar(props) {
                 </NavLinkRouter>
               </li>
               <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/panel-messages">
+                <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
                 </NavLinkRouter>
               </li>
