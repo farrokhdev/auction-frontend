@@ -59,21 +59,21 @@ function PanelSidebar(props) {
               {/*    <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/favorite">
+                 <FontAwesomeIcon icon={faHeart} /> علاقه‌مندی‌ها
+               </NavLinkRouter>
+              </li>
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faBell} /> یادآوری‌ها*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases">
+                 <FontAwesomeIcon icon={faShoppingCart} /> خریدهای من
+               </NavLinkRouter>
+              </li>
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
                   <FontAwesomeIcon icon={faWallet} /> کیف پول

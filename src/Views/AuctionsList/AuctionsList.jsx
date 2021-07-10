@@ -55,7 +55,7 @@ function AuctionsList() {
 
   return (
       <div>
-          <HeaderPanel/>
+          <HeaderPanel  titlePage = {"حراج‌های ساخته‌شده"}/>
           <div className="panel-main">
           <PanelSidebar/>
           {/**Main**/}

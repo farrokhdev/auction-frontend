@@ -95,10 +95,10 @@ function TransferToPay() {
                                 <span className="price-title">بیشترین پیشنهاد خودکار شما</span>
                             </div>
                         </div>
-                        <div className="input-group">
+                        {/* <div className="input-group">
                             <label className="default-lable textalign-center">بیشترین پیشنهاد خودکار خود را وارد نمایید.</label>
                             <input type="text" className="default-input" placeholder="بیشترین پیشنهاد خودکار" />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </Modal>
