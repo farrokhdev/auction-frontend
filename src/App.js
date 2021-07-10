@@ -90,7 +90,7 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
-              <Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>
+              {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
               <Route exact path="/panel-message" component={UserPanelMessage} />
               <Route exact path="/panel-sell-advice" component={UserPanelSellAdvice} />
