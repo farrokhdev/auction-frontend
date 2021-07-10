@@ -1,7 +1,10 @@
 import types from './auction.types';
 import axios from "../../../utils/request";
+import UploadAxios from "../../../utils/uploadRequest";
 import {BASE_URL} from "../../../utils";
-import {EDIT_PROFILE} from "../../../utils/constant";
+import {UPLOAD_EXEL_AUCTION} from "../../../utils/constant";
+import {Upload} from "antd";
+import {getTokenObject} from "../../../utils/utils";
 
 // ----- Register --------
 export const setAUCTION = (payload) => (
@@ -17,17 +20,17 @@ export const removeAUCTION = (payload) => (
 )
 
 
-// export const getProfile = () => {
-//     return (dispatch) => {
-//         axios.get(`${BASE_URL}${EDIT_PROFILE}`)
-//             .then(r => {
-//                 if(r?.data.code===200)
-//             dispatch(setProfile(r.data.data.result))
-//         }).catch(e => {
-//
-//         })
-//     }
-// }
+export const uploadExel = (name,file) => async dispatch=>{
+
+        UploadAxios.put(`${BASE_URL}${UPLOAD_EXEL_AUCTION(name)}`,file)
+            .then(r => {
+                console.log(r)
+             return r;
+        }).catch(e => {
+
+        })
+
+}
 
 
 

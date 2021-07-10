@@ -13,4 +13,5 @@ module.exports={
     CATEGORIE_ACTIVITY:"/sale/category/",
     ADD_AUCTION:"/sale/auctions/",
     SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
+    UPLOAD_EXEL_AUCTION:name=>`/sale/upload/${name}/`,
 }
