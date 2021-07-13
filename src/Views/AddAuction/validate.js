@@ -28,12 +28,14 @@ const Validate = (props) => {
         validations_auction,
         has_recommendation,
         admin_confirmation,
-        add_previous_buyer
+        add_previous_buyer,
+        other,
+        is_send_invitation
     } = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
-    useEffect(() => {
-    }, [])
+    // useEffect(() => {
+    // }, [])
 
     const onFinish = (values) => {
         // console.log(values)
@@ -61,8 +63,8 @@ const Validate = (props) => {
                 {!admin_confirmation ? <div className="row">
                         <div className="col-12">
                             <div className="form-check sm-mrgt35">
-                                <input className="form-check-input" type="checkbox" checked={invitationCard}
-                                       onChange={e => setInvitationCard(e.target.checked)}
+                                <input className="form-check-input" type="checkbox" checked={is_send_invitation}
+                                       onChange={e => dispatch(setAUCTION({is_send_invitation: e.target.checked}))}
                                        id="checkbox42"/>
                                 <label className="form-check-label" htmlFor="checkbox42">
                                     ارسال دعوتنامه
@@ -80,7 +82,7 @@ const Validate = (props) => {
                                                     const {onSuccess, onError, file, action, onProgress} = e;
                                                     let getDate = new Date();
                                                     let formData = new FormData()
-                                                    getDate=moment(getDate).format("YYYY-MM-DDThh:mm")
+                                                    getDate = moment(getDate).format("YYYY-MM-DDThh:mm")
                                                     onSuccess({"status": "uploading"})
                                                     await formData.append('file', e?.file)
                                                     if (finalData?.title)
@@ -140,8 +142,8 @@ const Validate = (props) => {
                             </>}
                         <div className="col-12">
                             <div className="form-check">
-                                <input className="form-check-input" type="checkbox" checked={description}
-                                       onChange={e => setDescription(e.target.checked)}
+                                <input className="form-check-input" type="checkbox" checked={other}
+                                       onChange={e => dispatch(setAUCTION({other: e.target.checked}))}
                                        id="checkbox44"/>
                                 <label className="form-check-label" htmlFor="checkbox44">
                                     سایر
@@ -160,7 +162,7 @@ const Validate = (props) => {
                   wrapperCol={{span: 24}}>
 
                 <div className="row">
-                    {(description && !admin_confirmation) ? <div className="col-12">
+                    {(other && !admin_confirmation) ? <div className="col-12">
                         <div className="input-group">
                             <label className="default-lable">توضیحات</label>
                             <Form.Item

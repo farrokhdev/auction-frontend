@@ -40,7 +40,7 @@ const PriceAddValidate = (props) => {
         } else {
             dispatch(setAUCTION({validations_auction: [...validations_auction, values]}))
         }
-        form.setFieldsValue({minimum: values.threshold, threshold: '', step: ''})
+        form.setFieldsValue({minimum: values.threshold, threshold: '', sufficient_inventory: ''})
         setRange(values.threshold)
     }
     return (
@@ -100,7 +100,7 @@ const PriceAddValidate = (props) => {
                                     <label className="default-lable">واحد افزایش</label>
                                     <Form.Item
                                         className="w-100 mb-0"
-                                        name="step"
+                                        name="sufficient_inventory"
                                         rules={[
                                             {
                                                 required: true,
@@ -148,7 +148,7 @@ const PriceAddValidate = (props) => {
                             <td>{i + 1}</td>
                             <td>{item.minimum}</td>
                             <td>{item.threshold}</td>
-                            <td>{item.step}</td>
+                            <td>{item.sufficient_inventory}</td>
                         </tr>)
                     }
                     </tbody>

@@ -22,12 +22,10 @@ import Validate from "./validate";
 const listComponent = [
     {name: "اطلاعات پایه", value: 1, thisComponent: BaseInformation},
     {name: "انتخاب محصول", value: 2, thisComponent: Products},
-    // {name: " تاریخ حراج", value: 3, thisComponent: ChooseLat},
     {name: " واحد پول ", value: 3, thisComponent: Currency},
     {name: " بازه پیشنهادات", value: 4, thisComponent: Suggest},
     {name: "اعتبارسنجی خریداران", value: 5, thisComponent: Validate},
     {name: "شرایط", value: 6, thisComponent: Conditions},
-    // {name: "شرایط", value: 4, thisComponent: Conditions},
 ]
 
 
@@ -39,31 +37,82 @@ function Index() {
     // const [selectComponent, setSelectComponent] = useState(1);
     const dispatch = useDispatch();
     const {id} = useSelector((state) => state.profileReducer)
-    const {data, products, selectComponent, payment_method,bid_steps,extendable_deadline,has_recommendation,admin_confirmation,add_previous_buyer} = useSelector((state) => state.auctionReducer)
+    const {
+        data,
+        products,
+        selectComponent,
+        payment_method,
+        steps,
+        extendable_deadline,
+        has_recommendation,
+        admin_confirmation,
+        add_previous_buyer,
+        productsDate,
+        choose_product_daily,
+        productsArrayDate,
+        other,
+        is_send_invitation,
+        has_gallery
+    } = useSelector((state) => state.auctionReducer)
+    const checkData = useSelector((state) => state.auctionReducer)
 
     useEffect(() => {
         if (!id)
             dispatch(getProfile())
     }, [])
 
-    const sendData = () => {
+    const sendData = async () => {
+        console.log(products, productsDate, data, checkData)
         let allData = data
+        let allDataMain = {}
+            Object.assign(allDataMain,checkData )
+        delete allDataMain["data"]
+        delete allDataMain["productsArrayDate"]
+        delete allDataMain["productsDate"]
+        delete allDataMain["products"]
+        delete allDataMain["error"]
         setLoading(true)
         allData["start_time"] = moment(data.start_time).format("YYYY-MM-DD hh:mm:ss")
         allData["end_time"] = (data?.type !== "LIVE") ? moment(data.end_time).format("YYYY-MM-DD hh:mm:ss") : null
-        allData["bidding_interval"] = (data?.type !== "LIVE") ? null : data.bidding_interval
-        let list_products = products.map(t => ({base_price: (t?.base_price || 0), product_id: t?.id}))
-        console.log(allData)
+        allData["bidding_interval"] = (data?.type === "ONLINE") ? data.bidding_interval : null
+        let auction_product = []
+        let auctions_date = []
+        if (choose_product_daily) {
+            Object.keys(productsDate).map(t => {
+                let p = []
+                Object.keys(productsDate[t]).map(c => p.push(productsDate[t][productsDate[t][c]?.id]?.id))
+                auctions_date.push({date: t, products_id: p})
+            })
+            auction_product = productsArrayDate.map(t => ({
+                base_price: (t?.base_price || 0),
+                product_id: t?.id
+            }))
+        } else {
+            Object.keys(products).map(t => (auction_product.push({
+                base_price: (products[t]?.base_price || 0),
+                product_id: products[t]?.id
+            })))
+        }
+
+
         axios.post(`${BASE_URL}${ADD_AUCTION}`, {
+            ...allDataMain,
             ...allData,
-            bid_steps,
-            extendable_deadline,
-            has_recommendation,
-            admin_confirmation,
-            add_previous_buyer,
-            products_id: list_products,
+            // steps,
+            // extendable_deadline,
+            // has_recommendation,
+            // admin_confirmation,
+            // add_previous_buyer,
+            // payment_method:payment_method,
+            auction_product: auction_product,
+            auctions_date: auctions_date,
             "is_live_streaming": false,
             "is_bidding_banned": false,
+            // "currency": data.currency,
+            // other,
+            // is_send_invitation,
+            // has_gallery
+            // house:id
         })
             .then(resp => {
                 setLoading(false)
@@ -76,12 +125,14 @@ function Index() {
                     // refreshTable()
                     // setSelectComponent(selectComponent + 1)
                     // setIsModalVisible(false)
+                } else {
+                    console.log(resp)
                 }
             })
             .catch(err => {
                 setLoading(false)
-                console.error(err);
-                message.error("دوباره تلاش کنید")
+                console.error(err.response );
+                message.error(err.response?.data?.message || "دوباره تلاش کنید")
             })
     }
     if (next) {
@@ -134,9 +185,9 @@ function Index() {
                             <ul className="wizard-list">
                                 {
                                     listComponent.map((item, i) => <li key={i}
-                                                                       className={`${selectComponent === item?.value && "current"} ${ selectComponent > item?.value && "done"}`}>
+                                                                       className={`${selectComponent === item?.value && "current"} ${selectComponent > item?.value && "done"}`}>
                                         <span className="d-none d-md-inline-block"> {item?.name}</span>
-                                        <span className="wizard-mobile d-md-none">{i+1}</span>
+                                        <span className="wizard-mobile d-md-none">{i + 1}</span>
                                     </li>)
                                 }
                                 {/*<li className="current">*/}
@@ -173,7 +224,7 @@ function Index() {
                                                  selectComponent={selectComponent}
                                                  finalData={data} setFinalData={setData} products={products} id={id}
                                                  setProducts={setProducts}
-                                                 bid_steps={bid_steps}
+                                                 steps={steps}
                                                  payment_method={payment_method} setPayment_method={setPayment_method}/>
                             })
                         }
@@ -191,11 +242,12 @@ function Index() {
                         {/*            payment_method={payment_method} setPayment_method={setPayment_method}/>}*/}
                         <div className="text-start">
                             {selectComponent !== 1 ?
-                                <Button type="button" className="btn-warn-custom mt-4"  loading={loading} onClick={() => {
-                                    dispatch(removeAUCTION())
-                                }}>انصراف و حذف اطلاعات
+                                <Button type="button" className="btn-warn-custom mt-4" loading={loading}
+                                        onClick={() => {
+                                            dispatch(removeAUCTION())
+                                        }}>انصراف و حذف اطلاعات
                                 </Button> : ''}
-                            {selectComponent === 6   ?
+                            {selectComponent === 6 ?
                                 <Button className="btn-default me-2" loading={loading} onClick={sendData}>ثبت
                                     نهایی</Button> : ''}
                         </div>

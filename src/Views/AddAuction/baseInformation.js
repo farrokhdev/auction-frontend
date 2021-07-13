@@ -97,14 +97,33 @@ const BaseInformation = (props) => {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="input-group">
+                                <label className="default-lable"> متن جزییات</label>
+                                <Form.Item
+                                    className="w-100"
+                                    name="details"
+                                    rules={[
+                                        {
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
+                                        },
+                                    ]}>
+                                    <textarea className="default-input" placeholder="جزییات حراج را وارد نمایید."/>
+                                </Form.Item>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="input-group">
                                 <label className="default-lable"> آدرس</label>
                                 <Form.Item
                                     className="w-100"
                                     name="address"
                                     rules={[
                                         {
-                                            required: true,
-                                            message: "تکمیل این فیلد ضروری است",
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
                                         },
                                     ]}>
                                     <textarea className="default-input" placeholder="آدرس حراج را وارد نمایید."/>
