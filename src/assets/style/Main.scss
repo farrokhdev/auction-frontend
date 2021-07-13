@@ -6481,3 +6481,26 @@ address.all-info:before {
     }
 
   }
+  .ant-collapse-header{
+    border-radius: 100% !important;
+  }
+
+  .ant-collapse , .ant-collapse-header{
+    border: white !important;
+    border-radius: 38px !important;
+    border-bottom: 0px solid white !important;
+  }
+
+  .ant-collapse-content-box{
+    border: white !important;
+    border-bottom: 1px solid white !important;
+    
+  }
+
+  .ant-collapse-content-box{
+    border-top: 1px solid white !important;
+  }
+
+.ant-collapse-arrow{
+      margin-left: 10px !important;
+  }
