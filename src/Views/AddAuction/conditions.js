@@ -119,7 +119,7 @@ const Conditions = (props) => {
                                 }}>بازگشت
                                 </Button>
 
-                                <Button className="btn-default" htmlType="submit">ثبت موقت</Button>
+                                <Button className="btn-default" htmlType="submit">ثبت </Button>
 
                             </div>
                         </div>

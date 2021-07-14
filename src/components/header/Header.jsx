@@ -8,6 +8,7 @@ import login from "../../images/login.svg";
 import Search from "./Search";
 import {connect, useDispatch} from 'react-redux';
 import {clearStorage} from '../../redux/reducers/auth/auth.actions'
+import {clearStorageAll} from '../../redux/reducers/all/all.actions'
 import { Link } from "react-router-dom";
 import {removeToken} from "../../utils/utils";
 
@@ -201,7 +202,7 @@ const handleRedirect = () => {
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/" onClick={()=>{
-                      dispatch(clearStorage())
+                      dispatch(clearStorageAll())
                     }}>
                       خروج
                     </Link>

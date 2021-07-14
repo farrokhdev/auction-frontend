@@ -37,6 +37,7 @@ const BaseInformation = (props) => {
     }
 
     return (
+        <>
         <Form onFinish={onFinish}
               form={form}
               wrapperCol={{span: 24}}>
@@ -245,6 +246,7 @@ const BaseInformation = (props) => {
                 </div>
             </div>
         </Form>
+            </>
     );
 };
 

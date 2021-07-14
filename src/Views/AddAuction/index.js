@@ -61,6 +61,8 @@ function Index() {
     const checkData = useSelector((state) => state.auctionReducer)
 
     useEffect(() => {
+
+
         if (!id)
             dispatch(getProfile())
     }, [])
