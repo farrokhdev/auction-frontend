@@ -6484,6 +6484,31 @@ address.all-info:before {
 
   }
 
+  .ant-collapse-header{
+    border-radius: 100% !important;
+  }
+
+  .ant-collapse , .ant-collapse-header{
+    border: white !important;
+    border-radius: 38px !important;
+    border-bottom: 0px solid white !important;
+  }
+
+  .ant-collapse-content-box{
+    border: white !important;
+    border-bottom: 1px solid white !important;
+    
+  }
+
+  .ant-collapse-content-box{
+    border-top: 1px solid white !important;
+  }
+
+.ant-collapse-arrow{
+      margin-left: 10px !important;
+  }
+
+
   .ant-modal-body .ant-btn-primary{
     @include pinkBtn;
     margin-right: 10px !important;
@@ -6506,9 +6531,6 @@ address.all-info:before {
     color: white !important;
   }
 
-  .ant-modal-footer{
-    display: none !important;
-  }
   .ant-modal-title{
     text-align: right !important;
   }
@@ -6516,3 +6538,8 @@ address.all-info:before {
   .ant-modal-header{
     border-bottom: none !important;
   }
+
+  .ant-upload-list-item-error, .ant-upload-list-item-error .ant-upload-text-icon > .anticon, .ant-upload-list-item-error .ant-upload-list-item-name {
+    color: #0d6efd !important;
+}
+

@@ -1,4 +1,5 @@
 import types from './panel.types';
+import typesAll from "../all/all.types";
 
 const initial_state = {
     title : "",
@@ -59,7 +60,8 @@ const panelReducer = (state = initial_state, {type, payload}) => {
         //         ...state,
         //         focusBankInfo : false,
         //     }
-
+        case typesAll.CLEAR_STORAGE_ALL:
+            return initial_state
         default:
             return state;
     }

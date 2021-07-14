@@ -24,7 +24,7 @@ const Suggest = (props) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
     // const [data, setData] = useState({})
-    const {extendable_deadline ,bid_steps,data} = useSelector((state) => state.auctionReducer)
+    const {extendable_deadline ,steps,data} = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const Suggest = (props) => {
         setFinalData({...finalData, ...values})
         setSelectComponent(selectComponent + 1)
         // sendData(values)
-        // dispatch(setAUCTION({bid_steps:values}))
+        // dispatch(setAUCTION({steps:values}))
 
     }
     return (
@@ -50,7 +50,7 @@ const Suggest = (props) => {
                 <div className="row">
                     <div className="col-xxxxl-8">
                         {console.log(finalData?.type)}
-                        {(finalData?.type === "LIVE") ? <div className="row">
+                        {(finalData?.type === "ONLINE") ? <div className="row">
                             <div className="col-md-6">
                                 <div className="input-group">
                                     <label className="default-lable">بازه زمانی پیشنهاد</label>
@@ -106,14 +106,14 @@ const Suggest = (props) => {
                                 <div className="button-group">
 
                                     <Button type="button" className="btn-gray" onClick={() => {
-                                        if(data.type ==="ONLINE" || data.type ==="PERIODIC")
+                                        if(data?.type ==="ONLINE" || data?.type ==="PERIODIC")
                                             setSelectComponent(selectComponent - 1)
                                         else
                                             setSelectComponent(selectComponent - 2)
                                     }}>بازگشت</Button>
 
 
-                                    {  <Button className="btn-default" htmlType="submit" disabled={!bid_steps?.length}>ادامه</Button> }
+                                    {  <Button className="btn-default" htmlType="submit" disabled={!steps?.length}>ادامه</Button> }
 
                                 </div>
                             </div>
