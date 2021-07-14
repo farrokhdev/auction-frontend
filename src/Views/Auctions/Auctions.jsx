@@ -111,11 +111,11 @@ function Auctions() {
             case "HIDDEN":
                 return "اولین پیشنهاد"
             case "PERIODIC":
-                return "مدت دار"
+                return "حراج مدت دار "
             case "ONLINE":
-                return "آنلاین"
+                return "حراج آنلاین"
             case "LIVE  ":
-                return "زنده"
+                return "حراج زنده"
             default:
                 return ""
         }
@@ -138,7 +138,7 @@ function Auctions() {
             <Header/>
             <main className="innercontent" id="all-auctions">
                 <div className="container innercontainer">
-                    <Maintitle title={'حراجی'} handleSetOrdering={handleSetOrdering}/>
+                    <Maintitle title={'حراج ها'} handleSetOrdering={handleSetOrdering}/>
                     <div className="row">
                         <Sidebar
                             params={params}
@@ -165,7 +165,7 @@ function Auctions() {
                                                 <div className="block-head row">
                                                     <div className="col-xl-3 col-sm-4 col-3">
                                                         <span className="category-icon live-icon">
-                                                          <span className="d-none d-md-inline-block"> حراج</span> {AuctionType(item.type) }
+                                                          <span className="d-none d-md-inline-block"> </span> {AuctionType(item.type) }
 
                                                         </span>
                                                     </div>
@@ -225,11 +225,20 @@ function Auctions() {
                                                     <div className="col-sm-7 textalign-left">
                                                         <button type="button" className="btn btn-gray ms-2">
                                                             <FontAwesomeIcon icon={faEye}/>
-                                                            مشاهده زنده
+                                                            مشاهده {AuctionType(item.type) }
+
                                                         </button>
+                                                        {item.status !== "CLOSED" ?
+                                                            <button type="button" class="btn btn-lightpink">حراج به پایان رسید</button>
+                                                            :
                                                         <button type="button" className="btn btn-main join">
-                                                            عضویت در حراج
+                                                            {/* عضویت در حراج  */}
+                                                            {item.status? "عضویت در حراج" : "ثبت نطر"}
+                                                        
                                                         </button>
+                                                            
+                                                            
+                                                    }
                                                     </div>
                                                 </div>
                                             </div>
