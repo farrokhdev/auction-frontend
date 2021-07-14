@@ -50,7 +50,7 @@ const Suggest = (props) => {
                 <div className="row">
                     <div className="col-xxxxl-8">
                         {console.log(finalData?.type)}
-                        {(finalData?.type === "LIVE") ? <div className="row">
+                        {(finalData?.type === "ONLINE") ? <div className="row">
                             <div className="col-md-6">
                                 <div className="input-group">
                                     <label className="default-lable">بازه زمانی پیشنهاد</label>

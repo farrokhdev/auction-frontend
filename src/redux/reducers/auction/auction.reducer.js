@@ -5,7 +5,7 @@ const initial_state = {
     pending: false,
     error: null,
     data:{
-        "currency":"toman1"
+        "currency":"toman"
     },
     products:{},
     productsArrayDate:[],

@@ -67,8 +67,14 @@ const Products = (props) => {
 
         let start_time = moment(data?.start_time).format("jYYYY-jMM-jDD")
         let end_time = moment(data?.end_time).format("jYYYY-jMM-jDD")
-        let list_date = productsDate
+        let list_date = {}
+        Object.keys(productsDate).map(t => {
+            if (t >= start_time && t <= end_time) {
+                list_date[t] = productsDate[t]
+            }
+        })
         let this_date = start_time
+        console.log(start_time, end_time,list_date)
         for (this_date; this_date <= end_time;) {
             if (!productsDate?.[this_date]) {
                 console.log('---now', productsDate?.[this_date])
@@ -80,7 +86,6 @@ const Products = (props) => {
         dispatch(setAUCTION({productsDate: list_date, productsArrayDate: productsArrayDate}))
 
     }, [])
-    console.log(productsDate, productsArrayDate)
     return (
         <div>
             <div>

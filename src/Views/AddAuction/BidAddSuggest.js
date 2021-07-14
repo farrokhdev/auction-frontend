@@ -68,7 +68,7 @@ const Suggest = (props) => {
                                         }}
                                     >
                                         {
-                                            [{name_fa:"تومان",name_en:"toman"},{name_fa:"دلار",name_en:"dollar"}].map((item, index) => (
+                                            [{name_fa:"تومان",name_en:"toman"},{name_fa:"دلار",name_en:"dollar1"}].map((item, index) => (
                                                 <Select.Option value={item.name_en}
                                                                key={index}>{item.name_fa} </Select.Option>
                                             ))

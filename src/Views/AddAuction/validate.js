@@ -30,12 +30,14 @@ const Validate = (props) => {
         admin_confirmation,
         add_previous_buyer,
         other,
-        is_send_invitation
+        is_send_invitation,
+        data
     } = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    // }, [])
+    useEffect(() => {
+        form.setFieldsValue({description:data?.description || ""})
+    }, [])
 
     const onFinish = (values) => {
         // console.log(values)
@@ -73,7 +75,7 @@ const Validate = (props) => {
                             </div>
 
                         </div>
-                        {invitationCard ? <div className="col-12 mb-4" dir="ltr">
+                        {is_send_invitation ? <div className="col-12 mb-4" dir="ltr">
                                 {/*<button type="button" className="btn-outline-pink" >آپلود لیست</button>*/}
                                 <div className="text-end">
                                     <Upload {...props} className="btn-outline-pink" style={{color: "#e6007e"}}
