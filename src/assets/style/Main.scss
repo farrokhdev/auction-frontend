@@ -1,3 +1,5 @@
+@import "./mixin.scss";
+
 @font-face {
   font-family: IRANSans_light;
   font-style: normal;
@@ -6480,4 +6482,37 @@ address.all-info:before {
       display: none !important;
     }
 
+  }
+
+  .ant-modal-body .ant-btn-primary{
+    @include pinkBtn;
+    margin-right: 10px !important;
+  }
+
+  
+  .ant-modal-body .ant-btn-primary:hover{
+    background-color: var(--pink) !important;
+    color: white !important;
+  }  
+  
+  .ant-modal-body .ant-btn:first-child{
+    @include grayBtn;
+    margin-right: 10px !important;
+  }
+
+  
+  .ant-modal-body .ant-btn:first-child:hover{
+    background-color: var(--darkgray) !important;
+    color: white !important;
+  }
+
+  .ant-modal-footer{
+    display: none !important;
+  }
+  .ant-modal-title{
+    text-align: right !important;
+  }
+
+  .ant-modal-header{
+    border-bottom: none !important;
   }
