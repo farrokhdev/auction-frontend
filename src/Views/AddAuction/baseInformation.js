@@ -20,6 +20,7 @@ const BaseInformation = (props) => {
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
     const [type, setType] = useState("")
+    const [today, setToday] = useState(data?.start_time || moment())
 
     useEffect(() => {
         let listDate={}
@@ -30,7 +31,7 @@ const BaseInformation = (props) => {
     }, [finalData])
 
     const onFinish = (values) => {
-        // console.log(values)
+        console.log(values)
         setFinalData({...finalData, ...values})
         setSelectComponent(selectComponent + 1)
     }
@@ -97,14 +98,33 @@ const BaseInformation = (props) => {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="input-group">
+                                <label className="default-lable"> متن جزییات</label>
+                                <Form.Item
+                                    className="w-100"
+                                    name="details"
+                                    rules={[
+                                        {
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
+                                        },
+                                    ]}>
+                                    <textarea className="default-input" placeholder="جزییات حراج را وارد نمایید."/>
+                                </Form.Item>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="input-group">
                                 <label className="default-lable"> آدرس</label>
                                 <Form.Item
                                     className="w-100"
                                     name="address"
                                     rules={[
                                         {
-                                            required: true,
-                                            message: "تکمیل این فیلد ضروری است",
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
                                         },
                                     ]}>
                                     <textarea className="default-input" placeholder="آدرس حراج را وارد نمایید."/>
@@ -133,7 +153,11 @@ const BaseInformation = (props) => {
                                                 // value={this.state.date}
                                                 timePicker={false}
                                                 isGregorian={false}
-                                                // onChange={this.handleDateChange}
+                                                onChange={(value)=>{
+                                                    if(value){
+                                                        setToday(value)
+                                                    }
+                                                }}
                                                 name="start_time"
                                                 id="start_time"
                                             />
@@ -150,6 +174,10 @@ const BaseInformation = (props) => {
                                                 {
                                                     required: true,
                                                     message: "تکمیل این فیلد ضروری است",
+                                                },
+                                                {
+                                                    validator: (_, value) =>
+                                                    value > today ? Promise.resolve() : Promise.reject(new Error(` تاریخ بزرگتر از تاریخ شروع وارد کنید `))
                                                 },
                                             ]}>
                                             <DatePicker

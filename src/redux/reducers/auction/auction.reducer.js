@@ -5,17 +5,23 @@ const initial_state = {
     pending: false,
     error: null,
     data:{
-        description:""
+        "currency":"toman"
     },
-    products:[],
-    bid_steps:[],
+    products:{},
+    productsArrayDate:[],
+    productsDate:{},
+    steps:[],
     validations_auction:[],
     selectComponent:1,
-    payment_method:false,
+    payment_method:"OFFLINE",
     extendable_deadline:false,
     has_recommendation:false,
     admin_confirmation:false,
     add_previous_buyer:false,
+    choose_product_daily:false,
+    other:false,
+    is_send_invitation:false,
+    has_gallery:false,
 }
 
 

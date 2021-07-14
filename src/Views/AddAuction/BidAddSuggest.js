@@ -20,24 +20,25 @@ const Suggest = (props) => {
     } = props
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
-    const [data, setData] = useState({})
+    // const [data, setData] = useState({})
     const [listRecord, setListRecord] = useState([])
     const [range, setRange] = useState(0)
     const dispatch = useDispatch();
-    const {bid_steps} = useSelector((state) => state.auctionReducer)
+    const {steps,data} = useSelector((state) => state.auctionReducer)
     useEffect(() => {
-        if (!bid_steps.length) {
+        form.setFieldsValue({currency: data.currency})
+        if (!steps.length) {
             form.setFieldsValue({minimum: 0})
         } else {
-            form.setFieldsValue({minimum: bid_steps[bid_steps.length - 1].threshold})
-            setRange(bid_steps[bid_steps.length - 1].threshold)
+            form.setFieldsValue({minimum: steps[steps.length - 1].threshold})
+            setRange(steps[steps.length - 1].threshold)
         }
     }, [])
     const onFinish = (values) => {
-        if (!bid_steps.length) {
-            dispatch(setAUCTION({bid_steps: [values]}))
+        if (!steps.length) {
+            dispatch(setAUCTION({steps: [values]}))
         } else {
-            dispatch(setAUCTION({bid_steps: [...bid_steps, values]}))
+            dispatch(setAUCTION({steps: [...steps, values]}))
         }
         form.setFieldsValue({minimum: values.threshold, threshold: '', step: ''})
         setRange(values.threshold)
@@ -54,25 +55,26 @@ const Suggest = (props) => {
                             <div className="col-md-6">
                                 <div className="input-group">
                                     <label className="default-lable">واحد پول</label>
-
+                                    <Form.Item
+                                        className="w-100 mb-0"
+                                        name="currency">
                                     <Select
                                         className="search-input w-100 fs-6"
                                         size="large"
                                         dropdownClassName="text-right"
                                         placeholder="  واحد پول را انتخاب کنید"
-                                        // onChange={value => {
-                                        //     setType(value)
-                                        // }}
-                                        defaultValue="تومان"
+                                        onChange={value => {
+                                            dispatch(setAUCTION({data: { ...data,currency:value}}))
+                                        }}
                                     >
                                         {
-                                            ["تومان"].map((item, index) => (
-                                                <Select.Option value={item}
-                                                               key={index}>{item} </Select.Option>
+                                            [{name_fa:"تومان",name_en:"toman"},{name_fa:"دلار",name_en:"dollar1"}].map((item, index) => (
+                                                <Select.Option value={item.name_en}
+                                                               key={index}>{item.name_fa} </Select.Option>
                                             ))
                                         }
                                     </Select>
-
+                                    </Form.Item>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +143,7 @@ const Suggest = (props) => {
                         </div>
                         <div className="text-start">
                             <Button className="add-row-danger" onClick={() => {
-                                dispatch(setAUCTION({bid_steps: []}))
+                                dispatch(setAUCTION({steps: []}))
                                 setRange(0)
                                 form.setFieldsValue({minimum: 0})
                             }}><FontAwesomeIcon className="ms-1"
@@ -158,7 +160,7 @@ const Suggest = (props) => {
             </Form>
             <div>
                 <div className="table-responsive">
-                {(bid_steps && bid_steps.length) ? <table className="panel-table create-auctions table">
+                {(steps && steps.length) ? <table className="panel-table create-auctions table">
                     <thead>
                     <tr>
                         <th>شماره</th>
@@ -169,7 +171,7 @@ const Suggest = (props) => {
                     </thead>
                     <tbody>
                     {
-                        bid_steps.map((item, i) => <tr>
+                        steps.map((item, i) => <tr>
                             <td>{i + 1}</td>
                             <td>{item.minimum}</td>
                             <td>{item.threshold}</td>
