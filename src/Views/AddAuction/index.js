@@ -32,7 +32,6 @@ const listComponent = [
     {name: "شرایط", value: 6, thisComponent: Conditions},
 ]
 
-
 function Index() {
     // const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
