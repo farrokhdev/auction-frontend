@@ -14,11 +14,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../../redux/reducers/profile/profile.actions";
 import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
 import moment from "moment-jalaali";
+import Suggest from "./suggest";
+import ChooseLat from "./ChooseLat";
+import Currency from "./currency";
+import Validate from "./validate";
 
 const listComponent = [
     {name: "اطلاعات پایه", value: 1, thisComponent: BaseInformation},
     {name: "انتخاب محصول", value: 2, thisComponent: Products},
-    {name: "شرایط", value: 3, thisComponent: Conditions},
+    // {name: " تاریخ حراج", value: 3, thisComponent: ChooseLat},
+    {name: " واحد پول ", value: 3, thisComponent: Currency},
+    {name: " بازه پیشنهادات", value: 4, thisComponent: Suggest},
+    {name: "اعتبارسنجی خریداران", value: 5, thisComponent: Validate},
+    {name: "شرایط", value: 6, thisComponent: Conditions},
+    // {name: "شرایط", value: 4, thisComponent: Conditions},
 ]
 
 
@@ -30,7 +39,7 @@ function Index() {
     // const [selectComponent, setSelectComponent] = useState(1);
     const dispatch = useDispatch();
     const {id} = useSelector((state) => state.profileReducer)
-    const {data, products, selectComponent, payment_method} = useSelector((state) => state.auctionReducer)
+    const {data, products, selectComponent, payment_method,bid_steps,extendable_deadline,has_recommendation,admin_confirmation,add_previous_buyer} = useSelector((state) => state.auctionReducer)
 
     useEffect(() => {
         if (!id)
@@ -42,13 +51,18 @@ function Index() {
         setLoading(true)
         allData["start_time"] = moment(data.start_time).format("YYYY-MM-DD hh:mm:ss")
         allData["end_time"] = (data?.type !== "LIVE") ? moment(data.end_time).format("YYYY-MM-DD hh:mm:ss") : null
+        allData["bidding_interval"] = (data?.type !== "LIVE") ? null : data.bidding_interval
         let list_products = products.map(t => ({base_price: (t?.base_price || 0), product_id: t?.id}))
+        console.log(allData)
         axios.post(`${BASE_URL}${ADD_AUCTION}`, {
             ...allData,
+            bid_steps,
+            extendable_deadline,
+            has_recommendation,
+            admin_confirmation,
+            add_previous_buyer,
             products_id: list_products,
             "is_live_streaming": false,
-            "bidding_interval": null,
-            "extendable_deadline": false,
             "is_bidding_banned": false,
         })
             .then(resp => {
@@ -107,6 +121,7 @@ function Index() {
         dispatch(setAUCTION({payment_method}))
     }
 
+
     return (
         <div>
             <HeaderPanel/>
@@ -119,9 +134,9 @@ function Index() {
                             <ul className="wizard-list">
                                 {
                                     listComponent.map((item, i) => <li key={i}
-                                                                       className={selectComponent === item?.value && "current"}>
+                                                                       className={`${selectComponent === item?.value && "current"} ${ selectComponent > item?.value && "done"}`}>
                                         <span className="d-none d-md-inline-block"> {item?.name}</span>
-                                        <span className="wizard-mobile d-md-none">1</span>
+                                        <span className="wizard-mobile d-md-none">{i+1}</span>
                                     </li>)
                                 }
                                 {/*<li className="current">*/}
@@ -158,6 +173,7 @@ function Index() {
                                                  selectComponent={selectComponent}
                                                  finalData={data} setFinalData={setData} products={products} id={id}
                                                  setProducts={setProducts}
+                                                 bid_steps={bid_steps}
                                                  payment_method={payment_method} setPayment_method={setPayment_method}/>
                             })
                         }
@@ -179,7 +195,7 @@ function Index() {
                                     dispatch(removeAUCTION())
                                 }}>انصراف و حذف اطلاعات
                                 </Button> : ''}
-                            {selectComponent === 3 ?
+                            {selectComponent === 6   ?
                                 <Button className="btn-default me-2" loading={loading} onClick={sendData}>ثبت
                                     نهایی</Button> : ''}
                         </div>

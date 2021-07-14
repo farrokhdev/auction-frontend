@@ -22,8 +22,10 @@ function RequestHouseAuction() {
     const [activites , setActivites] = useState([])
     const [homeAuctions, setHomeAuctions] = useState([])
     const [point, setPoint] = useState({})
-    const [url, setUrl] = useState('')
-    const [urlKey, setUrlKey] = useState('')
+    const [url_image, setUrl_image] = useState('')
+    const [url_image_Key, setUrl_image_Key] = useState('')    
+    const [url_file, setUrl_file] = useState('')
+    const [url_file_Key, setUrl_file_Key] = useState('')
     const [request, setRequest] = useState({
 
         home_auction_name: "arsam",
@@ -34,9 +36,8 @@ function RequestHouseAuction() {
         email : '' , 
         phone : '',
         address: "" , 
-        media_name : '',
-        media_type : '',
-        media_path : '',
+        media_name_image : '',
+        media_name_file : '',
         media_key : '',
         link_telegram : '',
         link_instagram : '',
@@ -44,52 +45,18 @@ function RequestHouseAuction() {
     })
 
 
-    // const props = {
-    //     action: `${BASE_URL}${UPLOAD}`,
-    //     listType: 'picture',
-    //     previewFile(file) {
-    //       console.log('Your upload file:', file);
-    //       // Your process logic. Here we just mock to the same file
-    //       return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
-    //         method: 'POST',
-    //         body: file,
-    //       })
-    //         .then(res => res.json())
-    //         .then(({ thumbnail }) => thumbnail);
-    //     },
-    //   };
-
-
 
     useEffect(() => {
         getCategoryActivities();
         getHomeAuctions();
-        // requestImageUrl();
     }, [])
 
-    // const requestImageUrl = () => {
-    //     let payload = {"content_type" : "image"}
-    //     axios.post(`${BASE_URL}${UPLOAD}` , payload).then(res => {
-    //         setUrl(res.data.data.result.upload_url);
-    //         setUrlKey(res.data.data.result.file_key)
-    //     }).catch(err => {
-    //         console.error(err)
-    //     })
-    // }
 
-    console.log("URL ->>>>> " , url);
-
-
-    
-
-    const handleRequest = async (info) => {
+    const handleRequestImage = async (info) => {
 
         let func1 = await axios.post(`${BASE_URL}${PRE_UPLOAD}` , {"content_type": "image"}).then(res => {
-            setUrl(res.data.data.result.upload_url);
-            setUrlKey(res.data.data.result.file_key)
-
-            console.log("**** ---???? ",res.data.data.result);
-    
+            setUrl_image(res.data.data.result.upload_url);
+            setUrl_image_Key(res.data.data.result.file_key)    
         return res.data.data.result ;
           
         }).catch(err => {
@@ -126,15 +93,49 @@ function RequestHouseAuction() {
 
 
 
+
     
-    // const addMedia = (payload) => {
+    const handleRequestFile = async (info) => {
+
+        let func1 = await axios.post(`${BASE_URL}${PRE_UPLOAD}` , {"content_type": "image"}).then(res => {
+            setUrl_file(res.data.data.result.upload_url);
+            setUrl_file_Key(res.data.data.result.file_key)    
+
+            console.log("^^^^^^^ ->>>>>", res.data.data.result);
+        return res.data.data.result ;
+          
+        }).catch(err => {
+            console.error(err)
+        })
     
-    //     axios.put(url , payload).then(res => {
-    //         console.log(res);
-    //     }).catch(err => {
-    //         console.error(err)
-    //     })
-    // }
+        // **************************
+    
+        let func2 = await axios.put(func1?.upload_url).then(res => {
+
+            return res.data.data.result ;
+
+        }).catch(err => {
+            console.error(err)
+        })
+    
+        // ***************************
+    
+        let func3 = await axios.post(`${BASE_URL}${UPLOAD}` , {
+    
+            "media_path": func1?.upload_url,
+            "type": "image",
+            "bucket_name": "image",
+            "file_key": func1?.file_key
+    
+        }).then(res => {
+                
+        }).catch(err => {
+            console.error(err)
+        })
+    
+
+    }
+
 
 
 
@@ -158,10 +159,6 @@ function RequestHouseAuction() {
     
 
     const handleSetActivityType = (value) =>{
-        // let a = request.activity_type
-        // a.append(parseInt(value))
-
-
         setRequest({
             ...request , 
             activity_type : value
@@ -178,7 +175,25 @@ function RequestHouseAuction() {
 
 
         const handleSubmit = (e) => {
+
             e.preventDefault();
+            let info_links =  [] ;
+
+            info_links = [
+                {
+                    "type": "telegram",
+                    "url": request?.link_telegram 
+                },
+                {
+                    "type": "instagram",
+                    "url": request?.link_instagram 
+                },{
+                    "type": "facebook",
+                    "url": request?.link_facebook 
+                }
+            ].filter( item=> item.url )
+
+
 
             let payload = {
                 "home_auction_name": request?.home_auction_name ,
@@ -190,32 +205,29 @@ function RequestHouseAuction() {
                         "longitude": point?.longitude ? String(point?.longitude) : '',
                         "latitude": point?.latitude  ? String(point?.latitude) : ''
                     },
-                    "address": request?.address
+                    "address": request?.address ? request?.address : ''
                 },
-                "info_link": [
+               
+                "info_link" : info_links,
+
+                "media": [
                     {
-                        "type": "instagram",
-                        "url": request?.link_instagram ? request?.link_instagram : ''
+                        "media_path": url_image ? url_image : '',
+                        "type": "profile_image",
+                        "bucket_name": "image",
+                        "file_key": url_image_Key ? url_image_Key : '',
+                        "file_name": request?.media_name_image ? request?.media_name_image : ''
                     },
                     {
-                        "type": "facebook",
-                        "url": request?.link_facebook ? request?.link_facebook  : ''
-                    },
-                    {
-                        "type": "telegram",
-                        "url": request?.link_telegram ? request?.link_telegram : ''
+                        "media_path": url_file ? url_file : '' ,
+                        "type": "rar",
+                        "bucket_name": "image",
+                        "file_key": url_file_Key ? url_file_Key : '',
+                        "file_name": request?.media_name_file ? request?.media_name_file : ''
                     }
                 ],
-                "media": {
-                    "media_path": url ? url : '',
-                    "type": "image",
-                    "bucket_name": "image",
-                    "file_key": urlKey ? urlKey : ''
-                },
 
-                "site"  : request?.site   ?  request?.site   :  '',
                 "phone" : request?.phone  ?  request?.phone  :  '',
-                "email" : request?.email  ?  request?.email  :  '',
             }
 
 
@@ -224,33 +236,23 @@ function RequestHouseAuction() {
                     successNotification("ثبت درخواست خانه حراجی"  , 'درخواست  با موفقیت ارسال شد')
                
             }).catch(err => {
-                console.error("Error",err.response.data.data)
+                // console.error("Error",err.response.data.data)
                 failNotification( 'خالی بودن یا نامعتبر بودن فیلدها' , '' )
             })
         }
 
 
+    function callback(key) {
+        console.log(key);
+    }
 
+    const handleSetNameImage = (upload) => {
+        setRequest({...request , media_name_image : upload?.file?.name });
+    }
 
-        // function getBase64(img, callback) {
-        //     const reader = new FileReader();
-        //     reader.addEventListener('load', () => callback(reader.result));
-        //     reader.readAsDataURL(img);
-        //   }
-
-
-        //   const handleChange = (info ) => {
- 
-        //       getBase64(info.file.originFileObj, imageUrl => ({imageUrl}));
-        //     console.log("Info_name -->>> " , info.file.name);
-        //     setRequest({...request , media_name : info.file.name})
-        //   };
-
-        function callback(key) {
-            console.log(key);
-          }
-
-
+    const handleSetNameFile = (upload) => {
+        setRequest({...request , media_name_file : upload?.file?.name });
+    }
 
 return (
     <React.Fragment>
@@ -364,12 +366,11 @@ return (
                                                     maxlength ={5}
                                                     class="default-input"
                                                     placeholder="" 
-                                                    // value="+98 912 506 3365"
-                                                     />
+                                                />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        {/* <div class="col-md-6">
                                             <div class="input-group">
                                                 <label class="default-lable">سایت</label>
 
@@ -384,9 +385,9 @@ return (
                                                     // value="+98 912 506 3365"
                                                      />
                                             </div>
-                                        </div>
+                                        </div> */}
 
-                                        <div class="col-md-6">
+                                        {/* <div class="col-md-6">
                                             <div class="input-group">
                                                 <label class="default-lable">ایمیل</label>
 
@@ -401,7 +402,7 @@ return (
                                                     // value="+98 912 506 3365"
                                                      />
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         <div class="col-md-6">
                                             <div class="input-group">
@@ -412,11 +413,9 @@ return (
                                                         {...request , phone : e.target.value}
                                                     )} 
                                                     type="number" 
-                                                    // maxlength ={5}
                                                     class="default-input"
                                                     placeholder="" 
-                                                    // value="+98 912 506 3365"
-                                                     />
+                                                />
                                             </div>
                                         </div>
 
@@ -429,17 +428,11 @@ return (
                                                         {...request , address : e.target.value}
                                                     )} 
                                                     type="text" 
-                                                    // maxlength ={5}
                                                     class="default-input"
                                                     placeholder="" 
-                                                    // value="+98 912 506 3365"
-                                                     />
+                                                 />
                                             </div>
                                         </div>
-
-                                        
-
-                                        
 
                                         <div className={classnames("col-md-6", {
                                                 "d-none": (!point?.latitude && !point?.longitude),
@@ -448,12 +441,8 @@ return (
                                                 <label class="default-lable">عرض جغرافیایی</label>
 
                                                 <input  
-                                                    // onChange={(e)=> setRequest(
-                                                    //     {...request , latitude : point?.latitude}
-                                                    // )} 
                                                     type="text" 
                                                     readOnly
-                                                    // maxlength ={5}
                                                     class="default-input"
                                                     placeholder="" 
                                                     value={point?.latitude}
@@ -469,11 +458,7 @@ return (
                                                 <label class="default-lable">طول جغرافیایی</label>
 
                                                 <input  
-                                                    // onChange={(e) => setRequest(
-                                                    //     {...request , longitude : point?.longitude}
-                                                    // )}
                                                     type="text" 
-                                                    // maxlength ={5}
                                                     readOnly
                                                     class="default-input"
                                                     placeholder="" 
@@ -487,13 +472,30 @@ return (
                                 
 
 
-                                        <div className="col">
+                                    <div className="col">
                                             <MapSelector setPoint={setPoint}/>
-                                        </div>
+                                    </div>
 
-                                        <div className="d-block my-4">
+                                    <div className="d-block my-4">
+                                        <label className="default-lable mx-3"> بارگذاری عکس </label>
+                                        <Upload 
+                                            
+                                            onChange = {handleSetNameImage}
+                                            maxCount={1}
+                                            onClick = {handleRequestImage} >
+                                                
+                                            <Button 
+                                             icon={<UploadOutlined />}></Button>
+                                        </Upload>
+                                    </div>
+
+                                    <div className="d-block my-4">
                                         <label className="default-lable mx-3"> بارگذاری فایل </label>
-                                        <Upload onClick = {handleRequest} >
+                                        <Upload
+                                            onChange = {handleSetNameFile}
+                                            maxCount={1} 
+                                            onClick = {handleRequestFile} 
+                                        >
                                             <Button   icon={<UploadOutlined />}></Button>
                                         </Upload>
                                     </div>
@@ -550,28 +552,8 @@ return (
                                                     </div>
                                                 </div>
                                             </Panel>    
-                                   
-                            
                                         </Collapse>
 
-
-
-
-
-
-
-                               
-                                 
-                                            
-                                    
-                                                                        
-
-                                    
-
-
-
-                             
-                            
                                     <div class="row">
                                         <div class="col-12 button-group">
                                             <button onClick={handleSubmit} type="submit" class="btn-default">ثبت</button>

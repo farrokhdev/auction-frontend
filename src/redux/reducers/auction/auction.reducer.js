@@ -4,10 +4,18 @@ import {removeToken, Token} from '../../../utils/utils'
 const initial_state = {
     pending: false,
     error: null,
-    data:{},
+    data:{
+        description:""
+    },
     products:[],
+    bid_steps:[],
+    validations_auction:[],
     selectComponent:1,
-    payment_method:false
+    payment_method:false,
+    extendable_deadline:false,
+    has_recommendation:false,
+    admin_confirmation:false,
+    add_previous_buyer:false,
 }
 
 
