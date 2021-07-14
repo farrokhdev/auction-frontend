@@ -3,92 +3,26 @@ import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
 import { Button, Form, Input, Spin, Select } from "antd";
 import { Link } from 'react-router-dom';
-import {setToken} from "../../utils/utils";
 
 
-// import { ConfigProvider } from "antd";
-// import { DatePicker as DatePickerJalali } from "antd-jalali";
-// import fa_IR from "antd/lib/locale/fa_IR";
 import "antd/dist/antd.css";
-import axios from '../../utils/request';
-import { BASE_URL } from '../../utils';
-import moment from "moment-jalaali";
-
-
-function CreateReminder(props) {
-    const [reminders, setReminders] = useState({});
+function EditReminder() {
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
-    // const [Name, setName] = useState("");
-    // const [Keyword, setKeyword] = useState("");
-    // const [ExactMatch, setExactMatch] = useState(true);
-    // const [MinPrice, setMinPrice] = useState("");
-    // const [MaxPice, setMaxPice] = useState("");
-    // const [ReminderDays, setReminderDays] = useState("");
-    // const [Status, setStatus] = useState("")
 
-    const [state, setstate] = useState(
-        {
-            Name : "",
-            Keyword : "",
-            ExactMatch : false,
-            MinPrice : "",
-            MaxPice : "",
-            ReminderDays :[],
-            Status :  false
 
-        }
-    )
-
-    // const onFinish = (values) => {
-    //     // sendData(values)
-    //     axios.post(`${BASE_URL}/notification/auction-reminders/`)
-    //         setLoading(true)
-    //         .then(res=> {
-                
-    //             setLoading(false);
-    //             console.log(res.data.data.result);
-    //         })
-    //         .catch(err=>console.log(err))
-
-    // }
-
-    
-    const reminderHandler = ()=>{
-        
-        let payload ={
-            "name": state?.Name,
-            "keyword": state?.Keyword,
-            "exact_match": state?.ExactMatch,
-            "min_price": state?.MinPrice,
-            "max_price": state?.MaxPice,
-            "reminder_days":state?.ReminderDays,
-            "status": state?.Status
-        }
-
-        axios.post(`${BASE_URL}/notification/auction-reminders/`,payload)
-        .then(res=> {
-            setLoading(true)
-            if(res.data.code === 201){
-            // console.log(setReminders(res.data.data.result));
-            setReminders(res.data.data.result)
-            // setToken(res.data.data.result)
-            window.location.href="#/panel-reminders"
-            
-            
-            }
-                  // setLoading(false);
-        })
-        .catch(err=>console.log(err))
+    const onFinish = (values) => {
+        sendData(values)
     }
     // useEffect(()=>{
     // getData()
 
     // },[])
 
-    // const sendData = () => {
-    //     setLoading(true)
-    // }
+    const sendData = () => {
+        setLoading(true)
+    }
+
     return (
         <>
             <HeaderPanel titlePage={"یادآوری‌ها"} />
@@ -96,12 +30,11 @@ function CreateReminder(props) {
                 <PanelSidebar />
                 <div className="panel-body">
                     <Spin spinning={loading}>
-                        <Form 
-                        // onFinish={onFinish}
+                        <Form onFinish={onFinish}
                             form={form}
                             wrapperCol={{ span: 24 }}>
                             <div className="panel-container" id="reminder-page">
-                                <h5 className="default mrgb50">ایجاد یادآوری جدید</h5>
+                                <h5 className="default mrgb50">ویرایش یادآوری </h5>
                                 <div className="row">
                                     <div class="col-md-4">
                                         <div class="input-group">
@@ -116,9 +49,6 @@ function CreateReminder(props) {
                                                     }
                                                 ]}>
                                                 <Input className="default-input"
-                                                         onChange={(e)=>{
-                                                            setstate({...state , Name : e.target.value});
-                                                          }}
                                                     placeholder="نام مورد نظر خود را وارد نمایید." />
                                             </Form.Item>
                                         </div>
@@ -136,21 +66,13 @@ function CreateReminder(props) {
                                                     }
                                                 ]}>
                                                 <Input className="default-input"
-                                                        onChange={(e)=>{
-                                                            setstate({...state , Keyword : e.target.value});
-                                                        }}
                                                     placeholder="کلمه کلیدی مورد نظر خود را وارد نمایید." />
                                             </Form.Item>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div className="form-check sm-mrgt35">
-                                            <Input 
-                                                onChange={(e)=>{
-                                                    setstate({...state , ExactMatch : e.target.checked });
-                                                }}
-                                                // onChange ={(e)=>console.log((e.target.checked))}
-                                                className=" form-check-input"
+                                            <Input className=" form-check-input"
                                                 name="accurate-matching"
                                                 type="checkbox"
                                                 id="checkbox41"
@@ -173,9 +95,6 @@ function CreateReminder(props) {
                                                     }
                                                 ]}>
                                                 <Input className="default-input"
-                                                        onChange={(e)=>{
-                                                            setstate({...state , MinPrice : e.target.value});
-                                                        }}
                                                     placeholder="کمترین قیمت مورد نظر را وارد نمایید." />
                                             </Form.Item>
                                         </div>
@@ -193,9 +112,6 @@ function CreateReminder(props) {
                                                     }
                                                 ]}>
                                                 <Input className="default-input"
-                                                         onChange={(e)=>{
-                                                            setstate({...state , MaxPice : e.target.value});
-                                                        }}
                                                     placeholder="بیشترین قیمت مورد نظر را وارد نمایید." />
                                             </Form.Item>
                                         </div>
@@ -203,10 +119,6 @@ function CreateReminder(props) {
                                     <div class="col-md-4">
                                         <div className="form-check sm-mrgt35">
                                             <Input className=" form-check-input"
-                                                 onChange={(e)=>{
-                                                    setstate({...state , Status : e.target.checked});
-                                                 }}
-                                                // onChange={(e)=>console.log(e.target.checked)}
                                                 name="off-reminder"
                                                 type="checkbox"
                                                 id="checkbox42"
@@ -222,12 +134,7 @@ function CreateReminder(props) {
                                             {["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه"].map((item) =>
                                                 <div div className="col" >
                                                     <div className="form-check ">
-                                                        <Input 
-                                                           
-                                                            onChange={(e)=>{
-                                                                setstate({...state , ReminderDays:[ moment(Date.now()).format("YYYY-MM-DD") ] });
-                                                            }}
-                                                            className="form-check-input" type="checkbox" value=""
+                                                        <Input className="form-check-input" type="checkbox" value=""
                                                             id="checkbox44" />
                                                         <label className="form-check-label" for="" >
                                                             {item}
@@ -242,7 +149,7 @@ function CreateReminder(props) {
                                             <button type="button" className="btn-gray">بازگشت</button>
                                         </Link>
                                         <span className="px-2 d-inline-block" />
-                                        <button type="submit" className="btn-default" onClick={reminderHandler}>ثبت</button>
+                                        <button type="button" className="btn-default">ثبت</button>
                                     </div>
                                 </div>
                             </div>
@@ -254,4 +161,4 @@ function CreateReminder(props) {
     )
 }
 
-export default CreateReminder;
+export default EditReminder;
