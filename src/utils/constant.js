@@ -16,4 +16,6 @@ module.exports={
     SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
     LIST_REMINDERS : '/notification/auction-reminders/' , 
     DELETE_REMINDER : id => `/notification/auction-reminders/${id}/` , 
+    UPLOAD_EXEL_AUCTION:name=>`/sale/upload/${name}/`,
+
 }

@@ -189,7 +189,7 @@ function UserPanelMessage() {
 
     return (
         <>
-            <HeaderPanel title={'پیام ها'}/>
+            <HeaderPanel titlePage={'پیام ها'}/>
             <div className="panel-main">
                 <PanelSidebar/>
 

@@ -43,9 +43,14 @@ function ModalEditReminder({reminder}) {
                 onCancel={() => setVisibleShowResults(false)}
                 width={1000}>
 
+                            {/* <div className="main-title">
+                                <span className="default titr">ddddd</span>
+                            </div> */}
                 <div collapse className="table-responsive ">
                     <table className="panel-table reminder mrgt50">
                         <tbody>
+
+                            
 
                             {resultProducts?.length ? resultProducts?.map(product => (
                                 <React.Fragment key={product?.id}> 
