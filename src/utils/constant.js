@@ -14,6 +14,8 @@ module.exports={
     CATEGORIE_ACTIVITY:"/sale/category/",
     ADD_AUCTION:"/sale/auctions/",
     SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
+    PRE_UPLOAD : "/core/upload/",
+    UPLOAD : "/core/media/photos/",
     LIST_REMINDERS : '/notification/auction-reminders/' , 
     DELETE_REMINDER : id => `/notification/auction-reminders/${id}/` , 
     UPLOAD_EXEL_AUCTION:name=>`/sale/upload/${name}/`,
