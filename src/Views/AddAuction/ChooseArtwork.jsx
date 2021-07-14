@@ -22,7 +22,7 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id}))
+    axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
         .then(resp => {
           setLoading(false)
 
