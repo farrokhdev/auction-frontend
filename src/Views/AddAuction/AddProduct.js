@@ -6,14 +6,18 @@ import {BASE_URL} from "../../utils";
 import {LIST_PRODUCTS} from "../../utils/constant";
 import Chooseartwork from "./ChooseArtwork";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
+import {DeleteColumnOutlined, DeleteFilled} from '@ant-design/icons';
 
 const Products = (props) => {
-    const {selectComponent, setSelectComponent, products, setProducts,id} = props;
+    const {id} = props;
     const [loading, setLoading] = useState(false)
+    const [productsList, setProductsList] = useState([])
     // const [data, setData] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const {data} = useSelector((state) => state.auctionReducer)
+    const {data, products} = useSelector((state) => state.auctionReducer)
+    const dispatch = useDispatch();
 
     return (
         <div>
@@ -42,53 +46,75 @@ const Products = (props) => {
                    onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}
                    footer={[<div className="text-center">
                        <Button key={2} type="" onClick={() => {
+                           let list = {}
+                           productsList.map(t => list[t?.id] = t)
+                           // console.log(productsDate,list)
+                           dispatch(setAUCTION({
+                               products: {...products, ...list},
+                           }))
                            setIsModalVisible(false)
-                           // let t = {}
-                           // products.map(element => (t[element?.id] = element))
-                           // setTimeout(() => {
-                           //     setData(t)
-                           //     setData(t)
-                           // }, 200)
 
                        }}
                                className="btn-default">
                            تایید
                        </Button></div>]}>
-                <Chooseartwork selectProduct={products} setSelectProduct={setProducts} id={id}/></Modal>
+                <Chooseartwork selectProduct={productsList} setSelectProduct={setProductsList} id={id} listCheck={[]}/></Modal>
             <div className="row mt-3">
                 {
-                    products && products.length ? products.map((item, i) => <div key={i}
-                                                                                 className="col-12 col-md-6 col-lg-4 ">
+                    products && Object.keys(products).length ? Object.keys(products).map((item, i) => <div key={i}
+                                                                                                           className="col-12 col-md-6 col-lg-4 ">
                             <div className="my-3">
                                 <Card
                                     style={{width: "100%"}}
                                     cover={
                                         <img
                                             alt="بدون تصویر"
-                                            src={item?.media?.exact_url}
+                                            src={products[item]?.media?.exact_url}
                                         />
                                     }
-                                    // actions={[
-                                    //   <SettingOutlined key="setting" />,
-                                    //   <EditOutlined key="edit" />,
-                                    //   <EllipsisOutlined key="ellipsis" />,
-                                    // ]}
+                                    actions={[
+                                        <DeleteFilled key="ellipsis" onClick={() => {
+                                            let p = products;
+                                            delete p[item];
+                                            dispatch(setAUCTION({products: p}))
+                                        }}/>,
+                                    ]}
                                 >
                                     <Meta
-                                        title={item?.artwork_title}
-                                        description={<div className="d-flex align-items-center justify-content-between">
-                                            <input type="number" className="default-input"
-                                                   defaultValue={item?.base_price}
-                                                   placeholder="قیمت..."
-                                                   onChange={e => {
-                                                       // let t= {base_price:e.target.value || 0}
-                                                       // let t= data
-                                                       //  t[item?.id]={...t[item?.id],base_price:e.target.value || 0}
-                                                       //  setData(t)
-                                                       let p = products.filter(p => p?.id !== item?.id)
-                                                       setProducts([...p,{...item,base_price:e.target.value || 0}])
-                                                   }}
-                                            /><small className="pe-2">تومان</small></div>}
+                                        title={products[item]?.artwork_title}
+                                        description={
+                                            <div className="pt-2">
+                                                <div className="d-flex align-items-center justify-content-between">
+                                                    <input type="number" className="default-input"
+                                                           defaultValue={products[item]?.base_price}
+                                                           placeholder="قیمت..."
+                                                           onChange={e => {
+                                                               let val = e.target.value
+                                                               if ((val.length > 4) || (val === "")) {
+                                                                   let p = products;
+                                                                   p[item]["base_price"] = (val || 0)
+                                                                   dispatch(setAUCTION({products: p}))
+                                                               }
+
+                                                           }}
+                                                    /><small className="pe-2">تومان</small></div>
+                                                <div className="pt-2">
+                                                    <div
+                                                        className="d-flex align-items-center justify-content-between ">
+                                                        <input type="number" className="default-input"
+                                                               defaultValue={products[item]?.reserve_price}
+                                                               placeholder="قیمت رزرو ..."
+                                                               onChange={e => {
+                                                                   let val = e.target.value
+                                                                   if ((val.length > 4) || (val === "")) {
+                                                                       let p = products;
+                                                                       p[item]["reserve_price"] = (e.target.value || 0)
+                                                                       dispatch(setAUCTION({products: p}))
+                                                                   }
+                                                               }}
+                                                        /><small className="pe-2">تومان</small></div>
+                                                </div>
+                                            </div>}
                                     />
                                 </Card>
                             </div>

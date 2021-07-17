@@ -66,8 +66,8 @@ const Conditions = (props) => {
                                     name="payment_method_conditions"
                                     rules={[
                                         {
-                                            required: true,
-                                            message: "تکمیل این فیلد ضروری است",
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
                                         },
                                     ]}>
                                <textarea rows="3" className="default-input"
@@ -83,8 +83,8 @@ const Conditions = (props) => {
                                     name="return_rules"
                                     rules={[
                                         {
-                                            required: true,
-                                            message: "تکمیل این فیلد ضروری است",
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
                                         },
                                     ]}>
                                <textarea rows="3" className="default-input"
@@ -100,8 +100,8 @@ const Conditions = (props) => {
                                     name="transportation"
                                     rules={[
                                         {
-                                            required: true,
-                                            message: "تکمیل این فیلد ضروری است",
+                                            max: 500,
+                                            message: "حداکثر 500کاراکتر",
                                         },
                                     ]}>
                                <textarea rows="3" className="default-input"
@@ -119,7 +119,7 @@ const Conditions = (props) => {
                                 }}>بازگشت
                                 </Button>
 
-                                <Button className="btn-default" htmlType="submit">ثبت موقت</Button>
+                                <Button className="btn-default" htmlType="submit">ثبت </Button>
 
                             </div>
                         </div>

@@ -71,7 +71,7 @@ function Login(props) {
                   }
             ]}>
                 <Input 
-                type="number"
+                type="text"
                 className="default-input"
                    onChange={(e) => {
                      setuserName(e.target.value);
@@ -87,7 +87,7 @@ function Login(props) {
                       message: "تکمیل این فیلد ضروری است",
                     },
                     {
-                      min: 8,
+                      // min: 8,
                       message: "حداقل 8 کارکتر مورد نیاز است",
                   }
               ]}>

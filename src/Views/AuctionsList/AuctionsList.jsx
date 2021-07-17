@@ -10,6 +10,7 @@ import PanelSidebar from "../../components/PanelSidebar";
 import {Link} from "react-router-dom";
 import { Modal, Button, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {useSelector} from "react-redux";
 
 function AuctionsList() {
 

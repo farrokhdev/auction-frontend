@@ -2,7 +2,8 @@ import React from "react";
 // Redirect
 import { Router, HashRouter, Route, Switch ,Redirect} from "react-router-dom";
 import { createHashHistory } from "history";
-import {connect} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {getProfile} from "./redux/reducers/profile/profile.actions";
 import AfterLoginPage from "./Views/AfterLoginPage";
 import Login from "./Views/Login";
 import Financialinformation from "./Views/FinancialInformation";
@@ -41,13 +42,22 @@ import Favorite from "./Views/Favorite/Favorite";
 import SingleHouseAuctionPage from "./Views/SingleHouseAuctionPage";
 import SingleAuctionDetailsPage from "./Views/SingleAuctionDetailsPage";
 import UserPanelCreateAuctionsBids from "./Views/UserPanelCreateAuctionsBids";
+import CreateReminder from "./Views/PanelRemindersPage/CreateReminder";
+
+import EditReminder from "./Views/PanelRemindersPage/EditReminder";
+import NotFound from "./Views/404";
 import OneAuction from "./Views/OneAuction";
 
 
 
 function App(props) {
   console.log("Login ->> ",props.auth.is_logged_in)
-
+    const {role} = useSelector((state) => state.profileReducer)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (!role)
+            dispatch(getProfile())
+    }, [])
   return (
 
     <>
@@ -56,6 +66,7 @@ function App(props) {
           <Switch>
             {!props.auth.is_logged_in && <Route exact path="/" component={Login}/>}
               <Route exact path="/login" component={Login} />
+
               <Route exact path="/verification-code" component={VerificationCode}/>
               <Route exact path="/reset-password" component={Resetpassword} />
               <Route exact path="/register-set-password" component={RegistersetPassword}/>
@@ -94,26 +105,31 @@ function App(props) {
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
               <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
+              {role=== "home_auction" ? <Route exact path="/panel-add-auction" component={AddAuction}/>:''}
+              {role=== "home_auction" ? <Route exact path="/auctions-list" component={AuctionsList} />:''}
               <Route exact path="/add-artworks" component={AddArtWorks} />
               {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
               <Route exact path="/panel-message" component={UserPanelMessage} />
               <Route exact path="/panel-sell-advice" component={UserPanelSellAdvice} />
-              <Route exact path="/panel-sell-recommendation" component={UserPanelSellRecommendation} />
+              {role=== "home_auction" ? <Route exact path="/panel-sell-recommendation" component={UserPanelSellRecommendation} /> :''}
               <Route exact path="/my-purchases" component={MyPurchases}/>
               <Route exact path="/favorite" component={Favorite}/>
               <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids}/>
               <Route exact path="/one-auction/:id" component={OneAuction}/>
+              <Route exact path="/create-reminder" component={CreateReminder}/>
+              <Route exact path="/edit-reminder" component={EditReminder}/>
 
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
               <Route exact path="/panel-artwork-list" component={UserPanelArtworkList}/>
+                {/*<Route path="/*" exact component={NotFound}/>*/}
 
 
-            </>:  
-            
-              <Redirect to = {{pathname : "/login"}} />} 
+            </>:
+
+              <Redirect to = {{pathname : "/login"}} />}
 
 
           </Switch>

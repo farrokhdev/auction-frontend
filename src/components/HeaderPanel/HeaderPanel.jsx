@@ -4,7 +4,7 @@ import logowhite from "../../images/logo-white.png";
 import loginactive from "../../images/login-active.png";
 import {removeToken} from "../../utils/utils";
 import {useDispatch} from "react-redux";
-import {clearStorage} from "../../redux/reducers/auth/auth.actions";
+import {clearStorageAll} from "../../redux/reducers/all/all.actions";
 
 function HeaderPanel(props) {
   const dispatch=useDispatch();
@@ -40,7 +40,7 @@ function HeaderPanel(props) {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/" onClick={()=>{
-                    dispatch(clearStorage())
+                    dispatch(clearStorageAll())
                   }}>
                     خروج
                   </Link>
