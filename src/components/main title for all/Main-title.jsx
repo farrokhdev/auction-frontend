@@ -28,7 +28,7 @@ function Maintitle({handleSetOrdering  , title}) {
               مرتب‌سازی با<span className="d-none d-md-inline-block">:</span>
             </span>
             <ul className="sort-list">
-              <li onClick={(e)=>handleSetOrdering("creation_date")} className="active">جدیدترین</li>
+              <li onClick={(e)=>handleSetOrdering("creation_date")} className="">جدیدترین</li>
               <li disabled>نزدیک‌ترین</li>
               <li disabled>محبوب‌ترین</li>
               <li disabled>پرفروش‌ترین</li>

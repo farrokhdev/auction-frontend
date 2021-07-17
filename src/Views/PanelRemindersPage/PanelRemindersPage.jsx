@@ -10,6 +10,7 @@ import { convertStatus } from '../../utils/converTypePersion';
 import { Modal, Button, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ModalShowResultsReminder from './ModalShowResultsReminder';
+import { Link } from 'react-router-dom';
 
 
 const { confirm } = Modal;
@@ -23,9 +24,9 @@ function RemindersPage() {
         getReminders();
     }, [])
 
-
+    // ?page=3
     const getReminders = () => {
-        axios.get(`${BASE_URL}${LIST_REMINDERS}`).then(res => {
+        axios.get(`${BASE_URL}${LIST_REMINDERS}?page=1`).then(res => {
             setReminders(res.data.data.result);
         }).catch(err => {
             console.error(err)
@@ -69,9 +70,11 @@ function RemindersPage() {
             <PanelSidebar />
         <div className="panel-body">
             <div className="panel-container">
-                <button type="button" className="btn btn-default mrgt30">
-                    <FontAwesomeIcon icon={faPlus} /> یادآوری جدید
-                </button>
+                <Link to="/create-reminder" >
+                    <button type="button" className="btn btn-default mrgt30">
+                        <FontAwesomeIcon icon={faPlus} /> یادآوری جدید
+                    </button>
+                </Link>
                 <div className="row">
                     <div className=" col-xxl-6">
 
@@ -83,7 +86,7 @@ function RemindersPage() {
                                         <React.Fragment key={reminder?.id}>
                                             <tr >
                                                 <td style={{minWidth : '150px'}} >{reminder?.name ? reminder?.name : ''}</td>
-                                                <td style={{minWidth : '150px'}} className="reminder-state active">{reminder?.status ? convertStatus(reminder?.status) : ''}</td>
+                                                <td style={{minWidth : '150px'}} className="reminder-state active">{reminder?.status ? "فعال" : "غیر فعال"}</td>
                                                 <td style={{minWidth : '150px'}} >
                                                     <ModalShowResultsReminder
                                                         reminder={reminder}
@@ -100,9 +103,11 @@ function RemindersPage() {
                                                         </div>
                                                         <div className="col">
                                                             <div className="d-flex justify-content-start">
-                                                                <button  type="button" className="operations">
-                                                                    <FontAwesomeIcon icon={faEdit}/>
-                                                                </button>
+                                                                <Link to="/edit-reminder">
+                                                                    <button  type="button" className="operations">
+                                                                        <FontAwesomeIcon icon={faEdit}/>
+                                                                    </button>
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                     </div>
