@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 // Redirect
 import { Router, HashRouter, Route, Switch ,Redirect} from "react-router-dom";
 import { createHashHistory } from "history";
