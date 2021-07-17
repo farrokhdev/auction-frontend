@@ -88,7 +88,7 @@ function App(props) {
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/panel-financial" component={PanelFinancial}/>
               <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
-              <Route exact path="/panel-add-auction" component={AddAuction}/>
+              {/*<Route exact path="/panel-add-auction" component={AddAuction}/>*/}
               <Route exact path="/panel-reminders" component={PanelRemindersPage}/>
               {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
               {/*<Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>*/}
@@ -102,7 +102,7 @@ function App(props) {
               <Route exact path="/wallet" component={Wallet} />
               <Route exact path="/reagent" component={Reagent} />
               <Route exact path="/auctions" component={Auctions} />
-              <Route exact path="/auctions-list" component={AuctionsList} />
+              {/*<Route exact path="/auctions-list" component={AuctionsList} />*/}
               <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
               <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
               {role=== "home_auction" ? <Route exact path="/panel-add-auction" component={AddAuction}/>:''}

@@ -102,7 +102,7 @@ const BaseInformation = (props) => {
                                 <label className="default-lable"> متن جزییات</label>
                                 <Form.Item
                                     className="w-100"
-                                    name="details"
+                                    name="description"
                                     rules={[
                                         {
                                             max: 500,

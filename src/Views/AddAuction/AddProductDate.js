@@ -86,6 +86,7 @@ const Products = (props) => {
         dispatch(setAUCTION({productsDate: list_date, productsArrayDate: productsArrayDate}))
 
     }, [])
+    console.log(productsDate,productsArrayDate)
     return (
         <div>
             <div>

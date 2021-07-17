@@ -36,7 +36,7 @@ const Validate = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        form.setFieldsValue({description:data?.description || ""})
+        form.setFieldsValue({details:data?.details || ""})
     }, [])
 
     const onFinish = (values) => {
@@ -169,7 +169,7 @@ const Validate = (props) => {
                             <label className="default-lable">توضیحات</label>
                             <Form.Item
                                 className="w-100 mb-0"
-                                name="description"
+                                name="details"
                                 rules={[
                                     {
                                         required: true,

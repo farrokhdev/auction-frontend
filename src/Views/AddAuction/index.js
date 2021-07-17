@@ -136,7 +136,8 @@ function Index() {
             .catch(err => {
                 setLoading(false)
                 console.error(err.response);
-                message.error(err.response?.data?.message==="ok" ? err.response?.data?.data?.error_message :err.response?.data?.message)
+                let t=err.response?.data?.message==="ok" ? err.response?.data?.data?.error_message :err.response?.data?.message
+                message.error(t)
             })
     }
     if (next) {

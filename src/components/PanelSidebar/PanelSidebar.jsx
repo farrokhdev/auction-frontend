@@ -57,11 +57,11 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faPlusCircle} /> درخواست خانه حراج 
                 </NavLinkRouter>
               </li>
-              <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">
-                  <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج
-                </NavLinkRouter>
-              </li>
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">*/}
+              {/*    <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من*/}
