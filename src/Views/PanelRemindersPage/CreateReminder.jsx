@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
-import { Button, Form, Input, Spin, Select } from "antd";
+import { Button, Form, Input, Spin, Select,message } from "antd";
 import { Link } from 'react-router-dom';
 import {setToken} from "../../utils/utils";
 
@@ -70,16 +70,20 @@ function CreateReminder(props) {
         .then(res=> {
             setLoading(true)
             if(res.data.code === 201){
-            // console.log(setReminders(res.data.data.result));
-            setReminders(res.data.data.result)
-            // setToken(res.data.data.result)
-            window.location.href="#/panel-reminders"
+                message.success("اطلاعات شما با موفقیت ثبت شد")
+                // console.log(setReminders(res.data.data.result));
+                setReminders(res.data.data.result)
+                // setToken(res.data.data.result)
+                window.location.href="#/panel-reminders"
             
             
             }
                   // setLoading(false);
         })
-        .catch(err=>console.log(err))
+        .catch(err=>{
+            console.log(err);
+            message.error("دوباره تلاش کنید")
+        })
     }
     // useEffect(()=>{
     // getData()
