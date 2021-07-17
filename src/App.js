@@ -20,6 +20,8 @@ import VerificationCode from "./Views/VerificationCode";
 import Artworks from "./Views/Artworks";
 import Auctions from "./Views/Auctions";
 import AuctionsList from "./Views/AuctionsList";
+import AuctionsListBids from "./Views/AuctionsList/Bids";
+import AuctionsListRequests from "./Views/AuctionsList/Requests";
 import AddArtWorks from "./Views/AddArtWorks";
 import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
@@ -44,7 +46,7 @@ import CreateReminder from "./Views/PanelRemindersPage/CreateReminder";
 
 import EditReminder from "./Views/PanelRemindersPage/EditReminder";
 import NotFound from "./Views/404";
-
+import OneAuction from "./Views/OneAuction";
 
 
 
@@ -86,20 +88,23 @@ function App(props) {
               <Route exact path="/panel-profile" component={PanelProfile} />
               <Route exact path="/panel-financial" component={PanelFinancial}/>
               <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
-
+              <Route exact path="/panel-add-auction" component={AddAuction}/>
               <Route exact path="/panel-reminders" component={PanelRemindersPage}/>
               {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
               {/*<Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>*/}
               {/*<Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>*/}
               {/*<Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>*/}
               {/*<Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>*/}
-              <Route exact path="/buyer-register" component={BuyerRegister} />
+              <Route exact path="/buyer-register/:id" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
               <Route exact path="/signing-contract" component={SigningContract} />
               <Route exact path="/wallet" component={Wallet} />
               <Route exact path="/reagent" component={Reagent} />
               <Route exact path="/auctions" component={Auctions} />
+              <Route exact path="/auctions-list" component={AuctionsList} />
+              <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
+              <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
               {role=== "home_auction" ? <Route exact path="/panel-add-auction" component={AddAuction}/>:''}
               {role=== "home_auction" ? <Route exact path="/auctions-list" component={AuctionsList} />:''}
               <Route exact path="/add-artworks" component={AddArtWorks} />
@@ -111,6 +116,7 @@ function App(props) {
               <Route exact path="/my-purchases" component={MyPurchases}/>
               <Route exact path="/favorite" component={Favorite}/>
               <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids}/>
+              <Route exact path="/one-auction/:id" component={OneAuction}/>
               <Route exact path="/create-reminder" component={CreateReminder}/>
               <Route exact path="/edit-reminder" component={EditReminder}/>
 
