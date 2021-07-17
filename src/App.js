@@ -40,6 +40,9 @@ import Favorite from "./Views/Favorite/Favorite";
 import SingleHouseAuctionPage from "./Views/SingleHouseAuctionPage";
 import SingleAuctionDetailsPage from "./Views/SingleAuctionDetailsPage";
 import UserPanelCreateAuctionsBids from "./Views/UserPanelCreateAuctionsBids";
+import CreateReminder from "./Views/PanelRemindersPage/CreateReminder";
+
+import EditReminder from "./Views/PanelRemindersPage/EditReminder";
 import NotFound from "./Views/404";
 
 
@@ -108,6 +111,8 @@ function App(props) {
               <Route exact path="/my-purchases" component={MyPurchases}/>
               <Route exact path="/favorite" component={Favorite}/>
               <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids}/>
+              <Route exact path="/create-reminder" component={CreateReminder}/>
+              <Route exact path="/edit-reminder" component={EditReminder}/>
 
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}

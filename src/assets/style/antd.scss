@@ -73,6 +73,12 @@
   background-color:  var(--darkgray) !important;
   // position: relative !important;
 }
+
+
+.ant-input{
+  background-color: var(--bgcolor) !important; 
+}
 .ant-card-actions > li > span a:not(.ant-btn):hover, .ant-card-actions > li > span > .anticon:hover {
   color: #e6007e;
+
 }
