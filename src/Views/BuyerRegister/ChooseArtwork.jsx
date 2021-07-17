@@ -7,12 +7,10 @@ import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons
 import Meta from "antd/es/card/Meta";
 
 function Chooseartwork(props) {
-    const {selectProduct, setSelectProduct,auction}=props
+  const {selectProduct, setSelectProduct,auction}=props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({})
   const [dataCount, setDataCount] = useState(0)
-
-    console.log(selectProduct)
 
   useEffect(()=>{
     setSelectProduct([])
@@ -20,15 +18,14 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(`${BASE_URL}${LIST_PRODUCTS}?auctions__id=1`)
+    axios.get(`${BASE_URL}/sale/auctions/${props.id}`)
         .then(resp => {
           setLoading(false)
-
           if ((resp.data.code === 200) && resp.data?.data?.result) {
-            const res = resp.data?.data?.result;
+            const res = resp.data?.data?.result.auction_product;
             // form.setFieldsValue(res)
             setData(res)
-            setDataCount(resp.data?.data?.count)
+            setDataCount(resp.data?.data?.result.auction_product.length)
             // let check = Object.keys(res).some(t => !res[t]);
             // console.log(check)
             // setNext(!check)
@@ -75,7 +72,7 @@ function Chooseartwork(props) {
                     cover={
                       <img
                           alt="بدون تصویر"
-                          src={item?.media?.exact_url}
+                          src={item?.product.media?.exact_url}
                       />
                     }
                     // actions={[
@@ -85,17 +82,17 @@ function Chooseartwork(props) {
                     // ]}
                 >
                   <Meta
-                      avatar={<Checkbox checked={selectProduct.some(t=>item?.id===t?.id)} onChange={e=>{
+                      avatar={<Checkbox checked={selectProduct.some(t=>item?.product.id===t?.product.id)} onChange={e=>{
                         if(e.target.checked)
                           setSelectProduct([...selectProduct,item])
                         else {
-                          let t=selectProduct.filter(t=>t?.id!==item?.id)
+                          let t=selectProduct.filter(t=>t?.product.id!==item?.product.id)
                             setSelectProduct(t)
                         }
 
                       }}/>}
-                      title={item.artwork_title}
-                      description={item?.technique}
+                      title={item.product.artwork_title}
+                      description={item?.product.technique}
                   />
                 </Card>
               </div>

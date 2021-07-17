@@ -70,7 +70,7 @@ const handleRedirect = () => {
                     <Search />
                   </li>
                   <li className="nav-item ps-5">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/auctions/">
                       <img
                         src={auction}
                         width="16"

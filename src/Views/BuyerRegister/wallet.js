@@ -61,16 +61,16 @@ const Wallet = (props) => {
                     </button>
                 </div>
                 <div className="button-group">
-                    <Link to="/works-of-interest">
-                        <button type="button" className="btn-gray">
+                        <button type="button" className="btn-gray" onClick={() => {
+                            setSelectComponent(selectComponent - 1)
+                        }}>
                             بازگشت
                         </button>
-                    </Link>
-                    <Link to="/auctions-list">
-                        <button type="button" className="btn-default">
-                            ثبت نهایی و خروج
+                        <button type="button" className="btn-default" onClick={() => {
+                            setSelectComponent(selectComponent + 1)
+                        }}>
+                            ادامه
                         </button>
-                    </Link>
                 </div>
             </div>
             <Modal centered

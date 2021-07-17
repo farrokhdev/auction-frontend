@@ -19,6 +19,8 @@ import VerificationCode from "./Views/VerificationCode";
 import Artworks from "./Views/Artworks";
 import Auctions from "./Views/Auctions";
 import AuctionsList from "./Views/AuctionsList";
+import AuctionsListBids from "./Views/AuctionsList/Bids";
+import AuctionsListRequests from "./Views/AuctionsList/Requests";
 import AddArtWorks from "./Views/AddArtWorks";
 import SingleArtworkPage from './Views/SingleArtworkPage'
 import PanelProfile from "./Views/PanleProfile";
@@ -39,6 +41,7 @@ import Favorite from "./Views/Favorite/Favorite";
 import SingleHouseAuctionPage from "./Views/SingleHouseAuctionPage";
 import SingleAuctionDetailsPage from "./Views/SingleAuctionDetailsPage";
 import UserPanelCreateAuctionsBids from "./Views/UserPanelCreateAuctionsBids";
+import OneAuction from "./Views/OneAuction";
 
 
 
@@ -81,7 +84,7 @@ function App(props) {
               {/*<Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>*/}
               {/*<Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>*/}
               {/*<Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>*/}
-              <Route exact path="/buyer-register" component={BuyerRegister} />
+              <Route exact path="/buyer-register/:id" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>
               <Route exact path="/signing-contract" component={SigningContract} />
@@ -89,6 +92,8 @@ function App(props) {
               <Route exact path="/reagent" component={Reagent} />
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
+              <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
+              <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
               {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
@@ -98,6 +103,7 @@ function App(props) {
               <Route exact path="/my-purchases" component={MyPurchases}/>
               <Route exact path="/favorite" component={Favorite}/>
               <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids}/>
+              <Route exact path="/one-auction/:id" component={OneAuction}/>
 
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}

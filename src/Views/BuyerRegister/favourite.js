@@ -8,8 +8,7 @@ import {JOIN_AUCTION} from "../../utils/constant";
 import ChooseAuction from "./ChooseAuction";
 
 const Favourite = (props) => {
-    const {setSelectComponent, selectComponent} = props
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const {setSelectComponent, selectComponent, setSelectProducts} = props
     const [selectProduct, setSelectProduct] = useState([])
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
@@ -18,89 +17,53 @@ const Favourite = (props) => {
     const { Meta } = Card;
     const sendData = () => {
         setLoading(true)
-        axios.post(`${BASE_URL}${JOIN_AUCTION}`, {sale_id:auction,products_id:data})
-            .then(resp => {
-                setLoading(false)
-                if (resp.data.code === 201 ) {
-                    // const res = resp.data?.data?.result;
-                    message.success("اطلاعات حساب شما با موفقیت ثبت شد")
-                    // let check = Object.keys(res).some(t => !res[t]);
-                    setNext(true)
-                    // refreshTable()
+        let temp = {}
+        for (let i in selectProduct) {
+            temp[selectProduct[i].product.id] = ""
+        }
+        setSelectProducts(temp)
+        setNext(true)
                     setSelectComponent(selectComponent + 1)
-                    setIsModalVisible(false)
-                }
-            })
-            .catch(err => {
-                setLoading(false)
-                console.error(err);
-                message.error("دوباره تلاش کنید")
-            })
+
+        // axios.post(`${BASE_URL}${JOIN_AUCTION}`, {sale_id:auction,products_id:data})
+        //     .then(resp => {
+        //         setLoading(false)
+        //         if (resp.data.code === 201 ) {
+        //             message.success("اطلاعات حساب شما با موفقیت ثبت شد")
+        //             setNext(true)
+        //             setSelectComponent(selectComponent + 1)
+        //         }
+        //     })
+        //     .catch(err => {
+        //         setLoading(false)
+        //         console.error(err);
+        //         message.error("دوباره تلاش کنید")
+        //     })
     }
     return (
         <div>
 
 <p className="text-center">قبل از شرکت در حراج محصولات مورد علاقه خود را انتخاب کنید.</p>
-            <div className="text-center">
-                <ChooseAuction auction={auction} setAuction={setAuction}/>
-                {auction ?<div className="default-box-choose mt-3" onClick={() => {
-                    setIsModalVisible(true)
-                }}>انتخاب حراجی
-                </div>:''}
-            </div>
-            <Modal centered title={
-                <div className='d-flex align-items-center justify-content-between'>
-                   <span className="default titr">آثار</span>
-
-                    <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        onClick={() => setIsModalVisible(false)}
-                    />
-
-                </div>
-            } className="text-end" width={1000} visible={isModalVisible}
-                   onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)} footer={[
-                <div className="text-center"><Button key={2}
-                        type="" onClick={() => {
-                            let t={}
-                    selectProduct.map(element=>(t[element?.id ]=""))
-                    setTimeout(()=>{   setData(t)
-
-                        setIsModalVisible(false)},200)
-
-                }}
-                        className="btn-default">
-                    تایید
-                </Button></div>,
-
-            ]}><Chooseartwork selectProduct={selectProduct} setSelectProduct={setSelectProduct} auction={auction}/></Modal>
+            <Chooseartwork selectProduct={selectProduct} setSelectProduct={setSelectProduct} auction={auction} id={props.id}/>
 
 
             <div>
                 <div className="row mt-3">
                     {
                         selectProduct && selectProduct.length ? selectProduct.map((item,i)=> <div className="col-12 col-md-6 col-lg-4 col-xl-3 ">
-                                <div className="my-3">
+                                <div key={i} className="my-3">
                                     <Card
                                         style={{ width: "100%" }}
                                         cover={
                                             <img
                                                 alt="بدون تصویر"
-                                                src={item?.media?.exact_url}
+                                                src={item?.product.media?.exact_url}
                                             />
                                         }
-                                        // actions={[
-                                        //   <SettingOutlined key="setting" />,
-                                        //   <EditOutlined key="edit" />,
-                                        //   <EllipsisOutlined key="ellipsis" />,
-                                        // ]}
                                     >
                                         <Meta
-                                            title={item?.artwork_title}
-                                            description={item?.technique}
+                                            title={item?.product.artwork_title}
+                                            description={item?.product.technique}
                                         />
                                     </Card>
                                 </div>
@@ -111,7 +74,7 @@ const Favourite = (props) => {
 
                 <div>
                     {selectProduct && selectProduct.length >= 1 ?<Button loading={loading} className="btn-default" htmlType="submit" onClick={()=>sendData()}>
-                        ثبت
+                         ثبت و ادامه
                     </Button> :''}
                     {next ? <Button className="btn-default " loading={loading} onClick={() => {
                         setSelectComponent(selectComponent + 1)
@@ -119,12 +82,6 @@ const Favourite = (props) => {
                         ادامه
                     </Button> : ""
                     }
-                    <span className="px-2 d-inline-block"/>
-                    <Button className="btn-gray" loading={loading} onClick={() => {
-                        setSelectComponent(selectComponent - 1)
-                    }}>
-                        بازگشت
-                    </Button>
                 </div>
             </div>
         </div>

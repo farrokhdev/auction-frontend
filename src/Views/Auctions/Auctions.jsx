@@ -157,7 +157,7 @@ function Auctions() {
                                     <div key={key} className="row-blocks">
                                         <div className="row">
                                             <div className="col-md-4">
-                                                <Link to="/" className="bg-shadow tr-shadow10">
+                                                <Link to={`/one-auction/${item.id}`} className="bg-shadow tr-shadow10">
                                                     <img src={slider1} width="500" height="500" alt=""/>
                                                 </Link>
                                             </div>
