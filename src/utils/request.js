@@ -11,7 +11,7 @@ const instance = axios.create({});
 // instance.defaults.baseURL = "http:app.jamterrace.com";
 let timeOut = false;
 instance.interceptors.request.use(config => {
-    console.log(config)
+    // console.log(config)
         if (!config.headers.Authorization) {
             let token = getTokenObject()
             if (token) {
