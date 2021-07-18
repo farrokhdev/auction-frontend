@@ -46,6 +46,7 @@ function PanelProfile() {
                 message.error("صفحه را دوباره لود کنید")
             })
     }
+    
     return (
         <div>
             <HeaderPanel titlePage={"پروفایل"}/>
@@ -56,7 +57,7 @@ function PanelProfile() {
                         <div className="panel-container">
                             <Tabs activeKey={activeKey} onChange={callback} className="nav nav-tabs main-tab" unmountInactiveTabs={true}>
                                 <TabPane tab=" ویرایش پروفایل" key="1" className="nav-item" >
-                                    <EditPanelProfile data={data} getProfile={getData}/>
+                                    <EditPanelProfile data={data} setActiveKey={setActiveKey} getProfile={getData}/>
                                 </TabPane>
                                 <TabPane tab=" تغییر رمز عبور" key="2" className="nav-item ">
                                     <ChangePasswordPanelProfile data={data} getProfile={getData}/>
