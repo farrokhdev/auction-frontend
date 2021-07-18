@@ -1,55 +1,109 @@
 import React, {useState} from 'react';
 import {Button} from "antd";
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
+import {CheckCircleTwoTone} from "@ant-design/icons";
+import {JOIN_AUCTION} from "../../utils/constant";
+import { message } from 'antd';
 
 const Contract = (props) => {
     const {setSelectComponent, selectComponent} = props
+    const [CoreUpload, setCoreUpload] = useState("");
+    const [Uploaded, setUploaded] = useState(false);
+    const [Uploading, setUploading] = useState(false);
+
+    const handleUpload = (e) => {
+        let payload = {"content_type":e.target.files[0].name.split('.')[1]}
+        axios.post(`${BASE_URL}/core/upload/`, payload)
+            .then(resp=>{
+                if(resp.data.code === 200){
+                    setCoreUpload(resp.data.data.result)
+                    setUploading(true)
+                    axios.put(resp.data.data.result.upload_url, e.target.files[0])
+                        .then(resp1 => {
+                            if (resp1.status === 200) {
+                                axios.post(`${BASE_URL}/core/media/photos/`, {
+                                    "media_path": resp.data.data.result.upload_url,
+                                    "type": e.target.files[0].name.split('.')[1],
+                                    "bucket_name": e.target.files[0].name.split('.')[1],
+                                    "file_key": resp.data.data.result.file_key
+                                })
+                                    .then(resp2=>{
+                                        if(resp2.data.code === 201){
+                                            setCoreUpload(resp2.data.data.result)
+                                            setUploaded(true)
+                                            setUploading(false)
+                                        }
+                                    })
+                                    .catch(err=>{
+                                        console.log("Error Message" , err.response);
+                                        setUploading(false)
+                                    })
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err.response);
+                            setUploading(false)
+                        })
+                }
+            })
+            .catch(err=>{
+                console.log("Error Message" , err.response);
+            })
+
+    }
+
     const sendData = () => {
         // setSelectComponent(selectComponent + 1)
         console.log({
             "sale_id": props.id,
             "products_id": props.selectProducts,
             "recommender": props.RecommenderData,
-            "medias": [{
-                "media_path": "https://box.amnmoj.ir/image/d30da840-dd21-443e-9a21-8b973a2ebdbb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=XAS8PG1BHSATZE09C25C%2F20210502%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210502T145642Z&X-Amz-Expires=18000&X-Amz-SignedHeaders=host&X-Amz-Signature=4e7b975ef0a594e18ad0589bd7947cd8569206ce72db22ffb8c6b5b4347b81d8",
-                "type": "image",
-                "bucket_name": "image",
-                "file_key": "d30da840-dd21-443e-9a21-8b973a2ebdbb"
-            }]
+            "medias": [CoreUpload]
         })
+        axios.post(`${BASE_URL}${JOIN_AUCTION}`, {
+            "sale_id": props.id,
+            "products_id": props.selectProducts,
+            "recommender": props.RecommenderData,
+            "medias": [CoreUpload]
+        })
+            .then(resp => {
+                if (resp.data.code === 201 ) {
+                    message.success("درخواست شما با موقیت ثبت شد.")
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                message.error("دوباره تلاش کنید")
+            })
     }
     return (
         <div>
             <div className="container container-form">
-                <p></p>
-                {!true ?
-                    <>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="input-group">
-                                <label className="default-lable">مدرک شماره1</label>
-                                <input type="file" className="default-input" placeholder="IR"/>
-                                <div className="input-file">
-                                    <span className="input-placeholder">انتخاب فایل</span>
-                                    <span className="btn-file"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="input-group">
-                                <label className="default-lable">مدرک شماره2</label>
-                                <input type="file" className="default-input" placeholder="IR"/>
-                                <div className="input-file">
-                                    <span className="input-placeholder">انتخاب فایل</span>
-                                    <span className="btn-file"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </>
-                    : ""
-                }
+                    {/*<div className="row">*/}
+                    {/*    <div className="col-md-6">*/}
+                    {/*        <div className="input-group">*/}
+                    {/*            <label className="default-lable">مدرک شماره1</label>*/}
+                    {/*            <input type="file" className="default-input" placeholder="IR"/>*/}
+                    {/*            <div className="input-file">*/}
+                    {/*                <span className="input-placeholder">انتخاب فایل</span>*/}
+                    {/*                <span className="btn-file"/>*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    {/*<div className="row">*/}
+                    {/*    <div className="col-md-6">*/}
+                    {/*        <div className="input-group">*/}
+                    {/*            <label className="default-lable">مدرک شماره2</label>*/}
+                    {/*            <input type="file" className="default-input" placeholder="IR"/>*/}
+                    {/*            <div className="input-file">*/}
+                    {/*                <span className="input-placeholder">انتخاب فایل</span>*/}
+                    {/*                <span className="btn-file"/>*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 <h5 className="default mrgt50">قرارداد</h5>
                 <p><a
                     href="#">برای دانلود نمونه قرارداد اینجا کلیک کنید.</a></p>
@@ -57,9 +111,19 @@ const Contract = (props) => {
                     <div className="col-md-6">
                         <div className="input-group">
                             <label className="default-lable">قرارداد</label>
-                            <input type="file" className="default-input" placeholder="IR"/>
+                            <input
+                                type="file"
+                                className="default-input"
+                                placeholder="IR"
+                                accept=".pdf, .rar"
+                                onClick={(e)  => e.target.value = ""}
+                                onChange={(e) => {
+                                    handleUpload(e)
+                                }}/>
                                 <div className="input-file">
                                     <span className="input-placeholder">انتخاب فایل قرارداد</span>
+                                    { Uploading ? <span style={{marginRight: 5}}> درحال آپلود </span> : "" }
+                                    { Uploaded ? <CheckCircleTwoTone style={{marginRight: 5}} twoToneColor="#52c41a" /> : "" }
                                     <span className="btn-file"/>
                                 </div>
                         </div>
@@ -67,7 +131,7 @@ const Contract = (props) => {
                 </div>
                 <div className="button-group">
                     <button type="button" className="btn-gray">بازگشت</button>
-                    <button type="button" className="btn-default" onClick={() => sendData()}>ثبت نهایی</button>
+                    <button type="button" className="btn-default" onClick={() => sendData()} disabled={!Uploaded}>ثبت نهایی</button>
                 </div>
             </div>
         </div>
