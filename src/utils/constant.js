@@ -19,5 +19,6 @@ module.exports={
     LIST_REMINDERS : '/notification/auction-reminders/' , 
     DELETE_REMINDER : id => `/notification/auction-reminders/${id}/` , 
     UPLOAD_EXEL_AUCTION:name=>`/sale/upload/${name}/`,
+    REFRESH_TOKEN:`/account/token/refresh/`,
 
 }
