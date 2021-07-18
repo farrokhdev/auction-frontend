@@ -29,7 +29,7 @@ const handleRedirect = () => {
 
   return (
     <>
-      <header className="mainnav boxshadow-cs" style={props.newStyle ,props.newstyle}>
+      <header className="mainnav boxshadow-cs" style={props.newStyle}>
         <div className=" container containercs">
           <nav className="navbar navbar-expand-lg">
             <Link className="navbar-brand" to="/">
