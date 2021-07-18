@@ -18,14 +18,14 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(`${BASE_URL}/sale/auctions/${props.id}`)
+    axios.get(`${BASE_URL}/sale/product/?auctions__id=${props.id}`)
         .then(resp => {
           setLoading(false)
           if ((resp.data.code === 200) && resp.data?.data?.result) {
-            const res = resp.data?.data?.result.auction_product;
+            const res = resp.data?.data?.result;
             // form.setFieldsValue(res)
             setData(res)
-            setDataCount(resp.data?.data?.result.auction_product.length)
+            setDataCount(resp.data?.data?.count)
             // let check = Object.keys(res).some(t => !res[t]);
             // console.log(check)
             // setNext(!check)
@@ -72,7 +72,7 @@ function Chooseartwork(props) {
                     cover={
                       <img
                           alt="بدون تصویر"
-                          src={item?.product.media?.exact_url}
+                          src={item?.media?.exact_url}
                       />
                     }
                     // actions={[
@@ -82,17 +82,17 @@ function Chooseartwork(props) {
                     // ]}
                 >
                   <Meta
-                      avatar={<Checkbox checked={selectProduct.some(t=>item?.product.id===t?.product.id)} onChange={e=>{
+                      avatar={<Checkbox checked={selectProduct.some(t=>item?.id===t?.id)} onChange={e=>{
                         if(e.target.checked)
                           setSelectProduct([...selectProduct,item])
                         else {
-                          let t=selectProduct.filter(t=>t?.product.id!==item?.product.id)
+                          let t=selectProduct.filter(t=>t?.id!==item?.id)
                             setSelectProduct(t)
                         }
 
                       }}/>}
-                      title={item.product.artwork_title}
-                      description={item?.product.technique}
+                      title={item.artwork_title}
+                      description={item?.technique}
                   />
                 </Card>
               </div>

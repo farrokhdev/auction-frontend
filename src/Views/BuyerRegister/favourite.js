@@ -19,7 +19,7 @@ const Favourite = (props) => {
         setLoading(true)
         let temp = {}
         for (let i in selectProduct) {
-            temp[selectProduct[i].product.id] = ""
+            temp[selectProduct[i].id] = ""
         }
         setSelectProducts(temp)
         setNext(true)
@@ -57,13 +57,13 @@ const Favourite = (props) => {
                                         cover={
                                             <img
                                                 alt="بدون تصویر"
-                                                src={item?.product.media?.exact_url}
+                                                src={item?.media?.exact_url}
                                             />
                                         }
                                     >
                                         <Meta
-                                            title={item?.product.artwork_title}
-                                            description={item?.product.technique}
+                                            title={item?.artwork_title}
+                                            description={item?.technique}
                                         />
                                     </Card>
                                 </div>
