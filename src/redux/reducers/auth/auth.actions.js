@@ -1,4 +1,7 @@
 import types from './auth.types';
+import axios from "../../../utils/request";
+import {BASE_URL} from "../../../utils";
+import {REFRESH_TOKEN} from "../../../utils/constant";
 
 // ----- Register --------
 export const registerStart = () => (
@@ -6,11 +9,15 @@ export const registerStart = () => (
         type : types.REGISTER_START
     }
 )
-// export const loginRefresh = () => (
-//     {
-//         type : types.REGISTER_REFRESH
-//     }
-// )
+export const refreshToken = () => async dispatch=>{
+    axios.put(`${BASE_URL}${REFRESH_TOKEN}`,{auth:false})
+        .then(r => {
+            console.log(r)
+            return r;
+        }).catch(e => {
+
+    })
+}
 
 export const registerSuccess = (data) => (
     {

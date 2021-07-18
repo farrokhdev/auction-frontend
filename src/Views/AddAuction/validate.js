@@ -188,7 +188,7 @@ const Validate = (props) => {
                             }}>بازگشت
                             </Button>
                             <Button className="btn-default" htmlType="submit"
-                                    disabled={!validations_auction?.length && !admin_confirmation}>ادامه</Button>
+                                    disabled={!validations_auction?.length && !admin_confirmation && !is_send_invitation}>ادامه</Button>
                         </div>
                     </div>
                 </div>

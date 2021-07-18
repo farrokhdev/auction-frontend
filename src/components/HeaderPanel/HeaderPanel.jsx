@@ -14,8 +14,8 @@ function HeaderPanel(props) {
              <header>
         <div className="panel-header">
           <div className="panel-brand">
-            <Link to={"/"}>
-              <img src={logowhite} width="139" height="30" alt="اسمارت آکشن" />
+            <Link to="/">
+            <img src={logowhite} width="139" height="30" alt="اسمارت آکشن" />
             </Link>
           </div>
           <div className="panel-head">

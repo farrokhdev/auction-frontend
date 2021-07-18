@@ -1,5 +1,6 @@
 import {getTokenObject} from "./utils";
 import * as axios from "axios";
+import {refreshToken} from "../redux/reducers/auth/auth.actions";
 // import {refreshToken} from "./refreshTokenRequest"
 // import {connect} from 'react-redux';
 // import {clearStorage} from '../redux/reducers/auth/auth.actions';
@@ -10,6 +11,7 @@ const instance = axios.create({});
 // instance.defaults.baseURL = "http:app.jamterrace.com";
 let timeOut = false;
 instance.interceptors.request.use(config => {
+    // console.log(config)
         if (!config.headers.Authorization) {
             let token = getTokenObject()
             if (token) {
@@ -33,7 +35,7 @@ instance.interceptors.request.use(config => {
                 //   axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
                 //   return axiosApiInstance(originalRequest);
                 timeOut = true ;
-                // refreshToken();            
+                // refreshToken();
                 console.log("Access_token =>>>>>>", error.request.responseURL);
                 
                     timeOut = false;

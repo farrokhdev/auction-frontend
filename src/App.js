@@ -90,11 +90,6 @@ function App(props) {
               <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction}/>
               {/*<Route exact path="/panel-add-auction" component={AddAuction}/>*/}
               <Route exact path="/panel-reminders" component={PanelRemindersPage}/>
-              {/*<Route exact path="/panel-auctions-date" component={UserPanelCreateAuctionsOnlineAuctionDate}/>*/}
-              {/*<Route exact path="/panel-auctions-offerrange" component={UserPanelCreateAuctionsOnlineAuctionOfferRange}/>*/}
-              {/*<Route exact path="/panel-auctions-currency" component={UserPanelCreateAuctionsOnlineAuctionCurrency}/>*/}
-              {/*<Route exact path="/panel-auctions-buyervalidation" component={UserPanelCreateAuctionsOnlineAuctionBuyerValidation}/>*/}
-              {/*<Route exact path="/panel-auctions-conditions" component={UserPanelCreateAuctionsOnlineAuctionConditions}/>*/}
               <Route exact path="/buyer-register/:id" component={BuyerRegister} />
               <Route exact path="/financial-information/:id" component={Financialinformation}/>
               <Route exact path="/works-of-interest" component={WorksOfInterest}/>

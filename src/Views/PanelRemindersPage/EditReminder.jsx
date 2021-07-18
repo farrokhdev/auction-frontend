@@ -1,26 +1,70 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
-import { Button, Form, Input, Spin, Select } from "antd";
+import { Button, Form, Input, Spin, Select,message } from "antd";
 import { Link } from 'react-router-dom';
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
 
 
 import "antd/dist/antd.css";
 function EditReminder() {
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
+    const [data,setData]=useState({})
+    const [next,setNext]=useState(false)
 
 
     const onFinish = (values) => {
         sendData(values)
     }
-    // useEffect(()=>{
-    // getData()
 
-    // },[])
+
+    useEffect(()=>{
+    getData()
+
+    },[])
 
     const sendData = () => {
         setLoading(true)
+        // axios.put(`${BASE_URL}${EDIT_PROFILE}`,values)
+        // .then(resp => {
+        //     setLoading(false)
+        //     if (resp.data.code === 200 && resp.data?.data?.result) {
+        //         const res= resp.data?.data?.result;
+        //         message.success("پروفایل شما با موفقیت تکمیل شد")
+        //         let check= Object.keys(res).some(t=>!res[t]);
+        //         setNext(!check)
+        //     }
+        // })
+        // .catch(err => {
+        //     setLoading(false)
+        //     console.error(err);
+        //     message.error("دوباره تلاش کنید")
+        // })
+    }
+
+    const getData = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/notification/auction-reminders/`)
+            .then(resp => {
+                setLoading(false)
+
+                if ((resp.data.code === 200) && resp.data?.data?.result) {
+                    const res= resp.data?.data?.result;
+                    console.log(res);
+                    form.setFieldsValue(res)
+                    setData(res)
+                    // let check= Object.keys(res).some(t=>!res[t]);
+                    // console.log(check)
+                    // setNext(!check)
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("صفحه را دوباره لود کنید")
+            })
     }
 
     return (

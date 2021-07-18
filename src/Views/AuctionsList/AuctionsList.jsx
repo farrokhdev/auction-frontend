@@ -8,7 +8,7 @@ import moment from 'jalali-moment'
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
 import {Link} from "react-router-dom";
-import { Modal, Button, Space } from 'antd';
+import {Modal, Button, Space, Spin} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {useSelector} from "react-redux";
 
@@ -18,6 +18,7 @@ function AuctionsList() {
     const [pageSize, setPageSize] = useState(30);
     const [bidsCount, setBidsCount] = useState(0);
     const [bids, setBids] = useState("");
+    const [loading, setLoading] = useState(false);
     const { confirm } = Modal;
 
     function showDeleteConfirm() {
@@ -39,14 +40,17 @@ function AuctionsList() {
 
 
     const getProducts = (page_size = pageSize) => {
+        setLoading(true)
         axios.get(`${BASE_URL}/sale/auctions/?page_size=${page_size}`)
             .then(resp => {
+                setLoading(false)
                 if (resp.data.code === 200) {
                     setAuctions(resp.data.data.result)
                 }
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }
@@ -103,6 +107,7 @@ function AuctionsList() {
                         </Link>
                         {/*<button type="button" className="btn btn-outline-pink" style={{marginRight:5}}>بارگزاری تفاهم‌نامه*/}
                         {/*</button>*/}
+                        <Spin spinning={loading} >
                         <div className="col-xxxxl-8 mrgt30">
                             <div className="table-responsive">
                                 <table className="panel-table create-auctions table ">
@@ -169,6 +174,7 @@ function AuctionsList() {
                             </div>
 
                         </div>
+                        </Spin>
                     </div>
                 </div>
             </div>

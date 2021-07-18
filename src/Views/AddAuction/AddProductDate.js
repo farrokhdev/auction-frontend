@@ -99,14 +99,13 @@ const Products = (props) => {
                             <div className="d-flex align-items-center justify-content-between">
                                 <span>{moment(item, "jYYYY-jMM-jDD").format("jYYYY  jMMMM jDD")}</span>
                                 <div>
-                                    <DeleteFilled key="ellipsis" className="ms-2" onClick={() => {
+                                    <DeleteFilled key="ellipsis" className="ms-2" onClick={async()  => {
                                         let filterList = [];
-                                        Object.keys(productsDate[item]).map(t => filterList.push(productsDate[item][t]));
-                                        let list = productsArrayDate.filter(t => (filterList.some(j => j?.id !== t?.id)))
-                                        let p = productsDate;
-                                        console.log(<li></li>)
+                                       await Object.keys(productsDate[item]).map(t => filterList.push(productsDate[item][t]));
+                                        let list = await productsArrayDate.filter(t => (filterList.some(j => j === t?.id)));
+                                        let p = await productsDate;
                                         p[item] = {}
-                                        dispatch(setAUCTION({productsDate: p, productsArrayDate: list}))
+                                        await dispatch(setAUCTION({productsDate: p, productsArrayDate: list}))
                                     }}/>
                                     <AddProduct id={id} date={item}
                                                 number={Object.keys(productsDate?.[item])?.length || 0}/>
@@ -146,7 +145,7 @@ const Products = (props) => {
                                                                 className="d-flex align-items-center justify-content-between ">
                                                                 <input type="number" className="default-input"
                                                                        defaultValue={productsDate?.[item][prd]?.base_price}
-                                                                       placeholder="کمترین قیمت ..."
+                                                                       placeholder={"قیمت پایه ..."  }
                                                                        onChange={e => {
                                                                            let price = e.target.value
                                                                            if (price.length > 4) {
@@ -156,12 +155,12 @@ const Products = (props) => {
                                                                            }
                                                                        }}
                                                                 /><small className="pe-2">تومان</small></div>
-                                                            <div className="pt-2">
+                                                            {data.type === "PERIODIC" ? <div className="pt-2">
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-between ">
                                                                     <input type="number" className="default-input"
                                                                            defaultValue={productsDate?.[item][prd]?.reserve_price}
-                                                                           placeholder="قیمت رزرو ..."
+                                                                           placeholder={"قیمت رزرو ..."}
                                                                            onChange={e => {
                                                                                let price = e.target.value
                                                                                if (price.length > 4) {
@@ -171,7 +170,7 @@ const Products = (props) => {
                                                                                }
                                                                            }}
                                                                     /><small className="pe-2">تومان</small></div>
-                                                            </div>
+                                                            </div> :''}
                                                         </div>}
                                                     />
                                                 </Card>
