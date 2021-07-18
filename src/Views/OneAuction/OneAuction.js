@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import {message, Pagination} from 'antd';
+import {message, Pagination, Spin} from 'antd';
 import 'antd/dist/antd.css';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
@@ -17,6 +17,7 @@ function OneAuction(props) {
     const [countProducts, setCountProducts] = useState(0)
     const [reminder, setReminder] = useState(false)
     const [bookmark, setBookmark] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const id = props.match.params.id;
     const [params, setParams] = useState({
@@ -28,36 +29,35 @@ function OneAuction(props) {
     })
     const queries = queryString.stringify(params);
     const getAuction = () => {
+        setLoading(true)
         axios.get(`${BASE_URL}/sale/auctions/${id}`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setAuction(resp.data.data.result)
                 }
+                axios.get(`${BASE_URL}/sale/product/?${queries}`)
+                    .then(resp => {
+                        if ((resp.data.code === 200) && resp.data?.data?.result) {
+                            const res = resp.data?.data?.result;
+                            setProduct(res)
+                            setLoading(false)
+                            setCountProducts(resp.data?.data?.count)
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        setLoading(false)
+                    })
 
             })
             .catch(err => {
                 console.error(err);
-            })
-    }
-
-    const getProducts = () => {
-        axios.get(`${BASE_URL}/sale/product/?${queries}`)
-            .then(resp => {
-                if ((resp.data.code === 200) && resp.data?.data?.result) {
-                    const res = resp.data?.data?.result;
-                    setProduct(res)
-                    console.log(resp)
-                    setCountProducts(resp.data?.data?.count)
-                }
-            })
-            .catch(err => {
-                console.error(err);
+                setLoading(false)
             })
     }
 
     useEffect(() => {
         getAuction()
-        getProducts()
 
     }, [params])
 
@@ -104,6 +104,7 @@ function OneAuction(props) {
     return (
         <>
             <Header/>
+            <Spin spinning={loading}>
             <main className="innercontent" id="oneAuction">
                 <div className="container innercontainer">
                     <div className="row sm-mrgb50">
@@ -434,7 +435,9 @@ function OneAuction(props) {
 
             </main>
 
+
             <Footer/>
+            </Spin>
         </>
     );
 }
