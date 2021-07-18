@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import {Pagination} from 'antd';
+import {message, Pagination} from 'antd';
 import 'antd/dist/antd.css';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
@@ -13,21 +13,25 @@ import {Link} from "react-router-dom";
 function OneAuction(props) {
 
     const [Auction, setAuction] = useState("");
+    const [Product, setProduct] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [reminder, setReminder] = useState(false)
     const [bookmark, setBookmark] = useState(false)
+
+    const id = props.match.params.id;
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
+        auctions__id: id,
+        search: "",
+        ordering: "id",
     })
-    const id = props.match.params.id;
     const queries = queryString.stringify(params);
     const getAuction = () => {
         axios.get(`${BASE_URL}/sale/auctions/${id}`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setAuction(resp.data.data.result)
-                    setCountProducts(resp.data.data.result.products_count)
                 }
 
             })
@@ -36,8 +40,24 @@ function OneAuction(props) {
             })
     }
 
+    const getProducts = () => {
+        axios.get(`${BASE_URL}/sale/product/?${queries}`)
+            .then(resp => {
+                if ((resp.data.code === 200) && resp.data?.data?.result) {
+                    const res = resp.data?.data?.result;
+                    setProduct(res)
+                    console.log(resp)
+                    setCountProducts(resp.data?.data?.count)
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
     useEffect(() => {
         getAuction()
+        getProducts()
 
     }, [params])
 
@@ -93,7 +113,8 @@ function OneAuction(props) {
                         >
                             <div className="w-100 lg-mrgb50 d-lg-none d-block"/>
                             <div className="col-lg-6 ">
-                                <p className="auction-link"> برای کسب اطلاعات بیشتر در مورد این حراج،<a style={{marginRight: 3}} href="#"> اینجا کلیک کنید. </a> </p>
+                                <p className="auction-link"> برای کسب اطلاعات بیشتر در مورد این حراج،<a
+                                    style={{marginRight: 3}} href="#"> اینجا کلیک کنید. </a></p>
                             </div>
                         </Breadcrumbs>
 
@@ -142,10 +163,10 @@ function OneAuction(props) {
                                         }
                                     </div>
                                     <div className="auction-moreinfo">
-                                        <a href="#" className="d-info category"><h6 className="default">هنر مدرن و
-                                            معاصر</h6></a>
-                                        <a href="#" className="d-info gallery"><h6 className="default">گالری
-                                            آرتیبیشن</h6>
+                                        <a href="#" className="d-info category"><h6
+                                            className="default">{Auction.category ? Auction.category[0]?.title : ""}</h6>
+                                        </a>
+                                        <a href="#" className="d-info gallery"><h6 className="default">نام گالری</h6>
                                         </a>
                                     </div>
                                     <div className="auction-btns">
@@ -167,7 +188,7 @@ function OneAuction(props) {
                                                 <div className="auction-closed">حراج بسته شد</div>
                                                 <div className="auction-total-price">
                                                     <span>مبلغ کل فروش:  </span>
-                                                    <span>3,997,500 تومان</span>
+                                                    <span>{Auction?.products_total_price} تومان</span>
                                                 </div>
                                             </>
 
@@ -177,22 +198,14 @@ function OneAuction(props) {
                                         <div className="db-left">
                                             <span className="db-title">آثار</span>
                                             <div className="price-block">
-                                                <span className="price">100,000,000</span>
-                                            </div>
-                                        </div>
-                                        <span className="seprator brdrbefor"/>
-                                        <div className="db-center">
-                                            <span className="db-title">تخمین</span>
-                                            <div className="price-block">
-                                                <span className="price">500-700</span>
-                                                <span className="unit"> تومان</span>
+                                                <span className="price">{Auction?.products_count}</span>
                                             </div>
                                         </div>
                                         <span className="seprator brdrbefor"/>
                                         <div className="db-right ">
                                             <span className="db-title ">هنرمندان</span>
                                             <div className="price-block ">
-                                                <span className="price">25</span>
+                                                <span className="price">{Auction?.artists_count}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +239,11 @@ function OneAuction(props) {
                                     <div className="col-lg-3 col-sm-5 col-9">
                                         <div className="search-input">
                                             <input type="text" className="default-input"
-                                                   placeholder="در بیش از 100 حراج جستجو کنید."/>
+                                                   placeholder="جستجو" onChange={(e) => {
+                                                setParams({
+                                                    ...params, search: e.target.value
+                                                })
+                                            }}/>
                                             <button type="button" className="btn-search"/>
                                         </div>
                                     </div>
@@ -235,21 +252,33 @@ function OneAuction(props) {
                                             <span className="btn-sort">مرتب‌سازی با<span
                                                 className="d-none d-md-inline-block">:</span></span>
                                             <ul className="sort-list">
-                                                <li>صعودی</li>
-                                                <li className="active">نزولی</li>
-                                                <li>محبوب‌ترین</li>
-                                                <li>پرفروش‌ترین</li>
+                                                <li
+                                                    onClick={() => {
+                                                        setParams({
+                                                            ...params, ordering: "id"
+                                                        })
+                                                    }}
+                                                    className={params.ordering === "id" ? "active" : ""}>صعودی
+                                                </li>
+                                                <li
+                                                    onClick={() => {
+                                                        setParams({
+                                                            ...params, ordering: "-id"
+                                                        })
+                                                    }}
+                                                    className={params.ordering === "-id" ? "active" : ""}>نزولی
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row mrgt30 all-artwork row-cols-2  row-cols-lg-4">
 
-                                    {Auction && Auction.product ? Auction.product.map((item, key) => {
+                                    {Product ? Product.map((item, key) => {
                                         return (
                                             <div className="artwork-block" key={key}>
                                                 <div className="artwork-img">
-                                                    <img src={item?.product?.media?.exact_url} width="317" height="280"
+                                                    <img src={item?.media?.exact_url} width="317" height="280"
                                                          alt=""
                                                          className="img-fluid"/>
                                                     <div className="artwork-category"
@@ -261,8 +290,8 @@ function OneAuction(props) {
                                                 <div className="block-body">
                                                     <div className="ra-row">
                                                         <div className="ra-col">
-                                                            <h6 className="default gray50 ">سهراب سپهری</h6>
-                                                            <h4 className="default">از ژورنال سقاخانه</h4>
+                                                            <h6 className="default gray50 ">{item?.artwork_title}</h6>
+                                                            <h4 className="default">از {Auction.title}</h4>
                                                         </div>
                                                         <div className="ra-col">
                                                             <h5 className="default lot-num">{key + 1}</h5>
@@ -273,7 +302,7 @@ function OneAuction(props) {
                                                             <span className="db-title">تخمین</span>
                                                             <div className="price-block">
                                                                 <span
-                                                                    className="price">{item?.base_price} - {item?.last_price}</span>
+                                                                    className="price">{item?.min_price} - {item?.max_price}</span>
                                                                 <span className="unit"> تومان</span>
                                                             </div>
                                                         </div>
@@ -281,7 +310,7 @@ function OneAuction(props) {
                                                         <div className="db-right ">
                                                             <span className="db-title">قیمت پایه</span>
                                                             <div className="price-block">
-                                                                <span className="price">{item?.product?.price}</span>
+                                                                <span className="price">{item?.price}</span>
                                                                 <span className="unit"> تومان</span>
                                                             </div>
                                                         </div>
@@ -310,23 +339,7 @@ function OneAuction(props) {
                                  aria-labelledby="profile-tab">
                                 <div className="row">
                                     <div className="col-lg-8">
-                                        <p>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-                                            شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                            کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
-                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-                                            طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-                                            لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                            ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده
-                                            شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
-                                            برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی
-                                            ایجاد کرد.</p>
-                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-                                            طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-                                            لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                            ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده
-                                            شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
-                                            برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی
-                                            ایجاد کرد.</p>
+                                        <p>{Auction.description}</p>
                                         <div className="vartical-tab">
                                             <ul className="nav nav-tabs " id="vt-1" role="tablist">
                                                 <li className="nav-item" role="presentation">
@@ -363,53 +376,21 @@ function OneAuction(props) {
                                             <div className="tab-content" id="vt-1Content">
                                                 <div className="tab-pane fade show active" id="v1" role="tabpanel"
                                                      aria-labelledby="vtab1">
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته،
-                                                        حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                                    <p>{Auction?.payment_method_conditions}</p>
                                                     <h5 className="default">نحوه‌ی پرداخت</h5>
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می
-                                                        باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت
-                                                        فراوان جامعه و متخصصان
-                                                        را می طلبد</p>
+                                                    <p>{Auction?.payment_method === 'ONLINE' ? 'آنلاین' : "آفلاین"}</p>
                                                 </div>
                                                 <div className="tab-pane fade" id="v2" role="tabpanel"
                                                      aria-labelledby="vtab2">
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته،
-                                                        حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
-                                                    <h5 className="default">حمل و نقل</h5>
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می
-                                                        باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت
-                                                        فراوان جامعه و متخصصان
-                                                        را می طلبد</p>
+                                                    <p>{Auction?.transportation}</p>
                                                 </div>
                                                 <div className="tab-pane fade" id="v3" role="tabpanel"
                                                      aria-labelledby="vtab3">
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته،
-                                                        حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
-                                                    <h5 className="default">شرایط استفاده</h5>
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می
-                                                        باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت
-                                                        فراوان جامعه و متخصصان
-                                                        را می طلبد</p>
+                                                    <p>{Auction?.return_rules}</p>
                                                 </div>
                                                 <div className="tab-pane fade" id="v4" role="tabpanel"
                                                      aria-labelledby="vtab3">
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می
-                                                        باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت
-                                                        فراوان جامعه و متخصصان
-                                                        را می طلبد</p>
-                                                    <h5 className="default">سایر</h5>
-                                                    <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                        ابزارهای کاربردی می
-                                                        باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت
-                                                        فراوان جامعه و متخصصان
-                                                        را می طلبد</p>
+                                                    <p>{Auction?.details}</p>
                                                 </div>
                                             </div>
                                         </div>

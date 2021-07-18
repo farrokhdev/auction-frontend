@@ -7,12 +7,24 @@ import {BASE_URL} from "../../utils";
 import {Redirect} from "react-router-dom";
 
 function BuyerRegister(props) {
-    const [hasPerm, setHasPerm] = useState(false);
+    const [hasPerm, setHasPerm] = useState(true);
+    const [redirectUrl, setRedirectUrl] = useState("");
+
     const getProfile = () => {
         axios.get(`${BASE_URL}/account/profile/`)
             .then(resp => {
                 if (resp.data.code === 200) {
-                    setHasPerm(true)
+                    if (!resp.data.data.result.complete_profile) {
+                        setRedirectUrl("/panel-profile")
+                        setHasPerm(false)
+                    }
+                    else if (!resp.data.data.result.complete_bank_info) {
+                        setRedirectUrl("/panel-financial")
+                        setHasPerm(false)
+                    }
+                    else {
+                        setHasPerm(true)
+                    }
                 }
             })
             .catch(err => {
@@ -34,7 +46,7 @@ function BuyerRegister(props) {
         )
     } else {
         return (
-            <Redirect to="/panel-profile"/>
+            <Redirect to={redirectUrl}/>
         )
     }
 }

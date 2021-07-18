@@ -95,6 +95,90 @@ const Wallet = (props) => {
                                  title={"افزودن حساب بانکی جدید"}/>
             </Modal>
 
+
+            <div className="modal fade" id="charge-modal" tabIndex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog w-600">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <div className="container g-0 d-flex justify-content-between">
+                                <div className="main-title">
+                                    <h2 className="default titr">
+                                        چقدر باید شارژ کنم؟
+                                    </h2>
+                                </div>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div className="modal-body textalign-center">
+                            <div className="recharge-txt">
+                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم<strong> 1000 تومان</strong> از صنعت چاپ
+                                    و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و
+                                    سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
+                                    بهبود ابزارهای کاربردی می باشد</p>
+                            </div>
+                            <div className="amount-list">
+                                <div className="amount-block">
+                                    <div className="amount-range">
+                                        0 - 100<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        1,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+                                <div className="amount-block">
+                                    <div className="amount-range">
+                                        101 - 200<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        2,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+                                <div className="amount-block">
+                                    <div className="amount-range">
+                                        201 - 300<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        3,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+                                <div className="amount-block">
+                                    <div className="amount-range">
+                                        301 - 400<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        4,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+                                <div className="amount-block">
+                                    <div className="amount-range">
+                                        401 - 500<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        5,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+                                <div className="amount-block">
+                                    <div className="amount-range">
+                                        501 - 600<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        6,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 };
