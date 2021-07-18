@@ -182,8 +182,9 @@ function Auctions() {
                                                                 <span className="d-none d-sm-inline-block">
                                                                   مشاهده{" "}
                                                                 </span>
-                                                                آثار (<span>{item?.product ? item.product.length : 0}</span>)
-                                                              </Link>
+                                                                    آثار
+                                                                    (<span>{item?.product ? item.product.length : 0}</span>)
+                                                                </Link>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -231,11 +232,13 @@ function Auctions() {
                                                             </div>
                                                         </div>
                                                         <div className="col-sm-7 textalign-left">
-                                                            <button type="button" className="btn btn-gray ms-2">
-                                                                <FontAwesomeIcon icon={faEye}/>
-                                                                مشاهده {AuctionType(item.type)}
+                                                            <Link to={`/one-auction/${item.id}`}>
+                                                                <button type="button" className="btn btn-gray ms-2">
+                                                                    <FontAwesomeIcon icon={faEye}/>
+                                                                    مشاهده {AuctionType(item.type)}
 
-                                                            </button>
+                                                                </button>
+                                                            </Link>
                                                             {item.status !== "CLOSED" ?
                                                                 <button type="button" class="btn btn-lightpink">حراج به
                                                                     پایان رسید</button>

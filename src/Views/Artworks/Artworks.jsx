@@ -154,7 +154,7 @@ function Artworks() {
                                     {Products && Products.length >= 1 ? Products.map((item, key) => {
                                         return (
                                             <div className="col" key={key}>
-                                                <Link to="#" class="artwork-block">
+                                                <Link to={`/artworks/${item.id}`} class="artwork-block">
                                                     <div className="artwork-img">
                                                         <img
                                                             src={item.media.exact_url ? item.media.exact_url : ''}
