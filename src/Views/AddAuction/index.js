@@ -67,9 +67,10 @@ function Index() {
             dispatch(getProfile())
     }, [])
 
-    const sendData = async () => {
+    const sendData = (values) => {
         // console.log(products, productsDate, data, checkData)
-        let allData = data
+
+        let allData = {...data, ...values}
         let allDataMain = {}
         Object.assign(allDataMain, checkData)
         delete allDataMain["data"]
@@ -91,11 +92,13 @@ function Index() {
             })
             auction_product = productsArrayDate.map(t => ({
                 base_price: (t?.base_price || 0),
+                reserve_price: (t?.reserve_price || 0),
                 product_id: t?.id
             }))
         } else {
             Object.keys(products).map(t => (auction_product.push({
                 base_price: (products[t]?.base_price || 0),
+                reserve_price: (products[t]?.reserve_price || 0),
                 product_id: products[t]?.id
             })))
         }
@@ -136,9 +139,11 @@ function Index() {
             .catch(err => {
                 setLoading(false)
                 console.error(err.response);
-                message.error(err.response?.data?.message==="ok" ? err.response?.data?.data?.error_message :err.response?.data?.message)
+                let t = err.response?.data?.message === "ok" ? err.response?.data?.data?.error_message : err.response?.data?.message
+                message.error(t)
             })
     }
+    console.log(productsDate, productsArrayDate)
     if (next) {
         return <Redirect to="/auctions-list"/>
     }
@@ -185,7 +190,9 @@ function Index() {
                                                  finalData={data} setFinalData={setData} products={products} id={id}
                                                  setProducts={setProducts}
                                                  steps={steps}
-                                                 payment_method={payment_method} setPayment_method={setPayment_method}/>
+                                                 payment_method={payment_method} setPayment_method={setPayment_method}
+                                                 sendData={sendData}
+                                    />
                             })
                         }
                         <div className="text-start">
@@ -195,9 +202,9 @@ function Index() {
                                             dispatch(removeAUCTION())
                                         }}>انصراف و حذف اطلاعات
                                 </Button> : ''}
-                            {selectComponent === 6 ?
-                                <Button className="btn-default me-2" loading={loading} onClick={sendData}>ثبت
-                                    نهایی</Button> : ''}
+                            {/*{selectComponent === 6 ?*/}
+                            {/*    <Button className="btn-default me-2" loading={loading} onClick={sendData}>ثبت*/}
+                            {/*        نهایی</Button> : ''}*/}
                         </div>
                     </div>
                 </div>

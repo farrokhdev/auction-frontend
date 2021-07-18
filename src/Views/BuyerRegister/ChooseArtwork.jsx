@@ -7,12 +7,10 @@ import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons
 import Meta from "antd/es/card/Meta";
 
 function Chooseartwork(props) {
-    const {selectProduct, setSelectProduct,auction}=props
+  const {selectProduct, setSelectProduct,auction}=props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({})
   const [dataCount, setDataCount] = useState(0)
-
-    console.log(selectProduct)
 
   useEffect(()=>{
     setSelectProduct([])
@@ -20,10 +18,9 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(`${BASE_URL}${LIST_PRODUCTS}?auctions__id=1`)
+    axios.get(`${BASE_URL}/sale/product/?auctions__id=${props.id}`)
         .then(resp => {
           setLoading(false)
-
           if ((resp.data.code === 200) && resp.data?.data?.result) {
             const res = resp.data?.data?.result;
             // form.setFieldsValue(res)

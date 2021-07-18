@@ -7,6 +7,8 @@ import ModalFinantioal from "./ModalFinantioal";
 import ListFinancial from "./listFinancial";
 import Favourite from "./favourite";
 import Wallet from "./wallet";
+import Recommender from "./Recommender";
+import Contract from "./Contract";
 // import {setToken} from "../../utils/utils";
 // import {setPhoneNumber} from "../../redux/reducers/auth/auth.actions";
 // import {connect} from "react-redux";
@@ -14,14 +16,18 @@ import Wallet from "./wallet";
 
 
 const listComponent=[
-  {name:"اطلاعات شخصی",value:1},
-  {name:"اطلاعات مالی",value:2},
-  {name:"آثارمورد علاقه",value:3},
-  {name:"کیف پول",value:4},
+  // {name:"اطلاعات شخصی",value:1},
+  // {name:"اطلاعات مالی",value:2},
+  {name:"آثارمورد علاقه",value:1},
+  {name:"کیف پول",value:2},
+  {name:"معرف",value:3},
+  {name:"قرارداد",value:4},
 ]
 function Content(props) {
 
   const [selectComponent, setSelectComponent] = useState(1);
+  const [selectProducts, setSelectProducts] = useState("");
+  const [RecommenderData, setRecommender] = useState("");
 
 
   return (
@@ -53,10 +59,29 @@ function Content(props) {
               </ul>
             </div>
           </div>
-          {selectComponent===1 && <EditPanelProfile setSelectComponent={setSelectComponent} selectComponent={selectComponent}/>}
-          {selectComponent===2 && <ListFinancial setSelectComponent={setSelectComponent} selectComponent={selectComponent}/>}
-          {selectComponent===3 && <Favourite setSelectComponent={setSelectComponent} selectComponent={selectComponent}/>}
-          {selectComponent===4 && <Wallet setSelectComponent={setSelectComponent} selectComponent={selectComponent}/>}
+          {/*{selectComponent===1 && <EditPanelProfile setSelectComponent={setSelectComponent} selectComponent={selectComponent}/>}*/}
+          {/*{selectComponent===2 && <ListFinancial setSelectComponent={setSelectComponent} selectComponent={selectComponent}/>}*/}
+          {selectComponent===1 && <Favourite
+              setSelectComponent={setSelectComponent}
+              selectComponent={selectComponent}
+              setSelectProducts={setSelectProducts}
+              id={props.id}/>}
+          {selectComponent===2 && <Wallet
+              setSelectComponent={setSelectComponent}
+              selectComponent={selectComponent}
+          />}
+          {selectComponent===3 && <Recommender
+              setSelectComponent={setSelectComponent}
+              selectComponent={selectComponent}
+              setRecommender={setRecommender}
+          />}
+          {selectComponent===4 && <Contract
+              setSelectComponent={setSelectComponent}
+              selectComponent={selectComponent}
+              selectProducts={selectProducts}
+              RecommenderData={RecommenderData}
+              id={props.id}
+          />}
        
         </div>
       </main>
@@ -66,22 +91,4 @@ function Content(props) {
 
 
 export default Content;
-
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//       setPhoneNumber : (data) => dispatch(setPhoneNumber(data)),
-
-//   }
-// }
-
-// const mapStateToProps = (store) => {
-//   return {
-//       auth : store.auctionReducer,
-//       panelReducer : store.panelReducer
-//   }
-// }
-
-
-// export default connect(mapStateToProps , mapDispatchToProps)(Content)
 

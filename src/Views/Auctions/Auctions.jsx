@@ -13,13 +13,14 @@ import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import queryString from "query-string";
-import {Pagination} from "antd";
+import {Pagination, Spin} from "antd";
 import Timer from 'react-compound-timer'
 
 function Auctions() {
 
     const [Auctions, setAuctions] = useState("");
     const [countAuctions, setCountAuctions] = useState(0)
+    const [loading, setLoading] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 9,
@@ -35,8 +36,10 @@ function Auctions() {
     const queries = queryString.stringify(params);
 
     const getProducts = () => {
+        setLoading(true)
         axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
             .then(resp => {
+                setLoading(false)
                 if (resp.data.code === 200) {
                     setAuctions(resp.data.data.result)
                     setCountAuctions(resp.data.data.count)
@@ -44,6 +47,7 @@ function Auctions() {
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }
@@ -136,6 +140,7 @@ function Auctions() {
     return (
         <div dir="rtl">
             <Header/>
+            <Spin spinning={loading}>
             <main className="innercontent" id="all-auctions">
                 <div className="container innercontainer">
                     <Maintitle title={'حراج ها'} handleSetOrdering={handleSetOrdering}/>
@@ -157,7 +162,7 @@ function Auctions() {
                                     <div key={key} className="row-blocks">
                                         <div className="row">
                                             <div className="col-md-4">
-                                                <Link to="/" className="bg-shadow tr-shadow10">
+                                                <Link to={`/one-auction/${item.id}`} className="bg-shadow tr-shadow10">
                                                     <img src={slider1} width="500" height="500" alt=""/>
                                                 </Link>
                                             </div>
@@ -270,6 +275,7 @@ function Auctions() {
                     </div>
                 </div>
             </main>
+            </Spin>
             <Footer/>
         </div>
     );

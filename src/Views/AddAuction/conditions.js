@@ -19,7 +19,7 @@ const listAuctionType = [
 
 const Conditions = (props) => {
 
-    const {selectComponent, setSelectComponent, finalData, setFinalData, products, id,payment_method,setPayment_method} = props
+    const {selectComponent, setSelectComponent, finalData, setFinalData, products, id,payment_method,setPayment_method,sendData} = props
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
@@ -28,6 +28,8 @@ const Conditions = (props) => {
     const onFinish = (values) => {
         setFinalData({...finalData, ...values})
         // sendData(values)
+            sendData(values)
+
     }
     useEffect(() => {
         form.setFieldsValue(finalData)

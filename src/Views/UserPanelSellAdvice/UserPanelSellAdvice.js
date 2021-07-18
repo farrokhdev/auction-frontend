@@ -6,13 +6,14 @@ import {BASE_URL} from "../../utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faPen, faTimes, faImages} from "@fortawesome/free-solid-svg-icons";
 import moment from "jalali-moment";
-import {message, Pagination} from "antd";
+import {message, Pagination, Spin} from "antd";
 import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {LoadingOutlined} from "@ant-design/icons";
 
 function UserPanelSellAdvice() {
     const [Products, setProducts] = useState("");
+    const [loading, setLoading] = useState(false)
     const [Suggestions, setSuggestions] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [params, setParams] = useState({
@@ -40,8 +41,10 @@ function UserPanelSellAdvice() {
     }
 
     const getSuggestion = (id) => {
+        setLoading(true)
         axios.get(`${BASE_URL}/auction-house/suggest/?product__id=${id}`)
             .then(resp => {
+                setLoading(false)
                 console.log(resp)
                 if (resp.data.code === 200) {
                     setSuggestions(resp.data.data.result)
@@ -49,6 +52,7 @@ function UserPanelSellAdvice() {
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }

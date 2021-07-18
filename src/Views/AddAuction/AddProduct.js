@@ -87,7 +87,7 @@ const Products = (props) => {
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <input type="number" className="default-input"
                                                            defaultValue={products[item]?.base_price}
-                                                           placeholder="قیمت..."
+                                                           placeholder={data.type === "PERIODIC" ? "قیمت پایه ..." : "کمترین قیمت ..."}
                                                            onChange={e => {
                                                                let val = e.target.value
                                                                if ((val.length > 4) || (val === "")) {
@@ -98,12 +98,12 @@ const Products = (props) => {
 
                                                            }}
                                                     /><small className="pe-2">تومان</small></div>
-                                                <div className="pt-2">
+                                                {data.type === "PERIODIC" ?<div className="pt-2">
                                                     <div
                                                         className="d-flex align-items-center justify-content-between ">
                                                         <input type="number" className="default-input"
                                                                defaultValue={products[item]?.reserve_price}
-                                                               placeholder="قیمت رزرو ..."
+                                                               placeholder={"قیمت رزرو ..."}
                                                                onChange={e => {
                                                                    let val = e.target.value
                                                                    if ((val.length > 4) || (val === "")) {
@@ -113,7 +113,7 @@ const Products = (props) => {
                                                                    }
                                                                }}
                                                         /><small className="pe-2">تومان</small></div>
-                                                </div>
+                                                </div>:''}
                                             </div>}
                                     />
                                 </Card>

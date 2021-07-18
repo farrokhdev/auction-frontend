@@ -50,7 +50,7 @@ const Products = (props) => {
                         </button>
 
 
-                        {((Object.keys(products).length && !choose_product_daily) || (productsArrayDate.length && choose_product_daily))  ? <button type="button" className="btn-default" onClick={() => {
+                        {((Object.keys(products)?.length && !choose_product_daily) || (productsArrayDate?.length && choose_product_daily))  ? <button type="button" className="btn-default" onClick={() => {
                             if (data.type === "ONLINE" || data.type === "PERIODIC")
                                 setSelectComponent(selectComponent + 1)
                             else

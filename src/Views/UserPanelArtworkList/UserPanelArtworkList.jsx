@@ -85,7 +85,7 @@ function UserPanelArtworkList() {
 
                             {
                                 data && data.length ? data.map((item,i)=>        <tr>
-                                    <td className="artwork-img">
+                                    <td key={i} className="artwork-img">
                                         <img src={item?.media?.exact_url} width="317" height="280" alt="بدون عکس" className="img-fluid"/>
                                     </td>
                                     <td>{item?.artwork_title}</td>

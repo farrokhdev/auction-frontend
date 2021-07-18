@@ -6,6 +6,11 @@ export const registerStart = () => (
         type : types.REGISTER_START
     }
 )
+// export const loginRefresh = () => (
+//     {
+//         type : types.REGISTER_REFRESH
+//     }
+// )
 
 export const registerSuccess = (data) => (
     {
@@ -62,4 +67,5 @@ export const getOtp = (data) => (
         payload : data
     }
 )
- 
+
+
