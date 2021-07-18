@@ -37,6 +37,7 @@ const BaseInformation = (props) => {
     }
 
     return (
+        <>
         <Form onFinish={onFinish}
               form={form}
               wrapperCol={{span: 24}}>
@@ -101,7 +102,7 @@ const BaseInformation = (props) => {
                                 <label className="default-lable"> متن جزییات</label>
                                 <Form.Item
                                     className="w-100"
-                                    name="details"
+                                    name="description"
                                     rules={[
                                         {
                                             max: 500,
@@ -245,6 +246,7 @@ const BaseInformation = (props) => {
                 </div>
             </div>
         </Form>
+            </>
     );
 };
 

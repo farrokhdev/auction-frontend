@@ -1,4 +1,6 @@
 import types from './auth.types';
+import typesAll from "../all/all.types";
+import {removeToken} from "../../../utils/utils";
 
 const initial_state = {
     favorite : false,
@@ -44,6 +46,8 @@ const estateReducer = (state = initial_state , {type , payload})=> {
                 data: { ...state.data , ...payload },
                 is_favorite_estate : true
             }
+        case typesAll.CLEAR_STORAGE_ALL:
+            return initial_state
 
         default :
         return state;

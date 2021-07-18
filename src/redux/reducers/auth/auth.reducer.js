@@ -1,27 +1,27 @@
 import types from './auth.types';
-import {removeToken , Token} from '../../../utils/utils'
-const initial_state ={
-    user : null,
-    data : "",
-    pending : false,
+import typesAll from '../all/all.types';
+import {removeToken, Token} from '../../../utils/utils'
+
+const initial_state = {
+    user: null,
+    data: "",
+    pending: false,
     error: null,
-    is_approved : null,
-    first_name : "",
-    last_name : "",
-    username : null,
-    otp : null,
-    is_logged_in : Boolean(Token())
+    is_approved: null,
+    first_name: "",
+    last_name: "",
+    username: null,
+    otp: null,
+    is_logged_in: Boolean(Token())
 }
 
 
-
-
-const authReducer = (state = initial_state , {type , payload})=> {
-    switch(type){
+const authReducer = (state = initial_state, {type, payload}) => {
+    switch (type) {
         case types.LOGIN_START:
             return {
                 ...state,
-                pending: true ,
+                pending: true,
                 error: null
             }
 
@@ -29,36 +29,36 @@ const authReducer = (state = initial_state , {type , payload})=> {
             console.log('REGISTER_START')
             return {
                 ...state,
-                pending: true ,
+                pending: true,
                 data: null,
                 error: null
             }
 
-        case types.SET_PHONENUMBER : 
+        case types.SET_PHONENUMBER :
             return {
-                    ...state, 
-                    username : payload.username 
-                    // data : payload
-                }
+                ...state,
+                username: payload.username
+                // data : payload
+            }
 
 
         case types.LOGIN_SUCCESS:
             return {
-                ...state , 
+                ...state,
                 pending: false,
-                data: { ...state.data , ...payload },
-                is_logged_in : true
+                data: {...state.data, ...payload},
+                is_logged_in: true
             }
 
 
         case types.REGISTER_SUCCESS:
             console.log('REGISTER_SUCCESS')
-            
+
             return {
-                ...state , 
+                ...state,
                 pending: false,
-                data: { ...state.data , ...payload },
-                
+                data: {...state.data, ...payload},
+
 
             }
         case types.LOGIN_ERROR:
@@ -72,36 +72,37 @@ const authReducer = (state = initial_state , {type , payload})=> {
             }
 
         case types.CLEAR_STORAGE:
-        console.log('CLEAR_STORAGE')
-        removeToken()
-            window.localStorage.clear();
+            removeToken()
+
             return {
                 initial_state,
-                pending: false ,
+                pending: false,
                 data: null,
                 error: null,
-                is_approved : null,
-                is_logged_in : false
+                is_approved: null,
+                is_logged_in: false
             }
-        case types.SET_PROFILE : 
-        console.log('Set Profile Done', payload)
+        case typesAll.CLEAR_STORAGE_ALL:
+            return {...initial_state,is_logged_in:false}
+        case types.SET_PROFILE :
+            console.log('Set Profile Done', payload)
             return {
                 ...state,
-                username : payload.username
-                
+                username: payload.username
+
             }
 
-        case types.GET_OTP : 
+        case types.GET_OTP :
             console.log('Get Otp Code Done', payload)
             return {
                 ...state,
-                otp : payload.otp,
-                            
-        }
+                otp: payload.otp,
+
+            }
 
 
         default :
-        return state;
+            return state;
     }
 }
 

@@ -75,8 +75,8 @@
 body,
 html {
   font-family: IRANSans_light, Arial, sans-serif !important;
-  font-size: 14px;
-  color: var(--gray50);
+  font-size: 14px !important;
+  color: var(--gray50) !important;
   direction: rtl !important;
 }
 
@@ -429,7 +429,7 @@ section {
 
 .artwork-bookmark {
   position: relative;
-  font-family: "Font Awesome\ 5 Pro";
+  font-family: "Font Awesome\ 5 Pro" !important;
   font-size: 16px;
   height: 34px !important;
   width: 32px !important;
@@ -4492,16 +4492,16 @@ p.help i {
 }
 
 .reminder-icon:before {
-  // content: "\f0f3";
-  // font-family: "Font Awesome\ 5 Pro";
+   content: "\f0f3";
+   font-family: "Font Awesome\ 5 Pro";
   color: var(--gray50);
   font-size: 16px;
   margin-left: 10px;
 }
 
 .reminder-icon.active:before {
-  // content: "\f0f3";
-  // font-family: "Font Awesome\ 5 Pro";
+   content: "\f0f3";
+   font-family: "Font Awesome\ 5 Pro";
   font-weight: 900;
   color: var(--pink);
 }
@@ -6532,9 +6532,6 @@ address.all-info:before {
     color: white !important;
   }
 
-  .ant-modal-footer{
-    display: none !important;
-  }
   .ant-modal-title{
     text-align: right !important;
   }

@@ -8,6 +8,7 @@ import login from "../../images/login.svg";
 import Search from "./Search";
 import {connect, useDispatch} from 'react-redux';
 import {clearStorage} from '../../redux/reducers/auth/auth.actions'
+import {clearStorageAll} from '../../redux/reducers/all/all.actions'
 import { Link } from "react-router-dom";
 import {removeToken} from "../../utils/utils";
 
@@ -28,7 +29,7 @@ const handleRedirect = () => {
 
   return (
     <>
-      <header className="mainnav boxshadow-cs" style={props.newStyle ,props.newstyle}>
+      <header className="mainnav boxshadow-cs" style={props.newStyle}>
         <div className=" container containercs">
           <nav className="navbar navbar-expand-lg">
             <Link className="navbar-brand" to="/">
@@ -70,7 +71,7 @@ const handleRedirect = () => {
                     <Search />
                   </li>
                   <li className="nav-item ps-5">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/auctions/">
                       <img
                         src={auction}
                         width="16"
@@ -201,7 +202,7 @@ const handleRedirect = () => {
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/" onClick={()=>{
-                      dispatch(clearStorage())
+                      dispatch(clearStorageAll())
                     }}>
                       خروج
                     </Link>

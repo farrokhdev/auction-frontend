@@ -22,7 +22,8 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id}))
+    axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
+    // axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
         .then(resp => {
           setLoading(false)
 
@@ -99,7 +100,7 @@ function Chooseartwork(props) {
                           disabled={listCheck.some(t=>item?.id===t?.id)}
                                         checked={selectProduct.some(t=>item?.id===t?.id) } onChange={e=>{
                         if(e.target.checked)
-                          setSelectProduct([...selectProduct,item])
+                          setSelectProduct([...selectProduct, {base_price:item?.min_price,...item}])
                         else {
                           let t=selectProduct.filter(t=>t?.id!==item?.id)
                             setSelectProduct(t)

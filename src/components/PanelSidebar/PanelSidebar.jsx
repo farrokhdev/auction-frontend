@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {NavLink as NavLinkRouter} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,8 +15,16 @@ import {
   faCreditCard,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import {useDispatch, useSelector} from "react-redux";
+import {getProfile} from "../../redux/reducers/profile/profile.actions";
 
 function PanelSidebar(props) {
+  const dispatch = useDispatch();
+  const {role} = useSelector((state) => state.profileReducer)
+  useEffect(() => {
+    if (!role)
+      dispatch(getProfile())
+  }, [])
     return (
         <>
         <div className="panel-sidebar">
@@ -39,21 +47,21 @@ function PanelSidebar(props) {
               {/*    <FontAwesomeIcon icon={faGavel} /> حراج‌های من*/}
               {/*  </NavLinkRouter>*/}
               {/*</li>*/}
-              <li>
+              {role=== "home_auction" ?<li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
-                  <FontAwesomeIcon icon={faPlusCircle} /> حراج‌های ساخته‌شده
+                  <FontAwesomeIcon icon={faPlusCircle}/> حراج‌های ساخته‌شده
                 </NavLinkRouter>
-              </li>      
+              </li>:''}
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
                   <FontAwesomeIcon icon={faPlusCircle} /> درخواست خانه حراج 
                 </NavLinkRouter>
               </li>
-              <li>
-                <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">
-                  <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج
-                </NavLinkRouter>
-              </li>
+              {/*<li>*/}
+              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">*/}
+              {/*    <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج*/}
+              {/*  </NavLinkRouter>*/}
+              {/*</li>*/}
               {/*<li>*/}
               {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
               {/*    <FontAwesomeIcon icon={faDollarSign} /> پیشنهادهای من*/}
@@ -95,11 +103,11 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faWallet} /> یادآوری‌ها
                 </NavLinkRouter>
               </li>
-              <li>
+              {role=== "home_auction" ?<li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
                   <FontAwesomeIcon icon={faCommentAlt} /> پیشنهاد فروش
                 </NavLinkRouter>
-              </li>
+              </li>:''}
               <li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
                   <FontAwesomeIcon icon={faEnvelope} /> پیام‌ها
