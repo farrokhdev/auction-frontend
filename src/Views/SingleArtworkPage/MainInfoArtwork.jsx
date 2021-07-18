@@ -1,7 +1,10 @@
 import React from 'react'
 import img from '../../images/img-1.jpg';
-
+import { convertTypeAuctionToPersian } from '../../utils/converTypePersion';
+import classnames from 'classnames';
 function MainInfoArtwork({artwork}) {
+
+    console.log("TTT ",artwork?.latest_auction?.type);
 return (
     <div className="row">
 
@@ -78,8 +81,15 @@ return (
                     <div className="bg-shadow bl-shadow20">
                         <div className="detail-info">
                             <div className="detail-head">
-                                <span className="category-icon live-icon"><span
-                                        className="d-none d-md-inline-block">حراج</span> زنده</span>
+                                <span className={classnames("category-icon", {
+                                "live-icon": artwork?.latest_auction?.type === 'LIVE',
+                                "online-icon": artwork?.latest_auction?.type === 'ONLINE',
+                                "timed-icon": artwork?.latest_auction?.type === 'PERIODIC',
+                                "firstoffer-icon": artwork?.latest_auction?.type === 'HIDDEN',
+                                "secondoffer-icon": artwork?.latest_auction?.type === 'SECOND_HIDDEN',
+                                
+                            })}> <span
+                                        className="d-none d-md-inline-block mx-1">حراج</span>{artwork?.latest_auction?.type ?  convertTypeAuctionToPersian(artwork?.latest_auction?.type) : ''}</span>
                                 <button type="button" className="btn-bookmark">نشان کردن</button>
                             </div>
                             <div className="detail-artwork">
@@ -90,21 +100,21 @@ return (
                                     </a>
                                     <a href="#" className="d-info category">
                                         {/* <h6 className="default">هنر مدرن و معاصر</h6> */}
-                                        <h6 className="default">{artwork?.category[0]?.title}</h6>
+                                        <h6 className="default">{artwork?.category ? artwork?.category[0]?.title  : ''}</h6>
                                     </a>
                                     <a href="#" className="d-info gallery">
-                                        <h6 className="default">----</h6>
+                                        <h6 className="default">{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : '--'}</h6>
                                     </a>
                                 </div>
                                 <div className="d-artwork-right">
-                                    <h5 className="default lot-num">1</h5>
+                                    <h5 className="default lot-num"></h5>
                                 </div>
                             </div>
                             <div className="detail-bid">
                                 <div className="db-left">
                                     <span className="db-title">تخمین</span>
                                     <div className="price-block">
-                                        <span className="price">----</span>
+                                        <span className="price"> {artwork?.max_price ? artwork?.max_price : 0} - {artwork?.min_price ? artwork?.min_price : 0}</span>
                                         <span className="unit"> تومان</span>
                                     </div>
                                 </div>
@@ -112,9 +122,9 @@ return (
                                 <div className="db-right ">
                                     <span className="db-title bluecolor">قیمت فعلی</span>
                                     <div className="price-block bluecolor">
-                                        <span className="price">----</span>
+                                        <span className="price">{artwork?.bidding_details?.max_bid ? artwork?.bidding_details?.max_bid : ''}</span>
                                         <span className="unit"> تومان</span><span
-                                            className="bids-num">(<span>--</span>پیشنهاد)</span>
+                                            className="bids-num">(<span className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : '' }</span>پیشنهاد)</span>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +159,7 @@ return (
                                     </div>
                                     <div className="detail-ahm">
                                         <a href="#" className="ah-link">
-                                            <h3 className="default">گالری آرتیبیشن</h3>
+                                            <h3 className="default">{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</h3>
                                         </a>
                                         <button type="button" className="btn-follow">دنبال کردن</button>
                                     </div>

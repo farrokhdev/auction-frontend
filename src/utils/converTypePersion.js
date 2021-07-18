@@ -102,3 +102,18 @@ export function convertStatusShowAuctionPersian(value) {
             return ''
     }
 }
+
+export function convertStatus(value) {
+    
+    switch (value) {
+
+        case "ACTIVE" :
+            return 'فعال'
+
+
+        default:
+            return 'غیر فعال'
+    }
+}
+
+

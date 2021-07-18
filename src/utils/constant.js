@@ -5,6 +5,7 @@ module.exports={
     ACCOUNT_BANK_INFO:"/accounting/bankprofile/",
     LIST_PRODUCTS:"/sale/product/",
     ONE_PRODUCT:id=> `/sale/product/${id}/`,
+    LIST_PRODUCTS_MATCHED : id=> `/notification/auction-reminders/${id}/matched-products/`,
     LIST_AUCTIONS:"/sale/auctions/",
     JOIN_AUCTION:"/sale/join-auction/",
     ACCOUNT_WALLET:"/accounting/wallet/me/",
@@ -14,5 +15,11 @@ module.exports={
     CATEGORIE_ACTIVITY:"/sale/category/",
     ADD_AUCTION:"/sale/auctions/",
     SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
+    PRE_UPLOAD : "/core/upload/",
+    UPLOAD : "/core/media/photos/",
+    LIST_REMINDERS : '/notification/auction-reminders/' , 
+    DELETE_REMINDER : id => `/notification/auction-reminders/${id}/` , 
+    UPLOAD_EXEL_AUCTION:name=>`/sale/upload/${name}/`,
+
 }
 

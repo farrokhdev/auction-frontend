@@ -1,7 +1,8 @@
 import React from 'react';
 import img from '../../images/img-1.jpg';
 import momentJalaali from 'moment-jalaali';
-
+import classnames from 'classnames';
+import { convertMouthToPersian, convertStatusShowAuctionPersian, convertTypeAuctionToPersian } from '../../utils/converTypePersion';
 
 function DetailAboutArtworkInfo({artwork}) {
     return (
@@ -39,12 +40,17 @@ function DetailAboutArtworkInfo({artwork}) {
                         </tr> */}
                         <tr>
                             <td>دسته‌بندی</td>
-                            <td>{artwork?.category[0]?.title}</td>
+                            <td>{ artwork?.category ?  artwork?.category[0]?.title : ''}</td>
                         </tr>
                         <tr>
-                            <td>ابعاد</td>
-                            {/* <td>50 * 70 cm</td> */}
-                            <td>{`${artwork?.height ? artwork?.height + ' * ' : ''} ${artwork?.length ? artwork?.width : ''} * ${artwork?.length ? artwork?.width : ''} cm`}</td>
+                            <td>ابعاد (cm)</td>
+                            
+                            <td>
+                                <span>
+                                    <div> {`${artwork?.artwork_height ? artwork?.artwork_height + ' * ' : ''}  ${artwork?.artwork_width ? artwork?.artwork_width : ''} * ${artwork?.artwork_length ? artwork?.artwork_length : ''}`} </div>
+                                    
+                                </span>
+                            </td>
                         </tr>
                         <tr>
                             <td>تاریخ</td>
@@ -65,8 +71,15 @@ function DetailAboutArtworkInfo({artwork}) {
                             <div className="col-md-9">
                                 <div className="block-head row">
                                     <div className="col-xl-3 col-sm-4 col-3">
-                                        <span className="category-icon live-icon"><span
-                                                    className="d-none d-md-inline-block">حراج</span> زنده</span>
+                                        <span className={classnames("category-icon", {
+                                            "live-icon": artwork?.latest_auction?.type === 'LIVE',
+                                            "online-icon": artwork?.latest_auction?.type === 'ONLINE',
+                                            "timed-icon": artwork?.latest_auction?.type === 'PERIODIC',
+                                            "firstoffer-icon": artwork?.latest_auction?.type === 'HIDDEN',
+                                            "secondoffer-icon": artwork?.latest_auction?.type === 'SECOND_HIDDEN',
+                                
+                                        })}><span
+                                                    className="d-none d-md-inline-block">حراج</span> {artwork?.latest_auction?.type ?  convertTypeAuctionToPersian(artwork?.latest_auction?.type) : ''}</span>
                                     </div>
                                     <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                                         <span className="reminder-icon">یادآوری</span>
@@ -77,12 +90,66 @@ function DetailAboutArtworkInfo({artwork}) {
                                     </div>
                                 </div>
                                 <div className="block-main">
-                                    <h5 className="default">فقط بصورت آنلاین زندگی کنید ، کتابهای عتیقه ، هنرهای تزئینی و تصاویر</h5>
+                                    <h5 className="default">{artwork?.latest_auction?.title ? artwork?.latest_auction?.title : ''}</h5>
                                     <div className="block-detail">
-                                        <h6 className="default">هنر معاصر</h6>
-                                        <h6 className="default gray50">گالری آرتیبیشن</h6>
+                                        {/* <h6 className="default">هنر معاصر</h6> */}
+                                        <h6 className=" gray50">{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</h6>
                                     </div>
                                 </div>
+
+
+
+                                <div className="block-footer row">
+
+                                    <div className="col-sm-5">
+                                        <div className="auction-calender date-show">
+
+                                            <div className={classnames("auction-date" , {
+                                                "d-none": artwork?.latest_auction?.status === 'CLOSED' ,
+                                            })} >
+                                                <span className="start-date">{artwork?.latest_auction?.start_time ? convertMouthToPersian(momentJalaali(artwork?.latest_auction?.start_time).format('MM')) : ''}</span>
+                                                <span className="end-date">{artwork?.latest_auction?.end_time ? convertMouthToPersian(momentJalaali(artwork?.latest_auction?.end_time).format('MM')) : ''}</span>
+                                            </div>
+
+
+                                            <div className={classnames("auction-time" , {
+                                                "d-none": artwork?.latest_auction?.status === 'CLOSED' ,
+                                            })} >
+                                                <span className="start-time">{artwork?.latest_auction?.start_time ? momentJalaali(artwork?.latest_auction?.start_time).format('DD') : ''}</span>
+                                                <span className="end-time">{artwork?.latest_auction?.end_time ? momentJalaali(artwork?.latest_auction?.end_time).format('DD') : ''}</span>
+                                            </div>
+
+
+                                            {artwork?.latest_auction?.status === "CLOSED" ? 
+                                            
+                                                <div className="ended">
+                                                    <div className="text">حراج به پایان رسید</div>
+                                                </div>
+
+                                            : ''}
+
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-7 textalign-left">
+                                        {/* <button  className={classnames("btn btn-gray view mx-2" , { */}
+                                        <button  className={classnames("btn btn-gray  mx-2" , {
+                                                "d-none": artwork?.latest_auction?.status === 'CLOSED' ,
+                                            })} type="button"  >
+                                                {artwork?.latest_auction?.type ? convertStatusShowAuctionPersian(artwork?.latest_auction?.type)  : null}
+                                        </button>
+
+                                        <button className={classnames("btn", "btn-main" , "join" , {
+                                                "d-none": artwork?.latest_auction?.status === 'ACTIVE',
+                                                "d-none": artwork?.latest_auction?.status === 'CLOSED',
+                                            })} type="button" >عضویت در حراج</button>
+                                    </div>
+
+                                    </div>
+
+{/* 
+
+
                                 <div className="block-footer row">
                                     <div className="col-sm-5">
                                         <div className="jumbotron countdown show end date-show"
@@ -103,16 +170,17 @@ function DetailAboutArtworkInfo({artwork}) {
                                         <button type="button" className="btn btn-gray view">مشاهده زنده</button>
                                         <button type="button" className="btn btn-main join">عضویت در حراج</button>
                                     </div>
-                                </div>
+                                </div> */}
+
+
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="tab-pane fade" id="detail-artwork3" role="tabpanel"
                      aria-labelledby="contact-tab">
-                    <p>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته</p>
-                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
-                   <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
+                    {/* <p>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته</p> */}
                     <div className="vartical-tab">
                         <ul className="nav nav-tabs " id="vt-1" role="tablist">
                             <li className="nav-item" role="presentation">
@@ -141,34 +209,30 @@ function DetailAboutArtworkInfo({artwork}) {
                         </ul>
                         <div className="tab-content" id="vt-1Content">
                             <div className="tab-pane fade show active" id="v1" role="tabpanel" aria-labelledby="vtab1">
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p> */}
                                 <h5 className="default">نحوه‌ی پرداخت</h5>
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                                    باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
-                                    را می طلبد</p>
+                                <p>{artwork?.latest_auction?.payment_method}</p>
                             </div>
                             <div className="tab-pane fade" id="v2" role="tabpanel" aria-labelledby="vtab2">
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p> */}
                                 <h5 className="default">حمل و نقل</h5>
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
                                     باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
-                                    را می طلبد</p>
+                                    را می طلبد</p> */}
                             </div>
                             <div className="tab-pane fade" id="v3" role="tabpanel" aria-labelledby="vtab3">
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p> */}
                                 <h5 className="default">شرایط استفاده</h5>
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                                    باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
-                                    را می طلبد</p>
+                                <p>{artwork?.latest_auction?.payment_method_conditions}</p>
                             </div>
                             <div className="tab-pane fade" id="v4" role="tabpanel" aria-labelledby="vtab3">
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
                                     باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
-                                    را می طلبد</p>
+                                    را می طلبد</p> */}
                                 <h5 className="default">سایر</h5>
-                                <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
                                     باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان
-                                    را می طلبد</p>
+                                    را می طلبد</p> */}
                             </div>
                         </div>
                     </div>

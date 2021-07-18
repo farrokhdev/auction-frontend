@@ -29,8 +29,6 @@ function SigningContract(props) {
         })
     }
 
-console.log("Title -->> " , artwork?.auctions[0]?.title);
-
 
   return (
     <div >
@@ -46,8 +44,8 @@ console.log("Title -->> " , artwork?.auctions[0]?.title);
                                 <ul className="breadcrumb-cs ">
                                     <li><Link to="/">صفحه اصلی</Link></li>
                                     <li><Link to="/house-acutions" >خانه‌های حراج</Link></li>
-                                    <li><Link >{artwork?.auctions[0]?.title}</Link></li>
-                                    <li><Link > --- </Link></li>
+                                    <li><Link >{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : ''}</Link></li>
+                                    <li><Link > {artwork?.latest_auction?.title} </Link></li>
                                     <li className="active">{artwork?.artwork_title}</li>
                                 </ul>
                             </div>

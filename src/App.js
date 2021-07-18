@@ -25,24 +25,20 @@ import PanelProfile from "./Views/PanleProfile";
 import BuyerRegister from "./Views/BuyerRegister";
 import "bootstrap/dist/css/bootstrap.css";
 import AddAuction from "./Views/AddAuction";
-// import UserPanelCreateAuctionsOnlineAuctionDate from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionDate";
-// import UserPanelCreateAuctionsOnlineAuctionOfferRange from "./Views/UserPanelCreateAuctionsOnlineAuctionNewAuctionOfferRange";
-// import UserPanelCreateAuctionsOnlineAuctionCurrency from "./Views/UserPanelCreateAuctionsOnlineAuctionCurrency";
-// import UserPanelCreateAuctionsOnlineAuctionBuyerValidation from "./Views/UserPanelCreateAuctionsOnlineAuctionBuyerValidation";
-// import UserPanelCreateAuctionsOnlineAuctionConditions from "./Views/UserPanelCreateAuctionsOnlineAuctionConditions";
 import UserPanelArtworkList from "./Views/UserPanelArtworkList";
 import HouseAuctionsPage from "./Views/HouseAuctionsPage";
-import UserPanelCreateAuctionsTimedaction from "./Views/UserPanelCreateAuctionsTimedaction";
 import PanelFinancial from "./Views/PanelFinancial";
 import UserPanelWallet from "./Views/UserPanelWallet";
 import RequestHouseAuction from "./Views/RequestHouseAuction";
 import UserPanelMessage from "./Views/UserPanelMessage";
+import UserPanelSellAdvice from "./Views/UserPanelSellAdvice";
+import UserPanelSellRecommendation from "./Views/UserPanelSellRecommendation";
 import MyPurchases from "./Views/MyPurchases";
 import PanelRemindersPage from "./Views/PanelRemindersPage";
 import Favorite from "./Views/Favorite/Favorite";
 import SingleHouseAuctionPage from "./Views/SingleHouseAuctionPage";
 import SingleAuctionDetailsPage from "./Views/SingleAuctionDetailsPage";
-
+import UserPanelCreateAuctionsBids from "./Views/UserPanelCreateAuctionsBids";
 
 
 
@@ -94,11 +90,15 @@ function App(props) {
               <Route exact path="/auctions" component={Auctions} />
               <Route exact path="/auctions-list" component={AuctionsList} />
               <Route exact path="/add-artworks" component={AddArtWorks} />
-              <Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>
+              {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}
               <Route exact path="/panel-wallet" component={UserPanelWallet} />
               <Route exact path="/panel-message" component={UserPanelMessage} />
+              <Route exact path="/panel-sell-advice" component={UserPanelSellAdvice} />
+              <Route exact path="/panel-sell-recommendation" component={UserPanelSellRecommendation} />
               <Route exact path="/my-purchases" component={MyPurchases}/>
               <Route exact path="/favorite" component={Favorite}/>
+              <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids}/>
+
 
               {/* <Route exact path="/home" component={AfterLoginPage} /> */}
 
