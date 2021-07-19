@@ -4,6 +4,7 @@ module.exports={
     ACCOUNT_APPROVE:"/account/approve/",
     ACCOUNT_BANK_INFO:"/accounting/bankprofile/",
     LIST_PRODUCTS:"/sale/product/",
+    ONE_PRODUCT:id=> `/sale/product/${id}/`,
     LIST_PRODUCTS_MATCHED : id=> `/notification/auction-reminders/${id}/matched-products/`,
     LIST_AUCTIONS:"/sale/auctions/",
     JOIN_AUCTION:"/sale/join-auction/",
@@ -23,3 +24,4 @@ module.exports={
     REFRESH_TOKEN:`/account/token/refresh/`,
 
 }
+

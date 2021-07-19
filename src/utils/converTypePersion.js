@@ -27,6 +27,9 @@ export function convertTypeAuctionToPersian(value) {
 
         case"ONLINE":
             return 'آنلاین'
+
+        case"OFFLINE":
+            return 'آفلاین'
         
         case"PERIODIC":
             return 'زمان‌دار'

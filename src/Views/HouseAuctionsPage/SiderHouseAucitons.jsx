@@ -8,42 +8,43 @@ function SiderHouseAucitons({params , handleSetCategory , categoryActivities , h
         <div className="col-sm-3 sidebar" id="left-side">
         <button type="button" className="btn-getclose d-block d-lg-none"></button>
         <div className="left-side">
-            <div className="result-box">
-                <div className="result-title">
-                    <h6 className="default">نتایج:</h6>
-                    <button type="button" className="btn-removeall">پاک کردن همه</button>
-                </div>
-                <div className="tags-box">
-                    <a href="#" className="tag-box date">
-                        <span>3 اردیبهشت - </span>
-                        <span>6 اردیبهشت</span>
-                        <button type="button" className="btn-remove"></button>
-                    </a>
-                    <a href="#" className="tag-box date">
-                        <span>تهران</span>
-                        <button type="button" className="btn-remove"></button>
-                    </a>
-                    <a href="#" className="tag-box date">
-                        <span>آرتیبیشن</span>
-                        <button type="button" className="btn-remove"></button>
-                    </a>
-                </div>
-            </div>
+            {/*<div className="result-box">*/}
+            {/*    <div className="result-title">*/}
+            {/*        <h6 className="default">نتایج:</h6>*/}
+            {/*        <button type="button" className="btn-removeall">پاک کردن همه</button>*/}
+            {/*    </div>*/}
+            {/*    <div className="tags-box">*/}
+            {/*        <a href="#" className="tag-box date">*/}
+            {/*            <span>3 اردیبهشت - </span>*/}
+            {/*            <span>6 اردیبهشت</span>*/}
+            {/*            <button type="button" className="btn-remove"></button>*/}
+            {/*        </a>*/}
+            {/*        <a href="#" className="tag-box date">*/}
+            {/*            <span>تهران</span>*/}
+            {/*            <button type="button" className="btn-remove"></button>*/}
+            {/*        </a>*/}
+            {/*        <a href="#" className="tag-box date">*/}
+            {/*            <span>آرتیبیشن</span>*/}
+            {/*            <button type="button" className="btn-remove"></button>*/}
+            {/*        </a>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className="search-box">
                 <div className="search-input">
                     <input  
                         id="search-house-auction"
                         type="text" className="default-input"
-                        placeholder="در بیش از 100 حراج جستجو کنید." />
+                        placeholder="جستجو..." />
                     <button 
                         onClick={(e)=>handleSetSearchFilter(document.querySelector('#search-house-auction').value)} 
                         type="button" 
                         className="btn-search"
                     />
                 </div>
-                <button  type="button" className="btn-lightpink"><i
-                        className="fal fa-map-marker-alt"></i>جستجو بر اساس محل
-                </button>
+                {/*<button  type="button" className="btn-lightpink">*/}
+                {/*    <FontAwesomeIcon className="mx-2" icon={faMapMarkedAlt}/>*/}
+                {/*    جستجو بر اساس محل*/}
+                {/*</button>*/}
             </div>
             <div className="accordion main-accordion" id="leftside">
 

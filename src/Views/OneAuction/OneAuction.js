@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import {message, Pagination} from 'antd';
+import {message, Pagination, Spin} from 'antd';
 import 'antd/dist/antd.css';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
@@ -9,6 +9,7 @@ import queryString from 'query-string';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import moment from "jalali-moment";
 import {Link} from "react-router-dom";
+import img from "../../images/img-1.jpg";
 
 function OneAuction(props) {
 
@@ -17,6 +18,8 @@ function OneAuction(props) {
     const [countProducts, setCountProducts] = useState(0)
     const [reminder, setReminder] = useState(false)
     const [bookmark, setBookmark] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [HouseDetail, setHouseDetail] = useState([])
 
     const id = props.match.params.id;
     const [params, setParams] = useState({
@@ -27,18 +30,6 @@ function OneAuction(props) {
         ordering: "id",
     })
     const queries = queryString.stringify(params);
-    const getAuction = () => {
-        axios.get(`${BASE_URL}/sale/auctions/${id}`)
-            .then(resp => {
-                if (resp.data.code === 200) {
-                    setAuction(resp.data.data.result)
-                }
-
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
 
     const getProducts = () => {
         axios.get(`${BASE_URL}/sale/product/?${queries}`)
@@ -46,26 +37,65 @@ function OneAuction(props) {
                 if ((resp.data.code === 200) && resp.data?.data?.result) {
                     const res = resp.data?.data?.result;
                     setProduct(res)
-                    console.log(resp)
                     setCountProducts(resp.data?.data?.count)
                 }
             })
             .catch(err => {
                 console.error(err);
+                setLoading(false)
             })
     }
 
+    const getAuction = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/auctions/${id}`)
+            .then(resp => {
+                if (resp.data.code === 200) {
+                    setAuction(resp.data.data.result)
+                    axios.get(`${BASE_URL}/account/home-auction/${resp.data.data.result?.house?.id}`).then(res => {
+                        setHouseDetail(res.data.data.result);
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                }
+                getProducts()
+                setLoading(false)
+
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false)
+            })
+    }
     useEffect(() => {
         getAuction()
-        getProducts()
+    }, [])
 
+    useEffect(() => {
+        getProducts()
     }, [params])
 
     const handeSelectPage = (e) => {
-        console.log("Log Of Pagination", e);
         setParams({
             ...params, page: e
         })
+    }
+
+    const parseWebSite = (data , type) => {
+        for(let i in data)
+            if (data[i].type === type){
+                if (data[i].url.startsWith("http"))
+                    return data[i].url
+                else
+                    return "http://" + data[i].url
+            }
+    }
+
+    const parser = (data, type) => {
+        for (let i in data)
+            if (data[i].type === type) {
+                return data[i].exact_url
+            }
     }
 
     const handleSearchProducts = (value) => {
@@ -104,6 +134,7 @@ function OneAuction(props) {
     return (
         <>
             <Header/>
+            <Spin spinning={loading}>
             <main className="innercontent" id="oneAuction">
                 <div className="container innercontainer">
                     <div className="row sm-mrgb50">
@@ -166,7 +197,7 @@ function OneAuction(props) {
                                         <a href="#" className="d-info category"><h6
                                             className="default">{Auction.category ? Auction.category[0]?.title : ""}</h6>
                                         </a>
-                                        <a href="#" className="d-info gallery"><h6 className="default">نام گالری</h6>
+                                        <a href="#" className="d-info gallery"><h6 className="default">{Auction?.house?.home_auction_name}</h6>
                                         </a>
                                     </div>
                                     <div className="auction-btns">
@@ -396,34 +427,43 @@ function OneAuction(props) {
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
+
+
                                         <div className="auction-gallery-info">
                                             <div className="ah-left">
                                                 <div className="h-block-img">
-                                                    <img src="img/logo-3.png" width="159" height="159"
-                                                         alt="گالری آرتیبیشن"/>
+                                                    <img src={parser(HouseDetail.media, 'profile')} width="159" height="159"
+                                                         alt={HouseDetail.home_auction_name}/>
                                                 </div>
                                                 <div className="detail-ahm">
-                                                    <a href="#" className="ah-link"><h3 className="default">گالری
-                                                        آرتیبیشن</h3></a>
+                                                    <a href="#" className="ah-link"><h3 className="default">{HouseDetail.home_auction_name}</h3></a>
                                                     <button type="button" className="btn-follow">دنبال کردن</button>
                                                 </div>
                                             </div>
                                             <div className="ah-block-all-info">
-                                                <a href="#" className="link-info all-info">www.sarebangallery.com</a>
-                                                <a href="mailto: Info@sarebangallery.com"
-                                                   className="all-info mail-info">Info@sarebangallery.com</a>
-                                                <a href="+982144258856" className="info-tel all-info">+98 21 4425
-                                                    8856</a>
-                                                <address className="all-info"><span className="province">تهران، </span>میدان
-                                                    هویزه، پلاک 103
+                                                <a href={parseWebSite(HouseDetail.info_link, 'website')} className="link-info all-info">{parseWebSite(HouseDetail.info_link, 'website')}</a>
+                                                <a href={`mailto: ${HouseDetail.email}`}
+                                                   className="all-info mail-info">{HouseDetail.email}</a>
+                                                <a href={HouseDetail.phone ? HouseDetail.phone : HouseDetail.mobile} className="info-tel all-info">{HouseDetail.phone ? HouseDetail.phone : HouseDetail.mobile}</a>
+                                                <address className="all-info">
+                                                    {HouseDetail?.home_auction_location?.address}
                                                 </address>
                                             </div>
                                             <ul className="social">
-                                                <li><a href="#" id="facebook"/></li>
-                                                <li><a href="#" id="instagram"/></li>
-                                                <li><a href="#" id="telegram"/></li>
+                                                <li>
+                                                    <a href={parseWebSite(HouseDetail.info_link, 'facebook')} id="facebook"/>
+                                                </li>
+                                                <li>
+                                                    <a href={parseWebSite(HouseDetail.info_link, 'instagram')} id="instagram"/>
+                                                </li>
+                                                <li>
+                                                    <a href={parseWebSite(HouseDetail.info_link, 'telegram')} id="telegram"/>
+                                                </li>
                                             </ul>
                                         </div>
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -434,7 +474,9 @@ function OneAuction(props) {
 
             </main>
 
+
             <Footer/>
+            </Spin>
         </>
     );
 }
