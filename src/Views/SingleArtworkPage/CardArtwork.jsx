@@ -4,7 +4,7 @@ import bookmark_active_icon from '../../images/bookmark-active.svg';
 import img from '../../images/img-1.jpg'
 
 
-function CardArtwork({price_base , price_range , house_auction , artist , lot_num}) {
+function CardArtwork({price_base , price_range , house_auction , title , lot_num}) {
 
     const [is_saved, setIs_saved] = useState(false)
 
@@ -28,7 +28,7 @@ return (
         <div className="block-body">
             <div className="ra-row">
                 <div className="ra-col">
-                    <h6 className="default gray50 ">{artist}</h6>
+                    <h6 className="default gray50 ">{title}</h6>
                     <h4 className="default">{house_auction}</h4>
                 </div>
                 <div className="ra-col">

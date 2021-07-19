@@ -211,7 +211,7 @@ function DetailAboutArtworkInfo({artwork}) {
                             <div className="tab-pane fade show active" id="v1" role="tabpanel" aria-labelledby="vtab1">
                                 {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p> */}
                                 <h5 className="default">نحوه‌ی پرداخت</h5>
-                                <p>{artwork?.latest_auction?.payment_method}</p>
+                                <p>{convertTypeAuctionToPersian(artwork?.latest_auction?.payment_method)}</p>
                             </div>
                             <div className="tab-pane fade" id="v2" role="tabpanel" aria-labelledby="vtab2">
                                 {/* <p>رای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p> */}

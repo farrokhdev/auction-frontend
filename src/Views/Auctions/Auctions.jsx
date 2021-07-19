@@ -239,20 +239,16 @@ function Auctions() {
 
                                                                 </button>
                                                             </Link>
-                                                            {item.status !== "CLOSED" ?
+                                                            {item.status === "CLOSED" ?
                                                                 <button type="button" class="btn btn-lightpink">حراج به
                                                                     پایان رسید</button>
                                                                 :
-
                                                                 <Link to={`/buyer-register/${item?.id}`}>
                                                                     <button type="button" className="btn btn-main join">
                                                                         {/* عضویت در حراج  */}
-                                                                        {item.status ? "عضویت در حراج" : "ثبت نطر"}
-
+                                                                        {item.status !== "CLOSED" ? "عضویت در حراج" : "ثبت نطر"}
                                                                     </button>
                                                                 </Link>
-
-
                                                             }
                                                         </div>
                                                     </div>

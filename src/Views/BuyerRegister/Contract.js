@@ -2,15 +2,18 @@ import React, {useState} from 'react';
 import {Button} from "antd";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
-import {CheckCircleTwoTone} from "@ant-design/icons";
+import {CheckCircleTwoTone, LoadingOutlined} from "@ant-design/icons";
 import {JOIN_AUCTION} from "../../utils/constant";
 import { message } from 'antd';
+import {Redirect} from "react-router-dom";
 
 const Contract = (props) => {
     const {setSelectComponent, selectComponent} = props
     const [CoreUpload, setCoreUpload] = useState("");
     const [Uploaded, setUploaded] = useState(false);
     const [Uploading, setUploading] = useState(false);
+    const [posted, setPosted] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     const handleUpload = (e) => {
         let payload = {"content_type":e.target.files[0].name.split('.')[1]}
@@ -61,6 +64,7 @@ const Contract = (props) => {
             "recommender": props.RecommenderData,
             "medias": [CoreUpload]
         })
+        setLoading(true)
         axios.post(`${BASE_URL}${JOIN_AUCTION}`, {
             "sale_id": props.id,
             "products_id": props.selectProducts,
@@ -68,14 +72,22 @@ const Contract = (props) => {
             "medias": [CoreUpload]
         })
             .then(resp => {
-                if (resp.data.code === 201 ) {
+                if (resp.data.code === 200 ) {
                     message.success("درخواست شما با موقیت ثبت شد.")
+                    setPosted(true)
+                    setLoading(false)
                 }
             })
             .catch(err => {
                 console.error(err);
                 message.error("دوباره تلاش کنید")
+                setLoading(false)
             })
+    }
+    if (posted) {
+        return (
+            <Redirect to = {{ pathname: "/auctions/" }} />
+        )
     }
     return (
         <div>
@@ -131,7 +143,9 @@ const Contract = (props) => {
                 </div>
                 <div className="button-group">
                     <button type="button" className="btn-gray">بازگشت</button>
-                    <button type="button" className="btn-default" onClick={() => sendData()} disabled={!Uploaded}>ثبت نهایی</button>
+                    <button type="button" className="btn-default" onClick={() => sendData()} disabled={!Uploaded}>
+                        {loading ? <LoadingOutlined style={{marginLeft: 5}} /> : ""}
+                        ثبت نهایی</button>
                 </div>
             </div>
         </div>

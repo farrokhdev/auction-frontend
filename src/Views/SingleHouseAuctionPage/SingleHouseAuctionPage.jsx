@@ -18,17 +18,16 @@ function SingleHouseAuctionPage(props) {
     })
 
     const [auctionsList, setAuctionsList] = useState([])
+    const [HouseDetails, setHouseDetails] = useState([])
 
     const getListAuctions = () => {
         const queries = queryString.stringify(params);
         axios.get(`${BASE_URL}${LIST_AUCTIONS}?${queries}`).then(res => {
             setAuctionsList(res.data.data.result);
-
         }).catch(err => {
             console.error(err)
         })
     }
-
     useEffect(() => {
         getListAuctions();
     }, [])
@@ -43,11 +42,11 @@ return (
             <div className="row sm-mrgb50">
                 <div className="col-6">
                     <div className="main-title d-inline-flex">
-                        <h2 className="default titr">گالری آرتیبیشن</h2>
+                        <h2 className="default titr">{HouseDetails?.home_auction_name}</h2>
                         <ul className="breadcrumb-cs">
                             <li><Link to="/">صفحه اصلی</Link></li>
                             <li><Link to="/house-acutions">خانه‌های حراج</Link></li>
-                            <li className="active">گالری آرتیبیشن</li>
+                            <li className="active">{HouseDetails?.home_auction_name}</li>
                         </ul>
                     </div>
                 </div>
@@ -56,7 +55,7 @@ return (
             <div className="row">
 
                 <div className="col-lg-3">
-                    <SiderSectionSingleHouseAuction/>
+                    <SiderSectionSingleHouseAuction id={props.match.params.id} setHouseDetails={setHouseDetails}/>
                 </div>
                 
                 <div className="col-lg-9">

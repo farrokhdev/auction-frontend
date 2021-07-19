@@ -44,8 +44,8 @@ function SigningContract(props) {
                                 <ul className="breadcrumb-cs ">
                                     <li><Link to="/">صفحه اصلی</Link></li>
                                     <li><Link to="/house-acutions" >خانه‌های حراج</Link></li>
-                                    <li><Link >{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : ''}</Link></li>
-                                    <li><Link > {artwork?.latest_auction?.title} </Link></li>
+                                    <li><Link to={`/house-acutions/${artwork?.latest_auction?.house?.id}`}>{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</Link></li>
+                                    <li><Link to={`/one-auction/${artwork?.latest_auction?.id}`} > {artwork?.latest_auction?.title} </Link></li>
                                     <li className="active">{artwork?.artwork_title}</li>
                                 </ul>
                             </div>
@@ -55,7 +55,7 @@ function SigningContract(props) {
 
             <MainInfoArtwork artwork={artwork}/>
             <DetailAboutArtworkInfo artwork={artwork}/>
-            <LastAuctionsSection/>
+            <LastAuctionsSection id={artwork?.latest_auction?.id}/>
 
             </div>
         </main>

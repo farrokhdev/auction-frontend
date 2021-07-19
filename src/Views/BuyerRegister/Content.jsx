@@ -69,6 +69,7 @@ function Content(props) {
           {selectComponent===2 && <Wallet
               setSelectComponent={setSelectComponent}
               selectComponent={selectComponent}
+              selectProducts={selectProducts}
           />}
           {selectComponent===3 && <Recommender
               setSelectComponent={setSelectComponent}

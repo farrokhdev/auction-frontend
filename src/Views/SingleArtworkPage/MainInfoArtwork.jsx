@@ -1,5 +1,4 @@
 import React from 'react'
-import img from '../../images/img-1.jpg';
 import { convertTypeAuctionToPersian } from '../../utils/converTypePersion';
 import classnames from 'classnames';
 function MainInfoArtwork({artwork}) {
@@ -14,7 +13,7 @@ return (
                 <div className="carousel-indicators">
                     <button type="button" data-bs-target="#inner-artwork" data-bs-slide-to="0" className="active"
                         aria-current="true" aria-label="Slide 1">
-                        <img src={artwork?.media?.media_path} width="547" height="547" className="img-fluid d-xl-block" alt="..." />
+                        <img src={artwork?.media?.exact_url} width="547" height="547" className="img-fluid d-xl-block" alt="..." />
                     </button>
                     {/* <button type="button" data-bs-target="#inner-artwork" data-bs-slide-to="1" aria-label="Slide 2">
                         <img src={img} width="547" height="547" className="d-xl-block img-fluid" alt="..." />
@@ -43,7 +42,7 @@ return (
                         <img src={artwork?.media?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
                     </div>
                     <div className="carousel-item ">
-                        <img src={img} width="547" height="547" className="d-block img-fluid" alt="..." />
+                        <img src={artwork?.media?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
                     </div>
 
                     <div className="carousel-item ">
@@ -69,15 +68,15 @@ return (
 
         <div className="col-lg-6">
             <div className="detail-block">
-                <div className="detail-block-header">
-                    <a href="#" className="btn-lot prev"><span className="d-none d-md-block">لت قبلی</span></a>
-                    <div className="search-input">
-                        <input type="text" className="default-input" placeholder="شماره لت مورد نظر را وارد نمایید." />
-                        <button type="button" className="btn-search"></button>
-                    </div>
-                    <a href="#" className="btn-lot next"><span className="d-none d-md-block">لت بعدی</span></a>
-                </div>
-                <div className="detail-block-body">
+                {/*<div className="detail-block-header">*/}
+                {/*    <a href="#" className="btn-lot prev"><span className="d-none d-md-block">لت قبلی</span></a>*/}
+                {/*    <div className="search-input">*/}
+                {/*        <input type="text" className="default-input" placeholder="شماره لت مورد نظر را وارد نمایید." />*/}
+                {/*        <button type="button" className="btn-search"></button>*/}
+                {/*    </div>*/}
+                {/*    <a href="#" className="btn-lot next"><span className="d-none d-md-block">لت بعدی</span></a>*/}
+                {/*</div>*/}
+                <div className="detail-block-body" style={{marginTop:0}}>
                     <div className="bg-shadow bl-shadow20">
                         <div className="detail-info">
                             <div className="detail-head">
@@ -154,7 +153,7 @@ return (
                             <div className="detail-ah">
                                 <div className="ah-left">
                                     <div className="h-block-img">
-                                        <img src={img} width="159" height="159" alt="گالری آرتیبیشن"
+                                        <img src={artwork?.house?.media?.exact_url} width="159" height="159" alt={artwork?.house?.media?.home_auction_name}
                                             className="img-fluid" />
                                     </div>
                                     <div className="detail-ahm">
