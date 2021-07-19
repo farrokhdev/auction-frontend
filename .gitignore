@@ -28,3 +28,15 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 npm-shrinkwrap.json
+.idea/
+.vscode/
+node_modules/
+build
+*.tgz
+my-app*
+template/src/__tests__/__snapshots__/
+lerna-debug.log
+/.changelog
+.npm/
+package-lock.json
+.env
