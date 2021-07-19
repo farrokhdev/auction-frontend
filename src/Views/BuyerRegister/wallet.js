@@ -9,11 +9,11 @@ import ModalWallet from "./ModalWallet";
 import {Redirect} from "react-router-dom";
 
 const Wallet = (props) => {
-    const {setSelectComponent, selectComponent} = props
+    const {setSelectComponent, selectComponent, selectProducts} = props
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const [next, setNext] = useState(false)
+    const [msg, setMsg] = useState(false)
     useEffect(()=>{
         getData()
     },[])
@@ -24,14 +24,19 @@ const Wallet = (props) => {
             .then(resp => {
                 setLoading(false)
                 if ((resp.data.code === 200)) {
-
                     const res = resp.data?.data?.result;
-                    // form.setFieldsValue(res)
                     setData(res)
-                    // setDataCount(resp.data?.data?.count)
-                    // let check = Object.keys(res).some(t => !res[t]);
-                    // console.log(check)
-                    // setNext(!check)
+                    axios.post(`${BASE_URL}/accounting/wallet/check-inventory/products/`, {
+                        "product_ids": selectProducts
+                    })
+                        .then(resp=>{
+                            if(resp.data.code === 200){
+                                setMsg(resp.data.data.result)
+                            }
+                        })
+                        .catch(err=>{
+                            message.error(err.response.data.data.error_message);
+                        })
                 }
             })
             .catch(err => {
@@ -52,6 +57,8 @@ const Wallet = (props) => {
                     <span className="price-unit">تومان</span>
                 </span>
                         <span className="price-lable">مانده حساب شما</span>
+
+                        <div className="price-block">{msg}</div>
                     </div>
                     <Link data-bs-toggle="modal" data-bs-target="#charge-modal">
                         چقدر باید شارژ کنم؟

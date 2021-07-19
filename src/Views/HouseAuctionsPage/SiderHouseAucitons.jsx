@@ -8,27 +8,27 @@ function SiderHouseAucitons({params , handleSetCategory , categoryActivities , h
         <div className="col-sm-3 sidebar" id="left-side">
         <button type="button" className="btn-getclose d-block d-lg-none"></button>
         <div className="left-side">
-            <div className="result-box">
-                <div className="result-title">
-                    <h6 className="default">نتایج:</h6>
-                    <button type="button" className="btn-removeall">پاک کردن همه</button>
-                </div>
-                <div className="tags-box">
-                    <a href="#" className="tag-box date">
-                        <span>3 اردیبهشت - </span>
-                        <span>6 اردیبهشت</span>
-                        <button type="button" className="btn-remove"></button>
-                    </a>
-                    <a href="#" className="tag-box date">
-                        <span>تهران</span>
-                        <button type="button" className="btn-remove"></button>
-                    </a>
-                    <a href="#" className="tag-box date">
-                        <span>آرتیبیشن</span>
-                        <button type="button" className="btn-remove"></button>
-                    </a>
-                </div>
-            </div>
+            {/*<div className="result-box">*/}
+            {/*    <div className="result-title">*/}
+            {/*        <h6 className="default">نتایج:</h6>*/}
+            {/*        <button type="button" className="btn-removeall">پاک کردن همه</button>*/}
+            {/*    </div>*/}
+            {/*    <div className="tags-box">*/}
+            {/*        <a href="#" className="tag-box date">*/}
+            {/*            <span>3 اردیبهشت - </span>*/}
+            {/*            <span>6 اردیبهشت</span>*/}
+            {/*            <button type="button" className="btn-remove"></button>*/}
+            {/*        </a>*/}
+            {/*        <a href="#" className="tag-box date">*/}
+            {/*            <span>تهران</span>*/}
+            {/*            <button type="button" className="btn-remove"></button>*/}
+            {/*        </a>*/}
+            {/*        <a href="#" className="tag-box date">*/}
+            {/*            <span>آرتیبیشن</span>*/}
+            {/*            <button type="button" className="btn-remove"></button>*/}
+            {/*        </a>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className="search-box">
                 <div className="search-input">
                     <input  
