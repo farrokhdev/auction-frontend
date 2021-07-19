@@ -28,6 +28,7 @@ const Suggest = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log(finalData)
         form.setFieldsValue(finalData)
     }, [finalData])
 

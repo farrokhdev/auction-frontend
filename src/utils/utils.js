@@ -48,6 +48,14 @@ export function Token() {
 
     return token;
 }
+export function getRefreshToken() {
+    let refresh = cookie.load('refresh');
+    if (refresh === 'undefined') {
+        return undefined;
+    }
+
+    return refresh;
+}
 
 export function removeToken() {
     cookie.remove('token', {path: '/'});

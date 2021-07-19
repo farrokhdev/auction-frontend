@@ -10,7 +10,8 @@ import PanelSidebar from "../../components/PanelSidebar";
 import {Link} from "react-router-dom";
 import {Modal, Button, Space, Spin} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
 
 function AuctionsList() {
 
@@ -20,7 +21,7 @@ function AuctionsList() {
     const [bids, setBids] = useState("");
     const [loading, setLoading] = useState(false);
     const { confirm } = Modal;
-
+    const dispatch = useDispatch();
     function showDeleteConfirm() {
         confirm({
             title: 'آیا قصد حذف کردن این حراجی را دارید؟',
@@ -100,8 +101,8 @@ function AuctionsList() {
                 {/**Main**/}
                 <div className="panel-body">
                     <div className="panel-container">
-                        <Link to="/panel-add-auction">
-                            <button type="button" className="btn btn-default"><FontAwesomeIcon className="pl-2"
+                        <Link to="/panel-add-auction/new" onClick={()=>dispatch(removeAUCTION())}>
+                            <button type="button" className="btn btn-default" ><FontAwesomeIcon className="pl-2"
                                                                                                icon={faPlus}/> حراج جدید
                             </button>
                         </Link>
@@ -120,11 +121,12 @@ function AuctionsList() {
                                         <td>آثار</td>
                                         <td>پیشنهادات</td>
                                         <td>درخواست عضویت</td>
-                                        <td></td>
+                                        <td className="text-center">نمایش درسایت </td>
+                                        <td>عملیات</td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {Auctions && Auctions.length >= 1 ? Auctions.map((item, key) => {
+                                    {(Auctions && Auctions.length >= 1) ? Auctions.map((item, key) => {
                                         return (
                                             <tr key={key}>
                                                 <td>{item.title}</td>
@@ -145,11 +147,11 @@ function AuctionsList() {
                                                     }
                                                 </td>
                                                 <td>
-                                                    <Link to={"/auctions-list/bids/" + item.id}>
+                                                    {item?.status=== "CLOSED" ? <Link to={"/auctions-list/bids/" + item.id}>
                                                         <button type="button" className="btn-outline-gray">
                                                             3 پیشنهاد
                                                         </button>
-                                                    </Link>
+                                                    </Link>:''}
                                                 </td>
                                                 <td>
                                                     <Link to={"/auctions-list/requests/" + item.id}>
@@ -158,10 +160,18 @@ function AuctionsList() {
                                                         </button>
                                                     </Link>
                                                 </td>
+                                                <td className="text-center">
+                                                        <input className="form-check-input" type="checkbox"
+                                                               checked={false}
+                                                               onChange={(e) => {
+                                                                   // dispatch(setAUCTION({extendable_deadline:e.target.checked}))
+                                                               }}
+                                                               id="checkbox413"/>
+                                                </td>
                                                 <td>
-                                                    <button type="button">
+                                                    <Link onClick={()=>dispatch(removeAUCTION())} to={`/panel-add-auction/${item.id}`} type="button">
                                                         <FontAwesomeIcon icon={faPen}/>
-                                                    </button>
+                                                    </Link>
                                                     <button type="button" onClick={showDeleteConfirm}>
                                                         <FontAwesomeIcon icon={faTimes}/>
                                                     </button>

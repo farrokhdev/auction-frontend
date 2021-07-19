@@ -4,15 +4,14 @@ import {refreshToken} from "../redux/reducers/auth/auth.actions";
 // import {refreshToken} from "./refreshTokenRequest"
 // import {connect} from 'react-redux';
 // import {clearStorage} from '../redux/reducers/auth/auth.actions';
-// import store from '../redux/store';
+import store from '../redux/store';
 
 const instance = axios.create({});
 
 // instance.defaults.baseURL = "http:app.jamterrace.com";
 let timeOut = false;
-instance.interceptors.request.use(config => {
-    // console.log(config)
-        if (!config.headers.Authorization) {
+instance.interceptors.request.use((config) => {
+        if (!config.headers.Authorization && !config?.data?.refresh) {
             let token = getTokenObject()
             if (token) {
                 config.headers.Authorization = `Bearer ${token.Authorization}`;
@@ -31,27 +30,26 @@ instance.interceptors.request.use(config => {
             // const originalRequest = error.config;
             if ((error.response.status === 401) && ( !timeOut)) {
                 //   originalRequest._retry = true;
-                // const access_token = refreshToken();            
+                // const access_token = refreshToken();
                 //   axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
                 //   return axiosApiInstance(originalRequest);
-                timeOut = true ;
-                // refreshToken();
-                console.log("Access_token =>>>>>>", error.request.responseURL);
-                
+                timeOut = true;
+                store.dispatch(refreshToken())
+                setTimeout(()=>{
                     timeOut = false;
-                
-            
+                },2000)
+
+
+
                 // if(access_token === undefined){
 
                 //     if(!error.request.responseURL.includes("favorite")){
                 //         store.dispatch(clearStorage);
-                        
+
                 //         console.log("STORE =>>>>>",store);
                 //         window.location.href = "#/login";
                 //     }
                 // }
-
-
         }
         return Promise.reject(error);
       });

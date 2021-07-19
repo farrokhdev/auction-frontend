@@ -13,6 +13,7 @@ module.exports={
     HOME_AUCITONS:"/account/home-auction/",
     CATEGORIE_ACTIVITY:"/sale/category/",
     ADD_AUCTION:"/sale/auctions/",
+    DETAIL_AUCTION:id=>`/sale/auctions/${id}/`,
     SEND_REQUEST_HOUMEAUCTION:"/account/request/me/",
     PRE_UPLOAD : "/core/upload/",
     UPLOAD : "/core/media/photos/",

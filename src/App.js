@@ -100,7 +100,7 @@ function App(props) {
               {/*<Route exact path="/auctions-list" component={AuctionsList} />*/}
               <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
               <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
-              {role=== "home_auction" ? <Route exact path="/panel-add-auction" component={AddAuction}/>:''}
+              {role=== "home_auction" ? <Route exact path="/panel-add-auction/:auctionId" component={AddAuction}/>:''}
               {role=== "home_auction" ? <Route exact path="/auctions-list" component={AuctionsList} />:''}
               <Route exact path="/add-artworks" component={AddArtWorks} />
               {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}

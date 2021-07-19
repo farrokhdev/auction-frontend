@@ -22,6 +22,7 @@ const ChangePasswordPanelProfile = (props) => {
                 setLoading(false)
                 if (resp.data.code === 200) {
                     message.success("رمز عبور شما با موفقیت ویرایش شد")
+                    form.resetFields();
                 }
             })
             .catch(err => {
@@ -35,9 +36,7 @@ const ChangePasswordPanelProfile = (props) => {
             <Form onFinish={onFinish}
                   form={form}
                   wrapperCol={{span: 24}}>
-                <div
-                    className=""
-                >
+                <div className="">
                     <div className="row">
                         <div className="col-md-6">
                             <div className="input-group ">

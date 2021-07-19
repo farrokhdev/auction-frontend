@@ -120,8 +120,9 @@ function AddArtWorks(props) {
                 "bucket_name": "image",
                 "file_key": Uploaded ? CoreUpload.file_key : ""
             },
-            "price": MinPrice,
             "artwork_link" : Link,
+            "min_price":MinPrice,
+            "max_price": MaxPrice
         //    صاحب اثر هم هست
         }
         setPosting(true)

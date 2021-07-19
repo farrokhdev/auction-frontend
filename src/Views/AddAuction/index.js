@@ -1,12 +1,12 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
-import {Link, Redirect} from "react-router-dom";
+import {Link, Redirect, useParams} from "react-router-dom";
 import BaseInformation from "./baseInformation";
 import EditPanelProfile from "../BuyerRegister/profile";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
-import {ADD_AUCTION} from "../../utils/constant";
+import {ADD_AUCTION, DETAIL_AUCTION} from "../../utils/constant";
 import {Button, message} from "antd";
 import Conditions from "./conditions";
 import Products from "./products";
@@ -17,6 +17,7 @@ import moment from "moment-jalaali";
 import Suggest from "./suggest";
 import Currency from "./currency";
 import Validate from "./validate";
+import {UrlQuery} from "../../utils/utils";
 
 const listComponent = [
     {name: "اطلاعات پایه", value: 1, thisComponent: BaseInformation},
@@ -39,6 +40,7 @@ function Index() {
     // const [products, setProducts] = useState([])
     // const [selectComponent, setSelectComponent] = useState(1);
     const dispatch = useDispatch();
+    let {auctionId} = useParams();
     const {id} = useSelector((state) => state.profileReducer)
     const {
         data,
@@ -61,11 +63,43 @@ function Index() {
     const checkData = useSelector((state) => state.auctionReducer)
 
     useEffect(() => {
-
-
+        if (auctionId !== "new")
+            getData()
         if (!id)
             dispatch(getProfile())
     }, [])
+
+    const getData = (e = "") => {
+        setLoading(true)
+        axios.get(UrlQuery(`${BASE_URL}${DETAIL_AUCTION(auctionId)}`))
+            .then(resp => {
+                setLoading(false)
+
+                if ((resp.data.code === 200) && resp.data?.data?.result) {
+
+                    const res = resp.data?.data?.result;
+                    let products = {}
+                    let steps = []
+
+                    res.auction_product.map(t => products[t?.product?.id] = {...t?.product, ...t})
+                    steps = res.steps.map((t, i, array) => ({minimum: (i > 0 ? array[i - 1]?.threshold : 0), ...t}))
+                    dispatch(setAUCTION({
+                        data: res,
+                        ...res,
+                        products,
+                        steps,
+
+                    }))
+                    // setData(res)
+                    // setDataCount(resp.data?.data?.count)
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("صفحه را دوباره لود کنید")
+            })
+    }
 
     const sendData = (values) => {
         // console.log(products, productsDate, data, checkData)
@@ -139,11 +173,15 @@ function Index() {
             .catch(err => {
                 setLoading(false)
                 console.error(err.response);
-                let t = err.response?.data?.message === "ok" ? err.response?.data?.data?.error_message : err.response?.data?.message
-                message.error(t)
+
+                if (err.response?.data?.message === "ok")
+                    message.error(err.response?.data?.data?.error_message)
+                else
+                    message.error(err.response?.data?.message)
+
             })
     }
-    console.log(productsDate, productsArrayDate)
+    // console.log(productsDate, productsArrayDate)
     if (next) {
         return <Redirect to="/auctions-list"/>
     }
