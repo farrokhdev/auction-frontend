@@ -34,16 +34,17 @@ function SiderHouseAucitons({params , handleSetCategory , categoryActivities , h
                     <input  
                         id="search-house-auction"
                         type="text" className="default-input"
-                        placeholder="در بیش از 100 حراج جستجو کنید." />
+                        placeholder="جستجو..." />
                     <button 
                         onClick={(e)=>handleSetSearchFilter(document.querySelector('#search-house-auction').value)} 
                         type="button" 
                         className="btn-search"
                     />
                 </div>
-                <button  type="button" className="btn-lightpink"><i
-                        className="fal fa-map-marker-alt"></i>جستجو بر اساس محل
-                </button>
+                {/*<button  type="button" className="btn-lightpink">*/}
+                {/*    <FontAwesomeIcon className="mx-2" icon={faMapMarkedAlt}/>*/}
+                {/*    جستجو بر اساس محل*/}
+                {/*</button>*/}
             </div>
             <div className="accordion main-accordion" id="leftside">
 
