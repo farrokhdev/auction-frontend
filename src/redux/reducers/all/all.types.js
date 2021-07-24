@@ -2,4 +2,5 @@
 
 export default {
     CLEAR_STORAGE_ALL : 'CLEAR_STORAGE_ALL',
+    OPEN_DASHBOARD : 'OPEN_DASHBOARD',
 }
