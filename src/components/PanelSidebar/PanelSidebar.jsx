@@ -17,20 +17,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../../redux/reducers/profile/profile.actions";
+import logoWhite from "../../images/logo-white.png"
 
 function PanelSidebar(props) {
   const dispatch = useDispatch();
   const {role} = useSelector((state) => state.profileReducer)
+  const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
   useEffect(() => {
     if (!role)
       dispatch(getProfile())
   }, [])
     return (
         <>
-        <div className="panel-sidebar">
+        <div className={`panel-sidebar ${is_Open_Dashboard && "active"} my-1`}>
             <NavLinkRouter activeClassName="active-style-menu" to="/" className="d-md-none d-block">
               <img
-                src="img/logo-white.png"
+                src={logoWhite}
                 width="139"
                 height="30"
                 alt="اسمارت آکشن"

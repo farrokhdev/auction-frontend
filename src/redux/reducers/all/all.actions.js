@@ -10,6 +10,19 @@ export const clearStorageAll = () => (
 )
 
 
+export const openDashboard = (payload)=>(
+    {
+        type : types.OPEN_DASHBOARD,
+        payload
+    }
+)
+
+// export const openDashboard = (payload) => (
+//     {
+//         type : types.OPEN_DASHBOARD, 
+//         payload
+//     }
+// )
 
 
 

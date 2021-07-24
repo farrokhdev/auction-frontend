@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import logowhite from "../../images/logo-white.png";
 import loginactive from "../../images/login-active.png";
 import {removeToken} from "../../utils/utils";
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 import {clearStorageAll} from "../../redux/reducers/all/all.actions";
-
+import auctionWhite from "../../images/auction-white.svg"
+import {openDashboard} from "../../redux/reducers/all/all.actions"
 function HeaderPanel(props) {
   const dispatch=useDispatch();
-
+  const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
     return (
         
              <header>
@@ -18,10 +19,10 @@ function HeaderPanel(props) {
             <img src={logowhite} width="139" height="30" alt="اسمارت آکشن" />
             </Link>
           </div>
-          <div className="panel-head">
-            <div className="d-block d-lg-none col-2 ">
+          <div className="panel-head ">
+            <div className="d-block d-lg-none col-2 pt-3 " onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}>
               <img
-                src="img/auction-white.svg"
+                src={auctionWhite}
                 width="16"
                 height="16"
                 alt=""
