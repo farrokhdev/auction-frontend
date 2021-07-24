@@ -12,14 +12,6 @@ function SelectorMap({location , setPoint}) {
 
 
     useEffect(() => {
-      
-        delete L.Icon.Default._getIconUrl;
-
-        L.Icon.Default.mergeOptions({
-            iconRetinaUrl: require("../../../node_modules/leaflet/dist/images/marker-icon-2x.png"),
-            iconUrl: require("../../../node_modules/leaflet/dist/images/marker-icon.png"),
-            shadowUrl: require("../../../node_modules/leaflet/dist/images/marker-shadow.png")
-        });
 
         navigator.geolocation.getCurrentPosition(function(location) {
 

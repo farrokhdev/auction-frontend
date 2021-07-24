@@ -1,25 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe , faPhone , faEnvelope , faMapMarker} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faEnvelope, faGlobe, faMapMarker, faPhone} from "@fortawesome/free-solid-svg-icons";
 import img from '../../images/img-1.jpg';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
-import GoogleMapReact from 'google-map-react';
+import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
+import '../../assets/style/leaflet.scss';
 
 function SiderSectionSingleHouseAuction(props) {
 
     const [HouseDetail, setHouseDetail] = useState([])
+    const [zoom, setZoom] = useState(13);
+    const [location, setLocation] = useState([]);
 
     const getHouseDetails = () => {
         axios.get(`${BASE_URL}/account/home-auction/${props.id}`).then(res => {
             props.setHouseDetails(res.data.data.result)
             setHouseDetail(res.data.data.result);
+            setLocation([res.data.data.result.home_auction_location.point.longitude, res.data.data.result.home_auction_location.point.latitude])
         }).catch(err => {
             console.error(err)
         })
     }
 
     useEffect(() => {
+
         getHouseDetails();
     }, [])
 
@@ -80,25 +85,21 @@ function SiderSectionSingleHouseAuction(props) {
                                     </div>
                                 </div>
                                 <div className="info-location">
-                                    <GoogleMapReact
-                                        bootstrapURLKeys={{ key: "" }}
-                                        defaultCenter={{
-                                            lat: HouseDetail?.home_auction_location?.point?.lat,
-                                            lng: HouseDetail?.home_auction_location?.point?.lng,
-                                            latLng: ""
-                                        }}
-                                        defaultZoom={11}
+                                    <Map
+                                        center={ location.length > 0 ? location : ["35.790655" , "51.420518"] }
+                                        zoom={zoom}
+                                        onzoomend={e=>setZoom(e.target._zoom)}
+                                        style={{width:"100%",height:"200px"}}
                                     >
-                                    </GoogleMapReact>
-
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12951.668025778226!2d51.4458866!3d35.7528446!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x42e7c301666fc308!2sArtibition%20Art%20Gallery!5e0!3m2!1sen!2s!4v1619847195968!5m2!1sen!2s"
-                                        width="100%" 
-                                        height="165" 
-                                        style={{border : '0'}}
-                                        allowfullscreen=""
-                                        loading="lazy">
-                                    </iframe>
+                                        <TileLayer
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <Marker
+                                            position={location.length > 0 ? location : ["35.790655" , "51.420518"]}
+                                        >
+                                            <Popup>موقعیت خانه حراجی</Popup>
+                                        </Marker>
+                                    </Map>
                                 </div>
                             </div>
 
