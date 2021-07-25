@@ -17,7 +17,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../../redux/reducers/profile/profile.actions";
-import logoWhite from "../../images/logo-white.png"
+import logoWhite from "../../images/logo-white.png";
+import {clearStorageAll} from "../../redux/reducers/all/all.actions";
 
 function PanelSidebar(props) {
   const dispatch = useDispatch();
@@ -123,7 +124,9 @@ function PanelSidebar(props) {
               </li>
 
               <li>
-                <NavLinkRouter to="/">
+                <NavLinkRouter to="/"  onClick={()=>{
+                    dispatch(clearStorageAll())
+                  }}>
                   <FontAwesomeIcon icon={faSignOutAlt} /> خروج از پروفایل
                 </NavLinkRouter>
               </li>
