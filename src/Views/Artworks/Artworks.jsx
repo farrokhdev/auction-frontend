@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import {faBookmark} from "@fortawesome/free-solid-svg-icons";
 import {Pagination, Spin} from 'antd';
 import 'antd/dist/antd.css';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import Maintitle from "../../components/main title for all";
 import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import queryString from 'query-string';
+import moment from "jalali-moment";
 
 function Artworks() {
 
@@ -36,6 +35,7 @@ function Artworks() {
         axios.get(`${BASE_URL}/sale/product/?${queries}`)
             .then(resp => {
                 if (resp.data.code === 200) {
+                    console.log(resp)
                     setProducts(resp.data.data.result)
                     setCountProducts(resp.data.data.count)
                     setLoading(false)
@@ -46,6 +46,31 @@ function Artworks() {
                 console.error(err);
                 setLoading(false)
             })
+    }
+
+    const addBookmark = (data, action) => {
+        if (action){
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getProducts()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/` , {
+                "content_type": "product",
+                "object_id": data,
+                "activity_type": "mark"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getProducts()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
     }
 
     useEffect(() => {
@@ -96,14 +121,12 @@ function Artworks() {
     }
 
     const handleSetDate = (dateFrom, dateTo) => {
-
-        // console.log(moment(dateFrom , 'YYYY-MM-DD').format(`YYYY-jMM-jDD`));
         setParams({
             ...params,
-            // date_after : moment( (dateFrom ,  'YYYY-MM-DD').format(`YYYY-jMM-jDD`) ),
-            // date_before : momentJalaali(dateTo ? dateTo : {}).format(`YYYY-jMM-jDD`)
-            date_after: '2021-01-05',
-            date_before: '2021-03-07'
+            date_before : dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
+            date_after : dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : ""
+            // date_after: '2021-01-05',
+            // date_before: '2021-03-07'
         })
 
     }
@@ -154,8 +177,8 @@ function Artworks() {
                                     {Products && Products.length >= 1 ? Products.map((item, key) => {
                                         return (
                                             <div className="col" key={key}>
-                                                <Link to={`/artworks/${item.id}`} class="artwork-block">
                                                     <div className="artwork-img">
+                                                        <Link to={`/artworks/${item.id}`} class="artwork-block">
                                                         <img
                                                             src={item.media.exact_url ? item.media.exact_url : ''}
                                                             width="998"
@@ -163,10 +186,15 @@ function Artworks() {
                                                             alt=""
                                                             className="img-fluid"
                                                         />
+                                                        </Link>
                                                         <div className="artwork-category">
-                        <span className="category-save">
-                          <FontAwesomeIcon icon={faBookmark}/>
-                        </span>
+                                                            <span onClick={() =>
+                                                                addBookmark(
+                                                                    item?.following?.bookmark?.is_active?
+                                                                    item?.following?.bookmark?.id :
+                                                                        item?.id, item?.following?.bookmark?.is_active)
+                                                            }
+                                                            className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")}/>
                                                             {convertToEn(item?.auctions ? item?.auctions[0]?.type : '')}
                                                             {/* <span className="category-icon live-icon">زنده</span> */}
                                                         </div>
@@ -176,11 +204,13 @@ function Artworks() {
                                                         <h4 className="default">{item?.artwork_title}</h4>
                                                         <div className="auction-calender">
                                                             <div className="auction-date">
-                                                                <span className="start-date">7 خرداد</span>
-                                                                <span className="end-date">9 خرداد</span>
+                                                                <span className="start-date">
+                                                                    {item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}
+                                                                </span>
+                                                                <span className="end-date">{item?.latest_auction?.end_time ? moment(item?.latest_auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}</span>
                                                             </div>
                                                             <div className="auction-time">
-                                                                <span className="start-time">10</span>
+                                                                <span className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('HH') : ""}</span>
                                                             </div>
                                                         </div>
                                                         <div className="price-block">
@@ -190,7 +220,6 @@ function Artworks() {
                         </span>
                                                         </div>
                                                     </div>
-                                                </Link>
                                             </div>
                                         )
                                     }) : ""}
@@ -212,7 +241,7 @@ function Artworks() {
                                     defaultCurrent={1}
                                     total={countProducts}
                                     pageSizeOptions={[9, 18, 36, 48]}
-                                    defaultPageSize={9}
+                                    defaultPageSize={params.page_size}
                                 />
 
                             </div>

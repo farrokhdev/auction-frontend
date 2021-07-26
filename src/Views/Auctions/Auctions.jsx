@@ -176,14 +176,16 @@ function Auctions() {
                                                         </div>
                                                         <div className="col-xl-9 col-sm-8 col-9 textalign-left">
                                                             <FontAwesomeIcon icon={faBell}/>
-                                                            <span className="reminder-icon ">یادآوری</span>
+                                                            <Link to={`/panel-reminders`}>
+                                                                <span className="reminder-icon ">یادآوری</span>
+                                                            </Link>
                                                             <button type="button" className="link-source">
                                                                 <Link to={`/one-auction/${item.id}`}>
                                                                 <span className="d-none d-sm-inline-block">
                                                                   مشاهده{" "}
                                                                 </span>
                                                                     آثار
-                                                                    (<span>{item?.product ? item.product.length : 0}</span>)
+                                                                    (<span>{item?.products_count ? item.products_count : 0}</span>)
                                                                 </Link>
                                                             </button>
                                                         </div>
@@ -197,7 +199,7 @@ function Auctions() {
                                                         <div className="block-detail">
                                                             <h6 className="default">{item.title}</h6>
                                                             <Link to="/" className="default">
-                                                                <h6 className="default gray50">گالری آرتیبیشن</h6>
+                                                                <h6 className="default gray50">{item.house}</h6>
                                                             </Link>
                                                         </div>
                                                     </div>
