@@ -14,8 +14,8 @@ const Suggest = (props) => {
     const {
         selectComponent,
         setSelectComponent,
-        finalData,
-        setFinalData,
+        // finalData,
+        // setFinalData,
         products,
         id,
         payment_method,
@@ -24,17 +24,19 @@ const Suggest = (props) => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
     // const [data, setData] = useState({})
-    const {extendable_deadline ,steps,data} = useSelector((state) => state.auctionReducer)
+    const {extendable_deadline ,steps,type} = useSelector((state) => state.auctionReducer)
+    const finalData = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(finalData)
+        // console.log(finalData)
         form.setFieldsValue(finalData)
     }, [finalData])
 
     const onFinish = (values) => {
         console.log(values)
-        setFinalData({...finalData, ...values})
+        // setFinalData({...finalData, ...values})
+        dispatch(setAUCTION({ ...values}))
         setSelectComponent(selectComponent + 1)
         // sendData(values)
         // dispatch(setAUCTION({steps:values}))
@@ -50,8 +52,7 @@ const Suggest = (props) => {
                   wrapperCol={{span: 24}}>
                 <div className="row">
                     <div className="col-xxxxl-8">
-                        {console.log(finalData?.type)}
-                        {(finalData?.type === "ONLINE") ? <div className="row">
+                        {(type === "ONLINE") ? <div className="row">
                             <div className="col-md-6">
                                 <div className="input-group">
                                     <label className="default-lable">بازه زمانی پیشنهاد</label>
@@ -107,7 +108,7 @@ const Suggest = (props) => {
                                 <div className="button-group">
 
                                     <Button type="button" className="btn-gray" onClick={() => {
-                                        if(data?.type ==="ONLINE" || data?.type ==="PERIODIC")
+                                        if(type ==="ONLINE" || type ==="PERIODIC")
                                             setSelectComponent(selectComponent - 1)
                                         else
                                             setSelectComponent(selectComponent - 2)

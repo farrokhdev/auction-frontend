@@ -7,7 +7,7 @@ import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import {ADD_AUCTION} from "../../utils/constant";
 import {useDispatch} from "react-redux";
-import {removeAUCTION} from "../../redux/reducers/auction/auction.actions";
+import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
 
 const listAuctionType = [
     {name: "SECOND_HIDDEN", value: "دومین قیمت پیشنهاد با حراج (مخفی)"},
@@ -26,7 +26,8 @@ const Conditions = (props) => {
 
     const dispatch = useDispatch();
     const onFinish = (values) => {
-        setFinalData({...finalData, ...values})
+        // setFinalData({...finalData, ...values})
+        dispatch(setAUCTION({ ...values}))
         // sendData(values)
             sendData(values)
 

@@ -8,7 +8,6 @@ const initial_state ={}
 const allReducer = (state = initial_state , {type , payload})=> {
     switch(type){
         case types.CLEAR_STORAGE_ALL:
-            console.log("remove")
             removeToken()
             return {}
         default :

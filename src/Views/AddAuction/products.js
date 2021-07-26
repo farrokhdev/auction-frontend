@@ -15,8 +15,9 @@ import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
 const Products = (props) => {
     const {selectComponent, setSelectComponent, products, setProducts, id} = props;
     const [loading, setLoading] = useState(false)
-    const {data, choose_product_daily,productsArrayDate} = useSelector((state) => state.auctionReducer)
+    const {type, choose_product_daily,productsArrayDate} = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
+    console.log(products)
     return (
         <div>
 
@@ -24,7 +25,7 @@ const Products = (props) => {
             <div className="form-check sm-mrgt35">
                 <input className="form-check-input" type="checkbox"
                        checked={choose_product_daily}
-                       disabled={data.type==="PERIODIC"}
+                       disabled={type==="PERIODIC"}
                        onChange={e => {
                            dispatch(setAUCTION({choose_product_daily: e.target.checked}))
                        }}/>
@@ -49,9 +50,11 @@ const Products = (props) => {
                         }}>بازگشت
                         </button>
 
+                        {
 
+                        }
                         {((Object.keys(products)?.length && !choose_product_daily) || (productsArrayDate?.length && choose_product_daily))  ? <button type="button" className="btn-default" onClick={() => {
-                            if (data.type === "ONLINE" || data.type === "PERIODIC")
+                            if (type === "ONLINE" || type === "PERIODIC")
                                 setSelectComponent(selectComponent + 1)
                             else
                                 setSelectComponent(selectComponent + 2)

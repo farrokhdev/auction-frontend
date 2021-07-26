@@ -7,6 +7,8 @@ module.exports={
     ONE_PRODUCT:id=> `/sale/product/${id}/`,
     LIST_PRODUCTS_MATCHED : id=> `/notification/auction-reminders/${id}/matched-products/`,
     LIST_AUCTIONS:"/sale/auctions/",
+    DELETE_AUCTION:id=>`/sale/auctions/${id}/`,
+    EDIT_AUCTION:id=>`/sale/auctions/${id}/`,
     JOIN_AUCTION:"/sale/join-auction/",
     ACCOUNT_WALLET:"/accounting/wallet/me/",
     TRANSACTION:"/accounting/transaction/",

@@ -16,7 +16,7 @@ import {UPLOAD_EXEL_AUCTION} from "../../utils/constant";
 
 const Validate = (props) => {
 
-    const {selectComponent, setSelectComponent, finalData, setFinalData} = props
+    const {selectComponent, setSelectComponent} = props
     const [form] = Form.useForm();
     // const [loading, setLoading] = useState(false)
     // const [data, setData] = useState({})
@@ -31,17 +31,19 @@ const Validate = (props) => {
         add_previous_buyer,
         other,
         is_send_invitation,
-        data
+        details
     } = useSelector((state) => state.auctionReducer)
+    const finalData = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        form.setFieldsValue({details:data?.details || ""})
+        form.setFieldsValue({details: details || ""})
     }, [])
 
     const onFinish = (values) => {
         // console.log(values)
-        setFinalData({...finalData, ...values})
+        // setFinalData({...finalData, ...values})
+        dispatch(setAUCTION({...values}))
         setSelectComponent(selectComponent + 1)
     }
 
@@ -52,7 +54,13 @@ const Validate = (props) => {
                     <div className="col-12">
                         <div className="form-check sm-mrgt35">
                             <input className="form-check-input" type="checkbox" checked={admin_confirmation}
-                                   onChange={e => dispatch(setAUCTION({admin_confirmation: e.target.checked}))}
+                                   onChange={e => dispatch(setAUCTION({
+                                       admin_confirmation: e.target.checked,
+                                       is_send_invitation: false,
+                                       has_recommendation: false,
+                                       add_previous_buyer: false,
+                                       other: false,
+                                   }))}
                                    id="checkbox41"/>
                             <label className="form-check-label" htmlFor="checkbox41">
                                 اعتبارسنجی توسط گالری آرتیبیشن
@@ -66,7 +74,12 @@ const Validate = (props) => {
                         <div className="col-12">
                             <div className="form-check sm-mrgt35">
                                 <input className="form-check-input" type="checkbox" checked={is_send_invitation}
-                                       onChange={e => dispatch(setAUCTION({is_send_invitation: e.target.checked}))}
+                                       onChange={e => dispatch(setAUCTION({is_send_invitation: e.target.checked,
+                                           admin_confirmation: false,
+                                           has_recommendation: false,
+                                           add_previous_buyer: false,
+                                           other: false,
+                                       }))}
                                        id="checkbox42"/>
                                 <label className="form-check-label" htmlFor="checkbox42">
                                     ارسال دعوتنامه

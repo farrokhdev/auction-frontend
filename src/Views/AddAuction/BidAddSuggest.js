@@ -24,9 +24,9 @@ const Suggest = (props) => {
     const [listRecord, setListRecord] = useState([])
     const [range, setRange] = useState(0)
     const dispatch = useDispatch();
-    const {steps,data} = useSelector((state) => state.auctionReducer)
+    const {steps,currency} = useSelector((state) => state.auctionReducer)
     useEffect(() => {
-        form.setFieldsValue({currency: data.currency})
+        form.setFieldsValue({currency})
         if (!steps.length) {
             form.setFieldsValue({minimum: 0})
         } else {
@@ -62,9 +62,9 @@ const Suggest = (props) => {
                                         className="search-input w-100 fs-6"
                                         size="large"
                                         dropdownClassName="text-right"
-                                        placeholder="  واحد پول را انتخاب کنید"
+                                        placeholder="واحد پول را انتخاب کنید"
                                         onChange={value => {
-                                            dispatch(setAUCTION({data: { ...data,currency:value}}))
+                                            dispatch(setAUCTION({currency:value}))
                                         }}
                                     >
                                         {
