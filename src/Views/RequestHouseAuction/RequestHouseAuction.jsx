@@ -1,142 +1,53 @@
 import React , {useState , useEffect} from 'react'
 import axios from '../../utils/request';
+import UploadAxios from "../../utils/uploadRequest";
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
 import Spinners from '../../components/Spinners';
 import {BASE_URL} from '../../utils';
-import {CATEGORIE_ACTIVITY , HOME_AUCITONS, PRE_UPLOAD, SEND_REQUEST_HOUMEAUCTION, UPLOAD} from '../../utils/constant';
-import {Select , Mentions , Collapse} from 'antd';
+import {CATEGORIE_ACTIVITY , PRE_UPLOAD, SEND_REQUEST_HOUMEAUCTION, UPLOAD} from '../../utils/constant';
+import {Select , Mentions , Collapse , Form , Input , Upload , Button , Alert } from 'antd';
 import { failNotification, successNotification } from '../../utils/notification';
 import MapSelector from '../../components/MapSelector';
 import classnames from 'classnames';
-import { Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-
 
 const { Option, getMentions } = Mentions;
 const { Panel } = Collapse;
 
 function RequestHouseAuction() {
 
+    const [form] = Form.useForm();
+
     const [loading , setLoading] = useState(false)
     const [activites , setActivites] = useState([])
-    const [homeAuctions, setHomeAuctions] = useState([])
     const [point, setPoint] = useState({})
-    const [url_image, setUrl_image] = useState('')
+    const [url_image, setUrl_image] = useState(' ')
     const [url_image_Key, setUrl_image_Key] = useState('')    
     const [url_file, setUrl_file] = useState('')
     const [url_file_Key, setUrl_file_Key] = useState('')
     const [request, setRequest] = useState({
 
-        home_auction_name: "arsam",
-        home_auction_type: "gallery",
+        home_auction_name: "",
+        home_auction_type: "",
         activity_type: [],
-        count: 10 , 
-        site : '',
-        email : '' , 
-        phone : '',
+        site : "",
+        phone : "",
         address: "" , 
-        media_name_image : '',
-        media_name_file : '',
-        media_key : '',
-        link_telegram : '',
-        link_instagram : '',
-        link_facebook : '',
+        media_name_image : "",
+        media_name_file : "",
+        media_key : "",
+        longitude : '',
+        latitude : '' ,
+        link_telegram : "",
+        link_instagram : "",
+        link_facebook : "",
     })
-
 
 
     useEffect(() => {
         getCategoryActivities();
-        getHomeAuctions();
     }, [])
-
-
-    const handleRequestImage = async (info) => {
-
-        let func1 = await axios.post(`${BASE_URL}${PRE_UPLOAD}` , {"content_type": "image"}).then(res => {
-            setUrl_image(res.data.data.result.upload_url);
-            setUrl_image_Key(res.data.data.result.file_key)    
-        return res.data.data.result ;
-          
-        }).catch(err => {
-            console.error(err)
-        })
-    
-        // **************************
-    
-        let func2 = await axios.put(func1?.upload_url).then(res => {
-
-            return res.data.data.result ;
-
-        }).catch(err => {
-            console.error(err)
-        })
-    
-        // ***************************
-    
-        let func3 = await axios.post(`${BASE_URL}${UPLOAD}` , {
-    
-            "media_path": func1?.upload_url,
-            "type": "image",
-            "bucket_name": "image",
-            "file_key": func1?.file_key
-    
-        }).then(res => {
-                
-        }).catch(err => {
-            console.error(err)
-        })
-    
-
-    }
-
-
-
-
-    
-    const handleRequestFile = async (info) => {
-
-        let func1 = await axios.post(`${BASE_URL}${PRE_UPLOAD}` , {"content_type": "image"}).then(res => {
-            setUrl_file(res.data.data.result.upload_url);
-            setUrl_file_Key(res.data.data.result.file_key)    
-
-            console.log("^^^^^^^ ->>>>>", res.data.data.result);
-        return res.data.data.result ;
-          
-        }).catch(err => {
-            console.error(err)
-        })
-    
-        // **************************
-    
-        let func2 = await axios.put(func1?.upload_url).then(res => {
-
-            return res.data.data.result ;
-
-        }).catch(err => {
-            console.error(err)
-        })
-    
-        // ***************************
-    
-        let func3 = await axios.post(`${BASE_URL}${UPLOAD}` , {
-    
-            "media_path": func1?.upload_url,
-            "type": "image",
-            "bucket_name": "image",
-            "file_key": func1?.file_key
-    
-        }).then(res => {
-                
-        }).catch(err => {
-            console.error(err)
-        })
-    
-
-    }
-
-
 
 
     const getCategoryActivities = () => {
@@ -148,14 +59,6 @@ function RequestHouseAuction() {
         })
     }   
     
-    const getHomeAuctions = () => {
-        axios.get(`${BASE_URL}${HOME_AUCITONS}`).then(res => {
-            console.log(res);
-            setHomeAuctions(res.data.data.result)
-        }).catch(err => {
-            console.error(err)
-        })
-    }
     
 
     const handleSetActivityType = (value) =>{
@@ -174,38 +77,37 @@ function RequestHouseAuction() {
     
 
 
-        const handleSubmit = (e) => {
-
-            e.preventDefault();
+    const onFinish = (values) => {
+        console.log(values)
+         
             let info_links =  [] ;
 
             info_links = [
                 {
                     "type": "telegram",
-                    "url": request?.link_telegram 
+                    "url": values?.link_telegram 
                 },
                 {
                     "type": "instagram",
-                    "url": request?.link_instagram 
+                    "url": values?.link_instagram 
                 },{
                     "type": "facebook",
-                    "url": request?.link_facebook 
+                    "url": values?.link_facebook 
                 }
             ].filter( item=> item.url )
 
 
 
             let payload = {
-                "home_auction_name": request?.home_auction_name ,
-                "home_auction_type": request?.home_auction_type,
-                "activity_type": request?.activity_type,
-                "count": parseInt(request?.count),
+                "home_auction_name": values?.home_auction_name ,
+                "home_auction_type": values?.home_auction_type,
+                "activity_type": values?.activity_type,
                 "home_auction_location": {
                     "point": {
-                        "longitude": point?.longitude ? String(point?.longitude) : '',
-                        "latitude": point?.latitude  ? String(point?.latitude) : ''
+                        "longitude": values?.longitude ? String(values?.longitude) : '',
+                        "latitude": values?.latitude  ? String(values?.latitude) : ''
                     },
-                    "address": request?.address ? request?.address : ''
+                    "address": values?.address ? values?.address : ''
                 },
                
                 "info_link" : info_links,
@@ -227,17 +129,16 @@ function RequestHouseAuction() {
                     }
                 ],
 
-                "phone" : request?.phone  ?  request?.phone  :  '',
+                "phone" : values?.phone  ?  values?.phone  :  '',
             }
 
 
             axios.put(`${BASE_URL}${SEND_REQUEST_HOUMEAUCTION}` , payload).then(res => {
-                console.log(res.data.data.statusCode);
-                    successNotification("ثبت درخواست خانه حراجی"  , 'درخواست  با موفقیت ارسال شد')
+                successNotification("ثبت درخواست خانه حراجی"  , 'درخواست  با موفقیت ارسال شد')
                
             }).catch(err => {
                 // console.error("Error",err.response.data.data)
-                failNotification( 'خالی بودن یا نامعتبر بودن فیلدها' , '' )
+                failNotification( 'خطا در ارسال درخواست' , '' )
             })
         }
 
@@ -246,13 +147,15 @@ function RequestHouseAuction() {
         console.log(key);
     }
 
-    const handleSetNameImage = (upload) => {
-        setRequest({...request , media_name_image : upload?.file?.name });
-    }
 
     const handleSetNameFile = (upload) => {
         setRequest({...request , media_name_file : upload?.file?.name });
     }
+
+    form.setFieldsValue({
+        longitude : point?.longitude ,
+        latitude : point?.latitude  ,
+    })
 
 return (
     <React.Fragment>
@@ -260,6 +163,12 @@ return (
         <Spinners loading={loading}/>
         <HeaderPanel titlePage = {"درخواست خانه حراج"} />
         <main>
+        <Form 
+                onFinish={onFinish}
+                initialValues={{ remember: true }}
+
+              form={form}
+              wrapperCol={{span: 24}}>
             <div class="panel-main">
                 <PanelSidebar />
                 <div class="panel-body">
@@ -274,33 +183,26 @@ return (
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <label class="default-lable">نام خانه حراج</label>
-
-                                                <input  
+                                                <Form.Item
+                                                        className="w-100"
+                                                        name="home_auction_name"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "نام خانه حراجی را وارد نشده است!",
+                                                            },
+                                                        ]}>
+                                                <Input 
+                                                    className="default-input" 
                                                     onChange={(e)=> setRequest(
                                                         {...request , home_auction_name : e.target.value}
                                                     )} 
                                                     type="text" 
-                                                    // maxlength ={5}
                                                     class="default-input"
                                                     placeholder="" 
-                                                    // value="+98 912 506 3365"
                                                      />
-                                               
-                                            {/* <select 
-                                                onChange={(e)=>handleSetAuctionName(e.target.value)} 
-                                                className="form-select" 
-                                                placeholder="نام خانه حراجی را انتخاب کنید"
-                                                aria-label="Default select example" 
-                                                required={true}
-                                            >
-                                                <option value="none" selected disabled hidden ></option>
-                                                {homeAuctions?.length ? homeAuctions?.map(home => (
-                                                    <React.Fragment key={home?.id}>
-                                                        <option >{home?.home_auction_name}</option>
-                                                    </React.Fragment>
-                                            )) : ''}
-                                                
-                                            </select> */}
+                                               </Form.Item>
+
                                         </div>
                                             
                                         </div>
@@ -308,19 +210,31 @@ return (
                                             <div class="input-group">
                                                 <label class="default-lable">نوع کاربری</label>
 
-
-                                                <select 
-                                                    onChange={(e)=>handleSetHomeType(e.target.value)} 
-                                                    className="form-select" 
-                                                    aria-label="Default select example" 
-                                                    required={true}
-                                                >
-                                                    <option value="none" selected disabled hidden ></option>
-                                                    <option value="collector">مجموعه دار</option>
-                                                    <option value="gallery">گالری دار</option>
-                                                    <option value="home_auction">خانه حراجی</option>
-                                           
-                                                </select>
+                                                    <Form.Item
+                                                        className="w-100"
+                                                        name="home_auction_type"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "نوع کاربری انتخاب نشده است!",
+                                                            },
+                                                        ]}>
+                                                    <Select
+                                                        className="search-input w-100 fs-6"
+                                                        size="large"
+                                                        dropdownClassName="text-right"
+                                                        placeholder="نوع  حراجی را انتخاب کنید"
+                                                        onChange={(e)=> 
+                                                            setRequest(
+                                                            {...request , home_auction_type : e}
+                                                        )}
+                                                    >
+                                                        <Select.Option value="none" selected disabled hidden ></Select.Option>
+                                                        <Select.Option value="collector">مجموعه دار</Select.Option>
+                                                        <Select.Option value="gallery">گالری دار</Select.Option>
+                                                        <Select.Option value="home_auction">خانه حراجی</Select.Option>
+                                                    </Select>
+                                                </Form.Item>
 
                                             </div>
                                         </div>              
@@ -328,7 +242,15 @@ return (
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <label class="default-lable">حوزه فعالیت خانه حراج</label>
-
+                                                <Form.Item
+                                                        className="w-100"
+                                                        name="activity_type"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "حوزه فعالیت انتخاب نشده است!",
+                                                            },
+                                                        ]}>
 
                                             <Select    
                                                 mode="multiple"
@@ -340,82 +262,51 @@ return (
                                                 onChange={handleSetActivityType}
                                             >
                                                 
-                                                {activites.length >= 1 ? activites.map(activity => (
+                                                {activites?.length >= 1 ? activites?.map(activity => (
 
                                                     <React.Fragment key={activity?.id}>
-                                                        <Option onChange={(e)=>console.log(e.target.value)}  value={`${parseInt(activity?.id)}`}>{activity?.title}</Option>
+                                                        <Select.Option   value={`${parseInt(activity?.id)}`}>{activity?.title}</Select.Option>
                                                     </React.Fragment>
-                                                )) : <Option value="s"></Option>}
+                                                )) : <Select.Option value="s"></Select.Option>}
 
                                                     
                                             
                                             </Select>
-
+                                            </Form.Item>
                                             </div>
                                         </div>
-
-
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <label class="default-lable">تعداد خانه حراجی</label>
-                                                <input  
-                                                    onChange={(e)=>setRequest(
-                                                        {...request , count : e.target.value})
-                                                    } 
-                                                    type="number" 
-                                                    maxlength ={5}
-                                                    class="default-input"
-                                                    placeholder="" 
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {/* <div class="col-md-6">
-                                            <div class="input-group">
-                                                <label class="default-lable">سایت</label>
-
-                                                <input  
-                                                    onChange={(e)=>setRequest(
-                                                        {...request , site : e.target.value}
-                                                    )}  
-                                                    type="text" 
-                                                    // maxlength ={5}
-                                                    class="default-input"
-                                                    placeholder="" 
-                                                    // value="+98 912 506 3365"
-                                                     />
-                                            </div>
-                                        </div> */}
-
-                                        {/* <div class="col-md-6">
-                                            <div class="input-group">
-                                                <label class="default-lable">ایمیل</label>
-
-                                                <input  
-                                                    onChange={(e)=>setRequest(
-                                                        {...request , email : e.target.value}
-                                                    )}  
-                                                    type="email" 
-                                                    // maxlength ={5}
-                                                    class="default-input"
-                                                    placeholder="" 
-                                                    // value="+98 912 506 3365"
-                                                     />
-                                            </div>
-                                        </div> */}
 
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <label class="default-lable">تلفن</label>
 
-                                                <input  
+                                                <Form.Item
+                                                        className="w-100"
+                                                        name="phone"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "تلفن وارد نشده است!",
+                                                            },
+                                                            {
+                                                                pattern: /^[\d]{0,14}$/,
+                                                                message: "تنها کاراکتر عدد معتبر می‌باشد!",
+                                                            },
+                                                        ]}>
+
+                                                <Input 
+                                                    className="default-input"
+                                                    // pattern = {/^[\d]{0,11}$/}
+                                                    maxLength={11}
                                                     onChange={(e)=>setRequest(
-                                                        {...request , phone : e.target.value}
+                                                        {...request , phone : e.target.value},
                                                     )} 
-                                                    type="number" 
+                                                    type="text" 
                                                     class="default-input"
                                                     placeholder="" 
                                                 />
+                                            </Form.Item>
+
                                             </div>
                                         </div>
 
@@ -423,49 +314,31 @@ return (
                                             <div class="input-group">
                                                 <label class="default-lable">آدرس</label>
 
-                                                <input  
+                                                <Form.Item
+                                                    className="w-100"
+                                                    name="address"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "آدرس وارد نشده است!",
+                                                        },
+                                                    ]}>
+
+                                                <Input 
+                                                    className="default-input" 
                                                     onChange={(e)=> setRequest(
                                                         {...request , address : e.target.value}
                                                     )} 
                                                     type="text" 
                                                     class="default-input"
                                                     placeholder="" 
-                                                 />
+                                                />
+
+                                                 </Form.Item>
                                             </div>
                                         </div>
 
-                                        <div className={classnames("col-md-6", {
-                                                "d-none": (!point?.latitude && !point?.longitude),
-                                                })} >
-                                            <div class="input-group">
-                                                <label class="default-lable">عرض جغرافیایی</label>
-
-                                                <input  
-                                                    type="text" 
-                                                    readOnly
-                                                    class="default-input"
-                                                    placeholder="" 
-                                                    value={point?.latitude}
-                                                     />
-                                            </div>
-                                        </div>
-
-
-                                        <div className={classnames("col-md-6", {
-                                                "d-none": (!point?.latitude && !point?.longitude),
-                                                })}>
-                                            <div class="input-group">
-                                                <label class="default-lable">طول جغرافیایی</label>
-
-                                                <input  
-                                                    type="text" 
-                                                    readOnly
-                                                    class="default-input"
-                                                    placeholder="" 
-                                                    value={point?.longitude}
-                                                     />
-                                            </div>
-                                        </div>
+                                        
 
                                     </div>
 
@@ -473,31 +346,189 @@ return (
 
 
                                     <div className="col">
-                                            <MapSelector setPoint={setPoint}/>
+
+                                            <div className="d-block d-md-flex justify-content-md-between">
+                                                <div 
+                                                    className="col-md-5 ml-md-4"
+                                                    >
+                                                    <div class="input-group mb-0">
+                                                        <label class="default-lable">عرض جغرافیایی</label>
+
+                                                        <Form.Item
+                                                            className="w-100"
+                                                            name="longitude"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "عرض جغرافیایی انتخاب نشده!",
+                                                                },
+                                                            ]}>
+                                                        <Input  
+                                                            className="default-input"
+                                                            type="text" 
+                                                            readOnly
+                                                            class="default-input"
+                                                            placeholder="" 
+                                                            // value={request?.longitude ? request?.longitude : ''}
+                                                            />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+
+                                                <div 
+                                                    className="col-md-5">
+                                                    <div class="input-group mb-0">
+                                                        <label class="default-lable">طول جغرافیایی</label>
+                                                            <Form.Item
+                                                                className="w-100"
+                                                                name="latitude"
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "طول جغرافیایی وارد نشده است!",
+                                                                    },
+                                                                ]}>
+                                                            <Input
+                                                            
+                                                                className="default-input"
+                                                                type="text" 
+                                                                readOnly
+                                                                class="default-input"
+                                                                placeholder="" 
+                                                                // value={request?.latitude ? request?.latitude : ''}
+                                                                
+                                                            />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <MapSelector point={point} setPoint={setPoint}/>
                                     </div>
 
                                     <div className="d-block my-4">
-                                        <label className="default-lable mx-3"> بارگذاری عکس </label>
+
+                                        <div className="d-flex my-4 pb-3 border-bottom">
+                                            <p className="mb-0">لطفا عکس گالری خود را بارگذاری کنید</p>
+
+                                        </div>
+
+
+                                        <Alert className={classnames("", {
+                                            "d-none": url_image ,
+                                        })}  message="شما باید یک عکس بارگذاری کنید!" type="error" showIcon />                                        
+                                        <div className="d-flex mt-4">
+                                        <label className="default-lable mx-3 "> بارگذاری عکس </label>
+                                        <Form.Item
+                                            name="upload-image"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: "عکس بارگذاری نشده است!",
+                                                },
+                                           
+                                            ]}
+                                        >
                                         <Upload 
-                                            
-                                            onChange = {handleSetNameImage}
+                                   
+                                            onRemove={()=>setUrl_image('')}
                                             maxCount={1}
-                                            onClick = {handleRequestImage} >
-                                                
+                                            customRequest = {
+                                                async(e)  => {
+                                                    const {file ,onSuccess , onError} = e;
+
+                                                 
+                                                        await axios.post(`${BASE_URL}${PRE_UPLOAD}` , {"content_type": "image"})
+                                                        .then(res => {
+
+                                                            onSuccess({'status' : 'success'})
+                                                            setUrl_image_Key(res.data.data.result.file_key);
+                                                            setRequest({...request , media_name_image : file?.name }); 
+                                                                
+                                                            if(res.data.data.result.upload_url && file?.type.split('/')[0] === 'image'){
+
+                                                                UploadAxios.put(res.data.data.result.upload_url , file)
+                                                                .then(res => {
+                                                                    setUrl_image(res.config.url)    
+                                                                }).catch(err => {
+                                                                    console.error(err)
+                                                                })
+
+                                                            }else{
+                                                                setUrl_image('')
+                                                            }
+    
+                                                        }).catch(err => {
+                                                            console.error(err)
+                                                            onError({'status' : 'error'})
+                                                        })
+                                             
+                                        
+                                                }
+                                            }
+                                            >
                                             <Button 
                                              icon={<UploadOutlined />}></Button>
                                         </Upload>
+                                    </Form.Item>  
+                                        </div>
+
                                     </div>
 
                                     <div className="d-block my-4">
+
+                                    <div className="d-flex my-4 pb-3 border-bottom">
+                                            <p className="mb-0">لطفا فایل مدارک مربوطه خود را بارگذاری کنید</p>
+                                        </div>
+
+                                       <div className="d-flex">
                                         <label className="default-lable mx-3"> بارگذاری فایل </label>
+                                       <Form.Item
+                                            name="upload-file"
+                                            rules={[
+                                                {
+                                                    required: false,
+                                                    message: "!",
+                                                },
+                                            ]}
+                                        >
                                         <Upload
-                                            onChange = {handleSetNameFile}
+                                            onRemove={()=>setUrl_file('') }
                                             maxCount={1} 
-                                            onClick = {handleRequestFile} 
+                                            customRequest = {
+                                                async(e)  => {
+                                                    const {file ,onSuccess , onError} = e;
+                                                    await axios.post(`${BASE_URL}${PRE_UPLOAD}` , {"content_type": "image"})
+                                                    .then(res => {
+                                                        onSuccess({'status' : 'success'})
+                                                        
+                                                        setRequest({...request , media_name_file : file?.name }); 
+
+                                                        setUrl_file_Key(res.data.data.result.file_key);
+                                                        if(res.data.data.result.upload_url){
+                                                            UploadAxios.put(res.data.data.result.upload_url)
+                                                            .then(res => {
+                                                                setUrl_file(res.config.url);
+                                                            }).catch(err => {
+                                                                console.error(err)
+                                                            })
+                                                        }
+                                                        
+                                             
+                                                    }).catch(err => {
+                                                        console.error(err)
+                                                        onError(err)
+                                                    })
+
+                                          
+
+                                                }
+                                            }
                                         >
                                             <Button   icon={<UploadOutlined />}></Button>
                                         </Upload>
+                                        </Form.Item>
+                                       </div>
                                     </div>
 
 
@@ -506,49 +537,81 @@ return (
                                                 <div className="col-md-6">
                                                     <div className="input-group">
                                                         <label className="default-lable">لینک تلگرام</label>
-                                                        <input  
-                                                            onChange={(e)=>setRequest(
-                                                                {...request , link_telegram : e.target.value}
-                                                            )} 
+                                                        <Form.Item
+                                                            className="w-100"
+                                                            name="link_telegram"
+                                                            rules={[
+                                                                {
+                                                                    required: false,
+                                                                    message: "",
+                                                                },
+                                                            ]}
+                                                        >
+                                                        <Input  
+                                               
                                                             type="text" 
-                                                            // maxlength ={5}
-                                                            class="default-input"
+                                                            className="default-input"
                                                             placeholder="" 
-                                                            // value="+98 912 506 3365"
+                                                            onChange={(e)=> 
+                                                                setRequest(
+                                                                {...request , link_telegram : e.target.value}
+                                                            )}
                                                             />
+                                                    </Form.Item>
                                                     </div>
                                                 </div>
 
                                                 <div className="col-md-6">
                                                     <div className="input-group">
                                                         <label className="default-lable">لینک اینستاگرام</label>
-
-                                                        <input  
-                                                            onChange={(e)=> setRequest(
-                                                                {...request , link_instagram : e.target.value}
-                                                            )} 
+                                                        <Form.Item
+                                                            className="w-100"
+                                                            name="link_instagram"
+                                                            rules={[
+                                                                {
+                                                                    required: false,
+                                                                    message: "",
+                                                                },
+                                                            ]}
+                                                        >
+                                                        <Input   
                                                             type="text" 
-                                                            // maxlength ={5}
-                                                            class="default-input"
+                                                            className="default-input"
                                                             placeholder="" 
-                                                            // value="+98 912 506 3365"
+                                                            onChange={(e)=> 
+                                                                setRequest(
+                                                                {...request , link_instagram : e.target.value}
+                                                            )}
+
+                                                             
+  
                                                             />
+                                                        </Form.Item>
                                                     </div>
                                                 </div>
 
                                                 <div className="col-md-6">
                                                     <div className="input-group">
                                                         <label className="default-lable">لینک فیسبوک</label>
-                                                        <input  
-                                                            onChange={(e)=>setRequest(
-                                                                {...request , link_facebook : e.target.value}
-                                                            )} 
+                                                        <Form.Item
+                                                            className="w-100"
+                                                            name="link_facebook"
+                                                            rules={[
+                                                                {
+                                                                    required: false,
+                                                                    message: "",
+                                                                },
+                                                            ]}
+                                                        >
+                                                        <Input   
                                                             type="text" 
-                                                            // maxlength ={5}
-                                                            class="default-input"
+                                                            className="default-input"
                                                             placeholder="" 
-                                                            // value="+98 912 506 3365"
+                                                            onChange={(e)=> setRequest({
+                                                                ...request , link_facebook : e.target.value
+                                                            })}
                                                             />
+                                                        </Form.Item>
                                                     </div>
                                                 </div>
                                             </Panel>    
@@ -556,7 +619,19 @@ return (
 
                                     <div class="row">
                                         <div class="col-12 button-group">
-                                            <button onClick={handleSubmit} type="submit" class="btn-default">ثبت</button>
+                                            <button 
+                                                htmlType="submit"
+                                                disabled={
+                                                    !url_image   ||
+                                                    !request?.home_auction_name ||
+                                                    !request?.activity_type?.length ||
+                                                    !request?.home_auction_type ||
+                                                    !request?.address ||
+                                                    !request?.phone ||
+                                                    !point?.longitude ||
+                                                    !point?.latitude
+                                                } 
+                                                class="btn-default">ثبت</button>
                                         </div>
                                     </div>
                                 </div>
@@ -566,6 +641,7 @@ return (
                     </div>
                 </div>
             </div>
+            </Form>
         </main>
         
     </React.Fragment>
