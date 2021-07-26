@@ -127,61 +127,59 @@ function AuctionsList() {
                         </Link>
                         {/*<button type="button" className="btn btn-outline-pink" style={{marginRight:5}}>بارگزاری تفاهم‌نامه*/}
                         {/*</button>*/}
-                        <Spin spinning={loading}>
-                            <div className="col-xxxxl-8 mrgt30">
-                                <div className="table-responsive">
-                                    <table className="panel-table create-auctions table ">
-                                        <thead>
-                                        <tr>
-                                            <td>نام حراج</td>
-                                            <td>نوع</td>
-                                            <td>تاریخ شروع</td>
-                                            <td>تاریخ پایان</td>
-                                            <td>آثار</td>
-                                            <td>پیشنهادات</td>
-                                            <td>درخواست عضویت</td>
-                                            <td className="text-center">نمایش درسایت</td>
-                                            <td>عملیات</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {(Auctions && Auctions.length >= 1) ? Auctions.map((item, key) => {
-                                            return (
-                                                <tr key={key}>
-                                                    <td>{item.title}</td>
-                                                    <td>{AuctionType(item.type)}</td>
-                                                    <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
-                                                    <td>{item.end_time !== "None" ? moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY') : ""}</td>
+                        <Spin spinning={loading} >
+                        <div className="col-xxxxl-8 mrgt30">
+                            <div className="table-responsive">
+                                <table className="panel-table create-auctions table ">
+                                    <thead>
+                                    <tr>
+                                        <td>نام حراج</td>
+                                        <td>نوع</td>
+                                        <td>تاریخ شروع</td>
+                                        <td>تاریخ پایان</td>
+                                        <td>آثار</td>
+                                        <td>پیشنهادات</td>
+                                        <td>درخواست عضویت</td>
+                                        <td className="text-center">نمایش درسایت </td>
+                                        <td>عملیات</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {(Auctions && Auctions.length >= 1) ? Auctions.map((item, key) => {
+                                        return (
+                                            <tr key={key}>
+                                                <td>{item.title}</td>
+                                                <td>{AuctionType(item.type)}</td>
+                                                <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
+                                                <td>{item.end_time !== "None" ? moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY') : ""}</td>
 
-                                                    <td>
-                                                        {item.product?.length > 0 ?
+                                                <td>
+                                                    {item.product_count > 0 ?
+                                                        <button type="button" className="btn-outline-gray">
+                                                            {item.product_count} اثر
+                                                        </button> :
+                                                        <Link to="/add-artworks">
                                                             <button type="button" className="btn-outline-gray">
-                                                                {item.product.length} اثر
-                                                            </button> :
-                                                            <Link to="/add-artworks">
-                                                                <button type="button" className="btn-outline-gray">
-                                                                    افزودن اثر
-                                                                </button>
-                                                            </Link>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        {item?.status === "CLOSED" ?
-                                                            <Link to={"/auctions-list/bids/" + item.id}>
-                                                                <button type="button" className="btn-outline-gray">
-                                                                    3 پیشنهاد
-                                                                </button>
-                                                            </Link> : ''}
-                                                    </td>
-                                                    <td>
-                                                        {item?.status === "ENROLLMENT" ?
-                                                            <Link to={"/auctions-list/requests/" + item.id}>
-                                                                <button type="button" className="btn-outline-gray">
-                                                                    8 درخواست
-                                                                </button>
-                                                            </Link> : ''}
-                                                    </td>
-                                                    <td className="text-center">
+                                                                افزودن اثر
+                                                            </button>
+                                                        </Link>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    {item?.status=== "CLOSED" ? <Link to={"/auctions-list/bids/" + item.id}>
+                                                        <button type="button" className="btn-outline-gray">
+                                                            {item.bids_count} پیشنهاد
+                                                        </button>
+                                                    </Link>:''}
+                                                </td>
+                                                <td>
+                                                    <Link to={"/auctions-list/requests/" + item.id}>
+                                                        <button type="button" className="btn-outline-gray">
+                                                            {item.registrations_count} درخواست
+                                                        </button>
+                                                    </Link>
+                                                </td>
+                                                <td className="text-center">
                                                         <input className="form-check-input" type="checkbox"
                                                                checked={false}
                                                                onChange={(e) => {

@@ -1,10 +1,11 @@
 import React from "react";
-
 import logo from "../../images/logo.svg";
 import search from "../../images/search.svg";
 import auction from "../../images/auction.svg";
+import house from "../../images/location-icon.svg";
 import help from "../../images/help.svg";
 import login from "../../images/login.svg";
+import artwork from "../../images/artist-icon.svg";
 import Search from "./Search";
 import {connect, useDispatch} from 'react-redux';
 import {clearStorage} from '../../redux/reducers/auth/auth.actions'
@@ -70,7 +71,7 @@ const handleRedirect = () => {
                     </Link>
                     <Search />
                   </li>
-                  <li className="nav-item ps-5">
+                  <li className="nav-item ps-2">
                     <Link className="nav-link" to="/auctions/">
                       <img
                         src={auction}
@@ -81,7 +82,29 @@ const handleRedirect = () => {
                       حراج‌ها
                     </Link>
                   </li>
-                  <li className="nav-item ps-5">
+                  <li className="nav-item ps-2">
+                    <Link className="nav-link" to="/artworks/">
+                      <img
+                        src={artwork}
+                        width="16"
+                        height="16"
+                        alt="auctions"
+                      />
+                      آثار
+                    </Link>
+                  </li>
+                  <li className="nav-item ps-2">
+                    <Link className="nav-link" to="/house-acutions/">
+                      <img
+                        src={house}
+                        width="16"
+                        height="16"
+                        alt="auctions"
+                      />
+                      خانه‌های حراج
+                    </Link>
+                  </li>
+                  <li className="nav-item ps-2">
                     <Link className="nav-link" to="/" data-target="nav-help">
                       <img src={help} width="16" height="16" alt="auctions" />
                       راهنما

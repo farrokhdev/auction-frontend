@@ -59,12 +59,12 @@ function Sidebar({handleSearchProducts , handleSetCategory , params , handleSetT
         <button type="button" className="btn-getclose d-block d-lg-none"></button>
         <div className="left-side">
           <div className="result-box">
-            <div className="result-title">
-              <h6 className="default">نتایج :</h6>
-              <button onClick={(e)=> window.location.reload()} type="button" className="btn-removeall">
-                پاک کردن همه
-              </button>
-            </div>
+            {/*<div className="result-title">*/}
+            {/*  <h6 className="default">نتایج :</h6>*/}
+            {/*  <button onClick={(e)=> window.location.reload()} type="button" className="btn-removeall">*/}
+            {/*    پاک کردن همه*/}
+            {/*  </button>*/}
+            {/*</div>*/}
             <div className="tags-box" >
               
             {/* {filters.length >=1 ? filters.map((filter , index) => (
