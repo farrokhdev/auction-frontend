@@ -175,7 +175,7 @@ function EditPanelProfile(props) {
                                         },
                                     ]}
                                 >
-                                    <input type="number" className="default-input"
+                                    <Input type="number" className="default-input"
                                            placeholder="کد پستی خود را وارد نمایید."/>
                                 </Form.Item>
                             </div>

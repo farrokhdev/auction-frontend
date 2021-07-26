@@ -8,10 +8,11 @@ import moment from 'jalali-moment'
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
 import {Link} from "react-router-dom";
-import {Modal, Button, Space, Spin} from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {Modal, Button, Space, Spin, message} from 'antd';
+import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
+import {DELETE_AUCTION} from "../../utils/constant";
 
 function AuctionsList() {
 
@@ -20,18 +21,36 @@ function AuctionsList() {
     const [bidsCount, setBidsCount] = useState(0);
     const [bids, setBids] = useState("");
     const [loading, setLoading] = useState(false);
-    const { confirm } = Modal;
+    const {confirm} = Modal;
     const dispatch = useDispatch();
-    function showDeleteConfirm() {
+
+    function showDeleteConfirm(id) {
+
         confirm({
             title: 'آیا قصد حذف کردن این حراجی را دارید؟',
-            icon: <ExclamationCircleOutlined />,
+            icon: <ExclamationCircleOutlined/>,
             content: '',
             okText: 'بله',
             okType: 'danger',
             cancelText: 'خیر',
             onOk() {
-                console.log('OK');
+                setLoading(true)
+                axios.delete(`${BASE_URL}${DELETE_AUCTION(id)}`)
+                    .then(resp => {
+                        setLoading(false)
+                        message.success("حذف حراجی با موفقیت انجام شد")
+                        getProducts()
+                    })
+                    .catch(err => {
+                        setLoading(false)
+                        console.error(err);
+                        if (err?.response?.data?.message)
+                            message.error(err.response.data.message)
+                        else if (err?.response?.data?.data?.result)
+                            message.error(err.response.data.message)
+                        else
+                            message.error("دوباره تلاش کنید")
+                    })
             },
             onCancel() {
                 console.log('Cancel');
@@ -101,8 +120,8 @@ function AuctionsList() {
                 {/**Main**/}
                 <div className="panel-body">
                     <div className="panel-container">
-                        <Link to="/panel-add-auction/new" onClick={()=>dispatch(removeAUCTION())}>
-                            <button type="button" className="btn btn-default" ><FontAwesomeIcon className="pl-2"
+                        <Link to="/panel-add-auction/new" onClick={() => dispatch(removeAUCTION())}>
+                            <button type="button" className="btn btn-default"><FontAwesomeIcon className="pl-2"
                                                                                                icon={faPlus}/> حراج جدید
                             </button>
                         </Link>
@@ -167,23 +186,25 @@ function AuctionsList() {
                                                                    // dispatch(setAUCTION({extendable_deadline:e.target.checked}))
                                                                }}
                                                                id="checkbox413"/>
-                                                </td>
-                                                <td>
-                                                    <Link onClick={()=>dispatch(removeAUCTION())} to={`/panel-add-auction/${item.id}`} type="button">
-                                                        <FontAwesomeIcon icon={faPen}/>
-                                                    </Link>
-                                                    <button type="button" onClick={showDeleteConfirm}>
-                                                        <FontAwesomeIcon icon={faTimes}/>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    }) : ""}
-                                    </tbody>
-                                </table>
-                            </div>
+                                                    </td>
+                                                    <td>
+                                                        <Link onClick={() => dispatch(removeAUCTION())}
+                                                              to={`/panel-add-auction/${item.id}`} type="button">
+                                                            <FontAwesomeIcon icon={faPen}/>
+                                                        </Link>
+                                                        <button type="button"
+                                                                onClick={() => showDeleteConfirm(item.id)}>
+                                                            <FontAwesomeIcon icon={faTimes}/>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }) : ""}
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                        </div>
+                            </div>
                         </Spin>
                     </div>
                 </div>

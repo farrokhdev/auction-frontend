@@ -5,9 +5,7 @@ import typesAll from "../all/all.types";
 const initial_state = {
     pending: false,
     error: null,
-    data: {
-        "currency": "toman"
-    },
+    "currency": "toman",
     products: {},
     productsArrayDate: [],
     productsDate: {},

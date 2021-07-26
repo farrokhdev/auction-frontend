@@ -12,6 +12,7 @@ export const registerStart = () => (
     }
 )
 export const refreshToken = () => async dispatch => {
+
     let refresh = getRefreshToken()
     if (refresh)
         axios.post(`${BASE_URL}${REFRESH_TOKEN}`, {refresh})
@@ -23,7 +24,12 @@ export const refreshToken = () => async dispatch => {
             dispatch(clearStorageAll())
             window.location.href = "#/"
         })
-    return;
+    else {
+        dispatch(clearStorageAll())
+        window.location.href = "#/"
+    }
+
+
 }
 
 export const registerSuccess = (data) => (

@@ -16,7 +16,7 @@ const Products = (props) => {
     const [productsList, setProductsList] = useState([])
     // const [data, setData] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const {data, products} = useSelector((state) => state.auctionReducer)
+    const {type, products} = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
     return (
@@ -87,7 +87,7 @@ const Products = (props) => {
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <input type="number" className="default-input"
                                                            defaultValue={products[item]?.base_price}
-                                                           placeholder={data.type === "PERIODIC" ? "قیمت پایه ..." : "کمترین قیمت ..."}
+                                                           placeholder={type === "PERIODIC" ? "قیمت پایه ..." : "کمترین قیمت ..."}
                                                            onChange={e => {
                                                                let val = e.target.value
                                                                if ((val.length > 4) || (val === "")) {
@@ -98,7 +98,7 @@ const Products = (props) => {
 
                                                            }}
                                                     /><small className="pe-2">تومان</small></div>
-                                                {data.type === "PERIODIC" ?<div className="pt-2">
+                                                {type === "PERIODIC" ?<div className="pt-2">
                                                     <div
                                                         className="d-flex align-items-center justify-content-between ">
                                                         <input type="number" className="default-input"

@@ -19,7 +19,7 @@ export const AddProduct = (props) => {
     const {id, date, number} = props;
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [products, setProducts] = useState([])
-    const {data, productsDate, productsArrayDate} = useSelector((state) => state.auctionReducer)
+    const {productsDate, productsArrayDate} = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
     return <>
         <Button className="add-row mb-0" onClick={() => setIsModalVisible(true)}><FontAwesomeIcon className="ms-1"
@@ -60,22 +60,22 @@ export const AddProduct = (props) => {
 const Products = (props) => {
     const {selectComponent, setSelectComponent, id} = props;
     const [loading, setLoading] = useState(false)
-    const {data, productsDate, productsArrayDate} = useSelector((state) => state.auctionReducer)
+    const { productsDate, productsArrayDate,start_time,end_time,type} = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
 
     useEffect(() => {
 
-        let start_time = moment(data?.start_time).format("jYYYY-jMM-jDD")
-        let end_time = moment(data?.end_time).format("jYYYY-jMM-jDD")
+        let start = moment(start_time).format("jYYYY-jMM-jDD")
+        let end = moment(end_time).format("jYYYY-jMM-jDD")
         let list_date = {}
         Object.keys(productsDate).map(t => {
-            if (t >= start_time && t <= end_time) {
+            if (t >= start && t <= end) {
                 list_date[t] = productsDate[t]
             }
         })
-        let this_date = start_time
-        console.log(start_time, end_time,list_date)
-        for (this_date; this_date <= end_time;) {
+        let this_date = start
+        console.log(start, end,list_date)
+        for (this_date; this_date <= end;) {
             if (!productsDate?.[this_date]) {
                 console.log('---now', productsDate?.[this_date])
                 list_date[this_date] = {}
@@ -155,7 +155,7 @@ const Products = (props) => {
                                                                            }
                                                                        }}
                                                                 /><small className="pe-2">تومان</small></div>
-                                                            {data.type === "PERIODIC" ? <div className="pt-2">
+                                                            {type === "PERIODIC" ? <div className="pt-2">
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-between ">
                                                                     <input type="number" className="default-input"
