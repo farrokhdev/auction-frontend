@@ -182,10 +182,11 @@ function Index() {
             })
                 .then(resp => {
                     setLoading(false)
-                    if (resp.data.code === 201) {
+                    if (resp.data.code === 200) {
                         message.success("اطلاعات حساب شما با موفقیت ثبت شد")
-                        dispatch(removeAUCTION())
                         setNext(true)
+                        dispatch(removeAUCTION())
+
 
                     } else {
                         console.log(resp)
@@ -215,8 +216,9 @@ function Index() {
                     setLoading(false)
                     if (resp.data.code === 201) {
                         message.success("اطلاعات حساب شما با موفقیت ثبت شد")
-                        dispatch(removeAUCTION())
                         setNext(true)
+                        dispatch(removeAUCTION())
+
 
                     } else {
                         console.log(resp)
