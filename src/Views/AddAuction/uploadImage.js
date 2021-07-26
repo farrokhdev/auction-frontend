@@ -50,7 +50,6 @@ const UploadImage = (props) => {
             .catch(err => {
                 console.log("Error Message", err.response);
             })
-
     }
     return (
         <>
