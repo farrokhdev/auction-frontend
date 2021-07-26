@@ -135,9 +135,9 @@ function AuctionsList() {
                                                 <td>{item.end_time !== "None" ? moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY') : ""}</td>
 
                                                 <td>
-                                                    {item.product.length > 0 ?
+                                                    {item.product_count > 0 ?
                                                         <button type="button" className="btn-outline-gray">
-                                                            {item.product.length} اثر
+                                                            {item.product_count} اثر
                                                         </button> :
                                                         <Link to="/add-artworks">
                                                             <button type="button" className="btn-outline-gray">
@@ -149,14 +149,14 @@ function AuctionsList() {
                                                 <td>
                                                     {item?.status=== "CLOSED" ? <Link to={"/auctions-list/bids/" + item.id}>
                                                         <button type="button" className="btn-outline-gray">
-                                                            3 پیشنهاد
+                                                            {item.bids_count} پیشنهاد
                                                         </button>
                                                     </Link>:''}
                                                 </td>
                                                 <td>
                                                     <Link to={"/auctions-list/requests/" + item.id}>
                                                         <button type="button" className="btn-outline-gray">
-                                                            8 درخواست
+                                                            {item.registrations_count} درخواست
                                                         </button>
                                                     </Link>
                                                 </td>

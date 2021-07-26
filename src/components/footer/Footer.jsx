@@ -23,19 +23,19 @@ export default function Footer() {
             <div className="col-lg-8 col-md-10 col-sm-9 pb-5">
               <ul className="simple-menu">
                 <li>
-                  <Link to="/">شرایط استفاده</Link>
+                  <Link>شرایط استفاده</Link>
                 </li>
                 <li>
-                  <Link to="/">حریم خصوصی</Link>
+                  <Link>حریم خصوصی</Link>
                 </li>
                 <li>
-                  <Link to="/">همکاری با ما</Link>
+                  <Link>همکاری با ما</Link>
                 </li>
                 <li>
-                  <Link to="/">سوالات متداول</Link>
+                  <Link>سوالات متداول</Link>
                 </li>
                 <li>
-                  <Link to="/">تماس با ما</Link>
+                  <Link>تماس با ما</Link>
                 </li>
               </ul>
             </div>

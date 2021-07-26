@@ -46,6 +46,31 @@ function AfterLoginPage() {
             })
     }
 
+    const addBookmark = (data, action) => {
+        if (action){
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getData()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/` , {
+                "content_type": "product",
+                "object_id": data,
+                "activity_type": "mark"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getData()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
+
     useEffect(() => {
         getData()
 
@@ -206,7 +231,6 @@ function AfterLoginPage() {
 
 
                     <div className="row">
-                        <h2> Multiple items </h2>
                         <div className="col-md-3 col-sm-12">
                             <div className="main-title">
                                 <h2 className="default titr">آخرین آثار حراج</h2>
@@ -217,13 +241,20 @@ function AfterLoginPage() {
                             {lastProducts ? lastProducts.map((item, key) => {
                                 return (
                                     <div className=" w-75" key={key}>
-                                        <Link to={`/artworks/${item.id}`} className="artwork-block ">
                                             <div className="artwork-img">
+                                                <Link to={`/artworks/${item.id}`} className="artwork-block ">
                                                 <img src={item.media.exact_url} width="998" height="880" alt=""
                                                      className="img-fluid"/>
+                                                </Link>
                                                 <div className="artwork-category">
-                                                    <FontAwesomeIcon icon={faBookmark}/>
-                                                    {/* <span class="category-save artwork-bookmark"></span> */}
+                                                    {/*<FontAwesomeIcon icon={faBookmark}/>*/}
+                                                    <span onClick={() =>
+                                                        addBookmark(
+                                                            item?.following?.bookmark?.is_active?
+                                                                item?.following?.bookmark?.id :
+                                                                item?.id, item?.following?.bookmark?.is_active)
+                                                    }
+                                                          className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")}/>
                                                     {convertToEn(item.latest_auction.type)}
                                                 </div>
                                             </div>
@@ -232,11 +263,11 @@ function AfterLoginPage() {
                                                 <h4 className="default">از {item.latest_auction.title}</h4>
                                                 <div className="auction-calender">
                                                     <div className="auction-date">
-                                                        <span className="start-date">7 خرداد</span>
-                                                        <span className="end-date">9 خرداد</span>
+                                                        <span className="start-date"> {item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}</span>
+                                                        <span className="end-date">{item?.latest_auction?.end_time ? moment(item?.latest_auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}</span>
                                                     </div>
                                                     <div className="auction-time">
-                                                        <span className="start-time">10</span>
+                                                        <span className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('HH') : ""}</span>
                                                     </div>
                                                 </div>
                                                 <div className="price-block">
@@ -245,7 +276,6 @@ function AfterLoginPage() {
                                                         className="price-unit">تومان</span></span>
                                                 </div>
                                             </div>
-                                        </Link>
                                     </div>
                                 )
                             }) : ""}
@@ -271,8 +301,10 @@ function AfterLoginPage() {
                                         <div className="col-xl-4 col-lg-4 col-sm-5">
                                             <div className="bg-shadow tl-shadow20">
                                                 <div className="artwork-img">
+                                                    <Link to={`/one-auction/${item.id}`} className="artwork-block ">
                                                     <img src={pic4} width="570" height="470" alt=""
                                                          className="img-fluid"/>
+                                                    </Link>
                                                     <div className="auction-category">
                                                         <span className="category-save auction-reminder"></span>
                                                         {convertToEn(item.type)}
