@@ -1891,10 +1891,10 @@ address .province {
   position: relative;
 }
 
-.ah-block img {
-  border: 1px solid var(--gray95);
-  background: var(--bs-white);
-}
+//.ah-block img {
+//  border: 1px solid var(--gray95);
+//  background: var(--bs-white);
+//}
 
 .bg-shadow.tl-shadow10 {
   width: calc(100% - 10px);
@@ -2021,6 +2021,10 @@ p a {
   color: var(--bs-white) !important;
   border-radius: 20px !important;
   font-size: 13px !important;
+}
+
+.btn-default:disabled{
+  background: grey !important;
 }
 
 .login-block .btn-container {
@@ -6542,5 +6546,9 @@ address.all-info:before {
 
   .ant-upload-list-item-error, .ant-upload-list-item-error .ant-upload-text-icon > .anticon, .ant-upload-list-item-error .ant-upload-list-item-name {
     color: #0d6efd !important;
+}
+
+.ant-alert-message{
+  color: #ff4d4f !important;
 }
 
