@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import moment from 'moment-jalaali'
 import {useDispatch, useSelector} from "react-redux";
 import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
+import UploadImage from "./uploadImage";
 
 const listAuctionType = [
     {name: "SECOND_HIDDEN", value: "دومین قیمت پیشنهاد با حراج (مخفی)"},
@@ -22,8 +23,10 @@ const BaseInformation = (props) => {
     // const [data, setData] = useState({})
     const [type, setType] = useState("")
 
+
     const {has_gallery} = useSelector((state) => state.auctionReducer)
     const finalData = useSelector((state) => state.auctionReducer)
+    const [media, setMedia] = useState( null)
     const [today, setToday] = useState(finalData?.start_time || moment())
     const [todayGallery, setTodayGallery] = useState(finalData?.gallery_start_date || moment())
     const dispatch = useDispatch();
@@ -34,7 +37,7 @@ const BaseInformation = (props) => {
         finalData?.end_time && (listDate["end_time"] = moment(finalData?.end_time))
         finalData?.gallery_end_date && (listDate["gallery_end_date"] = moment(finalData?.gallery_end_date))
         finalData?.type && (setType(finalData?.type))
-        console.log(listDate)
+        setMedia(finalData?.media || null)
         form.setFieldsValue({
             ...listDate,
             title: finalData?.title,
@@ -48,15 +51,21 @@ const BaseInformation = (props) => {
     const onFinish = (values) => {
         // console.log(values)
         // setFinalData({...finalData, ...values})
-        dispatch(setAUCTION({...values}))
+        dispatch(setAUCTION({...values, media}))
         setSelectComponent(selectComponent + 1)
     }
     const handleDateChange = () => {
         // dispatch(setAUCTION({  productsArrayDate: [],
         //     productsDate: {}}))
     }
+    const handleResultUpload = (value) => {
+        if (value?.media_path)
+            setMedia(value)
+        // dispatch(setAUCTION({media:value}))
+    }
     return (
         <>
+
             <Form onFinish={onFinish}
                   form={form}
                   wrapperCol={{span: 24}}>
@@ -95,6 +104,7 @@ const BaseInformation = (props) => {
                                 </div>
                             </div>
                         </div>
+
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="input-group">
@@ -114,6 +124,9 @@ const BaseInformation = (props) => {
 
                                 </div>
                             </div>
+                        </div>
+                        <div className="row mb-5">
+                            <UploadImage handleResultUpload={handleResultUpload} initialImage={media}/>
                         </div>
                         <div className="row">
                             <div className="col-md-6">

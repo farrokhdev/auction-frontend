@@ -139,7 +139,7 @@ function Index() {
             delete allData["gallery_end_date"]
         }
         if( !allDataMain?.address){
-            delete allData?.address
+            delete allDataMain?.address
         }
         setLoading(true)
         allData["start_time"] = await moment(allDataMain.start_time).format("YYYY-MM-DD hh:mm:ss")
