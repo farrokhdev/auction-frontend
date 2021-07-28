@@ -87,3 +87,22 @@
    font-size: 14px ;
  }
 }
+.ant-picker-content{
+  flex-direction: row-reverse;
+}
+.custom-timePicker{
+.ant-picker-input{
+  padding: 4px;
+}}
+.custom-timePicker.ant-picker{
+
+  background: var(--bgcolor);
+
+}
+.ant-picker-ok{
+  button{
+    background: #e6007e !important;
+    color:#fff;
+    border-radius: 100px;
+  }
+}

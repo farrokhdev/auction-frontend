@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, Select, Spin} from "antd";
+import {Button, Form, Input, message, Modal, Select, Spin, TimePicker} from "antd";
 import DatePicker from 'react-datepicker2';
 import {Link} from "react-router-dom";
 import moment from 'moment-jalaali'
 import {useDispatch, useSelector} from "react-redux";
 import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
 import UploadImage from "./uploadImage";
-
+import locale from "antd/es/date-picker/locale/de_DE";
 const listAuctionType = [
     {name: "SECOND_HIDDEN", value: "دومین قیمت پیشنهاد با حراج (مخفی)"},
     {name: "HIDDEN", value: "قیمت پیشنهاد با حراج (مخفی)"},
@@ -38,12 +38,17 @@ const BaseInformation = (props) => {
         finalData?.gallery_end_date && (listDate["gallery_end_date"] = moment(finalData?.gallery_end_date))
         finalData?.type && (setType(finalData?.type))
         setMedia(finalData?.media || null)
+
         form.setFieldsValue({
             ...listDate,
             title: finalData?.title,
             type: finalData?.type,
             description: finalData?.description,
             address: finalData?.address,
+            start_clock: finalData?.start_clock,
+            end_clock: finalData?.end_clock,
+            gallery_start_clock: finalData?.gallery_start_clock,
+            gallery_end_clock: finalData?.gallery_end_clock,
 
         })
     }, [finalData])
@@ -51,8 +56,13 @@ const BaseInformation = (props) => {
     const onFinish = (values) => {
         // console.log(values)
         // setFinalData({...finalData, ...values})
-        dispatch(setAUCTION({...values, media}))
-        setSelectComponent(selectComponent + 1)
+        if(media){
+            dispatch(setAUCTION({...values, media}))
+            setSelectComponent(selectComponent + 1)
+        }else{
+            message.error("آپلود تصویر آکشن اجباری می باشد")
+        }
+
     }
     const handleDateChange = () => {
         // dispatch(setAUCTION({  productsArrayDate: [],
@@ -170,6 +180,7 @@ const BaseInformation = (props) => {
                                                 <DatePicker
                                                     className="default-input pr-2 mt-2"
                                                     // value={this.state.date}
+                                                    // setTodayOnBlur={false}
                                                     timePicker={false}
                                                     isGregorian={false}
                                                     onChange={(value) => {
@@ -185,12 +196,37 @@ const BaseInformation = (props) => {
                                             </Form.Item>
                                         </div>
                                     </div>
+                                    <div className="col-md-6">
+                                        <div className="input-group">
+                                            <label className="default-lable">ساعت شروع</label>
+                                            <Form.Item
+                                                className="w-100"
+                                                name="start_clock"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "تکمیل این فیلد ضروری است",
+                                                    },
+                                                ]}>
+                                                <TimePicker    locale={{
+                                                    ...locale,
+                                                    lang: {
+                                                        ...locale.lang,
+                                                        ok: "تایید",
+                                                    }
+                                                }}
+                                                               placeholder="00:00"
+                                                               format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
                                     {type !== 'LIVE' && <div className="col-md-6">
                                         <div className="input-group">
                                             <label className="default-lable">تاریخ پایان</label>
                                             <Form.Item
                                                 className="w-100"
                                                 name="end_time"
+
                                                 rules={[
                                                     {
                                                         required: true,
@@ -203,6 +239,7 @@ const BaseInformation = (props) => {
                                                 ]}>
                                                 <DatePicker
                                                     className="default-input pr-2 mt-2"
+                                                    // setTodayOnBlur={false}
                                                     // value={this.state.date}
                                                     timePicker={false}
                                                     isGregorian={false}
@@ -213,6 +250,31 @@ const BaseInformation = (props) => {
                                             </Form.Item>
                                         </div>
                                     </div>}
+
+                                    <div className="col-md-6">
+                                        <div className="input-group">
+                                            <label className="default-lable">ساعت پایان</label>
+                                            <Form.Item
+                                                className="w-100"
+                                                name="end_clock"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "تکمیل این فیلد ضروری است",
+                                                    },
+                                                ]}>
+                                                <TimePicker    locale={{
+                                                    ...locale,
+                                                    lang: {
+                                                        ...locale.lang,
+                                                        ok: "تایید",
+                                                    }
+                                                }}
+                                                               placeholder="00:00"
+                                                               format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
                                     {type === 'ONLINE' && <>
                                         <div className="col-md-6">
                                             <div className="input-group">
@@ -259,6 +321,30 @@ const BaseInformation = (props) => {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="input-group">
+                                                    <label className="default-lable">ساعت شروع نمایشگاه </label>
+                                                    <Form.Item
+                                                        className="w-100"
+                                                        name="gallery_start_clock"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "تکمیل این فیلد ضروری است",
+                                                            },
+                                                        ]}>
+                                                        <TimePicker    locale={{
+                                                            ...locale,
+                                                            lang: {
+                                                                ...locale.lang,
+                                                                ok: "تایید",
+                                                            }
+                                                        }}
+                                                                       placeholder="00:00"
+                                                                       format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="input-group">
                                                     <label className="default-lable">تاریخ پایان نمایشگاه</label>
                                                     <Form.Item
                                                         className="w-100"
@@ -282,6 +368,31 @@ const BaseInformation = (props) => {
                                                             // name="gallery_end_date"
                                                             id="gallery_end_date"
                                                         />
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-6">
+                                                <div className="input-group">
+                                                    <label className="default-lable">ساعت پایان نمایشگاه</label>
+                                                    <Form.Item
+                                                        className="w-100"
+                                                        name="gallery_end_clock"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "تکمیل این فیلد ضروری است",
+                                                            },
+                                                        ]}>
+                                                        <TimePicker    locale={{
+                                                            ...locale,
+                                                            lang: {
+                                                                ...locale.lang,
+                                                                ok: "تایید",
+                                                            }
+                                                        }}
+                                                                       placeholder="00:00"
+                                                                       format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
                                                     </Form.Item>
                                                 </div>
                                             </div>

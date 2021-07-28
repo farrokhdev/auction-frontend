@@ -1,6 +1,7 @@
 import types from './auction.types';
 import {removeToken, Token} from '../../../utils/utils'
 import typesAll from "../all/all.types";
+import moment from "moment-jalaali";
 
 const initial_state = {
     pending: false,
@@ -21,6 +22,11 @@ const initial_state = {
     other: false,
     is_send_invitation: false,
     has_gallery: false,
+    start_clock:moment("08:00","HH:mm"),
+    end_clock:moment("20:00","HH:mm"),
+    gallery_start_clock:moment("08:00","HH:mm"),
+    gallery_end_clock:moment("20:00","HH:mm"),
+
 }
 
 

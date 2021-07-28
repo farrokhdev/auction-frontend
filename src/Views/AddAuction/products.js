@@ -17,7 +17,7 @@ const Products = (props) => {
     const [loading, setLoading] = useState(false)
     const {type, choose_product_daily,productsArrayDate} = useSelector((state) => state.auctionReducer)
     const dispatch = useDispatch();
-    console.log(products)
+
     return (
         <div>
 
@@ -54,9 +54,9 @@ const Products = (props) => {
 
                         }
                         {((Object.keys(products)?.length && !choose_product_daily) || (productsArrayDate?.length && choose_product_daily))  ? <button type="button" className="btn-default" onClick={() => {
-                            if (type === "ONLINE" || type === "PERIODIC")
-                                setSelectComponent(selectComponent + 1)
-                            else
+                            // if (type === "ONLINE" || type === "PERIODIC")
+                            //     setSelectComponent(selectComponent + 1)
+                            // else
                                 setSelectComponent(selectComponent + 2)
                         }}> ثبت و ادامه</button> : ''}
                     </div>

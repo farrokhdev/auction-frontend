@@ -6,7 +6,7 @@ import BaseInformation from "./baseInformation";
 import EditPanelProfile from "../BuyerRegister/profile";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
-import {ADD_AUCTION, DETAIL_AUCTION,EDIT_AUCTION} from "../../utils/constant";
+import {ADD_AUCTION, DETAIL_AUCTION, EDIT_AUCTION} from "../../utils/constant";
 import {Button, message, Spin} from "antd";
 import Conditions from "./conditions";
 import Products from "./products";
@@ -77,20 +77,25 @@ function Index() {
                     let productsArrayDate = []
                     let productsDate = {}
                     let choose_product_daily = !!res?.dates_auction?.length;
-                    let gallery_start_date =res?.gallery_start_date ? res?.gallery_start_date :''
-                    let gallery_end_date =res?.gallery_end_date ? res?.gallery_end_date :''
+                    let gallery_start_date = res?.gallery_start_date ? res?.gallery_start_date : ''
+                    let gallery_end_date = res?.gallery_end_date ? res?.gallery_end_date : ''
+                    let start_clock = res?.start_time.slice(11)
+                    let end_clock = res?.end_time.slice(11)
+                    let gallery_start_clock =res?.gallery_start_date ? moment(res?.gallery_start_date.slice(11), "HH:mm") : moment("08:00","HH:mm")
+                    let gallery_end_clock =res?.gallery_end_date ? moment(res?.gallery_end_date.slice(11), "HH:mm") : moment("20:00","HH:mm")
 
-                    res.auction_product.map(t => products[t?.product_id] = {...t?.product, ...t,id:t?.product_id})
+
+                    res.auction_product.map(t => products[t?.product_id] = {...t?.product, ...t, id: t?.product_id})
                     steps = res.steps.map((t, i, array) => ({minimum: (i > 0 ? array[i - 1]?.threshold : 0), ...t}))
-                    if(res?.dates_auction?.length){
+                    if (res?.dates_auction?.length) {
                         res.dates_auction.map(t => {
-                            let p= {}
-                            t?.product?.length && t?.product.map(c=>{
-                                p[c?.id]=c
+                            let p = {}
+                            t?.product?.length && t?.product.map(c => {
+                                p[c?.id] = c
                             })
-                            productsDate[t?.date] =p
+                            productsDate[t?.date] = p
                         })
-                        productsArrayDate= res.auction_product.map(t =>({...t?.product, ...t,id:t?.product_id}))
+                        productsArrayDate = res.auction_product.map(t => ({...t?.product, ...t, id: t?.product_id}))
                     }
                     dispatch(setAUCTION({
                         ...res,
@@ -100,7 +105,11 @@ function Index() {
                         gallery_end_date,
                         productsDate,
                         productsArrayDate,
-                        choose_product_daily
+                        choose_product_daily,
+                        start_clock: moment(start_clock, "HH:mm"),
+                        end_clock: moment(end_clock, "HH:mm"),
+                        gallery_start_clock:gallery_start_clock,
+                        gallery_end_clock:gallery_end_clock,
                     }))
                     // setData(res)
                     // setDataCount(resp.data?.data?.count)
@@ -113,7 +122,7 @@ function Index() {
             })
     }
 
-    const sendData =async (values) => {
+    const sendData = async (values) => {
         // console.log(products, productsDate, data, checkData)
 
         // let allData = {...data, ...values}
@@ -128,22 +137,25 @@ function Index() {
         delete allData["dates_auction"]
         delete allDataMain["dates_auction"]
 
-        if(!allDataMain?.gallery_start_date){
+        if (!allDataMain?.gallery_start_date) {
             //error from server
             delete allDataMain["gallery_start_date"]
             delete allDataMain["gallery_end_date"]
+        }else{
+            allDataMain["gallery_start_date"]=await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_start_clock).format("HH:mm")
+            allDataMain["gallery_end_date"]=await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_end_clock).format("HH:mm")
         }
-        if( !allData?.gallery_start_date){
+        if (!allData?.gallery_start_date) {
             //error from server
             delete allData["gallery_start_date"]
             delete allData["gallery_end_date"]
         }
-        if( !allDataMain?.address){
+        if (!allDataMain?.address) {
             delete allDataMain?.address
         }
         setLoading(true)
-        allData["start_time"] = await moment(allDataMain.start_time).format("YYYY-MM-DD hh:mm:ss")
-        allData["end_time"] = await (allDataMain?.type !== "LIVE") ? moment(allDataMain.end_time).format("YYYY-MM-DD hh:mm:ss") : null
+        allData["start_time"] = await moment(allDataMain.start_time).format("YYYY-MM-DD ") + moment(allDataMain.start_clock).format("HH:mm")
+        allData["end_time"] = await (allDataMain?.type !== "LIVE") ? moment(allDataMain.end_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm") : null
         allDataMain["bidding_interval"] = await (allDataMain?.type === "ONLINE") ? allDataMain.bidding_interval : null
 
         let auction_product = []
@@ -156,21 +168,22 @@ function Index() {
             })
             auction_product = await productsArrayDate.map(t => ({
                 base_price: (t?.base_price || 0),
-                reserve_price: (t?.reserve_price || 0),
+                reserve_price: (Number(t?.reserve_price) || 0),
                 product_id: t?.id
             }))
         } else {
-            await    Object.keys(products).map(t => (auction_product.push({
+            await Object.keys(products).map(t => (auction_product.push({
                 base_price: (products[t]?.base_price || 0),
-                reserve_price: (products[t]?.reserve_price || 0),
+                reserve_price: (Number(products[t]?.reserve_price) || 0),
                 product_id: products[t]?.id
             })))
+            // delete allDataMain["dates_auction"]
         }
         let getDate = new Date();
         getDate = await moment(getDate).format("YYYY-MM-DDThh:mm")
         let file_name = await is_send_invitation ? allData?.title + getDate : "";
 
-        if (auctionId !== "new" ){
+        if (auctionId !== "new") {
             await axios.put(`${BASE_URL}${EDIT_AUCTION(auctionId)}`, {
                 ...allDataMain,
                 ...allData,
@@ -202,7 +215,7 @@ function Index() {
                         message.error(err.response?.data?.message)
 
                 })
-        }else {
+        } else {
             await axios.post(`${BASE_URL}${ADD_AUCTION}`, {
                 ...allDataMain,
                 ...allData,
@@ -276,20 +289,22 @@ function Index() {
                             </ul>
                         </div>
                         <Spin spinning={loading}>
-                        {
-                            listComponent.map((item, i) => {
-                                let MyComponent = item.thisComponent;
-                                return (selectComponent === item.value) &&
-                                    <MyComponent setSelectComponent={setSelectComponent}
-                                                 selectComponent={selectComponent}
-                                                 finalData={checkData} setFinalData={setData} products={products} id={id}
-                                                 setProducts={setProducts}
-                                                 steps={steps}
-                                                 payment_method={payment_method} setPayment_method={setPayment_method}
-                                                 sendData={sendData}
-                                    />
-                            })
-                        }
+                            {
+                                listComponent.map((item, i) => {
+                                    let MyComponent = item.thisComponent;
+                                    return (selectComponent === item.value) &&
+                                        <MyComponent setSelectComponent={setSelectComponent}
+                                                     selectComponent={selectComponent}
+                                                     finalData={checkData} setFinalData={setData} products={products}
+                                                     id={id}
+                                                     setProducts={setProducts}
+                                                     steps={steps}
+                                                     payment_method={payment_method}
+                                                     setPayment_method={setPayment_method}
+                                                     sendData={sendData}
+                                        />
+                                })
+                            }
                         </Spin>
                         <div className="text-start">
                             {selectComponent !== 1 ?

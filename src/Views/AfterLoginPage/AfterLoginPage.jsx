@@ -141,7 +141,7 @@ function AfterLoginPage() {
 
     return (
         <React.Fragment>
-            <Header newstyle={{boxShadow: " none"}}/>
+            <Header newStyle={{boxShadow: " none"}}/>
             <main>
                 <Spin spinning={loading}>
                 <div className="container containercs ">
