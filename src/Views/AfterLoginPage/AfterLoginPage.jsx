@@ -16,7 +16,7 @@ import {Spin} from "antd";
 
 function AfterLoginPage() {
 
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(1)
     const [lastProducts, setLastProducts] = useState(0)
     const [lastAuctions, setLastAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -173,7 +173,7 @@ function AfterLoginPage() {
                                             <button className="carousel-control-prev" type="button"
                                                     data-bs-target="#main-carousel" data-bs-slide="prev">
                                                 <span className="carousel-control-prev-icon" aria-hidden="true"
-                                                      onClick={() => setCount(count - 1)}></span>
+                                                      onClick={() =>count > 1 && setCount(count - 1)}></span>
                                                 <span className="visually-hidden">قبلی</span>
                                             </button>
                                             <div className="carousel-number-indicator">
@@ -183,7 +183,7 @@ function AfterLoginPage() {
                                             <button className="carousel-control-next" type="button"
                                                     data-bs-target="#main-carousel" data-bs-slide="next">
                                                 <span className="carousel-control-next-icon" aria-hidden="true"
-                                                      onClick={() => setCount(count + 1)}></span>
+                                                      onClick={() =>count < 5 && setCount(count + 1)}></span>
                                                 <span className="visually-hidden">بعدی</span>
                                             </button>
                                         </div>
@@ -249,7 +249,7 @@ function AfterLoginPage() {
                                                 <div className="artwork-category">
                                                     {/*<FontAwesomeIcon icon={faBookmark}/>*/}
                                                     <span onClick={() =>
-                                                        addBookmark(
+                                                         addBookmark(
                                                             item?.following?.bookmark?.is_active?
                                                                 item?.following?.bookmark?.id :
                                                                 item?.id, item?.following?.bookmark?.is_active)
