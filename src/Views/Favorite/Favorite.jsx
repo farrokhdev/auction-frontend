@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
-import { message, Tabs } from "antd";
+import { Tabs } from "antd";
 import Artwork from "./Artwork";
 import Sales from "./Sales";
 import AuctionHouses from "./AuctionHouses";
@@ -17,10 +17,9 @@ function Favorite() {
         setActiveKey(key)
     }
 
-    const getData = () => {
+    // const getData = () => {
 
-        
-    }
+    // }
 
     return (
         <>
@@ -31,17 +30,14 @@ function Favorite() {
                     <div className="panel-container">
                         <Tabs activeKey={activeKey} onChange={callback} className="nav nav-tabs justify-content-star main-tab " unmountInactiveTabs={true}>
                             <TabPane tab="آثار" key="1" className="nav-item " >
-                                <Artwork data={data} getProfile={getData} />
+                                <Artwork data={data} getProfile={setData} />
                             </TabPane>
                             <TabPane tab="حراج" key="2" className="nav-item ">
-                                <Sales data={data} getProfile={getData} />
+                                <Sales data={data} getProfile={setData} />
                             </TabPane>
                             <TabPane tab="خانه حراج" key="3" className="nav-item ">
-                                <AuctionHouses data={data} getProfile={getData} />
+                                <AuctionHouses data={data} getProfile={setData} />
                             </TabPane>
-                            {/* <TabPane tab="ویرایش ایمیل" key="4" className="nav-item ">
-                                 <EditEmailPanelProfile data={data} getProfile={getData} /> 
-                            </TabPane> */}
                         </Tabs>
                     </div>
                 </div>
