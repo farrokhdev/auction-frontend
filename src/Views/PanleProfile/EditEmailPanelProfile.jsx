@@ -9,17 +9,20 @@ function EditEmailPanelProfile(props) {
     const [loading, setLoading] = useState(false)
     const [showNumber, setShowNumber] = useState(true)
     const [number, setNumber] = useState("")
-    const {data,getProfile} = props;
-    useEffect(()=>{
-        if(data.email){
+    const [newField, setNewField] = useState(null)
+    const {data, getProfile} = props;
+    useEffect(() => {
+        if (data.email) {
             setNumber(data.email)
-            form.setFieldsValue({email:data.email})
+            form.setFieldsValue({email: data.email})
+        } else {
+            setNumber(data.mobile)
         }
-    },[data])
+    }, [data])
 
     const onFinish = (values) => {
         if (values?.email)
-            setNumber(values?.email)
+            // setNumber(values?.email)
         sendData(values)
     }
 
@@ -33,11 +36,12 @@ function EditEmailPanelProfile(props) {
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
-
+                    setNewField(values?.email)
                     setShowNumber(false)
-                    message.success(" ایمیل شما با موفقیت ویرایش شد")
+                    message.success("کد تایید به ایمیل شما ارسال شد")
                     // console.log(resp.data.data.result.mobile)
                     // setNumber()
+                    form.resetFields()
                 }
             })
             .catch(err => {
@@ -49,22 +53,23 @@ function EditEmailPanelProfile(props) {
 
     const sendCode = (values) => {
         setLoading(true)
-        axios.post(`${BASE_URL}${ACCOUNT_APPROVE}`, {...values, user_name: number})
-            .then(resp => {
-                setLoading(false)
-                if (resp.data.code === 200) {
-                    setShowNumber(true)
-                    message.success(" ایمیل شما با موفقیت تایید شد")
-                    getProfile()
+        if (newField)
+            axios.post(`${BASE_URL}${ACCOUNT_APPROVE}`, {...values, user_name: number, tmp_user_name: newField})
+                .then(resp => {
+                    setLoading(false)
+                    if (resp.data.code === 200) {
+                        setShowNumber(true)
+                        message.success(" ایمیل شما با موفقیت تایید شد")
+                        getProfile()
 
-                }else {
-                    message.error(resp.data.result)
-                }
-            })
-            .catch(err => {
-                setLoading(false)
-                message.error("دوباره تلاش کنید")
-            })
+                    } else {
+                        message.error(resp.data.result)
+                    }
+                })
+                .catch(err => {
+                    setLoading(false)
+                    message.error("دوباره تلاش کنید")
+                })
     }
 
     return (
@@ -98,7 +103,7 @@ function EditEmailPanelProfile(props) {
                                 <div className="row">
                                     <div className="col-md-6 button-group">
                                         <Button className="btn-default" htmlType="submit">
-                                            ثبت
+                                            دریافت کد
                                         </Button>
                                     </div>
                                 </div>
@@ -116,10 +121,10 @@ function EditEmailPanelProfile(props) {
                                         <p className="darkgray">
 
 
-                                                  ما یک کد به
-                                            <span className="px-2">{number}</span>
+                                            ما یک کد به
+                                            <span className="px-2">{newField}</span>
                                             ارسال کردیم ،
-                                                  برای تأیید آدرس ایمیل خود کد را در زیر وارد کنید.
+                                            برای تأیید آدرس ایمیل خود کد را در زیر وارد کنید.
                                         </p>
                                         <div className="col-md-6">
                                             <div className="input-group ">
@@ -143,10 +148,10 @@ function EditEmailPanelProfile(props) {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-6 button-group">
-                                        <Button  className="btn-default" htmlType="submit">
+                                        <Button className="btn-default" htmlType="submit">
                                             تایید
                                         </Button>
-                                        <Button  className="btn-default" onClick={()=>setShowNumber(true)}>
+                                        <Button className="btn-gray me-2" onClick={() => setShowNumber(true)}>
                                             ویرایش ایمیل
                                         </Button>
                                     </div>
@@ -156,56 +161,6 @@ function EditEmailPanelProfile(props) {
                     </Form>
                 }
             </Spin>
-                  {/*   <div>*/}
-                  {/*  <div className="row">*/}
-                  {/*    <div className="col-md-6">*/}
-                  {/*      <div className="input-group ">*/}
-                  {/*        <label className="default-lable">ایمیل</label>*/}
-                  {/*        <input*/}
-                  {/*          type="email"*/}
-                  {/*          className="default-input"*/}
-                  {/*          placeholder="ایمیل خود را وارد نمایید."*/}
-                  {/*          value=""*/}
-                  {/*        />*/}
-                  {/*      </div>*/}
-                  {/*    </div>*/}
-                  {/*  </div>*/}
-                  {/*  <div className="row">*/}
-                  {/*    <div className="col-md-6 button-group">*/}
-                  {/*      <button type="button" className="btn-default">*/}
-                  {/*        ثبت*/}
-                  {/*      </button>*/}
-                  {/*    </div>*/}
-                  {/*  </div>*/}
-                  {/*  <div className="row mrgt50">*/}
-                  {/*    <p className="darkgray dir-rtl">*/}
-                  {/*      همکار گرامی، در این قسمت، بعد از اینکه کاربر ایمیل خود*/}
-                  {/*      را وارد نمود، قسمت بالا حذف شده و قسمت پایین نمایش داده*/}
-                  {/*      می شود. لطفا کلاس mrgt50 را در این قسمت حذف کنید.*/}
-                  {/*    </p>*/}
-                  {/*    <p className="darkgray">*/}
-                  {/*      ما یک کد به Ni****************@gmail.com ارسال کردیم ،*/}
-                  {/*      برای تأیید آدرس ایمیل خود کد را در زیر وارد کنید.*/}
-                  {/*    </p>*/}
-                  {/*    <div className="col-md-6">*/}
-                  {/*      <div className="input-group ">*/}
-                  {/*        <label className="default-lable">کد تایید</label>*/}
-                  {/*        <input*/}
-                  {/*          type="text"*/}
-                  {/*          className="default-input"*/}
-                  {/*          placeholder="کد تایید را اینجا وارد نمایید."*/}
-                  {/*        />*/}
-                  {/*      </div>*/}
-                  {/*    </div>*/}
-                  {/*  </div>*/}
-                  {/*  <div className="row">*/}
-                  {/*    <div className="col-md-6 button-group">*/}
-                  {/*      <button type="button" className="btn-default">*/}
-                  {/*        تایید*/}
-                  {/*      </button>*/}
-                  {/*    </div>*/}
-                  {/*  </div>*/}
-                  {/*</div>*/}
         </>
     )
 }

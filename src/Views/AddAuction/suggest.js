@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import BidAddSuggest from "./BidAddSuggest";
 import moment from "moment-jalaali";
 
-const timeInterval = [20, 30, 40, 50]
+const timeInterval = [1,2,3,4,5]
 
 const Suggest = (props) => {
     const {
@@ -77,7 +77,7 @@ const Suggest = (props) => {
                                             {
                                                 timeInterval.map((item, index) => (
                                                     <Select.Option value={item}
-                                                                   key={index}>{item}</Select.Option>
+                                                                   key={index}>{item} دقیقه </Select.Option>
                                                 ))
                                             }
                                         </Select>

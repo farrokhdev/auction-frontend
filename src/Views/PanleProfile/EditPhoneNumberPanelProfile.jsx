@@ -9,17 +9,22 @@ function EditPhoneNumberPanelProfile(props) {
     const [loading, setLoading] = useState(false)
     const [showNumber, setShowNumber] = useState(true)
     const [number, setNumber] = useState("")
+    const [newField, setNewField] = useState(null)
     const {data,getProfile} = props;
     useEffect(()=>{
         if(data.mobile){
             setNumber(data.mobile)
             form.setFieldsValue({mobile:data.mobile})
+        }else{
+            setNumber(data.email)
         }
 
     },[data])
     const onFinish = (values) => {
         if (values?.mobile)
-            setNumber(values?.mobile)
+        //     setNumber(values?.mobile)
+        // else
+        //     setNumber(data.email)
         sendData(values)
     }
     const onSub = (values) => {
@@ -31,9 +36,9 @@ function EditPhoneNumberPanelProfile(props) {
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
-
+                    setNewField(values?.mobile)
                     setShowNumber(false)
-                    message.success(" موبایل شما با موفقیت ویرایش شد")
+                    message.success(" کد تایید به موبایل شما ارسال شد")
                     // console.log(resp.data.data.result.mobile)
                     // setNumber()
                 }
@@ -46,7 +51,7 @@ function EditPhoneNumberPanelProfile(props) {
     }
     const sendCode = (values) => {
         setLoading(true)
-        axios.post(`${BASE_URL}${ACCOUNT_APPROVE}`, {...values, user_name: number})
+        axios.post(`${BASE_URL}${ACCOUNT_APPROVE}`, {...values, user_name: number, tmp_user_name: newField})
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
@@ -98,7 +103,7 @@ function EditPhoneNumberPanelProfile(props) {
                             <div className="row">
                                 <div className="col-md-6 button-group">
                                     <Button className="btn-default" htmlType="submit">
-                                        ثبت
+                                        دریافت کد
                                     </Button>
                                 </div>
                             </div>
@@ -116,7 +121,7 @@ function EditPhoneNumberPanelProfile(props) {
 
                                     <p className="darkgray">
                                         ما یک کد به
-                                        <span className="px-2">{number}</span>
+                                        <span className="px-2">{newField}</span>
 
                                         ارسال کردیم ، برای تأیید
                                         شماره تلفن خود ، کد را در زیر وارد کنید.
@@ -146,7 +151,7 @@ function EditPhoneNumberPanelProfile(props) {
                                     <Button  className="btn-default" htmlType="submit">
                                         تایید
                                     </Button>
-                                    <Button  className="btn-default" onClick={()=>setShowNumber(true)}>
+                                    <Button  className="btn-gray me-2" onClick={()=>setShowNumber(true)}>
                                         ویرایش موبایل
                                     </Button>
                                 </div>

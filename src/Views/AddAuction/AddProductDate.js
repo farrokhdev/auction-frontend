@@ -86,7 +86,7 @@ const Products = (props) => {
         dispatch(setAUCTION({productsDate: list_date, productsArrayDate: productsArrayDate}))
 
     }, [])
-    console.log(productsDate,productsArrayDate)
+    // console.log(productsDate,productsArrayDate)
     return (
         <div>
             <div>
@@ -155,7 +155,7 @@ const Products = (props) => {
                                                                            }
                                                                        }}
                                                                 /><small className="pe-2">تومان</small></div>
-                                                            {type === "PERIODIC" ? <div className="pt-2">
+                                                            {((type !== "ONLINE") && (type !== "LIVE") )? <div className="pt-2">
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-between ">
                                                                     <input type="number" className="default-input"
