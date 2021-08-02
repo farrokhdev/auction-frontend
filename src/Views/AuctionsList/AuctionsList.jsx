@@ -15,7 +15,6 @@ import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.ac
 import {DELETE_AUCTION} from "../../utils/constant";
 
 function AuctionsList() {
-
     const [Auctions, setAuctions] = useState("");
     const [pageSize, setPageSize] = useState(30);
     const [bidsCount, setBidsCount] = useState(0);

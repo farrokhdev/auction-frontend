@@ -9,12 +9,13 @@ import {UrlQuery} from "../../utils/utils";
 import {useSelector} from "react-redux";
 
 function Chooseartwork(props) {
-    const {selectProduct, setSelectProduct,auction,id,listCheck}=props
+    const {selectProduct, setSelectProduct,auction,listCheck}=props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   const [dataCount, setDataCount] = useState(0)
   // const {products,productsDate} = useSelector((state) => state.auctionReducer)
     // console.log(selectProduct)
+  const {id} = useSelector((state) => state.profileReducer)
 
   useEffect(()=>{
     // setSelectProduct([])
@@ -22,6 +23,7 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
+
     axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
     // axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
         .then(resp => {
