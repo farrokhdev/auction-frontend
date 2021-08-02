@@ -35,7 +35,7 @@ function HeaderPanel(props) {
             <div className="panel-info col-lg-4 col-2">
               <ul className="navbar-nav flex-row-reverse">
                 <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/">
+                  <Link className="nav-link" to="/">
                     EN
                   </Link>
                 </li>
