@@ -84,7 +84,6 @@ function Chooseartwork(props) {
               <div className="my-3">
                 <Card
                     style={{ width: "100%" }}
-
                     cover={<div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}/>}
                     // actions={[
                     //   <SettingOutlined key="setting" />,
