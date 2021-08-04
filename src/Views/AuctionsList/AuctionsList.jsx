@@ -3,7 +3,7 @@ import Footer from "../../components/footer";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPen, faTimes, faPlus,faStop} from "@fortawesome/free-solid-svg-icons";
 import moment from 'jalali-moment'
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
@@ -188,6 +188,8 @@ function AuctionsList() {
                                                                id="checkbox413"/>
                                                     </td>
                                                     <td>
+                                                        {item.status!== "CLOSED"  ?
+                                                        <>
                                                         <Link onClick={() => dispatch(removeAUCTION())}
                                                               to={`/panel-add-auction/${item.id}`} type="button">
                                                             <FontAwesomeIcon icon={faPen}/>
@@ -196,6 +198,7 @@ function AuctionsList() {
                                                                 onClick={() => showDeleteConfirm(item.id)}>
                                                             <FontAwesomeIcon icon={faTimes}/>
                                                         </button>
+                                                            </> :""}
                                                     </td>
                                                 </tr>
                                             )

@@ -131,12 +131,12 @@ const PriceAddValidate = (props) => {
                     </div>
                 </div>
             </Form>
-            <div>
+            <div className="col-12">
                 <div className="table-responsive">
                 {(validations_auction && validations_auction.length) ? <table className="panel-table create-auctions table">
                     <thead>
                     <tr>
-                        <th>شماره</th>
+                        <th>شماره</th>آخرین آثار حراج
                         <th>کمترین قیمت</th>
                         <th> بیشترین قیمت</th>
                         <th> واحد افزایش</th>

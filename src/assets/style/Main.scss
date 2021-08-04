@@ -6552,3 +6552,10 @@ address.all-info:before {
   color: #ff4d4f !important;
 }
 
+.image-custom-back{
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 100%;
+  background-color: #eee;
+}

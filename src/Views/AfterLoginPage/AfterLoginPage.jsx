@@ -243,8 +243,10 @@ function AfterLoginPage() {
                                     <div className=" w-75" key={key}>
                                             <div className="artwork-img">
                                                 <Link to={`/artworks/${item.id}`} className="artwork-block ">
-                                                <img src={item.media.exact_url} width="998" height="880" alt=""
-                                                     className="img-fluid"/>
+                                                     <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}>
+                                                         {/*<img src={item.media.exact_url} className="w-100 img-fluid" alt="gallery" />*/}
+                                                     </div>
+
                                                 </Link>
                                                 <div className="artwork-category">
                                                     {/*<FontAwesomeIcon icon={faBookmark}/>*/}

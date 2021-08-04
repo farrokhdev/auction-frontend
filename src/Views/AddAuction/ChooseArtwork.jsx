@@ -7,6 +7,7 @@ import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons
 import Meta from "antd/es/card/Meta";
 import {UrlQuery} from "../../utils/utils";
 import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 
 function Chooseartwork(props) {
     const {selectProduct, setSelectProduct,auction,listCheck}=props
@@ -84,12 +85,7 @@ function Chooseartwork(props) {
                 <Card
                     style={{ width: "100%" }}
 
-                    cover={
-                      <img
-                          alt="بدون تصویر"
-                          src={item?.media?.exact_url}
-                      />
-                    }
+                    cover={<div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}/>}
                     // actions={[
                     //   <SettingOutlined key="setting" />,
                     //   <EditOutlined key="edit" />,
