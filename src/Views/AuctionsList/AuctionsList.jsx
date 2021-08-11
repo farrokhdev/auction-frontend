@@ -228,6 +228,7 @@ const ShowCheckbox = (props) => {
     }, [visible_in_site])
 
     const handleShow = (value) => {
+        setLoading(true)
         axios.patch(`${BASE_URL}${EDIT_AUCTION(auctionId)}`, {
             visible_in_site:value
         })
@@ -254,6 +255,7 @@ const ShowCheckbox = (props) => {
             })
     }
     return (
+        <Spin spinning={loading}>
         <input className="form-check-input" type="checkbox"
                checked={isShow}
                onChange={(e) => {
@@ -261,5 +263,6 @@ const ShowCheckbox = (props) => {
                    // dispatch(setAUCTION({extendable_deadline:e.target.checked}))
                }}
                id="checkbox413"/>
+        </Spin>
     )
 }
