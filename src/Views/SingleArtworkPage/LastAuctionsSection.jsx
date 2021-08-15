@@ -9,7 +9,7 @@ import {BASE_URL} from '../../utils';
 import {Link} from "react-router-dom";
 
 function LastAuctionsSection(props) {
-
+const {id} =props;
     const [is_saved, setIs_saved] = useState(false)
     const [products, setProducts] = useState(false)
 
@@ -18,7 +18,7 @@ function LastAuctionsSection(props) {
     }
 
     const getAuction = () => {
-        axios.get(`${BASE_URL}/sale/product/?auctions__id=${props.id}&page_size=8`)
+        axios.get(`${BASE_URL}/sale/product/?auctions__id=${id}&page_size=8`)
             .then(resp => {
                 console.log(resp)
                 if (resp.data.code === 200) {
@@ -32,9 +32,9 @@ function LastAuctionsSection(props) {
     }
 
     useEffect(() => {
+        if(id)
         getAuction()
-
-    }, [])
+    }, [id])
 
     const settings = {
         // dots: false,

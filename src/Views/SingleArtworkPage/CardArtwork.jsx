@@ -2,10 +2,11 @@ import React , {useState} from 'react'
 import bookmark_icon from '../../images/bookmark.svg';
 import bookmark_active_icon from '../../images/bookmark-active.svg';
 import img from '../../images/img-1.jpg'
+import {useSelector} from "react-redux";
 
 
 function CardArtwork({price_base , price_range , house_auction , title , lot_num}) {
-
+    const {is_logged_in} = useSelector((state) => state.authReducer)
     const [is_saved, setIs_saved] = useState(false)
 
     const handleToggleBookmark = () => {
@@ -53,7 +54,7 @@ return (
                     </div>
                 </div>
             </div>
-            <button type="button" className="btn-lightpink">ثبت پیشنهاد</button>
+            {is_logged_in ? <button type="button" className="btn-lightpink">ثبت پیشنهاد</button> :''}
         </div>
     </div>
 
