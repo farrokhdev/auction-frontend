@@ -1,8 +1,10 @@
 import React from 'react'
 import { convertTypeAuctionToPersian } from '../../utils/converTypePersion';
 import classnames from 'classnames';
+import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 function MainInfoArtwork({artwork}) {
-
+    const {is_logged_in} = useSelector((state) => state.authReducer)
     console.log("TTT ",artwork?.latest_auction?.type);
 return (
     <div className="row">
@@ -127,11 +129,11 @@ return (
                                     </div>
                                 </div>
                             </div>
-                            <div className="detail-placebid general-bid">
+                            { is_logged_in ? <div className="detail-placebid general-bid">
                                 <div className="general-bid-block">
                                     <div className="search-input">
                                         <input type="text" className="default-input"
-                                            placeholder="حداکثر پیشنهاد خود را وارد نمایید." />
+                                               placeholder="حداکثر پیشنهاد خود را وارد نمایید."/>
                                         <span className="unit">تومان</span>
                                     </div>
                                     <button type="button" className="btn-lightpink">ثبت</button>
@@ -139,17 +141,23 @@ return (
                                 <div className="general-bid-block">
                                     <div className="number-input">
                                         <button
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                                            onClick="this.parentNode.querySelector('input[type=number]').stepDown()"/>
                                         <input className="default-inputquantity" min="0" name="quantity" type="number"
-                                            max="100" step="10" placeholder="انتخاب پیشنهاد" />
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                            className="plus"></button>
+                                               max="100" step="10" placeholder="انتخاب پیشنهاد"/>
+                                        <button onClick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                className="plus"/>
                                         <span className="unit">تومان</span>
                                     </div>
                                     <button type="button" className="btn-lightpink">ثبت پیشنهاد</button>
                                 </div>
 
-                            </div>
+                            </div> :
+                                <p className="text-center mt-4 ">
+                                برای ثبت پیشنهاد
+                                     <Link to="/login" className="d-inline-block px-1 color-link" > وارد </Link>
+                             شوید
+                            </p>
+                            }
                             <div className="detail-ah">
                                 <div className="ah-left">
                                     <div className="h-block-img">

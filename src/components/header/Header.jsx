@@ -7,7 +7,7 @@ import help from "../../images/help.svg";
 import login from "../../images/login.svg";
 import artwork from "../../images/artist-icon.svg";
 import Search from "./Search";
-import {connect, useDispatch} from 'react-redux';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import {clearStorage} from '../../redux/reducers/auth/auth.actions'
 import {clearStorageAll} from '../../redux/reducers/all/all.actions'
 import { Link } from "react-router-dom";
@@ -15,6 +15,7 @@ import {removeToken} from "../../utils/utils";
 
 function Header(props) {
   const dispatch = useDispatch()
+  const {is_logged_in} = useSelector((state) => state.authReducer)
 
 const handleRedirect = () => {
 
@@ -223,13 +224,13 @@ const handleRedirect = () => {
                       />
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/" onClick={()=>{
+                  {is_logged_in ? <li className="nav-item">
+                    <Link className="nav-link" to="/" onClick={() => {
                       dispatch(clearStorageAll())
                     }}>
                       خروج
                     </Link>
-                  </li>
+                  </li> :''}
                 </ul>
               </div>
             </div>
