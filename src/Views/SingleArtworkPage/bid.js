@@ -24,11 +24,13 @@ const Bid = ({artwork}) => {
                 console.log('-------------------------------------------->WebSocket Client Connected');
             };
             client.onmessage = (message) => {
-                if(message.length > 4){
-                    let messageArray = message.slice(2, message.length - 2).split(',');
-                    // console.log("[[26, 100.0, 300.0]]".splice(']' || '[' , ''));
-                    console.log(message,messageArray);
-                    setCurrentVPrice(messageArray[messageArray.length - 1]);
+                console.log(message);
+                if(message?.data?.length > 4){
+                    let messageArray = message.data.slice(2, message.data.length - 2).split(',');
+                    let priceFinal=Math.floor(messageArray[messageArray.length - 1]);
+                    setCurrentVPrice(priceFinal);
+                    setCurrentValue(priceFinal)
+                    form.setFieldsValue({price: 0})
                 }
 
             };
@@ -174,9 +176,9 @@ const Bid = ({artwork}) => {
                         {/*    </div>*/}
                         {/*    <button type="button" className="btn-lightpink">ثبت</button>*/}
                         {/*</div>*/}
-                        <Form onFinish={onFinish} form={form} className="m-0"
+                        {artwork?.product_status==="on_stage" ? <Form onFinish={onFinish} form={form} className="m-0"
                             // initialValues={{ inputValue: 0 }}
-                              wrapperCol={{span: 24}}>
+                               wrapperCol={{span: 24}}>
                             <div className="general-bid-block">
                                 <div className="number-input">
 
@@ -203,7 +205,13 @@ const Bid = ({artwork}) => {
                                 </div>
                                 <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
                             </div>
-                        </Form>
+                        </Form> : <p className="text-center category-icon">
+                            {artwork?.sale_status ? 'محصول فروخته شد':
+                                <span>
+                                {(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
+                                {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}
+                            </span>}
+                        </p>}
                     </div> :
                     <p className="text-center mt-4 ">
                         برای ثبت پیشنهاد

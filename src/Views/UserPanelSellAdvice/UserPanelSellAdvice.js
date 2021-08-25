@@ -68,7 +68,7 @@ function UserPanelSellAdvice() {
 
         axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
             .then(resp=>{
-                setLoading(false)
+                setPosting(false)
                 console.log(resp)
                 if(resp.data.code === 201){
                     message.success('درخواست شما با موفقیت ثبت شد.');
