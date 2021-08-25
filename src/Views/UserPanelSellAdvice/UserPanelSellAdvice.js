@@ -27,8 +27,10 @@ function UserPanelSellAdvice() {
     const queries = queryString.stringify(params);
 
     const getProducts = () => {
+        setLoading(true)
         axios.get(`${BASE_URL}/sale/product/?${queries}`)
             .then(resp => {
+                setLoading(false)
                 if (resp.data.code === 200) {
                     setProducts(resp.data.data.result)
                     setCountProducts(resp.data.data.count)
@@ -36,6 +38,7 @@ function UserPanelSellAdvice() {
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }
@@ -65,10 +68,10 @@ function UserPanelSellAdvice() {
 
         axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
             .then(resp=>{
+                setPosting(false)
                 console.log(resp)
                 if(resp.data.code === 201){
                     message.success('درخواست شما با موفقیت ثبت شد.');
-                    setPosting(false)
                 }
             })
             .catch(err=>{
@@ -212,6 +215,7 @@ function UserPanelSellAdvice() {
                                     </button>
                                 </li>
                             </ul>
+                            <Spin spinning={loading}>
                             <div className="tab-content" id="profile-tab-content">
                                 <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
                                      aria-labelledby="profiletab1-tab">
@@ -290,6 +294,7 @@ function UserPanelSellAdvice() {
                                     />
                                 </div>
                             </div>
+                            </Spin>
                         </div>
                     </div>
                 </div>

@@ -163,7 +163,8 @@ function Auctions() {
                                                 <div className="col-md-4">
                                                     <Link to={`/one-auction/${item.id}`}
                                                           className="bg-shadow tr-shadow10">
-                                                        <img src={slider1} width="500" height="500" alt=""/>
+                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item?.media?.exact_url})` ,height:"250px"}}/>
+                                                        {/*<img src={slider1} width="500" height="500" alt=""/>*/}
                                                     </Link>
                                                 </div>
                                                 <div className="col-md-8">

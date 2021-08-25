@@ -39,8 +39,8 @@ function HeaderPanel(props) {
                     EN
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/" onClick={()=>{
+                 <li className="nav-item">
+                  <Link className="nav-link" to="/" onClick={() => {
                     dispatch(clearStorageAll())
                   }}>
                     خروج

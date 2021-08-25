@@ -3,6 +3,7 @@ import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import {message , Spin} from "antd";
 import moment from "jalali-moment";
+import {Link} from "react-router-dom";
 
 
 
@@ -92,7 +93,8 @@ function Artwork() {
                                         <div className="col">
                                                 
                                                     <div className="artwork-img">
-                                                        <img src={item.media.exact_url} width="998" height="880" alt="" className="img-fluid" />
+                                                        {/*<img src={item.media.exact_url} width="998" height="880" alt="" className="img-fluid" />*/}
+                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"200px"}}/>
                                                         <div className="artwork-category">
 
                                                         <span 

@@ -7,14 +7,16 @@ import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons
 import Meta from "antd/es/card/Meta";
 import {UrlQuery} from "../../utils/utils";
 import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 
 function Chooseartwork(props) {
-    const {selectProduct, setSelectProduct,auction,id,listCheck}=props
+    const {selectProduct, setSelectProduct,auction,listCheck}=props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   const [dataCount, setDataCount] = useState(0)
   // const {products,productsDate} = useSelector((state) => state.auctionReducer)
     // console.log(selectProduct)
+  const {id} = useSelector((state) => state.profileReducer)
 
   useEffect(()=>{
     // setSelectProduct([])
@@ -22,6 +24,7 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
+
     axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
     // axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false}))
         .then(resp => {
@@ -81,13 +84,7 @@ function Chooseartwork(props) {
               <div className="my-3">
                 <Card
                     style={{ width: "100%" }}
-
-                    cover={
-                      <img
-                          alt="بدون تصویر"
-                          src={item?.media?.exact_url}
-                      />
-                    }
+                    cover={<div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}/>}
                     // actions={[
                     //   <SettingOutlined key="setting" />,
                     //   <EditOutlined key="edit" />,

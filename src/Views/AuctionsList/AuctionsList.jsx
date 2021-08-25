@@ -3,7 +3,7 @@ import Footer from "../../components/footer";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPen, faTimes, faPlus,faStop} from "@fortawesome/free-solid-svg-icons";
 import moment from 'jalali-moment'
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
@@ -12,7 +12,7 @@ import {Modal, Button, Space, Spin, message} from 'antd';
 import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
-import {DELETE_AUCTION} from "../../utils/constant";
+import {DELETE_AUCTION,EDIT_AUCTION} from "../../utils/constant";
 
 function AuctionsList() {
 
@@ -180,14 +180,12 @@ function AuctionsList() {
                                                     </Link>
                                                 </td>
                                                 <td className="text-center">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               checked={false}
-                                                               onChange={(e) => {
-                                                                   // dispatch(setAUCTION({extendable_deadline:e.target.checked}))
-                                                               }}
-                                                               id="checkbox413"/>
+                                                    <ShowCheckbox visible_in_site={item?.visible_in_site} auctionId={item?.id}/>
+
                                                     </td>
                                                     <td>
+                                                        {item.status!== "CLOSED"  ?
+                                                        <>
                                                         <Link onClick={() => dispatch(removeAUCTION())}
                                                               to={`/panel-add-auction/${item.id}`} type="button">
                                                             <FontAwesomeIcon icon={faPen}/>
@@ -196,6 +194,7 @@ function AuctionsList() {
                                                                 onClick={() => showDeleteConfirm(item.id)}>
                                                             <FontAwesomeIcon icon={faTimes}/>
                                                         </button>
+                                                            </> :""}
                                                     </td>
                                                 </tr>
                                             )
@@ -219,3 +218,51 @@ function AuctionsList() {
 }
 
 export default AuctionsList;
+const ShowCheckbox = (props) => {
+    const {auctionId, visible_in_site} = props;
+    const [loading, setLoading] = useState(false);
+    const [isShow, setIsShow] = useState(false);
+
+    useEffect(() => {
+        setIsShow(visible_in_site)
+    }, [visible_in_site])
+
+    const handleShow = (value) => {
+        setLoading(true)
+        axios.patch(`${BASE_URL}${EDIT_AUCTION(auctionId)}`, {
+            visible_in_site:value
+        })
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    message.success("اطلاعات نمایش در سایت با موفقیت ویرایش شد")
+                    // setNext(true)
+                    // dispatch(removeAUCTION())
+                    setIsShow(value)
+                } else {
+                    console.log(resp)
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err.response);
+
+                if (err.response?.data?.message === "ok")
+                    message.error(err.response?.data?.data?.error_message)
+                else
+                    message.error(err.response?.data?.message)
+
+            })
+    }
+    return (
+        <Spin spinning={loading}>
+        <input className="form-check-input" type="checkbox"
+               checked={isShow}
+               onChange={(e) => {
+                   handleShow(e.target.checked);
+                   // dispatch(setAUCTION({extendable_deadline:e.target.checked}))
+               }}
+               id="checkbox413"/>
+        </Spin>
+    )
+}

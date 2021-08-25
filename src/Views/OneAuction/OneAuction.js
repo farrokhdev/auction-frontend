@@ -10,9 +10,10 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import moment from "jalali-moment";
 import {Link} from "react-router-dom";
 import img from "../../images/img-1.jpg";
+import {useSelector} from "react-redux";
 
 function OneAuction(props) {
-
+    const {is_logged_in} = useSelector((state) => state.authReducer)
     const [Auction, setAuction] = useState("");
     const [Product, setProduct] = useState("");
     const [countProducts, setCountProducts] = useState(0)
@@ -382,8 +383,8 @@ function OneAuction(props) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" className="btn-lightpink">ثبت پیشنهاد
-                                                        </button>
+                                                        { is_logged_in ? <Link to={`/artworks/${item?.id}`} type="button" className="text-center btn-lightpink">ثبت پیشنهاد
+                                                        </Link> :''}
                                                     </div>
                                                 </div>
                                             )

@@ -83,7 +83,8 @@ function Sales() {
                                     <div className="row">
                                         <div className="col-xxl-2 col-md-3">
                                             <div className="bg-shadow tr-shadow10">
-                                                <img src={item.media.exact_url} width="500" height="500" alt="" />
+                                                {/*<img src={item.media.exact_url} width="500" height="500" alt="" />*/}
+                                                <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}/>
                                             </div>
                                         </div>
                                         <div className="col-xxl-10 col-md-9">

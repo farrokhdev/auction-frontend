@@ -179,13 +179,15 @@ function Artworks() {
                                             <div className="col" key={key}>
                                                     <div className="artwork-img">
                                                         <Link to={`/artworks/${item.id}`} class="artwork-block">
-                                                        <img
-                                                            src={item.media.exact_url ? item.media.exact_url : ''}
-                                                            width="998"
-                                                            height="880"
-                                                            alt=""
-                                                            className="img-fluid"
-                                                        />
+                                                            <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"270px"}}>
+                                                            </div>
+                                                        {/*<img*/}
+                                                        {/*    src={item.media.exact_url ? item.media.exact_url : ''}*/}
+                                                        {/*    width="998"*/}
+                                                        {/*    height="880"*/}
+                                                        {/*    alt=""*/}
+                                                        {/*    className="img-fluid"*/}
+                                                        {/*/>*/}
                                                         </Link>
                                                         <div className="artwork-category">
                                                             <span onClick={() =>
