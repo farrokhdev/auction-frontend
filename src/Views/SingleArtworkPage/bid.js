@@ -176,9 +176,9 @@ const Bid = ({artwork}) => {
                         {/*    </div>*/}
                         {/*    <button type="button" className="btn-lightpink">ثبت</button>*/}
                         {/*</div>*/}
-                        <Form onFinish={onFinish} form={form} className="m-0"
+                        {artwork?.product_status==="on_stage" ? <Form onFinish={onFinish} form={form} className="m-0"
                             // initialValues={{ inputValue: 0 }}
-                              wrapperCol={{span: 24}}>
+                               wrapperCol={{span: 24}}>
                             <div className="general-bid-block">
                                 <div className="number-input">
 
@@ -205,7 +205,13 @@ const Bid = ({artwork}) => {
                                 </div>
                                 <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
                             </div>
-                        </Form>
+                        </Form> : <p className="text-center category-icon">
+                            {artwork?.sale_status ? 'محصول فروخته شد':
+                                <span>
+                                {(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
+                                {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}
+                            </span>}
+                        </p>}
                     </div> :
                     <p className="text-center mt-4 ">
                         برای ثبت پیشنهاد

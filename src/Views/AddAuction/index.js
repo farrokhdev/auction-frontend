@@ -164,7 +164,7 @@ function Index() {
              Object.keys(productsDate).map(t => {
                 let p = []
                 Object.keys(productsDate[t]).map(c => p.push(productsDate[t][c]?.id))
-                auctions_date.push({date: moment(t,"jYYYY-jMM-jDD").format("YYYY-MM-DD ") + moment(allDataMain.gallery_start_clock).format("HH:mm")
+                auctions_date.push({date: moment(t,"jYYYY-jMM-jDD").format("YYYY-MM-DD ")
                     , products_id: p})
             })
             auction_product = await productsArrayDate.map(t => ({

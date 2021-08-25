@@ -4,7 +4,7 @@ import PanelSidebar from '../../components/PanelSidebar';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import moment from "jalali-moment";
-import {message, Pagination} from "antd";
+import {message, Pagination, Spin} from "antd";
 import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {Link} from "react-router-dom";
@@ -15,6 +15,7 @@ function UserPanelSellAdvice() {
     const [SuggestDetail, setSuggestDetail] = useState("");
     const [SuggestsList, setSuggestsList] = useState("");
     const [SuggestDescription, setSuggestDescription] = useState("");
+    const [loading, setLoading] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -26,21 +27,26 @@ function UserPanelSellAdvice() {
     const queries = queryString.stringify(params);
 
     const getSuggestsList = () => {
+        setLoading(true)
         axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
             .then(resp => {
+                setLoading(false)
                 if (resp.data.code === 200) {
                     setSuggestsList(resp.data.data.result)
                 }
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }
 
     const getSuggestions = () => {
+        setLoading(true)
         axios.get(`${BASE_URL}/auction-house/suggest/?${queries}`)
             .then(resp => {
+                setLoading(false)
                 if (resp.data.code === 200) {
                     setSuggestions(resp.data.data.result)
                     setSuggestionsCount(resp.data.data.count)
@@ -48,31 +54,35 @@ function UserPanelSellAdvice() {
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }
 
     const getSuggest = (id) => {
+        setLoading(true)
         axios.get(`${BASE_URL}/auction-house/suggest/${id}`)
             .then(resp => {
+                setLoading(false)
                 if (resp.data.code === 200) {
                     setSuggestDetail(resp.data.data.result)
                 }
 
             })
             .catch(err => {
+                setLoading(false)
                 console.error(err);
             })
     }
 
     let approvedSuggest = (id, type)=>{
         let payload = {
-            "homeauction_sugesstion_status": type,
+            "homeauction_sugesstion_status": type ? "accept" : "reject",
             "suggestion": SuggestDescription
         }
         setPosting(true)
 
-        axios.patch(`${BASE_URL}/auction-house/suggest/${id}`, payload)
+        axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
             .then(resp=>{
                 console.log(resp)
                 if(resp.data.code === 201){
@@ -81,7 +91,7 @@ function UserPanelSellAdvice() {
                 }
             })
             .catch(err=>{
-                message.error(err.response.data.data);
+                message.error(err?.response?.data?.data);
                 setPosting(false)
             })
     }
@@ -218,6 +228,7 @@ function UserPanelSellAdvice() {
                                     </button>
                                 </li>
                             </ul>
+                            <Spin spinning={loading}>
                             <div className="tab-content" id="profile-tab-content">
                                 <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
                                      aria-labelledby="profiletab1-tab">
@@ -335,7 +346,7 @@ function UserPanelSellAdvice() {
                                         defaultPageSize={10}
                                     />
                                 </div>
-                            </div>
+                            </div></Spin>
                         </div>
                     </div>
                 </div>

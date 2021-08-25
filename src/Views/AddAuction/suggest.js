@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import BidAddSuggest from "./BidAddSuggest";
 import moment from "moment-jalaali";
 
-const timeInterval = [1,2,3,4,5]
+const timeInterval = [1,2,3,4,5,15,30,50]
 
 const Suggest = (props) => {
     const {
@@ -69,7 +69,7 @@ const Suggest = (props) => {
                                             className="search-input w-100 fs-6"
                                             size="large"
                                             dropdownClassName="text-right"
-                                            placeholder="  واحد پول را انتخاب کنید"
+                                            placeholder="  بازه زمانی پیشنهاد را مشخص کنید"
                                             // onChange={value => {
                                             //     setType(value)
                                             // }}
