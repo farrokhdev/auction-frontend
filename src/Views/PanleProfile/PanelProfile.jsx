@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {AwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faCheckCircle,
     faTimesCircle,

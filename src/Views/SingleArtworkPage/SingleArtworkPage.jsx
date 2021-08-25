@@ -9,12 +9,14 @@ import LastAuctionsSection from "./LastAuctionsSection";
 import MainInfoArtwork from "./MainInfoArtwork";
 import { BASE_URL } from "../../utils";
 import { ONE_PRODUCT } from "../../utils/constant";
+import {Spin} from "antd";
 
 
 function SigningContract(props) {
 
     const [artwork, setArtwork] = useState()
     const [params, setParams] = useState({})
+    const [loading, setLoading] = useState(false)
     console.log("Art --->>>> ",artwork);
 
     useEffect(() => {
@@ -22,9 +24,12 @@ function SigningContract(props) {
     }, [params])
 
     const getProduct = ()=>{
+        setLoading(true)
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}`).then(res => {
+            setLoading(false)
             setArtwork(res.data.data.result)
         }).catch(err => {
+            setLoading(false)
             console.error(err)
         })
     }
@@ -34,6 +39,7 @@ function SigningContract(props) {
     <div >
       <Header />
         <main className="innercontent" id="oneartwork">
+            <Spin spinning={loading}>
             <div className="container innercontainer">
 
                 <div className="row sm-mrgb50">
@@ -53,11 +59,12 @@ function SigningContract(props) {
                     </div>
                 </div>
 
-            <MainInfoArtwork artwork={artwork}/>
+            <MainInfoArtwork artwork={artwork} />
             <DetailAboutArtworkInfo artwork={artwork}/>
             <LastAuctionsSection id={artwork?.latest_auction?.id}/>
 
             </div>
+            </Spin>
         </main>
 
       <Footer />

@@ -41,7 +41,9 @@ function PanelFinancial() {
         const pattern_Num = /^[\d]{0,26}$/ ;
         // const pattern_En_Num = /^[a-zA-Z0-9/)/(\\÷×'":;|}{=`~,<>/\-$@$!%*?&#^_. +]+$/ ;
 
-        
+        if(infoBank?.id){
+
+
 
         if(
             payload.bank_name.length && 
@@ -69,7 +71,34 @@ function PanelFinancial() {
             setLoading(false)
             failNotification("!خطا در ثبت اطلاعات" , "مقادیر ورودی نامعتبر است!")
         }
+        }else {
+            if(
+                payload.bank_name.length &&
+                payload.card_number &&
+                pattern_Num.test(payload.card_number) &&
+                payload.account_number.length &&
+                pattern_Num.test(payload.account_number) &&
+                payload.sheba_number.length == 26 &&
+                infoBank.sheba_number.slice(0,2) === "IR"
+            ){
 
+                axios.post(`${BASE_URL}${ACCOUNT_BANK_INFO}` , payload).then(res => {
+                    setLoading(false)
+                    successNotification( "بروز رسانی اطلاعات بانکی" , " با موفقیت انجام شد")
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+
+                }).catch(err => {
+                    console.error(err)
+                    setLoading(false)
+                    failNotification("خطا در ثبت اطلاعات!" , "مقادیر ورودی نامعتبر است")
+                })
+            }else{
+                setLoading(false)
+                failNotification("!خطا در ثبت اطلاعات" , "مقادیر ورودی نامعتبر است!")
+            }
+        }
     }
 
     const handleSetBankName = (value)=> {

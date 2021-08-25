@@ -383,8 +383,8 @@ function OneAuction(props) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        { is_logged_in ? <button type="button" className="btn-lightpink">ثبت پیشنهاد
-                                                        </button> :''}
+                                                        { is_logged_in ? <Link to={`/artworks/${item?.id}`} type="button" className="text-center btn-lightpink">ثبت پیشنهاد
+                                                        </Link> :''}
                                                     </div>
                                                 </div>
                                             )
