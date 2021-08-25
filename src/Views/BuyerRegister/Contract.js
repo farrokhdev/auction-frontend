@@ -72,10 +72,10 @@ const Contract = (props) => {
             "medias": [CoreUpload]
         })
             .then(resp => {
-                if (resp.data.code === 200 ) {
-                    message.success("درخواست شما با موقیت ثبت شد.")
+                setLoading(false)
+                if ((resp.data.code === 201 ) || (resp.data.code === 200 )) {
+                    message.success("درخواست شما با موفقیت ثبت شد.")
                     setPosted(true)
-                    setLoading(false)
                 }
             })
             .catch(err => {

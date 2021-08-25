@@ -3,6 +3,7 @@ import { convertTypeAuctionToPersian } from '../../utils/converTypePersion';
 import classnames from 'classnames';
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
+import Bid from "./bid";
 function MainInfoArtwork({artwork}) {
     const {is_logged_in} = useSelector((state) => state.authReducer)
     console.log("TTT ",artwork?.latest_auction?.type);
@@ -93,71 +94,50 @@ return (
                                         className="d-none d-md-inline-block mx-1">حراج</span>{artwork?.latest_auction?.type ?  convertTypeAuctionToPersian(artwork?.latest_auction?.type) : ''}</span>
                                 <button type="button" className="btn-bookmark">نشان کردن</button>
                             </div>
-                            <div className="detail-artwork">
-                                <div className="d-artwork-left">
-                                    <a href="#" className="d-info artist">
-                                        {/* <h6 className="default">صادق ادهم</h6> */}
-                                        <h6 className="default">{artwork?.persian_artist_name}</h6>
-                                    </a>
-                                    <a href="#" className="d-info category">
-                                        {/* <h6 className="default">هنر مدرن و معاصر</h6> */}
-                                        <h6 className="default">{artwork?.category ? artwork?.category[0]?.title  : ''}</h6>
-                                    </a>
-                                    <a href="#" className="d-info gallery">
-                                        <h6 className="default">{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : '--'}</h6>
-                                    </a>
-                                </div>
-                                <div className="d-artwork-right">
-                                    <h5 className="default lot-num"></h5>
-                                </div>
-                            </div>
-                            <div className="detail-bid">
-                                <div className="db-left">
-                                    <span className="db-title">تخمین</span>
-                                    <div className="price-block">
-                                        <span className="price"> {artwork?.max_price ? artwork?.max_price : 0} - {artwork?.min_price ? artwork?.min_price : 0}</span>
-                                        <span className="unit"> تومان</span>
-                                    </div>
-                                </div>
-                                <span className="seprator brdrbefor"></span>
-                                <div className="db-right ">
-                                    <span className="db-title bluecolor">قیمت فعلی</span>
-                                    <div className="price-block bluecolor">
-                                        <span className="price">{artwork?.bidding_details?.max_bid ? artwork?.bidding_details?.max_bid : ''}</span>
-                                        <span className="unit"> تومان</span><span
-                                            className="bids-num">(<span className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : '' }</span>پیشنهاد)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            { is_logged_in ? <div className="detail-placebid general-bid">
-                                <div className="general-bid-block">
-                                    <div className="search-input">
-                                        <input type="text" className="default-input"
-                                               placeholder="حداکثر پیشنهاد خود را وارد نمایید."/>
-                                        <span className="unit">تومان</span>
-                                    </div>
-                                    <button type="button" className="btn-lightpink">ثبت</button>
-                                </div>
-                                <div className="general-bid-block">
-                                    <div className="number-input">
-                                        <button
-                                            onClick="this.parentNode.querySelector('input[type=number]').stepDown()"/>
-                                        <input className="default-inputquantity" min="0" name="quantity" type="number"
-                                               max="100" step="10" placeholder="انتخاب پیشنهاد"/>
-                                        <button onClick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                className="plus"/>
-                                        <span className="unit">تومان</span>
-                                    </div>
-                                    <button type="button" className="btn-lightpink">ثبت پیشنهاد</button>
-                                </div>
-
-                            </div> :
-                                <p className="text-center mt-4 ">
-                                برای ثبت پیشنهاد
-                                     <Link to="/login" className="d-inline-block px-1 color-link" > وارد </Link>
-                             شوید
-                            </p>
-                            }
+                            <Bid artwork={artwork}/>
+                            {/*<div className="detail-artwork">*/}
+                            {/*    <div className="d-artwork-left">*/}
+                            {/*        <a href="#" className="d-info artist">*/}
+                            {/*            /!* <h6 className="default">صادق ادهم</h6> *!/*/}
+                            {/*            <h6 className="default">{artwork?.persian_artist_name}</h6>*/}
+                            {/*        </a>*/}
+                            {/*        <a href="#" className="d-info category">*/}
+                            {/*            /!* <h6 className="default">هنر مدرن و معاصر</h6> *!/*/}
+                            {/*            <h6 className="default">{artwork?.category ? artwork?.category[0]?.title  : ''}</h6>*/}
+                            {/*        </a>*/}
+                            {/*        <a href="#" className="d-info gallery">*/}
+                            {/*            <h6 className="default">{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : '--'}</h6>*/}
+                            {/*        </a>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="d-artwork-right">*/}
+                            {/*        <h5 className="default lot-num"></h5>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {/*<div className="detail-bid">*/}
+                            {/*    <div className="db-left">*/}
+                            {/*        <span className="db-title">تخمین</span>*/}
+                            {/*        <div className="price-block">*/}
+                            {/*            <span className="price"> {artwork?.max_price ? artwork?.max_price : 0} - {artwork?.min_price ? artwork?.min_price : 0}</span>*/}
+                            {/*            <span className="unit"> تومان</span>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*    <span className="seprator brdrbefor"></span>*/}
+                            {/*    <div className="db-right ">*/}
+                            {/*        <span className="db-title bluecolor">قیمت فعلی</span>*/}
+                            {/*        <div className="price-block bluecolor">*/}
+                            {/*            <span className="price">{artwork?.bidding_details?.max_bid ? artwork?.bidding_details?.max_bid : ''}</span>*/}
+                            {/*            <span className="unit"> تومان</span><span*/}
+                            {/*                className="bids-num">(<span className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : '' }</span>پیشنهاد)</span>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {/*{ is_logged_in ? <Bid artwork={artwork}/> :*/}
+                            {/*    <p className="text-center mt-4 ">*/}
+                            {/*    برای ثبت پیشنهاد*/}
+                            {/*         <Link to="/login" className="d-inline-block px-1 color-link" > وارد </Link>*/}
+                            {/* شوید*/}
+                            {/*</p>*/}
+                            {/*}*/}
                             <div className="detail-ah">
                                 <div className="ah-left">
                                     <div className="h-block-img">

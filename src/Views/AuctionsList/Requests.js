@@ -4,8 +4,9 @@ import {BASE_URL} from "../../utils";
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
 import {Link} from "react-router-dom";
-import {Spin, Modal, Row, Col} from "antd";
-
+import {Spin, Modal, Row, Col, message, Button} from "antd";
+import {faTimes, faEdit, faPlus, faCheck} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function AuctionsRequests(props) {
     const [RequestsCount, setRequestsCount] = useState(0);
     const [Requests, setRequests] = useState("");
@@ -81,7 +82,9 @@ function AuctionsRequests(props) {
                                 return (
                                     <div className="amount-block" key={key}>
                                         <div
-                                            className="amount-range">{item?.applicant?.first_name + " " + item?.applicant?.last_name}</div>
+                                            className="amount-range">{item?.applicant?.first_name + " " + item?.applicant?.last_name }
+                                            {item?.is_approve  ? <span className="text-success">  <FontAwesomeIcon icon={faCheck}/></span> : <span className="text-danger">  <FontAwesomeIcon icon={faTimes}/></span>}
+                                        </div>
                                         <div className="amount-range">
                                             <button type="button" className="btn btn-default" onClick={() => {
                                                 getDetails(item?.id)
@@ -95,21 +98,108 @@ function AuctionsRequests(props) {
                     </div>
                 </div>
                 {/**Main**/}
-            </Spin>
 
+            </Spin>
             <Modal
                 title="جزئیات درخواست"
-                visible={isModalVisible} onOk={() => {
-                setIsModalVisible(false);
-            }}
-                onCancel={() => {
-                    setIsModalVisible(false);
-                }}
+                visible={isModalVisible}
+            //     onOk={() => {
+            //     setLoading(true)
+            //     let payload = {
+            //         "is_approve": true
+            //     }
+            //     axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
+            //         console.log(res.data);
+            //         setLoading(false)
+            //         getBids()
+            //         setIsModalVisible(false);
+            //         message.success("کاربر تایید شد")
+            //
+            //     }).catch(err => {
+            //         setLoading(false)
+            //         setIsModalVisible(false);
+            //         message.error("با خطا مواجه شدید")
+            //         console.log(err);
+            //     })
+            //
+            // }}
+            //     onCancel={() => {
+            //         setLoading(true)
+            //         let payload = {
+            //             "is_approve": false
+            //         }
+            //         axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
+            //             console.log(res.data);
+            //             setLoading(false)
+            //             message.success("کاربر رد شد")
+            //             getBids()
+            //             setIsModalVisible(false);
+            //
+            //         }).catch(err => {
+            //             console.log(err);
+            //             setLoading(false)
+            //             setIsModalVisible(false);
+            //             message.error("با خطا مواجه شدید")
+            //
+            //         })
+            //
+            //     }}
+                footer={[
+                    <Button type="primary" className="btn btn-default" onClick={()=>{
+                        setLoading(true)
+                        let payload = {
+                            "is_approve": true
+                        }
+                        axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
+                            console.log(res.data);
+                            setLoading(false)
+                            getBids()
+                            setIsModalVisible(false);
+                            message.success("کاربر تایید شد")
+
+                        }).catch(err => {
+                            setLoading(false)
+                            setIsModalVisible(false);
+                            message.error("با خطا مواجه شدید")
+                            console.log(err);
+                        })
+                    }}>
+                        تایید
+                    </Button> ,
+                    <Button danger  onClick={()=>{
+                        setLoading(true)
+                        let payload = {
+                            "is_approve": false
+                        }
+                        axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
+                            console.log(res.data);
+                            setLoading(false)
+                            message.success("کاربر رد شد")
+                            getBids()
+                            setIsModalVisible(false);
+
+                        }).catch(err => {
+                            console.log(err);
+                            setLoading(false)
+                            setIsModalVisible(false);
+                            message.error("با خطا مواجه شدید")
+
+                        })
+                    }}>
+                        رد
+                    </Button>
+                    ,
+                    <Button type="button" onClick={()=> setIsModalVisible(false)}>
+                        بستن
+                    </Button>
+                ]}
                 okText="تایید"
                 cancelText="رد"
-                okButtonProps={{className: "btn btn-default"}}
-                cancelButtonProps={{className: "btn-outline-gray"}}
+                okButtonProps={{className: "btn btn-default",loading:loading}}
+                cancelButtonProps={{className: "btn-outline-gray",loading:loading}}
+
             >
+
                 <Row style={{marginTop: 10}}>
                     <Col span={12}>نام و نام خانوادگی</Col>
                     <Col span={12}>{Details?.applicant?.first_name + " " + Details?.applicant?.last_name}</Col>
@@ -157,6 +247,7 @@ function AuctionsRequests(props) {
                     </Row>
                     : ""}
             </Modal>
+
         </div>
 
 
