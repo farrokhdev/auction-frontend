@@ -97,7 +97,6 @@ const Bid = ({artwork}) => {
         setCurrentValue(currentValue + value)
     }
     const handleDecrease = () => {
-
     }
     const onFinish = (values) => {
         console.log(values)
