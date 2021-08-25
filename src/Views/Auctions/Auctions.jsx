@@ -211,10 +211,7 @@ function Auctions() {
                                                                 data-Date="2021/06/05 16:09:00"
                                                             >
                                                                 {item.status !== "CLOSED" ?
-                                                                    <div className="ended">
-                                                                        <div className="text">حراج به پایان رسید</div>
-                                                                    </div>
-                                                                    :
+
                                                                     <Timer
                                                                         initialTime={timeExpire(item.end_time)}
                                                                         direction="backward"
@@ -231,6 +228,10 @@ function Auctions() {
                                                                             </div>
                                                                         )}
                                                                     </Timer>
+                                                                    :
+                                                                    <div className="ended">
+                                                                        <div className="text">حراج به پایان رسید</div>
+                                                                    </div>
                                                                 }
                                                             </div>
                                                         </div>
