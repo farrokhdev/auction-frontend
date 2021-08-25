@@ -99,8 +99,8 @@ function AuctionHouses() {
                                                                 {item.home_auction_name}
                                                                 </h3>
                                                             <h6 className="default">
-                                                                هنرهای تجسمی
-                                                                
+                                                                {/* هنرهای تجسمی */}
+                                                                {item.home_auction_type}
                                                                 </h6>
                                                         </div>
                                                         <span

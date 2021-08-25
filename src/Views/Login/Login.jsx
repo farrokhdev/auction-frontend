@@ -3,11 +3,13 @@ import Logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // import {withRouter} from "react-router-dom"
-import {setPhoneNumber , loginSuccess} from '../../redux/reducers/auth/auth.actions'
+import { setPhoneNumber, loginSuccess } from '../../redux/reducers/auth/auth.actions'
 import { BASE_URL } from "../../utils/index";
-import {setToken} from "../../utils/utils";
-import {connect} from 'react-redux';
-import { Form, Input,message} from "antd";
+import { setToken } from "../../utils/utils";
+import { connect } from 'react-redux';
+import { Form, Input, message } from "antd";
+import GoogleLogin from "react-google-login";
+
 
 function Login(props) {
 
@@ -17,30 +19,52 @@ function Login(props) {
 
 
 
-  const handleRequestLogin = (e)=>{
+  const handleRequestLogin = (e) => {
     e.preventDefault();
 
     let payload = {
-      "id" : userName,
-      "password" : Password,
+      "id": userName,
+      "password": Password,
     }
-    axios.post(`${BASE_URL}/account/login/`,payload)
-      .then(resp=>{
-        console.log("token =>",resp.data.data.result);
-        if(resp.data.code === 200){
+    axios.post(`${BASE_URL}/account/login/`, payload)
+      .then(resp => {
+        console.log("token =>", resp.data.data.result);
+        if (resp.data.code === 200) {
           setToken(resp.data.data.result);
-          props.setPhoneNumber({username : payload.id})
-          props.loginSuccess({userName : payload.id})
+          props.setPhoneNumber({ username: payload.id })
+          props.loginSuccess({ userName: payload.id })
           message.success("به اسمارت آکشن خوش آمدید")
           window.location.href = "#/"
-      }
+        }
       })
-      .catch(err=>{
+      .catch(err => {
         message.error("کاربری با این مشخصات یافت نشد")
-        console.log("error message",err);
+        console.log("error message", err);
       })
   }
 
+  const responseGoogle = (response) => {
+
+    console.log("Sign Up", response);
+
+    let payload = {
+      "access_token": response.tokenObj.access_token
+    }
+
+    console.log("Ehsan", payload)
+
+    axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
+      setToken(res.data.data.result)
+      message.success("به اسمارت آکشن خوش آمدید")
+      setTimeout(() => {
+        window.location.href = "#/"
+      }, 500);
+    })
+      .catch(err => {
+        console.log(err)
+      })
+
+  }
 
   return (
     <>
@@ -62,42 +86,42 @@ function Login(props) {
               را پذیرفته‌اید.
             </p>
             <Form.Item
-                className="w-100"
-                name="user-name"
-                rules={[
-                  {
-                    required: true,
-                    message: "تکمیل این فیلد ضروری است",
-                  }
-            ]}>
-                <Input 
+              className="w-100"
+              name="user-name"
+              rules={[
+                {
+                  required: true,
+                  message: "تکمیل این فیلد ضروری است",
+                }
+              ]}>
+              <Input
                 type="text"
                 className="default-input"
-                   onChange={(e) => {
-                     setuserName(e.target.value);
-                  }}
-                  placeholder="شماره همراه یا ایمیل"/>
-              </Form.Item>
-              <Form.Item
-                  className="w-100"
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "تکمیل این فیلد ضروری است",
-                    },
-                    {
-                      // min: 8,
-                      message: "حداقل 8 کارکتر مورد نیاز است",
-                  }
+                onChange={(e) => {
+                  setuserName(e.target.value);
+                }}
+                placeholder="شماره همراه یا ایمیل" />
+            </Form.Item>
+            <Form.Item
+              className="w-100"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "تکمیل این فیلد ضروری است",
+                },
+                {
+                  // min: 8,
+                  message: "حداقل 8 کارکتر مورد نیاز است",
+                }
               ]}>
-                  <Input className="default-input"
-                      type="password"
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                    placeholder="رمز عبور"/>
-                </Form.Item>
+              <Input className="default-input"
+                type="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                placeholder="رمز عبور" />
+            </Form.Item>
             <div className="btn-container">
               <button
                 type="submit"
@@ -106,6 +130,20 @@ function Login(props) {
               >
                 ورود
               </button>
+            </div>
+            <div class="s-footer-block">
+              <div class="or-divider">
+                <span> یا </span>
+              </div>
+              <GoogleLogin
+                className="btn-google-login btn-google mt-5"
+                clientId="204714783619-coki1sldsv5iev552dcmtcpfj1sn77sg.apps.googleusercontent.com"
+                buttonText=" ثبت نام با گوگل"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+
+              />
             </div>
             <div className="l-footer-block">
               <div className="form-check">
@@ -138,18 +176,18 @@ function Login(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      setPhoneNumber : (data) => dispatch(setPhoneNumber(data)),
-      // setProfile : (data) => dispatch(setProfile(data)),
-      loginSuccess : (data) => dispatch(loginSuccess(data)),
+    setPhoneNumber: (data) => dispatch(setPhoneNumber(data)),
+    // setProfile : (data) => dispatch(setProfile(data)),
+    loginSuccess: (data) => dispatch(loginSuccess(data)),
   }
 }
 
 const mapStateToProps = (store) => {
   return {
-      auth : store.authReducer,
-      panelReducer : store.panelReducer
+    auth: store.authReducer,
+    panelReducer: store.panelReducer
   }
 }
 
 
-export default connect(mapStateToProps , mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
