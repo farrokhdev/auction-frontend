@@ -20,6 +20,7 @@ function AfterLoginPage() {
     const [lastProducts, setLastProducts] = useState(0)
     const [lastAuctions, setLastAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
+    let numeral = require('numeral');
 
     const getData = () => {
         setLoading(true)
@@ -272,7 +273,7 @@ function AfterLoginPage() {
                                                 </div>
                                                 <div className="price-block">
                                                     <span>قیمت پایه:</span>
-                                                    <span className="price">{item.price}<span
+                                                    <span className="price">{numeral(item.price).format('0,0')}<span
                                                         className="price-unit">تومان</span></span>
                                                 </div>
                                             </div>
