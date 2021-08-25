@@ -24,11 +24,13 @@ const Bid = ({artwork}) => {
                 console.log('-------------------------------------------->WebSocket Client Connected');
             };
             client.onmessage = (message) => {
-                if(message.length > 4){
-                    let messageArray = message.slice(2, message.length - 2).split(',');
-                    // console.log("[[26, 100.0, 300.0]]".splice(']' || '[' , ''));
-                    console.log(message,messageArray);
-                    setCurrentVPrice(messageArray[messageArray.length - 1]);
+                console.log(message);
+                if(message?.data?.length > 4){
+                    let messageArray = message.data.slice(2, message.data.length - 2).split(',');
+                    let priceFinal=Math.floor(messageArray[messageArray.length - 1]);
+                    setCurrentVPrice(priceFinal);
+                    setCurrentValue(priceFinal)
+                    form.setFieldsValue({price: 0})
                 }
 
             };
