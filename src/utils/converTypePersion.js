@@ -58,28 +58,28 @@ export function convertMouthToPersian(value) {
         case '03':
             return 'خرداد'
 
-        case '05':
+        case '04':
             return 'تیر'
         
-        case '06':
+        case '05':
             return 'مرداد'   
             
-        case '07':
+        case '06':
             return 'شهریور'
 
-        case '08':
+        case '07':
             return 'آبان'
 
-        case '09':
+        case '08':
             return 'آذر'
     
-        case '10':
+        case '09':
             return 'دی'
             
-        case '11':
+        case '10':
             return 'بهمن'   
                 
-        case '12':
+        case '11':
             return 'اسفند'
     
 
@@ -117,6 +117,21 @@ export function convertStatus(value) {
 
         default:
             return 'غیر فعال'
+    }
+}
+
+// Conver Currency English String To Persion
+export function convertCurrencyType(value) {
+    
+    switch (value) {
+
+        case "toman" :
+            return 'تومان'
+        case "dollar" :
+            return 'دلار'
+
+        default:
+            return 'تومان'
     }
 }
 

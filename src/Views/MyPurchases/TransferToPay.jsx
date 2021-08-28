@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Modal, Button } from "antd";
-import img9 from "../../images/img-9.jpg";
 import { Link } from 'react-router-dom';
+import { convertCurrencyType } from '../../utils/converTypePersion';
 
 
-function TransferToPay() {
+function TransferToPay({paymentMethod , price , currency , artist , artworkTitle , homAuction , url}) {
     const [loading, setloading] = useState(false);
     const [visible, setvisible] = useState(false);
+
+
 
     const showModal = () => {
         setvisible(true)
@@ -27,14 +29,15 @@ function TransferToPay() {
 
     return (
         <>
-
-            <Button type="primary" className="btn-default mrgl20" onClick={showModal}>
-                پرداخت
+            <Button 
+                className={paymentMethod === "OFFLINE" ? "d-none" : "btn-default mrgl20"} 
+                type="primary"  
+                onClick={showModal}>
+                مشاهده و پرداخت
             </Button>
             <Modal
-                // className=" "
+                
                 centered title={
-
                     <div className="d-flex align-items-center justify-content-between">
                         <h2 className="default titr">ارسال به درگاه</h2>
 
@@ -55,11 +58,11 @@ function TransferToPay() {
                 footer={[
                     <div class="modal-footer">
 
-                        <Button key="back" className="btn btn-gray" onClick={handleCancel}>
+                        <Button key="back" className="btn btn-gray align-items-center" onClick={handleCancel}>
                             بستن
                         </Button>
-                        <Button key="submit" type="btn btn-default" loading={loading} onClick={handleOk}>
-                            ثبت
+                        <Button   key="submit" type="btn btn-default" loading={loading} onClick={handleOk}>
+                            پرداخت
                         </Button>
 
                     </div>
@@ -69,31 +72,31 @@ function TransferToPay() {
                     <div className="transfer-to-pay">
                         <div className="d-flex flex-row">
                             <div className="artwork-img">
-                                <img src={img9} width="317" height="280" alt="" className="img-fluid" />
+                                <img src={url} width="317" height="280" alt="" className="img-fluid" />
                             </div>
                             <div className="artwork-info-left col-md-6">
                                 <div>
-                                    <span>صادق ادهم</span>
-                                    <h5 className="default">از سری سقاخانه</h5>
+                                    <span>{artist ? artist : ''}</span>
+                                    <h5 className="default">{artworkTitle ? artworkTitle : ''}</h5>
                                 </div>
-                                <p className="mrgt10">از<Link to="/">کالکشن 7</Link></p>
+                                <p className="mrgt10">از<Link to="/">{homAuction}</Link></p>
                             </div>
                         </div>
                         <div className="pay-info">
-                            <div className="payinfo-price">
+                            {/* <div className="payinfo-price">
                                 <span>270 <span className="price-unit">تومان</span></span>
                                 <span className="price-title">آخرین پیشنهاد شما</span>
                             </div>
-                            <span className="sep"></span>
+                            <span className="sep"></span> */}
                             <div className="payinfo-price">
-                                <span>300 <span className="price-unit">تومان</span></span>
-                                <span className="price-title">قیمت فعلی</span>
+                                <span>{price ? price : ''} <span className="price-unit">{price ? convertCurrencyType(currency) : ''}</span></span>
+                                <span className="price-title">قیمت قابل پرداخت</span>
                             </div>
-                            <span className="sep"></span>
+                            {/* <span className="sep"></span>
                             <div className="payinfo-price">
                                 <span>350 <span className="price-unit">تومان</span></span>
                                 <span className="price-title">بیشترین پیشنهاد خودکار شما</span>
-                            </div>
+                            </div> */}
                         </div>
                         {/* <div className="input-group">
                             <label className="default-lable textalign-center">بیشترین پیشنهاد خودکار خود را وارد نمایید.</label>

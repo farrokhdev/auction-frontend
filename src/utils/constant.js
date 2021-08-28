@@ -26,6 +26,7 @@ module.exports = {
     REFRESH_TOKEN: `/account/token/refresh/`,
     WEB_SOCKET_BID: id => `/price/${id}`,
     BID:`/bidding/`,
+    LIST_MY_WON_PERCHACE : `/sale/product/me/`
 
 }
 
