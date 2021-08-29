@@ -203,7 +203,7 @@ const Bid = ({artwork}) => {
                                             className="plus"/>
                                     <span className="unit">تومان</span>
                                 </div>
-                                <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
+                                {!!artwork?.join_auction_request_state ?  <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button> : null}
                             </div>
                         </Form> : <p className="text-center category-icon">
                             {artwork?.sale_status ? 'محصول فروخته شد':
