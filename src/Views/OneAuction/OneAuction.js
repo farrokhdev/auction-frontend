@@ -11,6 +11,7 @@ import moment from "jalali-moment";
 import {Link} from "react-router-dom";
 import img from "../../images/img-1.jpg";
 import {useSelector} from "react-redux";
+import { AuctionStatusTextBtn } from "../../utils/converTypePersion";
 
 function OneAuction(props) {
     const {is_logged_in} = useSelector((state) => state.authReducer)
@@ -237,11 +238,13 @@ function OneAuction(props) {
                                                         <button type="button" className="btn btn-gray view">مشاهده
                                                             زنده
                                                         </button> : ""}
-                                                    <Link to={`/buyer-register/${Auction?.id}`}>
+                                                    {/* <Link to={`/buyer-register/${Auction?.id}`}>
                                                         <button type="button" className="btn btn-main join">عضویت <span
                                                             className="">در حراج</span>
                                                         </button>
-                                                    </Link>
+                                                    </Link> */}
+
+                                                    {AuctionStatusTextBtn(Auction?.status , Auction?.user_is_enrolled)}
                                                 </>
                                                 :
 

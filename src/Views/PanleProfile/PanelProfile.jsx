@@ -40,6 +40,7 @@ function PanelProfile() {
             .then(resp => {
                 if ((resp.data.code === 200) && resp.data?.data?.result) {
                     setData(resp.data.data.result)
+                    // setData({...data , address :  resp.data.data.result.home_auction_location?.address})
                 }
             })
             .catch(err => {

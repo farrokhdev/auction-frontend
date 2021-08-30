@@ -18,6 +18,8 @@ function EditPanelProfile(props) {
         form.setFieldsValue(data)
     }, [data])
 
+    // console.log("form =>>>" , form);
+
 
     const sendData = (values) => {
         setLoading(true)
@@ -119,7 +121,7 @@ function EditPanelProfile(props) {
 
                             <div className="input-group notapproved">
                                 <label className="default-lable">شماره همراه</label>
-                                {data.mobile && data.mobile.length ?
+                                {data?.mobile && data?.mobile.length ?
                                     <>
                                         <Form.Item
                                             className="w-100"
@@ -142,7 +144,7 @@ function EditPanelProfile(props) {
                         <div className="col-md-6">
                             <div className="input-group notapproved">
                                 <label className="default-lable">ایمیل</label>
-                                {data.email && data.email.length ?
+                                {data?.email && data?.email?.length ?
                                     <>
                                         <Form.Item
                                             className="w-100"

@@ -24,15 +24,18 @@ function VerificationCode(props) {
       .then(res=>{
         console.log("Verification",res);
 
-        if(res.data.data.statusCode === 200){
-          message.success("لطفا وارد شوید")
-          window.location.href = "#/login"
+        if(res.data.data.statusCode === 400){
+          message.error("کد نامعتبر است")
           // setTimeout(() => {
           //   window.location.href = "#/register-set-password";
           // }, 1000);
           // history.push("/register-set-password")
         }else{
-          message.error("کد نامعتبر است")
+          // message.error success("کد نامعتبر است")
+          setTimeout(() => {
+            message.success("لطفا وارد شوید")
+            window.location.href = "#/login"
+          }, 500);
 
         }
       })

@@ -15,7 +15,7 @@ import {BASE_URL} from "../../utils";
 import queryString from "query-string";
 import {Pagination, Spin} from "antd";
 import Timer from 'react-compound-timer'
-
+import { AuctionStatusTextBtn , AuctionType } from '../../utils/converTypePersion';
 function Auctions() {
 
     const [Auctions, setAuctions] = useState("");
@@ -109,22 +109,7 @@ function Auctions() {
 
     }
 
-    function AuctionType(type) {
-        switch (type) {
-            case "SECOND_HIDDEN":
-                return "دومین پیشنهاد"
-            case "HIDDEN":
-                return "اولین پیشنهاد"
-            case "PERIODIC":
-                return "حراج مدت دار "
-            case "ONLINE":
-                return "حراج آنلاین"
-            case "LIVE  ":
-                return "حراج زنده"
-            default:
-                return ""
-        }
-    }
+
 
     function timeExpire(time) {
         let expire = new Date(time)
@@ -143,7 +128,7 @@ function Auctions() {
             <Spin spinning={loading}>
                 <main className="innercontent" id="all-auctions">
                     <div className="container innercontainer">
-                        <Maintitle title={'حراج ها'} handleSetOrdering={handleSetOrdering}/>
+                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering}/>
                         <div className="row">
                             <Sidebar
                                 params={params}
@@ -211,7 +196,7 @@ function Auctions() {
                                                                 className="jumbotron countdown show end date-show"
                                                                 data-Date="2021/06/05 16:09:00"
                                                             >
-                                                                {item.status !== "CLOSED" ?
+                                                                {item?.status === "CLOSED" ?
                                                                     <div className="ended">
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
@@ -236,24 +221,16 @@ function Auctions() {
                                                             </div>
                                                         </div>
                                                         <div className="col-sm-7 textalign-left">
-                                                            <Link to={`/one-auction/${item.id}`}>
-                                                                <button type="button" className="btn btn-gray ms-2">
-                                                                    <FontAwesomeIcon icon={faEye}/>
-                                                                    مشاهده {AuctionType(item.type)}
 
+                                                            {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item.id}`}>
+                                                                <button type="button" className="btn btn-gray ms-2">
+                                                                    <FontAwesomeIcon className="mx-1" icon={faEye}/>
+                                                                    مشاهده زنده
                                                                 </button>
-                                                            </Link>
-                                                            {item.status === "CLOSED" ?
-                                                                <button type="button" class="btn btn-lightpink">حراج به
-                                                                    پایان رسید</button>
-                                                                :
-                                                                <Link to={`/buyer-register/${item?.id}`}>
-                                                                    <button type="button" className="btn btn-main join">
-                                                                        {/* عضویت در حراج  */}
-                                                                        {item.status !== "CLOSED" ? "عضویت در حراج" : "ثبت نطر"}
-                                                                    </button>
-                                                                </Link>
-                                                            }
+                                                            </Link> : null}
+
+                                                            {AuctionStatusTextBtn(item?.status , item?.user_is_enrolled , item.id)}
+                                                      
                                                         </div>
                                                     </div>
                                                 </div>

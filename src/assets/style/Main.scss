@@ -1411,6 +1411,19 @@ footer .brdrtop span {
   color: #1b1b1b !important;
 }
 
+
+.btn-lightgreenbg {
+  height: 34px !important;
+  border-radius: 17px !important;
+  color: var(--lightgreen) !important;
+  padding: 5px 15px !important;
+  font-size: 12px !important;
+  position: relative !important;
+  background-color: var(--lightgreenbg) !important;
+  min-width: 120px;
+}
+
+
 .search-box .btn-lightpink {
   margin-top: 10px;
 }
