@@ -17,11 +17,10 @@ function SigningContract(props) {
     const [artwork, setArtwork] = useState()
     const [params, setParams] = useState({})
     const [loading, setLoading] = useState(false)
-    console.log("Art --->>>> ",artwork);
 
     useEffect(() => {
         getProduct();
-    }, [params])
+    }, [params , props.match.params.id])
 
     const getProduct = ()=>{
         setLoading(true)
@@ -61,7 +60,7 @@ function SigningContract(props) {
 
             <MainInfoArtwork artwork={artwork} />
             <DetailAboutArtworkInfo artwork={artwork}/>
-            <LastAuctionsSection id={artwork?.latest_auction?.id}/>
+            <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
 
             </div>
             </Spin>

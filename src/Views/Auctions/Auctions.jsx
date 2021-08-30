@@ -31,6 +31,7 @@ function Auctions() {
         ordering: '',
         auction_houses__home_auction_name: [],
         type: [],
+        visible_in_site : true
     })
 
     const queries = queryString.stringify(params);

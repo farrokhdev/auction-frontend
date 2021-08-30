@@ -49,11 +49,11 @@ function OneAuction(props) {
 
     const getAuction = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/auctions/${id}`)
+        axios.get(`${BASE_URL}/sale/auctions/${id}/`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setAuction(resp.data.data.result)
-                    axios.get(`${BASE_URL}/account/home-auction/${resp.data.data.result?.house?.id}`).then(res => {
+                    axios.get(`${BASE_URL}/account/home-auction/${resp.data.data.result?.house?.id}/`).then(res => {
                         setHouseDetail(res.data.data.result);
                     }).catch(err => {
                         console.error(err)
