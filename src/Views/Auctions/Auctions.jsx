@@ -210,7 +210,7 @@ function Auctions() {
                                                                 className="jumbotron countdown show end date-show"
                                                                 data-Date="2021/06/05 16:09:00"
                                                             >
-                                                                {item.status !== "CLOSED" ?
+                                                                {item.status === "ACTIVE" ?
 
                                                                     <Timer
                                                                         initialTime={timeExpire(item.end_time)}
@@ -229,9 +229,21 @@ function Auctions() {
                                                                         )}
                                                                     </Timer>
                                                                     :
+                                                                    ''
+                                                                }
+                                                                {item.status === "CLOSED" ?
+
                                                                     <div className="ended">
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
+                                                                    :''
+                                                                }
+                                                                {item.status === "PREPARING" ?
+
+                                                                    <div className="ended">
+                                                                        <div className="text">حراج در حال آماده سازی</div>
+                                                                    </div>
+                                                                    :''
                                                                 }
                                                             </div>
                                                         </div>
