@@ -1,12 +1,12 @@
 import React , {useState} from 'react'
 import bookmark_icon from '../../images/bookmark.svg';
 import bookmark_active_icon from '../../images/bookmark-active.svg';
-import img from '../../images/img-1.jpg'
+import {Link} from 'react-router-dom'
 import {useSelector} from "react-redux";
 
 
-function CardArtwork({price_base , price_range , house_auction , title , lot_num}) {
-    const {is_logged_in} = useSelector((state) => state.authReducer)
+function CardArtwork({price_base , price_range , house_auction , title , lot_num , url }) {
+    // const {is_logged_in} = useSelector((state) => state.authReducer)
     const [is_saved, setIs_saved] = useState(false)
 
     const handleToggleBookmark = () => {
@@ -16,16 +16,18 @@ function CardArtwork({price_base , price_range , house_auction , title , lot_num
 return (
 
     <div dir='rtl' className="artwork-block">
-        <div className="artwork-img">
-            <img src={img} width="317" height="280" alt="" className="img-fluid" />
-            <div class="artwork-category">
-                {!is_saved ?
-                <img onClick={handleToggleBookmark} style={{height :'20px' , width : '15px'}} className="icon-bookmark"
-                    src={bookmark_active_icon} lt="bookmark_icon" /> :
-                <img onClick={handleToggleBookmark} style={{height :'20px' , width : '15px'}} className=""
-                    src={bookmark_icon} alt="bookmark_icon" />}
+        
+            <div className="artwork-img">
+                <img src={url}  alt="image-artwork" className="img-fluid image-artwork" />
+                <div class="artwork-category">
+                    {!is_saved ?
+                    <img onClick={handleToggleBookmark} style={{height :'20px' , width : '15px'}} className="icon-bookmark"
+                        src={bookmark_active_icon} lt="bookmark_icon" /> :
+                    <img onClick={handleToggleBookmark} style={{height :'20px' , width : '15px'}} className=""
+                        src={bookmark_icon} alt="bookmark_icon" />}
+                </div>
             </div>
-        </div>
+        
         <div className="block-body">
             <div className="ra-row">
                 <div className="ra-col">
@@ -54,7 +56,6 @@ return (
                     </div>
                 </div>
             </div>
-            {is_logged_in ? <button type="button" className="btn-lightpink">ثبت پیشنهاد</button> :''}
         </div>
     </div>
 

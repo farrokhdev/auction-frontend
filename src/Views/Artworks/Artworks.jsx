@@ -178,7 +178,7 @@ function Artworks() {
                                         return (
                                             <div className="col" key={key}>
                                                     <div className="artwork-img">
-                                                        <Link to={`/artworks/${item.id}`} class="artwork-block">
+                                                        <Link to={`/artworks/${item?.id}`} class="artwork-block">
                                                             <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"270px"}}>
                                                             </div>
                                                         {/*<img*/}
