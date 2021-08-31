@@ -200,23 +200,30 @@ function Auctions() {
                                                                     <div className="ended">
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
-                                                                    :
-                                                                    <Timer
-                                                                        initialTime={timeExpire(item.end_time)}
-                                                                        direction="backward"
-                                                                    >
-                                                                        {() => (
-                                                                            <div style={{
-                                                                                direction: 'ltr',
-                                                                                textAlign: "right"
-                                                                            }}>
-                                                                                <Timer.Days/> :
-                                                                                <Timer.Hours/> :
-                                                                                <Timer.Minutes/> :
-                                                                                <Timer.Seconds/>
-                                                                            </div>
-                                                                        )}
-                                                                    </Timer>
+                                                                    :<div>
+                                                                        {item?.status === "PREPARING" &&
+                                                                            <Timer
+                                                                                initialTime={timeExpire(item.end_time)}
+                                                                                direction="backward"
+                                                                            >
+                                                                                {() => (
+                                                                                    <div style={{
+                                                                                        direction: 'ltr',
+                                                                                        textAlign: "right"
+                                                                                    }}>
+                                                                                        <Timer.Days/> :
+                                                                                        <Timer.Hours/> :
+                                                                                        <Timer.Minutes/> :
+                                                                                        <Timer.Seconds/>
+                                                                                    </div>
+                                                                                )}
+                                                                            </Timer>
+                                                                        }
+                                                                        {
+                                                                            item?.status === "ACTIVE" && <span>درحال برگزاری</span>
+                                                                        }
+
+                                                                    </div>
                                                                 }
                                                             </div>
                                                         </div>
