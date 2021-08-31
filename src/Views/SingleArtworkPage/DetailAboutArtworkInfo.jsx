@@ -65,7 +65,7 @@ function DetailAboutArtworkInfo({artwork}) {
                         <div className="row">
                             <div className="col-md-3">
                                 <div className="bg-shadow tl-shadow10">
-                                    <img src={img} width="500" height="500" alt=""/>
+                                    <img src={artwork?.media?.exact_url} width="500" height="500" alt=""/>
                                 </div>
                             </div>
                             <div className="col-md-9">
