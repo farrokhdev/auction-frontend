@@ -244,7 +244,7 @@ function OneAuction(props) {
                                                         </button>
                                                     </Link> */}
 
-                                                    {AuctionStatusTextBtn(Auction?.status , Auction?.user_is_enrolled)}
+                                                    {AuctionStatusTextBtn(Auction?.status , Auction?.user_is_enrolled,Auction?.id)}
                                                 </>
                                                 :
 
@@ -386,7 +386,9 @@ function OneAuction(props) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        { is_logged_in ? <Link to={`/artworks/${item?.id}`} type="button" className="text-center btn-lightpink">ثبت پیشنهاد
+                                                        { is_logged_in ? <Link to={`/artworks/${item?.id}`} type="button" className="text-center btn-lightpink">
+
+                                                            {item?.product_status==="on_stage" ?  'ثبت پیشنهاد' : 'مشاهده محصول'}
                                                         </Link> :''}
                                                     </div>
                                                 </div>

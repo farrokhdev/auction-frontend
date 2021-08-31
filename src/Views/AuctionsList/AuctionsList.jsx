@@ -13,6 +13,7 @@ import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
 import {DELETE_AUCTION,EDIT_AUCTION} from "../../utils/constant";
+import {getProfile} from "../../redux/reducers/profile/profile.actions";
 
 function AuctionsList() {
 
@@ -23,7 +24,7 @@ function AuctionsList() {
     const [loading, setLoading] = useState(false);
     const {confirm} = Modal;
     const dispatch = useDispatch();
-
+    const {role,id} = useSelector((state) => state.profileReducer)
     function showDeleteConfirm(id) {
 
         confirm({
@@ -61,7 +62,7 @@ function AuctionsList() {
 
     const getProducts = (page_size = pageSize) => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/auctions/?page_size=${page_size}`)
+        axios.get(`${BASE_URL}/sale/auctions/?home_auction=${id}&page_size=${page_size}`)
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
@@ -75,7 +76,7 @@ function AuctionsList() {
             })
     }
     const getBids = () => {
-        axios.get(`${BASE_URL}/bidding/?auction=1`)
+        axios.get(`${BASE_URL}/bidding/?auction=${id}`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setAuctions(resp.data.data.result)
@@ -87,10 +88,17 @@ function AuctionsList() {
             })
     }
 
-    useEffect(() => {
-        getProducts()
-
-    }, [])
+    // useEffect(() => {
+    //     getProducts()
+    //
+    // }, [])
+    useEffect(()=>{
+        // setSelectProduct([])
+        if(id)
+            getProducts()
+        if (!id)
+            dispatch(getProfile())
+    },[])
 
     function AuctionType(type) {
 
@@ -166,11 +174,11 @@ function AuctionsList() {
                                                     }
                                                 </td>
                                                 <td>
-                                                    {item?.status=== "CLOSED" ? <Link to={"/auctions-list/bids/" + item.id}>
+                                                    <Link to={"/auctions-list/bids/" + item.id}>
                                                         <button type="button" className="btn-outline-gray">
                                                             {item.bids_count} پیشنهاد
                                                         </button>
-                                                    </Link>:''}
+                                                    </Link>
                                                 </td>
                                                 <td>
                                                     <Link to={"/auctions-list/requests/" + item.id}>
@@ -201,6 +209,7 @@ function AuctionsList() {
                                         }) : ""}
                                         </tbody>
                                     </table>
+                                {(Auctions && Auctions.length < 1) ? <p className="text-center ">شما تا به حال حراجی ثبت نکرده اید</p>:''}
                                 </div>
 
                             </div>

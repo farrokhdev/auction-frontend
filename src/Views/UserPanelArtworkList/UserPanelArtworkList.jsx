@@ -21,6 +21,7 @@ function UserPanelArtworkList() {
     const dispatch = useDispatch();
     useEffect(()=>{
         // setSelectProduct([])
+        if(id)
         getData()
         if (!id)
             dispatch(getProfile())

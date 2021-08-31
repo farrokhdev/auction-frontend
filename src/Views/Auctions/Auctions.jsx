@@ -230,7 +230,7 @@ function Auctions() {
                                                             </Link> : null}
 
                                                             {AuctionStatusTextBtn(item?.status , item?.user_is_enrolled , item.id)}
-                                                      
+
                                                         </div>
                                                     </div>
                                                 </div>
