@@ -22,7 +22,6 @@ export function convertTypePersian(value) {
 
 
 export function convertTypeAuctionToPersian(value) {
-    
     switch (value) {
         case"LIVE":
             return 'زنده'
