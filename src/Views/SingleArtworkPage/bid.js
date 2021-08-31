@@ -117,8 +117,8 @@ const Bid = ({artwork}) => {
         }
         axios.post(`${BASE_URL}${BID}`, payload)
             .then(resp => {
-                if (resp.data.code === 200) {
-                    setAuction(resp.data.data.result)
+                if (resp.status === 201) {
+                    message.success("درخواست شما با موفقیت ارسال شد")
                 }
                 setLoading(false)
             })
@@ -163,7 +163,7 @@ const Bid = ({artwork}) => {
                         {/*    </div>*/}
                         {/*    <button type="button" className="btn-lightpink">ثبت</button>*/}
                         {/*</div>*/}
-                        {artwork?.product_status==="on_stage" ? <Form onFinish={onFinish} form={form} className="m-0"
+                        {((artwork?.product_status==="on_stage") && (artwork?.join_auction_request_state)) ? <Form onFinish={onFinish} form={form} className="m-0"
                             // initialValues={{ inputValue: 0 }}
                                wrapperCol={{span: 24}}>
                             <div className="general-bid-block">
@@ -190,14 +190,25 @@ const Bid = ({artwork}) => {
                                             className="plus"/>
                                     <span className="unit">تومان</span>
                                 </div>
-                                {!!artwork?.join_auction_request_state ?  <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button> : null}
+                               <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
                             </div>
                         </Form> : <p className="text-center category-icon">
                             {artwork?.sale_status ? 'محصول فروخته شد':
-                                <span>
-                                {(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
-                                {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}
-                            </span>}
+                                <p>
+                                    <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
+                                        {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
+                                    <div>
+                                        {artwork?.join_auction_request_state ?? <p>
+                                        <span>برای ثبت پیشنهاد باید   </span>
+                                        <Link to={`/buyer-register/${artwork?.latest_auction?.id}`} className="d-inline-block">   عضو حراجی </Link>
+                                        <span>   باشید</span>
+                                    </p>}
+                                        {artwork?.join_auction_request_state===false && <p>
+                                           درخواست  عضویت شما در انتظار تایید حراجی است
+                                        </p>}
+                                    </div>
+
+                            </p>}
                         </p>}
                     </div> :
                     <p className="text-center mt-4 ">
