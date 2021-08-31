@@ -244,7 +244,7 @@ function OneAuction(props) {
                                                         </button>
                                                     </Link> */}
 
-                                                    {AuctionStatusTextBtn(Auction?.status , Auction?.user_is_enrolled)}
+                                                    {AuctionStatusTextBtn(Auction?.status , Auction?.user_is_enrolled,Auction?.id)}
                                                 </>
                                                 :
 

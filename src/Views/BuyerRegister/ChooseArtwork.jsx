@@ -14,6 +14,7 @@ function Chooseartwork(props) {
 
   useEffect(()=>{
     setSelectProduct([])
+    if(props.id)
     getData()
   },[auction])
   const getData = (e="") => {

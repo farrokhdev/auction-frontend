@@ -8,7 +8,7 @@ import {Button, Form, Spin,message} from "antd";
 import {ADD_AUCTION, BID, HOME_AUCITONS, WEB_SOCKET_BID} from "../../utils/constant";
 
 
-const Bid = ({artwork}) => {
+const Secret = ({artwork}) => {
     const [loading, setLoading] = useState(false)
     const [auction, setAuction] = useState({})
     const [steps, setSteps] = useState([])
@@ -17,30 +17,7 @@ const Bid = ({artwork}) => {
     const [currentSuggestValue, setCurrentSuggestValue] = useState(0)
     const {is_logged_in} = useSelector((state) => state.authReducer)
     const [form] = Form.useForm();
-    useEffect(() => {
-        if (artwork?.id && (artwork?.product_status==="on_stage")) {
-            let client = new W3CWebSocket(WEB_SOCKET_BASE_URL + WEB_SOCKET_BID(artwork?.latest_auction?.id));
-            client.onopen = () => {
-                console.log('-------------------------------------------->WebSocket Client Connected');
-            };
-            client.onmessage = (message) => {
-                console.log(message);
-                if(message?.data?.length > 4){
-                    let messageArray = message.data.slice(2, message.data.length - 2).split(',');
-                    let priceFinal=Math.floor(messageArray[messageArray.length - 1]);
-                    setCurrentVPrice(priceFinal);
-                    setCurrentValue(priceFinal)
-                    form.setFieldsValue({price: 0})
-                }
 
-            };
-            client.onclose =(event)=> {
-                console.log('The connection has been closed successfully.',event);
-            };
-            return ()=>client.close(3001,"disconnect");
-        }
-
-    }, [artwork])
 
     useEffect(() => {
 
@@ -118,6 +95,7 @@ const Bid = ({artwork}) => {
         axios.post(`${BASE_URL}${BID}`, payload)
             .then(resp => {
                 if (resp.data.code === 200) {
+                    message.success("درخواست شما با موفقیت ارسال شد")
                     setAuction(resp.data.data.result)
                 }
                 setLoading(false)
@@ -125,7 +103,7 @@ const Bid = ({artwork}) => {
             .catch(err => {
                 console.error(err.response);
                 if(err.response?.data?.data?.error_message)
-                message.error(err.response?.data?.data?.error_message)
+                    message.error(err.response?.data?.data?.error_message)
                 else
                     message.error("با خطا مواجه شدید")
                 setLoading(false)
@@ -165,7 +143,7 @@ const Bid = ({artwork}) => {
                         {/*</div>*/}
                         {artwork?.product_status==="on_stage" ? <Form onFinish={onFinish} form={form} className="m-0"
                             // initialValues={{ inputValue: 0 }}
-                               wrapperCol={{span: 24}}>
+                                                                      wrapperCol={{span: 24}}>
                             <div className="general-bid-block">
                                 <div className="number-input">
 
@@ -179,15 +157,14 @@ const Bid = ({artwork}) => {
                                             },
                                         ]}>
                                         <input className="default-inputquantity" min="0" name="quantity" type="number"
-                                               readOnly={true}
                                                placeholder="انتخاب پیشنهاد"/>
                                     </Form.Item>
                                     {/*<button*/}
                                     {/*    type="button"*/}
                                     {/*    onClick={handleDecrease}/>*/}
-                                    <button onClick={handleIncrease}
-                                            type="button"
-                                            className="plus"/>
+                                    {/*<button onClick={handleIncrease}*/}
+                                    {/*        type="button"*/}
+                                    {/*        className="plus"/>*/}
                                     <span className="unit">تومان</span>
                                 </div>
                                 {!!artwork?.join_auction_request_state ?  <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button> : null}
@@ -196,7 +173,7 @@ const Bid = ({artwork}) => {
                             {artwork?.sale_status ? 'محصول فروخته شد':
                                 <span>
                                 {(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
-                                {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}
+                                    {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}
                             </span>}
                         </p>}
                     </div> :
@@ -212,4 +189,4 @@ const Bid = ({artwork}) => {
     );
 };
 
-export default Bid;
+export default Secret;
