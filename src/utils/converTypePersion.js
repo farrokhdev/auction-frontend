@@ -37,10 +37,10 @@ export function convertTypeAuctionToPersian(value) {
             return 'زمان‌دار'
 
         case"HIDDEN":
-            return 'حراج با پیشنهاد قیمت مخفی'
+            return ' با پیشنهاد قیمت مخفی'
         
         case"SECOND_HIDDEN":
-            return 'حراج با دومین پیشنهاد قیمت مخفی'
+            return ' با دومین پیشنهاد قیمت مخفی'
 
         default:
             return ''

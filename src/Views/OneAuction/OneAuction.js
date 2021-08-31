@@ -344,9 +344,10 @@ function OneAuction(props) {
                                             return (
                                                 <div className="artwork-block" key={key}>
                                                     <div className="artwork-img">
-                                                        <img src={item?.media?.exact_url} width="317" height="280"
-                                                             alt=""
-                                                             className="img-fluid"/>
+                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}/>
+                                                        {/*<img src={item?.media?.exact_url} width="317" height="280"*/}
+                                                        {/*     alt=""*/}
+                                                        {/*     className="img-fluid"/>*/}
                                                         <div className="artwork-category"
                                                              onClick={() => setBookmark(!bookmark)}>
                                                         <span onClick={() =>

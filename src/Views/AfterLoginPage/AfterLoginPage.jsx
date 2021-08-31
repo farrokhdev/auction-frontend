@@ -332,7 +332,7 @@ function AfterLoginPage() {
                                                     </div>
                                                 </div>
                                                 <h3 className="default">{item.title}</h3>
-                                                {item.status !== "CLOSED" ?
+                                                {item.status === "CLOSED" ?
                                                     <button type="button" class="btn btn-basic">حراج به پایان رسید</button>
                                                     :
 
