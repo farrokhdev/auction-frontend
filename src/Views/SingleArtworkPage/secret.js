@@ -168,16 +168,17 @@ const Secret = ({artwork}) => {
                                 <p>
                                     <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
                                         {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
-                                    <div>
+                                    { (artwork?.product_status !== "after_stage") ?<div>
                                         {artwork?.join_auction_request_state ?? <p>
                                             <span>برای ثبت پیشنهاد باید   </span>
-                                            <Link to={`/buyer-register/${artwork?.latest_auction?.id}`} className="d-inline-block">   عضو حراجی </Link>
+                                            <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
+                                                  className="d-inline-block"> عضو حراجی </Link>
                                             <span>   باشید</span>
                                         </p>}
-                                        {artwork?.join_auction_request_state===false && <p>
-                                            درخواست  عضویت شما در انتظار تایید حراجی است
+                                        {artwork?.join_auction_request_state === false && <p>
+                                            درخواست عضویت شما در انتظار تایید حراجی است
                                         </p>}
-                                    </div>
+                                    </div> :''}
 
                                 </p>}
                         </p>}
