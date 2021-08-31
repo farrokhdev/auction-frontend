@@ -123,9 +123,8 @@ const Bid = ({artwork}) => {
                 setLoading(false)
             })
             .catch(err => {
-                console.error(err.response);
-                if(err.response?.data?.data?.error_message)
-                message.error(err.response?.data?.data?.error_message)
+                if(err.response?.data?.message)
+                    message.error(err.response?.data?.message)
                 else
                     message.error("با خطا مواجه شدید")
                 setLoading(false)
