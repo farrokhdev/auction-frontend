@@ -14,6 +14,7 @@ const Bid = ({artwork}) => {
     const [steps, setSteps] = useState([])
     const [currentValue, setCurrentValue] = useState(0)
     const [currentPrice, setCurrentVPrice] = useState(0)
+    const [currentSuggest, setCurrentSuggest] = useState(0)
     const [currentSuggestValue, setCurrentSuggestValue] = useState(0)
     const {is_logged_in} = useSelector((state) => state.authReducer)
     const [form] = Form.useForm();
@@ -21,15 +22,16 @@ const Bid = ({artwork}) => {
         if (artwork?.id && (artwork?.product_status==="on_stage")) {
             let client = new W3CWebSocket(WEB_SOCKET_BASE_URL + WEB_SOCKET_BID(artwork?.latest_auction?.id));
             client.onopen = () => {
-                console.log('-------------------------------------------->WebSocket Client Connected');
+                console.log('-->WebSocket Client Connected');
             };
             client.onmessage = (message) => {
                 console.log(message);
                 if(message?.data?.length > 4){
                     let messageArray = message.data.slice(2, message.data.length - 2).split(',');
-                    let priceFinal=Math.floor(messageArray[messageArray.length - 1]);
+                    let priceFinal=Math.floor(messageArray[3]);
                     setCurrentVPrice(priceFinal);
                     setCurrentValue(priceFinal)
+                    setCurrentSuggest(Math.floor(messageArray[2]))
                     form.setFieldsValue({price: 0})
                 }
 
@@ -47,6 +49,9 @@ const Bid = ({artwork}) => {
         if (artwork?.bidding_details?.max_bid) {
             setCurrentVPrice(artwork?.bidding_details?.max_bid)
             setCurrentValue(artwork?.bidding_details?.max_bid)
+        }
+        if (artwork?.bidding_details?.total_bids) {
+            setCurrentSuggest(artwork?.bidding_details?.total_bids)
         }
 
 
@@ -149,7 +154,7 @@ const Bid = ({artwork}) => {
                             <span className="price">{currentPrice}</span>
                             <span className="unit"> تومان</span>
                             <span className="bids-num">(<span
-                                className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : ''}</span>پیشنهاد)</span>
+                                className="mx-1">{currentSuggest}</span>پیشنهاد)</span>
                         </div>
                     </div>
                 </div>
