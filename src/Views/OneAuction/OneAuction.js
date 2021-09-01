@@ -202,18 +202,19 @@ function OneAuction(props) {
                                             {Auction?.status !== "CLOSED" ?
                                                 <>
                                                     <div className="auction-date">
-                                            <span className="start-date">
-                                                {Auction && Auction?.start_time !== 'None' ? moment(Auction?.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}
+                                            <span className="start-date ps-2">
+                                                {Auction && Auction?.start_time !== 'None' ? moment(Auction?.start_time, 'YYYY-MM-DD').locale('fa').format('D MMMM') : ""}
                                             </span>
-                                                        <span className="end-date">
-                                                {Auction && Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}
+                                                        <span className="end-date pe-2">
+                                                {Auction && Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY-MM-DD').locale('fa').format('D MMMM') : ""}
                                             </span>
                                                     </div>
                                                     <div className="auction-time">
                                             <span
-                                                className="start-time"> {moment(Auction?.start_time, 'YYYY/MM/DD').locale('fa').format('HH')}</span>
-                                                        <span className="end-time">
-                                                {Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY/MM/DD').locale('fa').format('HH') : ""}
+                                                className="start-time ps-1"> {moment(Auction?.start_time, 'YYYY-MM-DD HH:mm').locale('fa').format('HH')}</span>
+
+                                                        <span className="end-time pe-2">
+                                                {Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY-MM-DD HH:mm').locale('fa').format('HH') : ""}
                                             </span>
                                                     </div>
                                                 </>
@@ -403,7 +404,7 @@ function OneAuction(props) {
                                                                                 <div className="db-right ">
                                                                                     <span className="db-title">قیمت فعلی</span>
                                                                                     <div className="price-block">
-                                                                                        <span className="price">{item?.bidding_details?.max_bid}</span>
+                                                                                        <span className="price">{item?.bidding_details?.max_bid || 0}</span>
                                                                                         <span className="unit"> تومان</span>
                                                                                         <span className="unit" style={{fontSize:'.7rem'}}> ({item?.bidding_details?.total_bids}) پیشنهاد</span>
                                                                                     </div>
