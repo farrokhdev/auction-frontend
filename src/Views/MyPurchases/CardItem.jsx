@@ -10,7 +10,7 @@ function CardItem(props) {
             <div className="col">
                 <div className="col-flex">
                     <div className="artwork-img">
-                        <img src={props.media?.exact_url} width="317" height="280" alt="auction_img" className="img-fluid" />
+                        <img src={props?.exactUrl} width="317" height="280" alt="auction_img" className="img-fluid" />
                     </div>
                     <div className="artwork-info">
                         <div className="artwork-info-left col-md-6">
@@ -49,7 +49,7 @@ function CardItem(props) {
                                     artist={props.artist} 
                                     artworkTitle={props.artworkTitle}
                                     homAuction={props.Link}
-                                    url={props.media?.exact_url}
+                                    url={props?.exactUrl}
                                     />
                             </div>
                         </div>
