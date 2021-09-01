@@ -11,6 +11,7 @@ import {BASE_URL} from "../../utils";
 import queryString from 'query-string';
 import moment from "jalali-moment";
 import Timer from "react-compound-timer";
+import numberWithCommas from "../../components/threeNumber";
 
 function Artworks() {
 
@@ -229,7 +230,7 @@ function Artworks() {
                                                                 item?.latest_auction?.status === "ACTIVE" ?
                                                                     <div className="auction-calender">
                                                                     <Timer
-                                                                        initialTime={timeExpire(item.end_time)}
+                                                                        initialTime={timeExpire(item?.latest_auction.end_time)}
                                                                         direction="backward"
                                                                     >
                                                                         {({
@@ -299,13 +300,13 @@ function Artworks() {
                                                                 item?.sale_status ?
                                                                     <div className="price-block">
                                                                         <span>قیمت فروخته شده:</span>
-                                                                        <span className="price">{item?.price}<span
+                                                                        <span className="price">{numberWithCommas(item?.price)}<span
                                                                             className="price-unit">تومان</span></span>
                                                                     </div>
                                                                     :
                                                                     <div className="price-block">
                                                                         <span>قیمت فعلی:</span>
-                                                                        <span className="price">{item?.price}<span
+                                                                        <span className="price">{numberWithCommas(item?.price)}<span
                                                                             className="price-unit">تومان</span></span>
                                                                     </div>
                                                             }
@@ -313,7 +314,7 @@ function Artworks() {
                                                         :
                                                         <div className="price-block">
                                                             <span>قیمت پایه:</span>
-                                                            <span className="price">{item?.price}<span
+                                                            <span className="price">{numberWithCommas(item?.price)}<span
                                                                 className="price-unit">تومان</span></span>
                                                         </div>
                                                     }
