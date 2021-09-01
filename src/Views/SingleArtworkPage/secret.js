@@ -101,9 +101,8 @@ const Secret = ({artwork}) => {
                 setLoading(false)
             })
             .catch(err => {
-                console.error(err.response);
-                if(err.response?.data?.data?.error_message)
-                    message.error(err.response?.data?.data?.error_message)
+                if(err.response?.data?.message)
+                    message.error(err.response?.data?.message)
                 else
                     message.error("با خطا مواجه شدید")
                 setLoading(false)
@@ -125,7 +124,7 @@ const Secret = ({artwork}) => {
                     <div className="db-right ">
                         <span className="db-title bluecolor">قیمت فعلی</span>
                         <div className="price-block bluecolor">
-                            <span className="price">{currentPrice}</span>
+                            <span className="price">{artwork?.price}</span>
                             <span className="unit"> تومان</span>
                             <span className="bids-num">(<span
                                 className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : ''}</span>پیشنهاد)</span>
@@ -168,16 +167,17 @@ const Secret = ({artwork}) => {
                                 <p>
                                     <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
                                         {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
-                                    <div>
+                                    { (artwork?.product_status !== "after_stage") ?<div>
                                         {artwork?.join_auction_request_state ?? <p>
                                             <span>برای ثبت پیشنهاد باید   </span>
-                                            <Link to={`/buyer-register/${artwork?.latest_auction?.id}`} className="d-inline-block">   عضو حراجی </Link>
+                                            <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
+                                                  className="d-inline-block"> عضو حراجی </Link>
                                             <span>   باشید</span>
                                         </p>}
-                                        {artwork?.join_auction_request_state===false && <p>
-                                            درخواست  عضویت شما در انتظار تایید حراجی است
+                                        {artwork?.join_auction_request_state === false && <p>
+                                            درخواست عضویت شما در انتظار تایید حراجی است
                                         </p>}
-                                    </div>
+                                    </div> :''}
 
                                 </p>}
                         </p>}

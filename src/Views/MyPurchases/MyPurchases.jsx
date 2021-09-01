@@ -74,7 +74,10 @@ function MyPurchases() {
                               
                                     price={item?.bidding_details?.max_bid ? item?.bidding_details?.max_bid : ''}
                                     paymentMethod={item?.payment_method}
-                                    />) : null}
+                                    media={item?.media}
+                                    />) :<p className="text-center">
+                                    شما تا به حال در هیچ حراجی برنده نشده اید
+                                </p>}
 
                             </div>
 

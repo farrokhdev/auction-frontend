@@ -11,7 +11,8 @@ import moment from "jalali-moment";
 import {Link} from "react-router-dom";
 import img from "../../images/img-1.jpg";
 import {useSelector} from "react-redux";
-import { AuctionStatusTextBtn } from "../../utils/converTypePersion";
+import {AuctionStatusTextBtn} from "../../utils/converTypePersion";
+import numberWithCommas from "../../components/threeNumber";
 
 function OneAuction(props) {
     const {is_logged_in} = useSelector((state) => state.authReducer)
@@ -133,13 +134,13 @@ function OneAuction(props) {
     }
 
     const addBookmark = (data, action) => {
-        if (action){
+        if (action) {
             axios.delete(`${BASE_URL}/following/${data}`)
                 .then(resp => {
                     getProducts()
                 })
         } else {
-            axios.post(`${BASE_URL}/following/` , {
+            axios.post(`${BASE_URL}/following/`, {
                 "content_type": "product",
                 "object_id": data,
                 "activity_type": "mark"
@@ -202,18 +203,19 @@ function OneAuction(props) {
                                             {Auction?.status !== "CLOSED" ?
                                                 <>
                                                     <div className="auction-date">
-                                            <span className="start-date">
-                                                {Auction && Auction?.start_time !== 'None' ? moment(Auction?.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}
+                                            <span className="start-date ps-2">
+                                                {Auction && Auction?.start_time !== 'None' ? moment(Auction?.start_time, 'YYYY-MM-DD').locale('fa').format('D MMMM') : ""}
                                             </span>
-                                                        <span className="end-date">
-                                                {Auction && Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}
+                                                        <span className="end-date pe-2">
+                                                {Auction && Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY-MM-DD').locale('fa').format('D MMMM') : ""}
                                             </span>
                                                     </div>
                                                     <div className="auction-time">
                                             <span
-                                                className="start-time"> {moment(Auction?.start_time, 'YYYY/MM/DD').locale('fa').format('HH')}</span>
-                                                        <span className="end-time">
-                                                {Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY/MM/DD').locale('fa').format('HH') : ""}
+                                                className="start-time ps-1"> {moment(Auction?.start_time, 'YYYY-MM-DD HH:mm').locale('fa').format('HH')}</span>
+
+                                                        <span className="end-time pe-2">
+                                                {Auction?.end_time !== 'None' ? moment(Auction?.end_time, 'YYYY-MM-DD HH:mm').locale('fa').format('HH') : ""}
                                             </span>
                                                     </div>
                                                 </>
@@ -244,7 +246,7 @@ function OneAuction(props) {
                                                         </button>
                                                     </Link> */}
 
-                                                    {AuctionStatusTextBtn(Auction?.status , Auction?.user_is_enrolled,Auction?.id)}
+                                                    {AuctionStatusTextBtn(Auction?.status, Auction?.user_is_enrolled, Auction?.id)}
                                                 </>
                                                 :
 
@@ -252,7 +254,7 @@ function OneAuction(props) {
                                                     <div className="auction-closed">حراج بسته شد</div>
                                                     <div className="auction-total-price">
                                                         <span>مبلغ کل فروش:  </span>
-                                                        <span>{Auction?.products_total_price} تومان</span>
+                                                        <span>{numberWithCommas(Auction?.products_total_price)} تومان</span>
                                                     </div>
                                                 </>
 
@@ -344,14 +346,18 @@ function OneAuction(props) {
                                             return (
                                                 <div className="artwork-block" key={key}>
                                                     <div className="artwork-img">
-                                                        <img src={item?.media?.exact_url} width="317" height="280"
-                                                             alt=""
-                                                             className="img-fluid"/>
+                                                        <div className="image-custom-back" style={{
+                                                            backgroundImage: `url(${item.media.exact_url})`,
+                                                            height: "250px"
+                                                        }}/>
+                                                        {/*<img src={item?.media?.exact_url} width="317" height="280"*/}
+                                                        {/*     alt=""*/}
+                                                        {/*     className="img-fluid"/>*/}
                                                         <div className="artwork-category"
                                                              onClick={() => setBookmark(!bookmark)}>
                                                         <span onClick={() =>
                                                             addBookmark(
-                                                                item?.following?.bookmark?.is_active?
+                                                                item?.following?.bookmark?.is_active ?
                                                                     item?.following?.bookmark?.id :
                                                                     item?.id, item?.following?.bookmark?.is_active)
                                                         }
@@ -373,23 +379,80 @@ function OneAuction(props) {
                                                                 <span className="db-title">تخمین</span>
                                                                 <div className="price-block">
                                                                 <span
-                                                                    className="price">{item?.min_price} - {item?.max_price}</span>
+                                                                    className="price">{numberWithCommas(item?.min_price)} - {numberWithCommas(item?.max_price)}</span>
                                                                     <span className="unit"> تومان</span>
                                                                 </div>
                                                             </div>
                                                             <span className="seprator brdrbefor"/>
-                                                            <div className="db-right ">
-                                                                <span className="db-title">قیمت پایه</span>
-                                                                <div className="price-block">
-                                                                    <span className="price">{item?.price}</span>
-                                                                    <span className="unit"> تومان</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        { is_logged_in ? <Link to={`/artworks/${item?.id}`} type="button" className="text-center btn-lightpink">
+                                                            {
+                                                                Auction?.status === "CLOSED" ?
+                                                                    <div>
+                                                                        {
+                                                                            item?.sale_status ?
+                                                                                <div className="db-right text-success">
+                                                                                    <span className="db-title"> پیشنهاد نهایی</span>
+                                                                                    <div className="price-block">
+                                                                                        <span
+                                                                                            className="price text-success">{numberWithCommas(item?.bidding_details?.max_bid) || 0}</span>
+                                                                                        <span
+                                                                                            className="unit text-success"> تومان</span>
+                                                                                        <span className="text-success"
+                                                                                              style={{fontSize: '.7rem'}}> ({item?.bidding_details?.total_bids}) پیشنهاد</span>
 
-                                                            {item?.product_status==="on_stage" ?  'ثبت پیشنهاد' : 'مشاهده محصول'}
-                                                        </Link> :''}
+                                                                                    </div>
+                                                                                </div>
+                                                                                :
+                                                                                <div className="db-right ">
+                                                                                    <span className="db-title">قیمت فعلی</span>
+                                                                                    <div className="price-block">
+                                                                                        <span className="price">{numberWithCommas(item?.bidding_details?.max_bid) || 0}</span>
+                                                                                        <span className="unit"> تومان</span>
+                                                                                        <span className="unit" style={{fontSize:'.7rem'}}> ({item?.bidding_details?.total_bids}) پیشنهاد</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                        }
+                                                                    </div>
+
+                                                                    :
+                                                                                <div className="db-right ">
+                                                                                    <span className="db-title">قیمت پایه</span>
+                                                                                    <div className="price-block">
+                                                                                        <span className="price">{numberWithCommas(item?.price)}</span>
+                                                                                        <span className="unit"> تومان</span>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                        }
+
+                                                        </div>
+                                                        {is_logged_in ? <div>
+
+                                                                {
+                                                                    item?.sale_status ?
+                                                                        <Link to={`/artworks/${item?.id}`} type="button"
+                                                                              className="text-center btn-lightgreenbg">
+                                                                            فروخته شد
+                                                                        </Link> :
+                                                                        <div>
+                                                                            {
+                                                                                Auction?.status === "CLOSED" ?
+                                                                                    <Link to={`/artworks/${item?.id}`} type="button"
+                                                                                          className="text-center btn-lightpink">
+                                                                                       فروخته نشد
+                                                                                    </Link>
+                                                                                    :
+                                                                                    <Link to={`/artworks/${item?.id}`} type="button"
+                                                                                                                     className="text-center btn-lightpink">
+                                                                                    {item?.product_status === "on_stage" ? 'ثبت پیشنهاد' : 'مشاهده محصول'}
+                                                                                </Link>
+                                                                            }
+                                                                        </div>
+
+                                                                }
+
+                                                            </div>
+
+                                                            : ''}
                                                     </div>
                                                 </div>
                                             )

@@ -200,23 +200,37 @@ function Auctions() {
                                                                     <div className="ended">
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
-                                                                    :
-                                                                    <Timer
-                                                                        initialTime={timeExpire(item.end_time)}
-                                                                        direction="backward"
-                                                                    >
-                                                                        {() => (
-                                                                            <div style={{
-                                                                                direction: 'ltr',
-                                                                                textAlign: "right"
-                                                                            }}>
-                                                                                <Timer.Days/> :
-                                                                                <Timer.Hours/> :
-                                                                                <Timer.Minutes/> :
-                                                                                <Timer.Seconds/>
-                                                                            </div>
-                                                                        )}
-                                                                    </Timer>
+                                                                    :<div>
+                                                                        {item?.status === "ACTIVE" &&
+                                                                            <Timer
+                                                                                initialTime={timeExpire(item.end_time)}
+                                                                                direction="backward"
+                                                                            >
+                                                                                {({ start, resume, pause, stop, reset, timerState }) => (
+                                                                                    <div style={{
+                                                                                        direction: 'ltr',
+                                                                                        textAlign: "right"
+                                                                                    }}>
+
+                                                                                        <span className="d-inline-block ">ساعت</span>
+                                                                                         <span className="d-inline-block"><Timer.Hours/> </span>
+                                                                                         <span className="d-inline-block">:</span>
+                                                                                         <span className="d-inline-block"><Timer.Minutes/></span>
+                                                                                         <span className="d-inline-block">:</span>
+                                                                                        <span className="d-inline-block "><Timer.Seconds/></span>
+
+                                                                                        <span className="d-inline-block mx-2">  و  </span>
+                                                                                        <span className="d-inline-block ">  روز  </span>
+                                                                                        <span className="d-inline-block "><Timer.Days/></span>
+                                                                                    </div>
+                                                                                )}
+                                                                            </Timer>
+                                                                        }
+                                                                        {
+                                                                            item?.status === "PREPARING" && <span>درحال آماده سازی</span>
+                                                                        }
+
+                                                                    </div>
                                                                 }
                                                             </div>
                                                         </div>

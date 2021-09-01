@@ -132,6 +132,7 @@ function AddArtWorks(props) {
                 if(resp.data.code === 201){
                     message.success('اثر با موفقیت ثبت شد.');
                     setPosting(false)
+                    window.location.href="#/panel-sell-advice"
                 }
             })
             .catch(err=>{

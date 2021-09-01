@@ -52,7 +52,7 @@ function AuctionsBids(props) {
                                 <div className="container g-0 d-flex justify-content-between">
                                     <div className="main-title">
                                         <h2 className="default titr">
-                                            پیشنهادات{bids.title}
+                                            پیشنهادات{bids?.title}
                                         </h2>
                                     </div>
                                     <Link to="/auctions-list">
