@@ -201,7 +201,7 @@ function Auctions() {
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
                                                                     :<div>
-                                                                        {item?.status === "PREPARING" &&
+                                                                        {item?.status === "ACTIVE" &&
                                                                             <Timer
                                                                                 initialTime={timeExpire(item.end_time)}
                                                                                 direction="backward"
@@ -227,7 +227,7 @@ function Auctions() {
                                                                             </Timer>
                                                                         }
                                                                         {
-                                                                            item?.status === "ACTIVE" && <span>درحال برگزاری</span>
+                                                                            item?.status === "PREPARING" && <span>درحال آماده سازی</span>
                                                                         }
 
                                                                     </div>

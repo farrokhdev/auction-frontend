@@ -10,6 +10,7 @@ import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import queryString from 'query-string';
 import moment from "jalali-moment";
+import Timer from "react-compound-timer";
 
 function Artworks() {
 
@@ -49,13 +50,13 @@ function Artworks() {
     }
 
     const addBookmark = (data, action) => {
-        if (action){
+        if (action) {
             axios.delete(`${BASE_URL}/following/${data}`)
                 .then(resp => {
                     getProducts()
                 })
         } else {
-            axios.post(`${BASE_URL}/following/` , {
+            axios.post(`${BASE_URL}/following/`, {
                 "content_type": "product",
                 "object_id": data,
                 "activity_type": "mark"
@@ -123,8 +124,8 @@ function Artworks() {
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
             ...params,
-            date_before : dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
-            date_after : dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : ""
+            date_before: dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
+            date_after: dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : ""
             // date_after: '2021-01-05',
             // date_before: '2021-03-07'
         })
@@ -154,6 +155,17 @@ function Artworks() {
     }
 
 
+    function timeExpire(time) {
+        let expire = new Date(time)
+        let now = new Date()
+        if (expire > now) {
+            return expire - now
+        } else {
+            return 0
+
+        }
+    }
+
     return (
         <div style={{overflow: 'hidden'}}>
             <Header/>
@@ -177,10 +189,13 @@ function Artworks() {
                                     {Products && Products.length >= 1 ? Products.map((item, key) => {
                                         return (
                                             <div className="col" key={key}>
-                                                    <div className="artwork-img">
-                                                        <Link to={`/artworks/${item?.id}`} class="artwork-block">
-                                                            <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"270px"}}>
-                                                            </div>
+                                                <div className="artwork-img">
+                                                    <Link to={`/artworks/${item?.id}`} class="artwork-block">
+                                                        <div className="image-custom-back" style={{
+                                                            backgroundImage: `url(${item.media.exact_url})`,
+                                                            height: "270px"
+                                                        }}>
+                                                        </div>
                                                         {/*<img*/}
                                                         {/*    src={item.media.exact_url ? item.media.exact_url : ''}*/}
                                                         {/*    width="998"*/}
@@ -188,40 +203,121 @@ function Artworks() {
                                                         {/*    alt=""*/}
                                                         {/*    className="img-fluid"*/}
                                                         {/*/>*/}
-                                                        </Link>
-                                                        <div className="artwork-category">
+                                                    </Link>
+                                                    <div className="artwork-category">
                                                             <span onClick={() =>
                                                                 addBookmark(
-                                                                    item?.following?.bookmark?.is_active?
-                                                                    item?.following?.bookmark?.id :
+                                                                    item?.following?.bookmark?.is_active ?
+                                                                        item?.following?.bookmark?.id :
                                                                         item?.id, item?.following?.bookmark?.is_active)
                                                             }
-                                                            className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")}/>
-                                                            {convertToEn(item?.auctions ? item?.auctions[0]?.type : '')}
-                                                            {/* <span className="category-icon live-icon">زنده</span> */}
-                                                        </div>
+                                                                  className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")}/>
+                                                        {convertToEn(item?.auctions ? item?.auctions[0]?.type : '')}
+                                                        {/* <span className="category-icon live-icon">زنده</span> */}
                                                     </div>
-                                                    <div className="block-body text-center">
-                                                        <h6 className="default gray50 ">{item?.persian_artist_name}</h6>
-                                                        <h4 className="default">{item?.artwork_title}</h4>
+                                                </div>
+                                                <div className="block-body text-center">
+                                                    <h6 className="default gray50 ">{item?.persian_artist_name}</h6>
+                                                    <h4 className="default">{item?.artwork_title}</h4>
+                                                    {item?.latest_auction?.status === "CLOSED" ?
                                                         <div className="auction-calender">
-                                                            <div className="auction-date">
-                                                                <span className="start-date">
-                                                                    {item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}
-                                                                </span>
-                                                                <span className="end-date">{item?.latest_auction?.end_time ? moment(item?.latest_auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}</span>
-                                                            </div>
-                                                            <div className="auction-time">
-                                                                <span className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('HH') : ""}</span>
-                                                            </div>
+                                                            حراجی به پایان رسید
                                                         </div>
+                                                        :
+                                                        <div>
+                                                            {
+                                                                item?.latest_auction?.status === "ACTIVE" ?
+                                                                    <div className="auction-calender">
+                                                                    <Timer
+                                                                        initialTime={timeExpire(item.end_time)}
+                                                                        direction="backward"
+                                                                    >
+                                                                        {({
+                                                                              start,
+                                                                              resume,
+                                                                              pause,
+                                                                              stop,
+                                                                              reset,
+                                                                              timerState
+                                                                          }) => (
+                                                                            <div style={{
+                                                                                direction: 'ltr',
+                                                                                textAlign: "center",
+                                                                            }}>
+
+                                                                                <span className="d-inline-block text-secondary">به پایان</span>     <span className="d-inline-block text-secondary">/</span>
+                                                                             <span className="d-inline-block">
+                                                                                <span
+                                                                                    className="d-inline-block text-danger">ساعت</span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger"><Timer.Hours/> </span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger">:</span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger"><Timer.Minutes/></span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger">:</span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger"><Timer.Seconds/></span>
+
+                                                                                <span
+                                                                                    className="d-inline-block text-danger mx-2">  و  </span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger">  روز  </span>
+                                                                                <span
+                                                                                    className="d-inline-block text-danger"><Timer.Days/></span>
+                                                                                </span>
+
+
+                                                                            </div>
+
+                                                                        )}
+                                                                    </Timer></div>
+                                                                    : <div>{
+                                                                        item?.latest_auction?.status ?
+                                                                        <div className="auction-calender">
+                                                                <div className="auction-date">
+                                                                <span className="start-date">
+                                                            {item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY-MM-DD').locale('fa').format('DD MMMM') : ""}
+                                                                </span>
+                                                                <span
+                                                                className="end-date">{item?.latest_auction?.end_time ? moment(item?.latest_auction?.end_time, 'YYYY-MM-DD').locale('fa').format('DD MMMM') : ""}</span>
+                                                                </div>
+                                                                <div className="auction-time">
+                                                                <span
+                                                                className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY-MM-DD HH').locale('fa').format('HH') : ""}</span>
+                                                                </div>
+                                                                        </div> :
+                                                                 ""
+                                                                    }</div>
+                                                            }
+                                                        </div>
+
+                                                    }
+                                                    {item?.latest_auction?.status === "CLOSED" ? <div>
+                                                            {
+                                                                item?.sale_status ?
+                                                                    <div className="price-block">
+                                                                        <span>قیمت فروخته شده:</span>
+                                                                        <span className="price">{item?.price}<span
+                                                                            className="price-unit">تومان</span></span>
+                                                                    </div>
+                                                                    :
+                                                                    <div className="price-block">
+                                                                        <span>قیمت فعلی:</span>
+                                                                        <span className="price">{item?.price}<span
+                                                                            className="price-unit">تومان</span></span>
+                                                                    </div>
+                                                            }
+                                                        </div>
+                                                        :
                                                         <div className="price-block">
                                                             <span>قیمت پایه:</span>
-                                                            <span className="price">
-                          {item?.price}<span className="price-unit">تومان</span>
-                        </span>
+                                                            <span className="price">{item?.price}<span
+                                                                className="price-unit">تومان</span></span>
                                                         </div>
-                                                    </div>
+                                                    }
+                                                </div>
                                             </div>
                                         )
                                     }) : ""}
