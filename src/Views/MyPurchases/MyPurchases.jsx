@@ -63,7 +63,7 @@ function MyPurchases() {
                                     artworkTitle={item?.artwork_title}
                                     Link={item?.latest_auction?.house?.home_auction_name}
                                     ArtworkLink=" گالری آرتیبیشن"
-
+                                    exactUrl={item?.media?.exact_url}
                                     date={item?.bidding_details?.max_bid_date ? 
                                         `${momentJalaali(item?.bidding_details?.max_bid_date).format(`jDD`)}  
                                         ${convertMouthToPersian(momentJalaali(item?.bidding_details?.max_bid_date).format(`jMM`))}   
