@@ -10,25 +10,35 @@ import {message, Pagination, Spin} from "antd";
 import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {LoadingOutlined} from "@ant-design/icons";
+import {useDispatch, useSelector} from "react-redux";
+import {getProfile} from "../../redux/reducers/profile/profile.actions";
 
 function UserPanelSellAdvice() {
     const [Products, setProducts] = useState("");
     const [loading, setLoading] = useState(false)
     const [Suggestions, setSuggestions] = useState("");
     const [countProducts, setCountProducts] = useState(0)
+    const dispatch = useDispatch();
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
         is_approve: ""
     })
+    const {id} = useSelector((state) => state.profileReducer)
     const [Posting, setPosting] = useState(false);
 
 
     const queries = queryString.stringify(params);
 
+    useEffect(() => {
+        if (!id)
+            dispatch(getProfile())
+    }, [])
+
     const getProducts = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/product/?${queries}`)
+        if(id)
+        axios.get(`${BASE_URL}/sale/product/?owner__id=${id}&${queries}`)
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
@@ -70,7 +80,7 @@ function UserPanelSellAdvice() {
             .then(resp=>{
                 setPosting(false)
                 console.log(resp)
-                if(resp.data.code === 201){
+                if((resp.data.code === 201)||(resp.data.code === 200)){
                     message.success('درخواست شما با موفقیت ثبت شد.');
                 }
             })
@@ -328,21 +338,27 @@ function UserPanelSellAdvice() {
                                                 </div>
                                                 <h6 className="default">{item?.auction_house.first_name + " " + item?.auction_house.last_name}</h6>
                                             </div>
-                                            <div className="td-right">
+                                            {item?.is_selected?
+                                                <p className="text-success">این پیشنهاد توسط شما تایید شد</p>
+                                                : <div className="td-right">
                                                 <button
                                                     disabled={Posting}
                                                     type="button"
-                                                    className={Posting ? "btn-default" :"btn-gray"}
+                                                    data-bs-dismiss="modal"
+                                                    className={Posting ? "btn-default" : "btn-gray"}
                                                     onClick={() => approvedSuggest(item.id, false)}
                                                 >
-                                                    {Posting ? <LoadingOutlined style={{marginLeft: 5}} /> : ""}رد کردن</button>
+                                                    {Posting ? <LoadingOutlined style={{marginLeft: 5}}/> : ""}رد کردن
+                                                </button>
                                                 <button
                                                     disabled={Posting}
                                                     type="button"
-                                                    className={Posting ? "btn-gray" :"btn-default"}
+                                                    data-bs-dismiss="modal"
+                                                    className={Posting ? "btn-gray" : "btn-default"}
                                                     onClick={() => approvedSuggest(item.id, true)}
-                                                >{Posting ? <LoadingOutlined style={{marginLeft: 5}} /> : ""}تایید</button>
-                                            </div>
+                                                >{Posting ? <LoadingOutlined style={{marginLeft: 5}}/> : ""}تایید
+                                                </button>
+                                            </div>}
                                         </div>
                                         <div className="ticket-detail-body">
                                             <p>{item.suggestion}</p>

@@ -305,7 +305,7 @@ function AfterLoginPage() {
                                             <div className="bg-shadow tl-shadow20">
                                                 <div className="artwork-img">
                                                     <Link to={`/one-auction/${item.id}`} className="artwork-block ">
-                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}>
+                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"280px"}}>
                                                             {/*<img src={item.media.exact_url} className="w-100 img-fluid" alt="gallery" />*/}
                                                         </div>
                                                     {/*<img src={pic4} width="570" height="470" alt=""*/}

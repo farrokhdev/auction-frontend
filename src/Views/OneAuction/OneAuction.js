@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import img from "../../images/img-1.jpg";
 import {useSelector} from "react-redux";
 import {AuctionStatusTextBtn} from "../../utils/converTypePersion";
+import numberWithCommas from "../../components/threeNumber";
 
 function OneAuction(props) {
     const {is_logged_in} = useSelector((state) => state.authReducer)
@@ -253,7 +254,7 @@ function OneAuction(props) {
                                                     <div className="auction-closed">حراج بسته شد</div>
                                                     <div className="auction-total-price">
                                                         <span>مبلغ کل فروش:  </span>
-                                                        <span>{Auction?.products_total_price} تومان</span>
+                                                        <span>{numberWithCommas(Auction?.products_total_price)} تومان</span>
                                                     </div>
                                                 </>
 
@@ -378,7 +379,7 @@ function OneAuction(props) {
                                                                 <span className="db-title">تخمین</span>
                                                                 <div className="price-block">
                                                                 <span
-                                                                    className="price">{item?.min_price} - {item?.max_price}</span>
+                                                                    className="price">{numberWithCommas(item?.min_price)} - {numberWithCommas(item?.max_price)}</span>
                                                                     <span className="unit"> تومان</span>
                                                                 </div>
                                                             </div>
@@ -392,7 +393,7 @@ function OneAuction(props) {
                                                                                     <span className="db-title"> پیشنهاد نهایی</span>
                                                                                     <div className="price-block">
                                                                                         <span
-                                                                                            className="price text-success">{item?.bidding_details?.max_bid || 0}</span>
+                                                                                            className="price text-success">{numberWithCommas(item?.bidding_details?.max_bid) || 0}</span>
                                                                                         <span
                                                                                             className="unit text-success"> تومان</span>
                                                                                         <span className="text-success"
@@ -404,7 +405,7 @@ function OneAuction(props) {
                                                                                 <div className="db-right ">
                                                                                     <span className="db-title">قیمت فعلی</span>
                                                                                     <div className="price-block">
-                                                                                        <span className="price">{item?.bidding_details?.max_bid || 0}</span>
+                                                                                        <span className="price">{numberWithCommas(item?.bidding_details?.max_bid) || 0}</span>
                                                                                         <span className="unit"> تومان</span>
                                                                                         <span className="unit" style={{fontSize:'.7rem'}}> ({item?.bidding_details?.total_bids}) پیشنهاد</span>
                                                                                     </div>
@@ -416,7 +417,7 @@ function OneAuction(props) {
                                                                                 <div className="db-right ">
                                                                                     <span className="db-title">قیمت پایه</span>
                                                                                     <div className="price-block">
-                                                                                        <span className="price">{item?.price}</span>
+                                                                                        <span className="price">{numberWithCommas(item?.price)}</span>
                                                                                         <span className="unit"> تومان</span>
 
                                                                                     </div>

@@ -61,7 +61,7 @@ function UserPanelSellAdvice() {
 
     const getSuggest = (id) => {
         setLoading(true)
-        axios.get(`${BASE_URL}/auction-house/suggest/${id}`)
+        axios.get(`${BASE_URL}/auction-house/suggest/${id}/`)
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
@@ -75,25 +75,30 @@ function UserPanelSellAdvice() {
             })
     }
 
-    let approvedSuggest = (id, type)=>{
+    let approvedSuggest = (id, type) => {
         let payload = {
             "homeauction_sugesstion_status": type ? "accept" : "reject",
             "suggestion": SuggestDescription
         }
         setPosting(true)
-
-        axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
-            .then(resp=>{
-                console.log(resp)
-                if(resp.data.code === 201){
-                    message.success('درخواست شما با موفقیت ثبت شد.');
+        if (SuggestDescription) {
+            axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
+                .then(resp => {
+                    console.log(resp)
+                    if ((resp.data.code === 200) || (resp.data.code === 201)) {
+                        message.success('درخواست شما با موفقیت ثبت شد.');
+                        setPosting(false)
+                        getSuggestions()
+                    }
+                })
+                .catch(err => {
+                    message.error(err?.response?.data?.data);
                     setPosting(false)
-                }
-            })
-            .catch(err=>{
-                message.error(err?.response?.data?.data);
-                setPosting(false)
-            })
+                })
+        } else {
+            message.error("توضیحی وارد کنید");
+            setPosting(false)
+        }
     }
 
     useEffect(() => {
@@ -229,10 +234,41 @@ function UserPanelSellAdvice() {
                                 </li>
                             </ul>
                             <Spin spinning={loading}>
-                            <div className="tab-content" id="profile-tab-content">
-                                <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
-                                     aria-labelledby="profiletab1-tab">
-                                    <div className="table-responsive">
+                                <div className="tab-content" id="profile-tab-content">
+                                    <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
+                                         aria-labelledby="profiletab1-tab">
+                                        <div className="table-responsive">
+                                            <table className="panel-table sellrecommand ">
+                                                <thead>
+                                                <tr>
+                                                    <td>تصویر</td>
+                                                    <td>نام</td>
+                                                    <td>هنرمند</td>
+                                                    <td>وضعیت</td>
+                                                    <td>تخمین قیمت</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <SuggestList/>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <Pagination
+                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            responsive
+                                            onChange={(e) => handeSelectPage(e)}
+                                            defaultCurrent={1}
+                                            total={SuggestionsCount}
+                                            defaultPageSize={10}
+                                        />
+                                    </div>
+                                    <div className="tab-pane fade" id="profiletab2" role="tabpanel"
+                                         aria-labelledby="profiletab2-tab">
                                         <table className="panel-table sellrecommand ">
                                             <thead>
                                             <tr>
@@ -246,107 +282,77 @@ function UserPanelSellAdvice() {
                                             </tr>
                                             </thead>
                                             <tbody>
-
-                                                <SuggestList />
-
+                                            <SuggestList/>
                                             </tbody>
                                         </table>
+
+                                        <Pagination
+                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            responsive
+                                            onChange={(e) => handeSelectPage(e)}
+                                            defaultCurrent={1}
+                                            total={SuggestionsCount}
+                                            defaultPageSize={10}
+                                        />
                                     </div>
+                                    <div className="tab-pane fade" id="profiletab3" role="tabpanel"
+                                         aria-labelledby="profiletab3-tab">
+                                        <table className="panel-table sellrecommand ">
+                                            <thead>
+                                            <tr>
+                                                <td>تصویر</td>
+                                                <td>نام</td>
+                                                <td>هنرمند</td>
+                                                <td>وضعیت</td>
+                                                <td>تخمین قیمت</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <SuggestList/>
+                                            </tbody>
+                                        </table>
 
-                                    <Pagination
-                                        style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
-                                        responsive
-                                        onChange={(e) => handeSelectPage(e)}
-                                        defaultCurrent={1}
-                                        total={SuggestionsCount}
-                                        defaultPageSize={10}
-                                    />
-                                </div>
-                                <div className="tab-pane fade" id="profiletab2" role="tabpanel"
-                                     aria-labelledby="profiletab2-tab">
-                                    <table className="panel-table sellrecommand ">
-                                        <thead>
-                                        <tr>
-                                            <td>تصویر</td>
-                                            <td>نام</td>
-                                            <td>هنرمند</td>
-                                            <td>وضعیت</td>
-                                            <td>تخمین قیمت</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <SuggestList />
-                                        </tbody>
-                                    </table>
+                                        <Pagination
+                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            responsive
+                                            onChange={(e) => handeSelectPage(e)}
+                                            defaultCurrent={1}
+                                            total={SuggestionsCount}
+                                            defaultPageSize={10}
+                                        />
+                                    </div>
+                                    <div className="tab-pane fade" id="profiletab4" role="tabpanel"
+                                         aria-labelledby="profiletab3-tab">
+                                        <table className="panel-table sellrecommand ">
+                                            <thead>
+                                            <tr>
+                                                <td>تصویر</td>
+                                                <td>نام</td>
+                                                <td>هنرمند</td>
+                                                <td>وضعیت</td>
+                                                <td>تخمین قیمت</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <SuggestList/>
+                                            </tbody>
+                                        </table>
 
-                                    <Pagination
-                                        style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
-                                        responsive
-                                        onChange={(e) => handeSelectPage(e)}
-                                        defaultCurrent={1}
-                                        total={SuggestionsCount}
-                                        defaultPageSize={10}
-                                    />
+                                        <Pagination
+                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            responsive
+                                            onChange={(e) => handeSelectPage(e)}
+                                            defaultCurrent={1}
+                                            total={SuggestionsCount}
+                                            defaultPageSize={10}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="tab-pane fade" id="profiletab3" role="tabpanel"
-                                     aria-labelledby="profiletab3-tab">
-                                    <table className="panel-table sellrecommand ">
-                                        <thead>
-                                        <tr>
-                                            <td>تصویر</td>
-                                            <td>نام</td>
-                                            <td>هنرمند</td>
-                                            <td>وضعیت</td>
-                                            <td>تخمین قیمت</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <SuggestList />
-                                        </tbody>
-                                    </table>
-
-                                    <Pagination
-                                        style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
-                                        responsive
-                                        onChange={(e) => handeSelectPage(e)}
-                                        defaultCurrent={1}
-                                        total={SuggestionsCount}
-                                        defaultPageSize={10}
-                                    />
-                                </div>
-                                <div className="tab-pane fade" id="profiletab4" role="tabpanel"
-                                     aria-labelledby="profiletab3-tab">
-                                    <table className="panel-table sellrecommand ">
-                                        <thead>
-                                        <tr>
-                                            <td>تصویر</td>
-                                            <td>نام</td>
-                                            <td>هنرمند</td>
-                                            <td>وضعیت</td>
-                                            <td>تخمین قیمت</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <SuggestList />
-                                        </tbody>
-                                    </table>
-
-                                    <Pagination
-                                        style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
-                                        responsive
-                                        onChange={(e) => handeSelectPage(e)}
-                                        defaultCurrent={1}
-                                        total={SuggestionsCount}
-                                        defaultPageSize={10}
-                                    />
-                                </div>
-                            </div></Spin>
+                            </Spin>
                         </div>
                     </div>
                 </div>
@@ -371,12 +377,13 @@ function UserPanelSellAdvice() {
                         <div className="modal-body">
                             <div className="d-flex flex-row row">
                                 <div className="artwork-img col-3">
-                                    <img src={SuggestDetail?.product?.media?.exact_url} width="317" height="280" alt="" className="img-fluid"/>
+                                    <img src={SuggestDetail?.product?.media?.exact_url} width="317" height="280" alt=""
+                                         className="img-fluid"/>
                                 </div>
                                 <div className="artwork-info-left col-lg-6 col-9">
                                     <div>
                                         <span>{SuggestDetail?.product?.persian_artist_name}</span>
-                                        <h5 className="default">از سری سقاخانه</h5>
+                                        <h5 className="default">{SuggestDetail?.product?.latest_auction?.title}</h5>
                                     </div>
                                     <div className="mrgt10 estimate">تخمین قیمت:
                                         <span>{SuggestDetail?.product?.price}</span>
@@ -386,35 +393,52 @@ function UserPanelSellAdvice() {
                                 <div className="seller-phone col-12 col-lg-3">
                                     شماره فروشنده
                                     <a href={SuggestDetail?.product?.owner?.username} type="tel">
-                                        <span className="seller-phone-name">{SuggestDetail?.product?.owner?.first_name} {SuggestDetail?.product?.owner?.last_name}</span>
-                                        <span className="seller-phone-number">{SuggestDetail?.product?.owner?.username}</span>
+                                        <span
+                                            className="seller-phone-name">{SuggestDetail?.product?.owner?.first_name} {SuggestDetail?.product?.owner?.last_name}</span>
+                                        <span
+                                            className="seller-phone-number">{SuggestDetail?.product?.owner?.username}</span>
                                     </a>
                                 </div>
                             </div>
                             <div className="d-flex flex-row">
                                 <p className="mrgt10 gray50">
                                     {SuggestDetail?.product?.persian_description}
-                                    </p>
+                                </p>
                             </div>
                             <div className="input-group mrgt50">
                                 <label className="default-lable">توضیحات</label>
                                 <textarea rows="4" className="default-input"
-                                          onChange={(e) => {setSuggestDescription(e.target.value)}}
+                                          onChange={(e) => {
+                                              setSuggestDescription(e.target.value)
+                                          }}
                                           placeholder="توضیحات را وارد نمایید."/>
                             </div>
                         </div>
+                        {((SuggestDetail?.homeauction_sugesstion_status !== "accept") && (SuggestDetail?.homeauction_sugesstion_status !== "reject")) &&
                         <div className="modal-footer">
                             <button
                                 disabled={Posting}
-                                type="button" className="btn btn-gray"
+                                type="button" className="btn btn-gray "
                                 data-bs-dismiss="modal"
-                                onClick={() => approvedSuggest(SuggestDetail?.product?.id, false)}
-                            >رد کردن</button>
+                                onClick={() => approvedSuggest(SuggestDetail?.id, false)}
+                            >رد کردن
+                            </button>
                             <button
                                 disabled={Posting}
-                                onClick={() => approvedSuggest(SuggestDetail?.product?.id, true)}
-                                type="button" className="btn btn-default">تایید</button>
-                        </div>
+                                data-bs-dismiss="modal"
+                                onClick={() => approvedSuggest(SuggestDetail?.id, true)}
+                                type="button" className="btn btn-default">تایید
+                            </button>
+
+                        </div>}
+                        {
+                            (SuggestDetail?.homeauction_sugesstion_status === "accept") &&
+                            <p className="text-success text-center mb-4">این پیشنهاد توسط شما تایید شد</p>
+                        }
+                        {
+                            (SuggestDetail?.homeauction_sugesstion_status === "reject") &&
+                            <p className="text-danger text-cente mb-4">این پیشنهاد توسط شما رد شد</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -435,8 +459,7 @@ function UserPanelSellAdvice() {
                             </div>
                         </div>
                         <div className="modal-body">
-                            <Link to="/panel-add-auction" onClick={() =>
-                            {
+                            <Link to="/panel-add-auction" onClick={() => {
                                 const modal = document.getElementsByClassName('modal show')[0];
                                 const fade = document.getElementsByClassName('modal-backdrop show')[0];
                                 modal.className = modal.className.replace('show', '');
@@ -452,7 +475,7 @@ function UserPanelSellAdvice() {
                                 <table className="panel-table">
                                     <tbody>
                                     {SuggestsList ? SuggestsList.map((item, key) => {
-                                        return(
+                                        return (
                                             <tr key={key}>
                                                 <td><a href="#" className="default-link">{item.title}</a></td>
                                                 <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>

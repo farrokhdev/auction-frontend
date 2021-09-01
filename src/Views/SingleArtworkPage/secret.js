@@ -124,7 +124,7 @@ const Secret = ({artwork}) => {
                     <div className="db-right ">
                         <span className="db-title bluecolor">قیمت فعلی</span>
                         <div className="price-block bluecolor">
-                            <span className="price">{currentPrice}</span>
+                            <span className="price">{artwork?.price}</span>
                             <span className="unit"> تومان</span>
                             <span className="bids-num">(<span
                                 className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : ''}</span>پیشنهاد)</span>
