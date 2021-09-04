@@ -84,15 +84,15 @@ return (
                     <div className="bg-shadow bl-shadow20">
                         <div className="detail-info">
                             <div className="detail-head">
-                                <span className={classnames("category-icon", {
-                                "live-icon": artwork?.latest_auction?.type === 'LIVE',
-                                "online-icon": artwork?.latest_auction?.type === 'ONLINE',
-                                "timed-icon": artwork?.latest_auction?.type === 'PERIODIC',
-                                "firstoffer-icon": artwork?.latest_auction?.type === 'HIDDEN',
-                                "secondoffer-icon": artwork?.latest_auction?.type === 'SECOND_HIDDEN',
-                                
-                            })}> <span
-                                        className="d-none d-md-inline-block mx-1">حراج</span>{artwork?.latest_auction?.type ?  convertTypeAuctionToPersian(artwork?.latest_auction?.type) : ''}</span>
+                                {artwork?.latest_auction?.id && <span className={classnames("category-icon", {
+                                    "live-icon": artwork?.latest_auction?.type === 'LIVE',
+                                    "online-icon": artwork?.latest_auction?.type === 'ONLINE',
+                                    "timed-icon": artwork?.latest_auction?.type === 'PERIODIC',
+                                    "firstoffer-icon": artwork?.latest_auction?.type === 'HIDDEN',
+                                    "secondoffer-icon": artwork?.latest_auction?.type === 'SECOND_HIDDEN',
+
+                                })}> <span
+                                    className="d-none d-md-inline-block mx-1">حراج</span>{artwork?.latest_auction?.type ? convertTypeAuctionToPersian(artwork?.latest_auction?.type) : ''}</span>}
                                 <button type="button" className="btn-bookmark">نشان کردن</button>
                             </div>
                             <div className="detail-artwork">
