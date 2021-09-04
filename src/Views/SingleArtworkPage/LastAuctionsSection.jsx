@@ -81,45 +81,48 @@ function LastAuctionsSection(props) {
 
 
 
-    return (
-        <div className="row">
-            <section className="Categorized-artworks related-artworks">
-                <div className="container innercontainer">
-                    <div className="row">
-                        <div className="col-md-3 col-sm-12">
-                            <div className="main-title">
-                                <h2 className="default titr">آخرین آثار حراج</h2>
-                                <Link to={`/one-auction/${props.id}/`} className="btn-view">مشاهده همه</Link>
-                            </div>
+    return (<>
+        {id &&
+    <div className="row">
+        <section className="Categorized-artworks related-artworks">
+            <div className="container innercontainer">
+                <div className="row">
+                    <div className="col-md-3 col-sm-12">
+                        <div className="main-title">
+                            <h2 className="default titr">آخرین آثار حراج</h2>
+                            <Link to={`/one-auction/${props.id}/`} className="btn-view">مشاهده همه</Link>
                         </div>
                     </div>
-                        
-                    <div className="owl-carousel" id="relatedArtworks">
-
-                        <Slider className="mt-5" {...settings}>
-                            {products?.length ? products?.map((item, key) => {
-                                return(
-                                    <div className="px-3" key={item?.id}>
-                                        <Link to={`/artworks/${item?.id}`}>
-                                            <CardArtwork
-                                                url={item?.media?.exact_url}
-                                                price_base={item?.price}
-                                                price_range={item?.min_price + " - " + item?.max_price}
-                                                house_auction={item?.latest_auction.title}
-                                                title={item?.artwork_title}
-                                                lot_num={key+1}
-                                            />
-                                        </Link>
-                                    </div>
-                                )
-                            }) : ""}
-
-                        </Slider>
-                        
-                    </div>
                 </div>
-            </section>
-        </div>
+
+                <div className="owl-carousel" id="relatedArtworks">
+
+                    <Slider className="mt-5" {...settings}>
+                        {products?.length ? products?.map((item, key) => {
+                            return (
+                                <div className="px-3" key={item?.id}>
+                                    <Link to={`/artworks/${item?.id}`}>
+                                        <CardArtwork
+                                            url={item?.media?.exact_url}
+                                            price_base={item?.price}
+                                            price_range={item?.min_price + " - " + item?.max_price}
+                                            house_auction={item?.latest_auction.title}
+                                            title={item?.artwork_title}
+                                            lot_num={key + 1}
+                                        />
+                                    </Link>
+                                </div>
+                            )
+                        }) : ""}
+
+                    </Slider>
+
+                </div>
+            </div>
+        </section>
+    </div>
+}
+        </>
     )
 }
 

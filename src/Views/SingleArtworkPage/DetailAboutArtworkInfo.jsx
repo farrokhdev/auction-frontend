@@ -16,18 +16,18 @@ function DetailAboutArtworkInfo({artwork}) {
                             type="button" role="tab" aria-controls="catsearch1" aria-selected="true">درباره اثر
                     </button>
                 </li>
-                <li className="nav-item" role="presentation">
+                {artwork?.latest_auction?.id && <li className="nav-item" role="presentation">
                     <button className="nav-link" data-bs-toggle="tab"
                             data-bs-target="#detail-artwork2"
                             type="button" role="tab" aria-controls="tab2" aria-selected="false">جزئیات حراج
                     </button>
-                </li>
-                <li className="nav-item" role="presentation">
+                </li>}
+                {artwork?.latest_auction?.id && <li className="nav-item" role="presentation">
                     <button className="nav-link" data-bs-toggle="tab"
                             data-bs-target="#detail-artwork3"
                             type="button" role="tab" aria-controls="tab3" aria-selected="false">قوانین حراج
                     </button>
-                </li>
+                </li>}
             </ul>
             <div className="tab-content mrgt50" id="da-content">
                 <div className="tab-pane fade show active" id="detail-artwork1" role="tabpanel"
