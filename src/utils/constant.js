@@ -11,6 +11,8 @@ module.exports = {
     EDIT_AUCTION: id => `/sale/auctions/${id}/`,
     JOIN_AUCTION: "/sale/join-auction/",
     ACCOUNT_WALLET: "/accounting/wallet/me/",
+    ACCOUNT_WITHDRAWAL: "/accounting/transaction/",
+    ACCOUNT_INCREASE_CHARGE: "/accounting/transaction/",
     TRANSACTION: "/accounting/transaction/",
     ACCOUNT_BANK_Edit: id => `/accounting/bankprofile/${id}/`,
     HOME_AUCITONS: "/account/home-auction/",
