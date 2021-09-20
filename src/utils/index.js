@@ -1,5 +1,5 @@
-// export const BASE_URL = "http://backend.auction.amln.ir/api";
-export const BASE_URL = "https://api.beta.smartauctionhouse.com/api";
+export const BASE_URL = "http://backend.auction.amln.ir/api";
+// export const BASE_URL = "https://api.beta.smartauctionhouse.com/api";
 // export const BASE_URL = "http://192.168.0.38:8010/api";
 // export const BASE_URL = "https://api.beta.smartauctionhouse.com/api";
 // export const BASE_URL = "http://192.168.0.38:8010/api";

@@ -3,9 +3,16 @@ import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
+import { ACCOUNT_WITHDRAWAL } from '../../utils/constant';
+import { successNotification } from '../../utils/notification';
+import ModalIncreaseCharge from './ModalIncreaseCharge';
+import ModalWithdrawal from './ModalWithdrawal';
 
 function UserPanelWallet() {
     const [Wallet, setWallet] = useState("");
+    
+    const [isModalWithdrawalVisible, setIsModalWithdrawalVisible] = useState(false);
+    const [isModalIncreaseChargeVisible, setIsModalIncreaseChargeVisible] = useState(false);
 
     const getWallet = () => {
         axios.get(`${BASE_URL}/accounting/wallet/me/`)
@@ -24,6 +31,8 @@ function UserPanelWallet() {
         getWallet()
     }, [])
 
+
+
     return (
         <>
             <HeaderPanel  titlePage = {" کیف پول"}/>
@@ -36,13 +45,24 @@ function UserPanelWallet() {
                                 <div className="col">
                                     <div className="wallet-block">
                                         <h3 className="default gray50">اعتبار نقدی</h3>
-                                        <h2 className="default">{Wallet.inventory} <span className="price-unit">تومان</span></h2>
+                                        <h2 className="default">{Wallet?.inventory} <span className="price-unit">تومان</span></h2>
                                         <div className="btn-group">
-                                            <button type="button" className="btn-default" data-bs-toggle="modal"
-                                                    data-bs-target="#increasecreadit">افزایش اعتبار
+                                            <button 
+                                                // show modal increase charge wallet
+                                                onClick={()=>setIsModalIncreaseChargeVisible(true)}
+                                                type="button" 
+                                                className="btn-default" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#increasecreadit">
+                                                    افزایش اعتبار
                                             </button>
-                                            <button type="button" className="btn-outline-pink" data-bs-toggle="modal"
-                                                    data-bs-target="#withdrawal">برداشت از حساب
+                                            <button 
+                                                // show modal withdrawal from inventory 
+                                                onClick={()=>setIsModalWithdrawalVisible(true)} 
+                                                type="button" 
+                                                className="btn-outline-pink" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#withdrawal">برداشت از حساب
                                             </button>
                                         </div>
                                     </div>
@@ -50,7 +70,7 @@ function UserPanelWallet() {
                                 <div className="col">
                                     <div className="wallet-block">
                                         <h3 className="default gray50">اعتبار هدیه</h3>
-                                        <h2 className="default">{Wallet.gift_credit}</h2>
+                                        <h2 className="default">{Wallet?.gift_credit}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -61,66 +81,19 @@ function UserPanelWallet() {
             </div>
 
 
-            <div className="modal fade" id="increasecreadit" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div className="modal-dialog w-600">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <div className="container g-0 d-flex justify-content-between">
-                                <div className="main-title">
-                                    <h2 className="default titr">
-                                        افزایش اعتبار
-                                    </h2>
-                                </div>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                        </div>
-                        <div className="modal-body textalign-center">
-                            <h3 className="default">{Wallet.inventory} <span className="price-unit">تومان</span></h3>
-                            <h6 className="default">اعتبار نقدی</h6>
-                            <div className="search-input">
-                                <label className="default-lable">مبلغ مورد نظر خود را وارد نمایید.</label>
-                                <input type="text" className="default-input" placeholder="100,000"/>
-                                <span className="unit">تومان</span>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-default">پرداخت</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="modal fade" id="withdrawal" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div className="modal-dialog w-600">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <div className="container g-0 d-flex justify-content-between">
-                                <div className="main-title">
-                                    <h2 className="default titr">
-                                        برداشت از حساب
-                                    </h2>
-                                </div>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                        </div>
-                        <div className="modal-body textalign-center">
-                            <h3 className="default">{Wallet.inventory} <span className="price-unit">تومان</span></h3>
-                            <h6 className="default">اعتبار نقدی</h6>
-                            <div className="search-input">
-                                <label className="default-lable">مبلغ مورد نظر خود را وارد نمایید.</label>
-                                <input type="text" className="default-input" placeholder="100,000"/>
-                                <span className="unit">تومان</span>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-default">برداشت از حساب</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/* modal increase charge wallet */}
+            <ModalIncreaseCharge 
+                setIsModalIncreaseChargeVisible={setIsModalIncreaseChargeVisible} 
+                isModalIncreaseChargeVisible={isModalIncreaseChargeVisible} 
+                Wallet={Wallet}
+            />
+            {/* modal withdrawal thant handle decrease inventory */}
+            <ModalWithdrawal 
+                setIsModalWithdrawalVisible={setIsModalWithdrawalVisible} 
+                isModalWithdrawalVisible={isModalWithdrawalVisible} 
+                Wallet={Wallet}
+            />
+
         </>
     )
 }

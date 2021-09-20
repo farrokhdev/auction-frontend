@@ -2787,6 +2787,10 @@ main {
   height: 100vh;
 }
 
+.ant-modal-footer{
+  border: none !important;
+}
+
 .num-artwork {
   display: flex;
   justify-content: flex-end;
