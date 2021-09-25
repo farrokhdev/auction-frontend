@@ -134,11 +134,14 @@ function RequestHouseAuction() {
 
 
             axios.put(`${BASE_URL}${SEND_REQUEST_HOUMEAUCTION}` , payload).then(res => {
-                successNotification("ثبت درخواست خانه حراجی"  , 'درخواست  با موفقیت ارسال شد')
+
+                if(res.data.data.statusCode !== 400){
+                    successNotification("ثبت درخواست خانه حراجی"  , 'درخواست  با موفقیت ارسال شد')
+                }
                
             }).catch(err => {
-                // console.error("Error",err.response.data.data)
-                failNotification( 'خطا در ارسال درخواست' , '' )
+                failNotification("خطا در ارسال درخواست",err.response.data.data.error_message[0])
+                
             })
         }
 
