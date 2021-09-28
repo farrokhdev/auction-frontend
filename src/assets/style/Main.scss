@@ -6507,6 +6507,7 @@ address.all-info:before {
     height: 40px !important;
     border-radius: 30px !important;
     background-color: var(--bgcolor) !important;
+    text-align: right !important;
     .ant-select-selection-search{
       display: none !important;
     }
@@ -6582,4 +6583,36 @@ address.all-info:before {
   background-size: cover;
   width: 100%;
   background-color: #eee;
+}
+
+/* tile uploaded pictures */
+
+
+.ant-upload-list.ant-upload-list-text {
+  // background-color: red !important;
+  display: block !important;
+}
+
+.ant-upload.ant-upload-drag {
+  display: block !important;
+  // background-color: yellow !important;
+}
+
+.img-icon-upload-add-new-artwork{
+  color: var( --gray90) !important;
+}
+
+button.ant-btn.ant-btn-text.ant-btn-sm.ant-btn-icon-only.ant-upload-list-item-card-actions-btn {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+input#add-new-artwork_price {
+  text-align: right !important;
+  background-color: var(--gray95);
+  outline: none !important;
+  border: none !important;
+  height: 40px;
+  border-radius: 38px;
+  box-shadow: none !important;
 }
