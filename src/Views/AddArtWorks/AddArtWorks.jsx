@@ -52,10 +52,7 @@ function AddArtWorks(props) {
         // axios.get(`${BASE_URL}/sale/category/${e.target.value}`)
         axios.get(`${BASE_URL}/sale/category/?title=آثار`)
             .then(resp => {
-                if (resp.data.code === 200) {
-                    setChildCategories(resp.data.data.result[0].children)
-                }
-
+                setChildCategories(resp.data.data.result[1].children)
             })
             .catch(err => {
                 console.error(err);
@@ -144,7 +141,7 @@ function AddArtWorks(props) {
             })
     }
 
-    console.log("ChildCategories --->>>" , ChildCategories);
+
 
     return (
         <div>
@@ -156,8 +153,20 @@ function AddArtWorks(props) {
                 <div className="panel-container">
 
                     <div className="col-xxxxl-8">
+
+                        <div className="d-flex mb-3">
+                            <label htmlFor={"file"} className="btn-outline-pink">
+                                        انتخاب تصویر
+                                    </label>
+
+                                    { Uploading ? <span style={{marginRight: 5}}> درحال آپلود </span> : "" }
+                                    { Uploaded ? <CheckCircleTwoTone style={{marginRight: 5}} twoToneColor="#52c41a" /> : "" }
+
+                                <input onChange={(e) => handleUpload(e)} id={'file'} type="file" accept=".jpg, .jpeg, .png" style={{display: "none"}}/>
+                        </div>
                         <div className="row addartwork">
-                            <div className="col-md-6">
+
+                            {/* <div className="col-md-6">
                                 <div className="input-group">
                                     <label className="default-lable">دسته‌بندی عمومی</label>
                                     <select className="form-select" aria-label="Default select example"
@@ -176,17 +185,10 @@ function AddArtWorks(props) {
                                         }
                                     </select>
                                 </div>
-                            </div>
-                            <div className="col-md-6">
-                                <label htmlFor={"file"} className="btn-outline-pink">
-                                    انتخاب تصویر
-                                </label>
+                            </div> */}
 
-                                { Uploading ? <span style={{marginRight: 5}}> درحال آپلود </span> : "" }
-                                { Uploaded ? <CheckCircleTwoTone style={{marginRight: 5}} twoToneColor="#52c41a" /> : "" }
+             
 
-                                <input onChange={(e) => handleUpload(e)} id={'file'} type="file" accept=".jpg, .jpeg, .png" style={{display: "none"}}/>
-                            </div>
                             <div className="col-md-6">
                                 <div className="input-group">
                                     <label className="default-lable">دسته‌بندی</label>
@@ -194,7 +196,7 @@ function AddArtWorks(props) {
                                         onChange={(e)=>setCategory(e.target.value)}
                                         className="form-select" aria-label="Default select example">
                                         <option disabled selected>انتخاب کنید</option>
-                                        { ChildCategories.length >= 1  ? ChildCategories.map((item, key) => {
+                                        { ChildCategories?.length >= 1  ? ChildCategories?.map((item, key) => {
                                             return (
                                                 <option
                                                 key={key}

@@ -39,8 +39,8 @@ function HouseAuctionsPage() {
         })
     }
     const getCategoryActivity = () => {
-        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}`).then(res => {
-            setCategoryActivities(res.data.data.result)
+        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?title=خانه های حراج`).then(res => {
+            setCategoryActivities(res.data.data.result[0].children)
         }).catch(err => {
             console.error(err);
         })

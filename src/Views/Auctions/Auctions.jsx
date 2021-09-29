@@ -139,6 +139,7 @@ function Auctions() {
                                 handleSetType={handleSetType}
                                 handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
                                 handleSetDate={handleSetDate}
+                                typeCategory="حراج ها"
                             />
 
                             <div className="col-lg-9">

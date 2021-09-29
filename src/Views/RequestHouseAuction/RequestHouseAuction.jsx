@@ -51,9 +51,8 @@ function RequestHouseAuction() {
 
 
     const getCategoryActivities = () => {
-        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}`).then(res => {
-            console.log(res);
-            setActivites(res.data.data.result)
+        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?title=خانه های حراج`).then(res => {
+            setActivites(res.data.data.result[0].children)
         }).catch(err => {
             console.error(err)
         })
@@ -270,7 +269,7 @@ return (
                                                     <React.Fragment key={activity?.id}>
                                                         <Select.Option   value={`${parseInt(activity?.id)}`}>{activity?.title}</Select.Option>
                                                     </React.Fragment>
-                                                )) : <Select.Option value="s"></Select.Option>}
+                                                )) : <Select.Option value=""></Select.Option>}
 
                                                     
                                             

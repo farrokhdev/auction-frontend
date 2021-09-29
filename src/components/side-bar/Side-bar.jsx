@@ -14,7 +14,7 @@ import fa_IR from "antd/lib/locale/fa_IR";
 import en_US from "antd/lib/locale/en_US";
 import "antd/dist/antd.css";
 
-function Sidebar({handleSearchProducts , handleSetCategory , params , handleSetType , handleSetHomeAuction , handleSetHomeAuctionSelect , handleSetDate}) {
+function Sidebar({handleSearchProducts , handleSetCategory , params , handleSetType , handleSetHomeAuction , handleSetHomeAuctionSelect , handleSetDate , typeCategory}) {
 
 
   const [filters, setFilters] = useState([
@@ -25,12 +25,28 @@ function Sidebar({handleSearchProducts , handleSetCategory , params , handleSetT
 
   useEffect(() => {
 
-    axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}`).then(res => {
-      console.log("C ",res.data.data.result);
-      setCategories(res.data.data.result)
+    axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?${typeCategory}`).then(res => {
+      setCategories(res.data.data.result[setNumbCategory(typeCategory)].children )
     }).catch(err => {
       console.error(err);
     })
+
+    // this function set index of categories result for set categories children
+    const setNumbCategory = (typeCategory) => {
+      switch (typeCategory) {
+        case 'خانه های حراج':
+          return 0
+        case 'آثار':
+          return 1
+       case 'حراج ها':
+          return 2
+      
+        default:
+          break;
+      }
+    }
+
+
 
 
     axios.get(`${BASE_URL}${HOME_AUCITONS}`).then(res => {
@@ -397,7 +413,7 @@ function Sidebar({handleSearchProducts , handleSetCategory , params , handleSetT
                 <div className="accordion-body">
                   <div className="list-box">
 
-                  {categories.length >=1 ? categories.map((category , index) => (
+                  {categories?.length >=1 ? categories?.map((category , index) => (
                       <React.Fragment key={category?.id}>
                         <ItemCategory title={category?.title} id={`checkbox2${++index}`} params={params}  handleSetCategory={handleSetCategory}/>
                       </React.Fragment>
