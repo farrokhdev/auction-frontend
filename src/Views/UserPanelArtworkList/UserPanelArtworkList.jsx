@@ -9,31 +9,42 @@ import axios from "../../utils/request";
 import {UrlQuery} from "../../utils/utils";
 import {BASE_URL} from "../../utils";
 import {LIST_PRODUCTS} from "../../utils/constant";
-import {message, Spin} from "antd";
+import {message, Pagination, Spin} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../../redux/reducers/profile/profile.actions";
+import PaginationComponent from '../../components/PaginationComponent';
+import queryString from "query-string";
 
 function UserPanelArtworkList() {
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
     const [dataCount, setDataCount] = useState(0)
     const {role,id} = useSelector((state) => state.profileReducer)
+    
+    const [params, setParams] = useState({
+        page : 1,
+        page_size : 10 , 
+        owner__id : role === 'user'  ? id :  '',
+        auction_houses__id : role !== 'user' ? id :  '',
+        
+    })
+
     const dispatch = useDispatch();
+
     useEffect(()=>{
         // setSelectProduct([])
         if(id)
         getData()
         if (!id)
             dispatch(getProfile())
-    },[])
+    },[params])
+
+
     const getData = (e="") => {
         setLoading(true)
-        let params={}
-        if(role==="user")
-            params["owner__id"]=id
-        else
-            params["auction_houses__id"]=id
-        axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,params))
+
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}${LIST_PRODUCTS}?${queries}`)
             .then(resp => {
                 setLoading(false)
 
@@ -54,6 +65,14 @@ function UserPanelArtworkList() {
                 message.error("صفحه را دوباره لود کنید")
             })
     }
+
+    const handeSelectPage = (e) => {
+        setParams({
+            ...params, page: e
+        })
+    }
+
+
     return (
         <>
             <HeaderPanel  titlePage = {"لیست آثار"}/>
@@ -108,9 +127,16 @@ function UserPanelArtworkList() {
                                 </tr>):''
                             }
 
+                         
+
 
                             </tbody>
+                            
                         </table>
+
+                        <div className="d-flex justify-content-center w-100 mt-4">
+                                <PaginationComponent count={dataCount} handeSelectPage={handeSelectPage}/>
+                            </div>
                     </div>
 
                 </div>
