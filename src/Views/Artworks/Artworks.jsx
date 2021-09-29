@@ -184,6 +184,7 @@ function Artworks() {
                                 handleSetType={handleSetType}
                                 handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
                                 handleSetDate={handleSetDate}
+                                typeCategory="آثار"
                             />
                             <div class="col-lg-9">
                                 <div class="row row-cols-md-3 row-cols-2">
