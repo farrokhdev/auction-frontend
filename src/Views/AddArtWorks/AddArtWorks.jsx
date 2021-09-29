@@ -43,14 +43,17 @@ function AddArtWorks(props) {
                 console.error(err);
             })
 
+            handleMainCategories()
+
     }, [])
 
-    const handleMainCategories = (e) =>{
+    const handleMainCategories = () =>{
         setCategory("")
-        axios.get(`${BASE_URL}/sale/category/${e.target.value}`)
+        // axios.get(`${BASE_URL}/sale/category/${e.target.value}`)
+        axios.get(`${BASE_URL}/sale/category/?title=آثار`)
             .then(resp => {
                 if (resp.data.code === 200) {
-                    setChildCategories(resp.data.data.result.children)
+                    setChildCategories(resp.data.data.result[0].children)
                 }
 
             })
@@ -140,6 +143,8 @@ function AddArtWorks(props) {
                 setPosting(false)
             })
     }
+
+    console.log("ChildCategories --->>>" , ChildCategories);
 
     return (
         <div>
