@@ -38,7 +38,7 @@ useEffect(() => {
 // get list of sub category for show to user and select by users in dropdown to create artwork
 const getListCategory = () => {
     axios.get(`${BASE_URL}/sale/category/?title=آثار` ).then(res => {
-        setCategories(res.data.data.result[1].children)
+        setCategories(res.data.data.result[0].children)
     }).catch(err => {
         console.error(err);
     })

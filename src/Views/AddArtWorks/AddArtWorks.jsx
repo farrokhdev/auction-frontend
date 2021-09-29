@@ -52,7 +52,7 @@ function AddArtWorks(props) {
         // axios.get(`${BASE_URL}/sale/category/${e.target.value}`)
         axios.get(`${BASE_URL}/sale/category/?title=آثار`)
             .then(resp => {
-                setChildCategories(resp.data.data.result[1].children)
+                setChildCategories(resp.data.data.result[0].children)
             })
             .catch(err => {
                 console.error(err);
