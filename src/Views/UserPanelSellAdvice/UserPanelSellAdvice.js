@@ -7,17 +7,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faPen, faTimes, faImages} from "@fortawesome/free-solid-svg-icons";
 import moment from "jalali-moment";
 import {message, Pagination, Spin} from "antd";
-import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {LoadingOutlined} from "@ant-design/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../../redux/reducers/profile/profile.actions";
+import ModalAddNewArtwork from './ModalAddNewArtwork';
+import 'antd/dist/antd.css';
 
 function UserPanelSellAdvice() {
     const [Products, setProducts] = useState("");
     const [loading, setLoading] = useState(false)
     const [Suggestions, setSuggestions] = useState("");
     const [countProducts, setCountProducts] = useState(0)
+    const [visibleAddNewArtwork, setVisibleAddNewArtwork] = useState(false)
     const dispatch = useDispatch();
     const [params, setParams] = useState({
         page: 1,
@@ -186,10 +188,20 @@ function UserPanelSellAdvice() {
                 <div className="panel-body">
                     <div className="panel-container">
                         <div className="">
-                            <a href={'#/add-artworks'} className="btn btn-default">
+                            <span 
+                            // href={'#/add-artworks'} 
+                                onClick={()=>setVisibleAddNewArtwork(true)}
+                                className="btn btn-default">
                                 <FontAwesomeIcon style={{marginLeft: 5}} icon={faPlus}/>
                                 اثر جدید
-                            </a>
+                            </span>
+
+                            {/* ----- modal for create new artwork ------ */}
+                            <ModalAddNewArtwork 
+                                setVisibleAddNewArtwork={setVisibleAddNewArtwork}
+                                visibleAddNewArtwork={visibleAddNewArtwork}
+                            />
+                            
                             <ul className="nav nav-tabs justify-content-star main-tab mrgt30" id="profile-tab"
                                 role="tablist">
                                 <li className="nav-item" role="presentation">
