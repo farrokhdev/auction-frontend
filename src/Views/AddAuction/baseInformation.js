@@ -1,33 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, message, Modal, Select, Spin, TimePicker} from "antd";
-import DatePicker from 'react-datepicker2';
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, message, Modal, Select, Spin, TimePicker } from "antd";
+import DatePicker, { Calendar } from 'react-datepicker2';
+import { Link } from "react-router-dom";
 import moment from 'moment-jalaali'
-import {useDispatch, useSelector} from "react-redux";
-import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import UploadImage from "./uploadImage";
+import momentJalaali from "moment-jalaali"
 import locale from "antd/es/date-picker/locale/de_DE";
 const listAuctionType = [
-    {name: "SECOND_HIDDEN", value: "دومین قیمت پیشنهاد با حراج (مخفی)"},
-    {name: "HIDDEN", value: "قیمت پیشنهاد با حراج (مخفی)"},
-    {name: "PERIODIC", value: "حراج زمان دار"},
-    {name: "ONLINE", value: "آنلاین"},
-    {name: "LIVE", value: "زنده"},
+    { name: "SECOND_HIDDEN", value: "دومین قیمت پیشنهاد با حراج (مخفی)" },
+    { name: "HIDDEN", value: "قیمت پیشنهاد با حراج (مخفی)" },
+    { name: "PERIODIC", value: "حراج زمان دار" },
+    { name: "ONLINE", value: "آنلاین" },
+    { name: "LIVE", value: "زنده" },
 ]
 
 const BaseInformation = (props) => {
 
-    const {selectComponent, setSelectComponent} = props
+    const { selectComponent, setSelectComponent } = props
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
+    const [isGregorian, setisGregorian] = useState(true)
     // const [data, setData] = useState({})
     const [type, setType] = useState("")
 
 
     // const {has_gallery} = useSelector((state) => state.auctionReducer)
     const finalData = useSelector((state) => state.auctionReducer)
-    const [media, setMedia] = useState( null)
-    const [has_gallery_state, setHas_gallery_state] = useState( false)
+    const [media, setMedia] = useState(null)
+    const [has_gallery_state, setHas_gallery_state] = useState(false)
     const [today, setToday] = useState(finalData?.start_time || moment())
     const [todayGallery, setTodayGallery] = useState(finalData?.gallery_start_date || moment())
     const dispatch = useDispatch();
@@ -62,10 +64,10 @@ const BaseInformation = (props) => {
     const onFinish = (values) => {
         // console.log(values)
         // setFinalData({...finalData, ...values})
-        if(media){
-            dispatch(setAUCTION({...values, media,has_gallery:has_gallery_state}))
+        if (media) {
+            dispatch(setAUCTION({ ...values, media, has_gallery: has_gallery_state }))
             setSelectComponent(selectComponent + 1)
-        }else{
+        } else {
             message.error("آپلود تصویر آکشن اجباری می باشد")
         }
 
@@ -79,12 +81,19 @@ const BaseInformation = (props) => {
             setMedia(value)
         // dispatch(setAUCTION({media:value}))
     }
+
+    // const enabledRange = ()=> {
+    //     min:
+    //     //end:momentJalaali().add(1,'days') 
+
+    //   };
+
     return (
         <>
 
             <Form onFinish={onFinish}
-                  form={form}
-                  wrapperCol={{span: 24}}>
+                form={form}
+                wrapperCol={{ span: 24 }}>
                 <div className="row">
                     <div className="col-xxxxl-8">
                         <div className="row">
@@ -112,7 +121,7 @@ const BaseInformation = (props) => {
                                             {
                                                 listAuctionType.map((item, index) => (
                                                     <Select.Option value={item.name}
-                                                                   key={index}>{item.value}</Select.Option>
+                                                        key={index}>{item.value}</Select.Option>
                                                 ))
                                             }
                                         </Select>
@@ -135,14 +144,14 @@ const BaseInformation = (props) => {
                                             },
                                         ]}>
                                         <input type="text" className="default-input"
-                                               placeholder="نام حراج را وارد نمایید."/>
+                                            placeholder="نام حراج را وارد نمایید." />
                                     </Form.Item>
 
                                 </div>
                             </div>
                         </div>
                         <div className="row mb-5">
-                            <UploadImage handleResultUpload={handleResultUpload} initialImage={media}/>
+                            <UploadImage handleResultUpload={handleResultUpload} initialImage={media} />
                         </div>
                         <div className="row">
                             <div className="col-md-6">
@@ -161,7 +170,7 @@ const BaseInformation = (props) => {
                                                 message: "حداکثر 500کاراکتر",
                                             },
                                         ]}>
-                                        <textarea className="default-input" placeholder="جزییات حراج را وارد نمایید."/>
+                                        <textarea className="default-input" placeholder="جزییات حراج را وارد نمایید." />
                                     </Form.Item>
 
                                 </div>
@@ -198,6 +207,7 @@ const BaseInformation = (props) => {
                                                     }}
                                                     name="start_time"
                                                     id="start_time"
+                                                    min={momentJalaali().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
@@ -214,15 +224,15 @@ const BaseInformation = (props) => {
                                                         message: "تکمیل این فیلد ضروری است",
                                                     },
                                                 ]}>
-                                                <TimePicker    locale={{
+                                                <TimePicker locale={{
                                                     ...locale,
                                                     lang: {
                                                         ...locale.lang,
                                                         ok: "تایید",
                                                     }
                                                 }}
-                                                               placeholder="00:00"
-                                                               format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                                    placeholder="00:00"
+                                                    format={"HH:mm"} showNow={false} className="default-input custom-timePicker mt-2" />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -252,6 +262,7 @@ const BaseInformation = (props) => {
                                                     // onChange={handleDateChange}
                                                     name="end_time"
                                                     id="end_time"
+                                                    min={momentJalaali().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
@@ -269,15 +280,15 @@ const BaseInformation = (props) => {
                                                         message: "تکمیل این فیلد ضروری است",
                                                     },
                                                 ]}>
-                                                <TimePicker    locale={{
+                                                <TimePicker locale={{
                                                     ...locale,
                                                     lang: {
                                                         ...locale.lang,
                                                         ok: "تایید",
                                                     }
                                                 }}
-                                                               placeholder="00:00"
-                                                               format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                                    placeholder="00:00"
+                                                    format={"HH:mm"} showNow={false} className="default-input custom-timePicker mt-2" />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -286,11 +297,11 @@ const BaseInformation = (props) => {
                                             <div className="input-group">
                                                 <div className="form-check">
                                                     <input className="form-check-input" type="checkbox"
-                                                           checked={has_gallery_state}
-                                                           onChange={e => setHas_gallery_state(e.target.checked)
-                                                               // dispatch(setAUCTION({has_gallery: e.target.checked}))
-                                                           }
-                                                           id="checkboxphysicalex"/>
+                                                        checked={has_gallery_state}
+                                                        onChange={e => setHas_gallery_state(e.target.checked)
+                                                            // dispatch(setAUCTION({has_gallery: e.target.checked}))
+                                                        }
+                                                        id="checkboxphysicalex" />
                                                     <label className="form-check-label" htmlFor="checkboxphysicalex">
                                                         نمایش در نمایشگاه فیزیکی
                                                     </label>
@@ -298,7 +309,7 @@ const BaseInformation = (props) => {
                                             </div>
                                         </div>
                                         {has_gallery_state && <>
-                                            <div className="col-md-6"/>
+                                            <div className="col-md-6" />
                                             <div className="col-md-6">
                                                 <div className="input-group">
                                                     <label className="default-lable"> تاریخ شروع نمایشگاه</label>
@@ -323,6 +334,7 @@ const BaseInformation = (props) => {
                                                             }}
                                                             name="gallery_start_date"
                                                             id="gallery_start_date"
+                                                            min={momentJalaali().startOf('moment')}
                                                         />
                                                     </Form.Item>
                                                 </div>
@@ -339,15 +351,15 @@ const BaseInformation = (props) => {
                                                                 message: "تکمیل این فیلد ضروری است",
                                                             },
                                                         ]}>
-                                                        <TimePicker    locale={{
+                                                        <TimePicker locale={{
                                                             ...locale,
                                                             lang: {
                                                                 ...locale.lang,
                                                                 ok: "تایید",
                                                             }
                                                         }}
-                                                                       placeholder="00:00"
-                                                                       format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                                            placeholder="00:00"
+                                                            format={"HH:mm"} showNow={false} className="default-input custom-timePicker mt-2" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -375,6 +387,7 @@ const BaseInformation = (props) => {
                                                             // onChange={this.handleDateChange}
                                                             // name="gallery_end_date"
                                                             id="gallery_end_date"
+                                                            min={momentJalaali().startOf('moment')}
                                                         />
                                                     </Form.Item>
                                                 </div>
@@ -392,15 +405,15 @@ const BaseInformation = (props) => {
                                                                 message: "تکمیل این فیلد ضروری است",
                                                             },
                                                         ]}>
-                                                        <TimePicker    locale={{
+                                                        <TimePicker locale={{
                                                             ...locale,
                                                             lang: {
                                                                 ...locale.lang,
                                                                 ok: "تایید",
                                                             }
                                                         }}
-                                                                       placeholder="00:00"
-                                                                       format={"HH:mm"} showNow={false}  className="default-input custom-timePicker mt-2" />
+                                                            placeholder="00:00"
+                                                            format={"HH:mm"} showNow={false} className="default-input custom-timePicker mt-2" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -421,8 +434,8 @@ const BaseInformation = (props) => {
                                                                 message: "حداکثر 500کاراکتر",
                                                             },
                                                         ]}>
-                                                    <textarea className="default-input"
-                                                              placeholder="آدرس حراج را وارد نمایید."/>
+                                                        <textarea className="default-input"
+                                                            placeholder="آدرس حراج را وارد نمایید." />
                                                     </Form.Item>
                                                 </div>
                                             </div>

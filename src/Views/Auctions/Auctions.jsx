@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import slider1 from "../../images/slider1.jpg";
 import {
-    faBell,
-    faEye,
+    faEye
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
@@ -43,6 +41,7 @@ function Auctions() {
                 setLoading(false)
                 if (resp.data.code === 200) {
                     setAuctions(resp.data.data.result)
+                    console.log(Auctions(resp.data.data.result));
                     setCountAuctions(resp.data.data.count)
                 }
 
@@ -163,7 +162,6 @@ function Auctions() {
                                                         </span>
                                                         </div>
                                                         <div className="col-xl-9 col-sm-8 col-9 textalign-left">
-                                                            <FontAwesomeIcon icon={faBell}/>
                                                             <Link to={`/panel-reminders`}>
                                                                 <span className="reminder-icon ">یادآوری</span>
                                                             </Link>
@@ -198,6 +196,7 @@ function Auctions() {
                                                                 data-Date="2021/06/05 16:09:00"
                                                             >
                                                                 {item?.status === "CLOSED" ?
+                                                            
                                                                     <div className="ended">
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
@@ -240,7 +239,8 @@ function Auctions() {
                                                             {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item.id}`}>
                                                                 <button type="button" className="btn btn-gray ms-2">
                                                                     <FontAwesomeIcon className="mx-1" icon={faEye}/>
-                                                                    مشاهده زنده
+                                                                    {/* مشاهده  */}
+                                                                   { AuctionType(item.type)}
                                                                 </button>
                                                             </Link> : null}
 
