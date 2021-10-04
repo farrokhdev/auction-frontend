@@ -1,13 +1,12 @@
 import axios from '../../utils/request';
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import PaginationComponent from '../../components/PaginationComponent';
-import img from '../../images/logo-1.jpg';
-import {BASE_URL} from '../../utils';
-import {CATEGORIE_ACTIVITY, HOME_AUCITONS} from '../../utils/constant';
+import { BASE_URL } from '../../utils';
+import { CATEGORIE_ACTIVITY, HOME_AUCITONS } from '../../utils/constant';
 import SiderHouseAucitons from './SiderHouseAucitons';
 import queryString from 'query-string';
-import {Link} from 'react-router-dom';
-import {Spin} from "antd";
+import { Link } from 'react-router-dom';
+import { Spin } from "antd";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer";
 
@@ -38,6 +37,7 @@ function HouseAuctionsPage() {
             setLoading(false)
         })
     }
+
     const getCategoryActivity = () => {
         axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?title=خانه های حراج`).then(res => {
             setCategoryActivities(res.data.data.result[0].children)
@@ -58,9 +58,9 @@ function HouseAuctionsPage() {
         })
     }
 
-    const handleSetOrdering = (value) => {
+    const handleSetOrdering = () => {
         setParams({
-            ...params, ordering: value
+            ...params, ordering: 'date_joined'
         })
     }
 
@@ -86,10 +86,34 @@ function HouseAuctionsPage() {
             }
     }
 
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getHouseAuction()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction_house",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getHouseAuction()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
 
     return (
         <>
-            <Header/>
+            <Header />
             <Spin spinning={loading}>
                 <main className="innercontent" id="auction-houses">
                     <div className="container innercontainer">
@@ -103,18 +127,18 @@ function HouseAuctionsPage() {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="w-100 lg-mrgb50 d-lg-none d-block"/>
+                            <div className="w-100 lg-mrgb50 d-lg-none d-block" />
                             <div className="col-3 d-lg-none d-block">
                                 <button type="button" className="btn-filter btn">فیلتر</button>
                             </div>
                             <div className="col-lg-6 col-9 ">
                                 <div className="sort-block">
-                        <span className="btn-sort">مرتب‌سازی با
-                    <span className="d-none d-md-inline-block"> : </span>
-                        </span>
+                                    <span className="btn-sort">مرتب‌سازی با
+                                        <span className="d-none d-md-inline-block"> : </span>
+                                    </span>
                                     <ul className="sort-list">
-                                        <li onClick={(e) => handleSetOrdering(e.target.value)}>جدیدترین</li>
-                                        <li className="active">نزدیک‌ترین</li>
+                                        <li onClick={(e) => handleSetOrdering()}>جدیدترین</li>
+                                        {/* <li className="active">نزدیک‌ترین</li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -142,8 +166,6 @@ function HouseAuctionsPage() {
                                                     <div className="row">
                                                         <div className="col-xl-5 col-3">
                                                             <div className="h-block-img">
-
-
                                                                 <Link to={`/house-acutions/${house?.id}`}>
                                                                     <img
                                                                         src={house?.media.filter(pic => pic?.type === "profile_image")[0]?.exact_url}
@@ -157,17 +179,23 @@ function HouseAuctionsPage() {
                                                         <div className="col-xl-7 col-9">
                                                             <div className="h-block-header">
                                                                 <div className="h-block-title">
-                                                                    {/* <h3 className="default">گالری ساربان</h3> */}
                                                                     <h3 className="default">{house?.home_auction_name ? house?.home_auction_name : '---'}</h3>
-                                                                    {/* <h6 className="default">هنرهای تجسمی, ...</h6> */}
                                                                     <h6 className="default">{house?.home_auction_type ? house?.home_auction_type : '---'}</h6>
                                                                 </div>
-                                                                <button type="button" className="btn-follow">دنبال کردن
+                                                                <button
+                                                                    onClick={() =>
+                                                                        Follow(
+                                                                            house?.following?.follow?.is_active ?
+                                                                                house?.following?.follow?.id :
+                                                                                house?.id, house?.following?.follow?.is_active)
+                                                                    }
+                                                                    type="button" className={" btn-follow " + (house?.following?.follow?.is_active ? "following" : "")}>
+                                                                    {house?.following?.follow?.is_active ? "عدم دنبال کردن " : "دنبال کردن"}
                                                                 </button>
                                                             </div>
                                                             <div className="h-block-info">
                                                                 <a href={house?.phone ? house?.phone : house?.mobile}
-                                                                   className="info-tel all-info">{house?.phone ? house?.phone : house?.mobile}</a>
+                                                                    className="info-tel all-info">{house?.phone ? house?.phone : house?.mobile}</a>
                                                                 {/* <address className="all-info"><span className="province">تهران، </span>میدان
                                                                 هویزه، پلاک 103
                                                             </address> */}
@@ -185,14 +213,14 @@ function HouseAuctionsPage() {
 
                                 </div>
                                 {countHousAuction > 10 ?
-                                    <PaginationComponent count={countHousAuction} handeSelectPage={handeSelectPage}/>
+                                    <PaginationComponent count={countHousAuction} handeSelectPage={handeSelectPage} />
                                     : ""
                                 }
                             </div>
                         </div>
                     </div>
                 </main>
-                <Footer/>
+                <Footer />
             </Spin>
         </>
     )
