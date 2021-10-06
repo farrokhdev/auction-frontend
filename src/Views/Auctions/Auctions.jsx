@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import slider1 from "../../images/slider1.jpg";
-import {
-    faBell,
-    faEye,
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Link} from "react-router-dom";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import Maintitle from "../../components/main title for all";
 import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
+import { BASE_URL } from "../../utils";
 import queryString from "query-string";
-import {Pagination, Spin} from "antd";
+import { Pagination, Spin } from "antd";
 import Timer from 'react-compound-timer'
-import { AuctionStatusTextBtn , AuctionType } from '../../utils/converTypePersion';
+import { AuctionStatusTextBtn, AuctionType } from '../../utils/converTypePersion';
+import moment from "jalali-moment";
+import PaginationComponent from '../../components/PaginationComponent';
+
 function Auctions() {
 
     const [Auctions, setAuctions] = useState("");
@@ -23,15 +22,15 @@ function Auctions() {
     const [loading, setLoading] = useState(false)
     const [params, setParams] = useState({
         page: 1,
-        page_size: 9,
+        page_size: 10,
         search: '',
         category: [],
         date_after: '',
         date_before: '',
         ordering: '',
-        auction_houses__home_auction_name: [],
+        home_auction_name: [],
         type: [],
-        visible_in_site : true
+        visible_in_site: true
     })
 
     const queries = queryString.stringify(params);
@@ -41,11 +40,8 @@ function Auctions() {
         axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
             .then(resp => {
                 setLoading(false)
-                if (resp.data.code === 200) {
-                    setAuctions(resp.data.data.result)
-                    setCountAuctions(resp.data.data.count)
-                }
-
+                setCountAuctions(resp.data.data.count)
+                setAuctions(resp.data.data.result)
             })
             .catch(err => {
                 setLoading(false)
@@ -57,6 +53,32 @@ function Auctions() {
         getProducts()
 
     }, [params])
+
+
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getProducts()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getProducts()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
 
     const handeSelectPage = (e) => {
         setParams({
@@ -72,39 +94,41 @@ function Auctions() {
 
     const handleSetCategory = (value) => {
         setParams({
-            ...params, category: value
+            ...params, page: 1, category: value
         })
     }
 
     const handleSetHomeAuction = (value) => {
         setParams({
-            ...params, auction_houses__home_auction_name: value
+            ...params, page: 1, home_auction_name: value
         })
     }
 
     const handleSetHomeAuctionSelect = (value) => {
         setParams({
-            ...params, auction_houses__home_auction_name: value
+            ...params, home_auction_name: value
         })
     }
 
     const handleSetType = (value) => {
         setParams({
-            ...params, type: value
+            ...params, page: 1, type: value
         })
     }
 
-    const handleSetOrdering = (value) => {
+    const handleSetOrdering = () => {
         setParams({
-            ...params, ordering: value
+            // since the ordering field on the product is different from auctions we have to
+            // set this explicitly
+            ...params, ordering: 'creation_time'
         })
     }
 
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
             ...params,
-            date_after: '2021-01-05',
-            date_before: '2021-03-07'
+            start_date_before: dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
+            start_date_after: dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
         })
 
     }
@@ -124,11 +148,11 @@ function Auctions() {
 
     return (
         <div dir="rtl">
-            <Header/>
+            <Header />
             <Spin spinning={loading}>
                 <main className="innercontent" id="all-auctions">
                     <div className="container innercontainer">
-                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering}/>
+                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} />
                         <div className="row">
                             <Sidebar
                                 params={params}
@@ -139,7 +163,7 @@ function Auctions() {
                                 handleSetType={handleSetType}
                                 handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
                                 handleSetDate={handleSetDate}
-                                typeCategory="حراج ها"
+                                typeCategory="خانه های حراج"
                             />
 
                             <div className="col-lg-9">
@@ -149,29 +173,33 @@ function Auctions() {
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     <Link to={`/one-auction/${item.id}`}
-                                                          className="bg-shadow tr-shadow10">
-                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item?.media?.exact_url})` ,height:"250px"}}/>
-                                                        {/*<img src={slider1} width="500" height="500" alt=""/>*/}
+                                                        className="bg-shadow tr-shadow10">
+                                                        <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                                                     </Link>
                                                 </div>
                                                 <div className="col-md-8">
                                                     <div className="block-head row">
                                                         <div className="col-xl-3 col-sm-4 col-3">
-                                                        <span className="category-icon live-icon">
-                                                          <span
-                                                              className="d-none d-md-inline-block"> </span> {AuctionType(item.type)}
-                                                        </span>
+                                                            <span className="category-icon live-icon">
+                                                                <span
+                                                                    className="d-none d-md-inline-block"> </span> {AuctionType(item.type)}
+                                                            </span>
                                                         </div>
                                                         <div className="col-xl-9 col-sm-8 col-9 textalign-left">
-                                                            <FontAwesomeIcon icon={faBell}/>
-                                                            <Link to={`/panel-reminders`}>
-                                                                <span className="reminder-icon ">یادآوری</span>
-                                                            </Link>
+
+                                                            <button
+                                                                onClick={() =>
+                                                                    Follow(
+                                                                        item?.following?.follow?.is_active ?
+                                                                            item?.following?.follow?.id :
+                                                                            item?.id, item?.following?.follow?.is_active)
+                                                                }
+                                                                type="button" className={" reminder-icon " + (item?.following?.follow?.is_active ? "active" : "")}>
+                                                                یادآوری
+                                                            </button>
                                                             <button type="button" className="link-source">
                                                                 <Link to={`/one-auction/${item.id}`}>
-                                                                <span className="d-none d-sm-inline-block">
-                                                                  مشاهده{" "}
-                                                                </span>
+                                                                    <span className="d-none d-sm-inline-block">مشاهده</span>
                                                                     آثار
                                                                     (<span>{item?.products_count ? item.products_count : 0}</span>)
                                                                 </Link>
@@ -198,10 +226,11 @@ function Auctions() {
                                                                 data-Date="2021/06/05 16:09:00"
                                                             >
                                                                 {item?.status === "CLOSED" ?
+
                                                                     <div className="ended">
                                                                         <div className="text">حراج به پایان رسید</div>
                                                                     </div>
-                                                                    :<div>
+                                                                    : <div>
                                                                         {item?.status === "ACTIVE" &&
                                                                             <Timer
                                                                                 initialTime={timeExpire(item.end_time)}
@@ -214,15 +243,15 @@ function Auctions() {
                                                                                     }}>
 
                                                                                         <span className="d-inline-block ">ساعت</span>
-                                                                                         <span className="d-inline-block"><Timer.Hours/> </span>
-                                                                                         <span className="d-inline-block">:</span>
-                                                                                         <span className="d-inline-block"><Timer.Minutes/></span>
-                                                                                         <span className="d-inline-block">:</span>
-                                                                                        <span className="d-inline-block "><Timer.Seconds/></span>
+                                                                                        <span className="d-inline-block"><Timer.Hours /> </span>
+                                                                                        <span className="d-inline-block">:</span>
+                                                                                        <span className="d-inline-block"><Timer.Minutes /></span>
+                                                                                        <span className="d-inline-block">:</span>
+                                                                                        <span className="d-inline-block "><Timer.Seconds /></span>
 
                                                                                         <span className="d-inline-block mx-2">  و  </span>
                                                                                         <span className="d-inline-block ">  روز  </span>
-                                                                                        <span className="d-inline-block "><Timer.Days/></span>
+                                                                                        <span className="d-inline-block "><Timer.Days /></span>
                                                                                     </div>
                                                                                 )}
                                                                             </Timer>
@@ -239,12 +268,13 @@ function Auctions() {
 
                                                             {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item.id}`}>
                                                                 <button type="button" className="btn btn-gray ms-2">
-                                                                    <FontAwesomeIcon className="mx-1" icon={faEye}/>
-                                                                    مشاهده زنده
+                                                                    <FontAwesomeIcon className="mx-1" icon={faEye} />
+                                                                    {/* مشاهده  */}
+                                                                    {AuctionType(item.type)}
                                                                 </button>
                                                             </Link> : null}
 
-                                                            {AuctionStatusTextBtn(item?.status , item?.user_is_enrolled , item.id)}
+                                                            {AuctionStatusTextBtn(item?.status, item?.user_is_enrolled, item.id)}
 
                                                         </div>
                                                     </div>
@@ -254,31 +284,27 @@ function Auctions() {
                                     )
                                 }) : ""}
 
+                                <PaginationComponent count={countAuctions} handeSelectPage={handeSelectPage} />
 
-                                <Pagination
-                                    style={{direction: 'ltr', textAlign: 'center'}}
+                                {/* <Pagination
+                                    style={{ direction: 'ltr', textAlign: 'center' }}
                                     showSizeChanger
                                     responsive
                                     onShowSizeChange={(current, pageSize) => {
                                         getProducts(pageSize)
                                     }}
-                                    // onChange={(current, pageSize) => {
-                                    //   console.log(current, pageSize)
-
-                                    // }}
                                     onChange={(e) => handeSelectPage(e)}
                                     defaultCurrent={1}
                                     total={countAuctions}
                                     pageSizeOptions={[9, 18, 36, 48]}
-                                    defaultPageSize={9}
-                                />
-
+                                    defaultPageSize={10}
+                                /> */}
                             </div>
                         </div>
                     </div>
                 </main>
             </Spin>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

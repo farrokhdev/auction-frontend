@@ -34,7 +34,9 @@ function SiderHouseAucitons({params , handleSetCategory , categoryActivities , h
                     <input  
                         id="search-house-auction"
                         type="text" className="default-input"
-                        placeholder="جستجو..." />
+                        placeholder="جستجو..."
+                        onChange={(e)=>handleSetSearchFilter(document.querySelector('#search-house-auction').value)} 
+                        />
                     <button 
                         onClick={(e)=>handleSetSearchFilter(document.querySelector('#search-house-auction').value)} 
                         type="button" 
