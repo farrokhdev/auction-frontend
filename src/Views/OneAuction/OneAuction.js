@@ -346,10 +346,12 @@ function OneAuction(props) {
                                             return (
                                                 <div className="artwork-block" key={key}>
                                                     <div className="artwork-img">
+                                                        <Link to={`/artworks/${item.id}`}> 
                                                         <div className="image-custom-back" style={{
                                                             backgroundImage: `url(${item.media.exact_url})`,
                                                             height: "250px"
                                                         }}/>
+                                                        </Link>
                                                         {/*<img src={item?.media?.exact_url} width="317" height="280"*/}
                                                         {/*     alt=""*/}
                                                         {/*     className="img-fluid"/>*/}
