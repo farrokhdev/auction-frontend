@@ -18,6 +18,7 @@ function Artworks() {
     const [Products, setProducts] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [Auctions, setAuctions] = useState("");
     // const [pageSize, setPageSize] = useState(5);
     const [params, setParams] = useState({
         page: 1,
@@ -30,6 +31,8 @@ function Artworks() {
         home_auction_name: [],
         auctions__type: [],
     })
+
+    // console.log("countProducts==>>",countProducts);
 
     const queries = queryString.stringify(params);
     const getProducts = () => {
@@ -88,19 +91,19 @@ function Artworks() {
 
     const handleSearchProducts = (value) => {
         setParams({
-            ...params, search: value
+            ...params, page: 1, search: value
         })
     }
 
     const handleSetCategory = (value) => {
         setParams({
-            ...params, category: value
+            ...params, page: 1, category: value
         })
     }
 
     const handleSetHomeAuction = (value) => {
         setParams({
-            ...params, home_auction_name: value
+            ...params, page: 1, home_auction_name: value
         })
     }
 
@@ -128,9 +131,8 @@ function Artworks() {
         setParams({
             ...params,
             date_before: dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
-            date_after: dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : ""
-            // date_after: '2021-01-05',
-            // date_before: '2021-03-07'
+            date_after: dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
+            page: 1
         })
 
     }
@@ -168,6 +170,7 @@ function Artworks() {
 
         }
     }
+    // console.log("item.last_auction === >>>>>", Products?.latest_auction?.type('helllo'))
 
     return (
         <div style={{ overflow: 'hidden' }}>
@@ -216,8 +219,8 @@ function Artworks() {
                                                                     item?.id, item?.following?.bookmark?.is_active)
                                                         }
                                                             className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")} />
-                                                        {convertToEn(item?.auctions ? item?.auctions[0]?.type : '')}
-                                                        {/* <span className="category-icon live-icon">زنده</span> */}
+                                                        <span className="px-1">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : 'بدون حراجی'}</span>
+                                                        {/* <span>{console.log(im)}</span> */}
                                                     </div>
                                                 </div>
                                                 <div className="block-body text-center">
@@ -298,6 +301,7 @@ function Artworks() {
                                                         </div>
 
                                                     }
+                                                    {/* {item?.latest_auction?.status === "CLOSED" } */}
                                                     {item?.latest_auction?.status === "CLOSED" ? <div>
                                                         {
                                                             item?.sale_status ?
@@ -307,18 +311,34 @@ function Artworks() {
                                                                         className="price-unit">تومان</span></span>
                                                                 </div>
                                                                 :
+                                                                // <div className="price-block">
+                                                                //     <span>قیمت فعلی:</span>
+                                                                //     <span className="price">{numberWithCommas(item?.price)}<span
+                                                                //         className="price-unit">تومان</span></span>
+                                                                // </div>
+                                                                <div className="price-block">
+                                                                    <span> فروخته نشده</span>
+                                                                    {/* <span className="price">{numberWithCommas(item?.price)}<span
+                                                                        className="price-unit">تومان</span></span> */}
+                                                                </div>
+                                                        }
+                                                    </div>
+                                                        : <div>
+                                                            {item?.latest_auction?.status === "ACTIVE" ?
+                                                                <div>
+                                                                    <div className="price-block">
+                                                                        <span>قیمت پایه:</span>
+                                                                        <span className="price">{numberWithCommas(item?.price)}<span
+                                                                            className="price-unit">تومان</span></span>
+                                                                    </div>
+
+                                                                </div> :
                                                                 <div className="price-block">
                                                                     <span>قیمت فعلی:</span>
                                                                     <span className="price">{numberWithCommas(item?.price)}<span
                                                                         className="price-unit">تومان</span></span>
                                                                 </div>
-                                                        }
-                                                    </div>
-                                                        :
-                                                        <div className="price-block">
-                                                            <span>قیمت پایه:</span>
-                                                            <span className="price">{numberWithCommas(item?.price)}<span
-                                                                className="price-unit">تومان</span></span>
+                                                            }
                                                         </div>
                                                     }
                                                 </div>
@@ -328,17 +348,16 @@ function Artworks() {
 
 
                                 </div>
+
                                 <Pagination
                                     style={{ direction: 'ltr', textAlign: 'center' }}
-                                    showSizeChanger
+                                    showSizeChanger={false}
                                     responsive
                                     onShowSizeChange={(current, pageSize) => {
                                         getProducts(pageSize)
+                                        // getProduct(pageSize)
                                     }}
-                                    // onChange={(current, pageSize) => {
-                                    //   console.log(current, pageSize)
-
-                                    // }}
+                                    // (e) => handeSelectPage(e)
                                     onChange={(e) => handeSelectPage(e)}
                                     defaultCurrent={1}
                                     total={countProducts}
