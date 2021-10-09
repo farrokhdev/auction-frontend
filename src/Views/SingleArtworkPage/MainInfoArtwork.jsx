@@ -2,16 +2,15 @@ import React from 'react'
 import { convertTypeAuctionToPersian } from '../../utils/converTypePersion';
 import classnames from 'classnames';
 import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
 import Bid from "./bid";
 import Secret from "./secret";
+import { Rate } from 'antd';
+
 function MainInfoArtwork({artwork}) {
     const {is_logged_in} = useSelector((state) => state.authReducer)
-    console.log("TTT ",artwork?.latest_auction?.type);
+    console.log("artwork==>>>> ",artwork);
 return (
     <div className="row">
-
-
         <div className="col-lg-6">
             <div id="inner-artwork" className="carousel slide" data-bs-ride="carousel" data-bs-touch="false">
                 <div className="carousel-indicators">
@@ -97,20 +96,20 @@ return (
                             </div>
                             <div className="detail-artwork">
                                 <div className="d-artwork-left">
-                                    <a href="#" className="d-info artist">
+                                    <p className="d-info artist">
                                         {/* <h6 className="default">صادق ادهم</h6> */}
                                         <h6 className="default">{artwork?.persian_artist_name}</h6>
-                                    </a>
-                                    <a href="#" className="d-info category">
+                                    </p>
+                                    <p className="d-info category">
                                         {/* <h6 className="default">هنر مدرن و معاصر</h6> */}
                                         <h6 className="default">{artwork?.category ? artwork?.category[0]?.title : ''}</h6>
-                                    </a>
-                                    <a href="#" className="d-info gallery">
+                                    </p>
+                                    <p className="d-info gallery">
                                         <h6 className="default">{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : '--'}</h6>
-                                    </a>
+                                    </p>
                                 </div>
                                 <div className="d-artwork-right">
-                                    <h5 className="default lot-num"></h5>
+                                    <h5 className="default lot-num">{artwork?.id}</h5>
                                 </div>
                             </div>
                             { ((artwork?.latest_auction?.type === 'ONLINE')|| (artwork?.latest_auction?.type === 'PERIODIC'))?
@@ -124,21 +123,22 @@ return (
                                             className="img-fluid" />
                                     </div>
                                     <div className="detail-ahm">
-                                        <a href="#" className="ah-link">
+                                        <h6 className="ah-link">
                                             <h3 className="default">{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</h3>
-                                        </a>
+                                        </h6>
                                         <button type="button" className="btn-follow">دنبال کردن</button>
                                     </div>
                                 </div>
-                                <div className="ah-right">
+                                {/* <div className="ah-right">
                                     <ul className="star-rate">
                                         <li></li>
                                         <li></li>
                                         <li></li>
                                         <li></li>
-                                        <li></li>
+                                    <li></li>
                                     </ul>
-                                </div>
+                                </div> */}
+                                <Rate />
                             </div>
                         </div>
                     </div>
