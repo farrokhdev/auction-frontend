@@ -60,8 +60,8 @@ const getListCategory = () => {
           "type": "image",
           "file_name": image.name,
         },
-        "category_id": newArtwork.category_id
-
+        "category_id": newArtwork.category_id,
+        "offer_home_auction" : "required"
       }
 
             
