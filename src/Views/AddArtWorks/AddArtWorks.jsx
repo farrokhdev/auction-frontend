@@ -122,7 +122,8 @@ function AddArtWorks(props) {
             },
             "artwork_link" : Link,
             "min_price":MinPrice,
-            "max_price": MaxPrice
+            "max_price": MaxPrice,
+            "offer_home_auction" : "unrequired"
         //    صاحب اثر هم هست
         }
         setPosting(true)
