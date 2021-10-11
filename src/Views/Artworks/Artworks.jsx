@@ -219,7 +219,7 @@ function Artworks() {
                                                                     item?.id, item?.following?.bookmark?.is_active)
                                                         }
                                                             className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")} />
-                                                        <span className="px-1">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : 'بدون حراجی'}</span>
+                                                        <span className="">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : <span className="category-icon text-secondary">بدون حراجی</span>}</span>
                                                         {/* <span>{console.log(im)}</span> */}
                                                     </div>
                                                 </div>
