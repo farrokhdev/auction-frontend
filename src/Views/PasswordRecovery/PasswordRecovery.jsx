@@ -1,42 +1,55 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import Logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // import {withRouter} from "react-router-dom"
 import { BASE_URL } from "../../utils/index";
-import {setToken} from "../../utils/utils";
+import { setToken } from "../../utils/utils";
 // import AuthContext from "../../context/AuthContext";
-import {setPhoneNumber} from '../../redux/reducers/auth/auth.actions';
-import {connect} from 'react-redux';
-import {Form, Input,message} from "antd";
+import { setPhoneNumber } from '../../redux/reducers/auth/auth.actions';
+import { connect } from 'react-redux';
+import { Form, Input, message } from "antd";
 
 function Passwordrecovery(props) {
   const [username, setUsername] = useState("");
   const [form] = Form.useForm();
 
-
-  const handleRequestPasswordRecovery = (value)=>{
-
-    let payload ={
-      "user_name" : username,
+  function err_msg_resolver(res_body) {
+    if (res_body.code == 201 || res_body.code == 200)
+      return res_body.data.error_message
+    else {
+      return res_body.message
     }
-    axios.post(`${BASE_URL}/account/sendotp/` ,payload)
-      .then(res=>{
-        console.log("Password Recovey",res);
+  }
 
-        if(res.data.code === 200){
+  const handleRequestPasswordRecovery = (value) => {
+
+    let payload = {
+      "user_name": username,
+    }
+    axios.post(`${BASE_URL}/account/sendotp/`, payload)
+      .then(res => {
+        console.log("Password Recovey", res);
+
+        if (res.data.code === 200) {
           setToken(res.data.data.result);
-          props.setPhoneNumber({username : payload.user_name})
+          props.setPhoneNumber({ username: payload.user_name })
           setTimeout(() => {
-            window.location.href ="#/confirm-mobile-number"
-          message.success("کد تایید ارسال شد")
+            window.location.href = "#/confirm-mobile-number"
+            message.success("کد تایید ارسال شد")
           }, 1000);
           // history.push("/confirm-mobile-number")
         }
       })
-      .catch(err=>{
-        message.error("دوباره تلاش کنید")
-        console.log("Can not Login" , err);
+      .catch(err => {
+        message.error({
+          content: err_msg_resolver(err.response.data),
+          className: 'text-danger',
+          style: {
+            marginTop: '10vh',
+          },
+        })
+        console.log("Can not Login", err);
       })
   }
 
@@ -63,17 +76,17 @@ function Passwordrecovery(props) {
                 className="w-100"
                 name="user-name"
                 rules={[
-                    {
-                      required: true,
-                      message: "تکمیل این فیلد ضروری است",
-                    }
-                    
-            ]}>
+                  {
+                    required: true,
+                    message: "تکمیل این فیلد ضروری است",
+                  }
+
+                ]}>
                 <Input className="default-input"
-                    onChange={(e)=>{
-                      setUsername(e.target.value)
-                    }}
-                  placeholder="شماره تلفن یا ایمیل خود را وارد کنید"/>
+                  onChange={(e) => {
+                    setUsername(e.target.value)
+                  }}
+                  placeholder="شماره تلفن یا ایمیل خود را وارد کنید" />
               </Form.Item>
               {/* <input
                 onChange={(e)=>{
@@ -86,12 +99,12 @@ function Passwordrecovery(props) {
               /> */}
             </div>
             <div className="btn-container pt-5">
-                <button
-                  onClick={handleRequestPasswordRecovery}
-                  type="submit"
-                  className="btn-default">
-                  دریافت کد تایید
-                </button>
+              <button
+                onClick={handleRequestPasswordRecovery}
+                type="submit"
+                className="btn-default">
+                دریافت کد تایید
+              </button>
               {/* <Link to="/confirm-mobile-number">
               </Link> */}
             </div>
@@ -104,7 +117,7 @@ function Passwordrecovery(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      setPhoneNumber : (data) => dispatch(setPhoneNumber(data)),
+    setPhoneNumber: (data) => dispatch(setPhoneNumber(data)),
 
   }
 }
@@ -112,9 +125,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (store) => {
   return {
-      auth : store.authReducer,
+    auth: store.authReducer,
   }
 }
 
 
-export default connect(mapStateToProps , mapDispatchToProps)(Passwordrecovery)
+export default connect(mapStateToProps, mapDispatchToProps)(Passwordrecovery)

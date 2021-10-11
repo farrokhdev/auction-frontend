@@ -17,6 +17,15 @@ function ConfirmMobileNumber(props) {
   const [verify_code, setverify_code] = useState("");
   const [form] = Form.useForm();
 
+  function err_msg_resolver(res_body) {
+    if (res_body.code == 201 || res_body.code == 200)
+      return res_body.data.error_message
+    else {
+      return res_body.message
+    }
+  }
+
+
   const handleRequestConfrimMobile = (value)=>{
     let payload={
       "user_name": props.auth.username,
@@ -26,19 +35,36 @@ function ConfirmMobileNumber(props) {
     axios.post(`${BASE_URL}/account/approve/` , payload)
       .then(res=>{
         console.log("Confrim-Mobile" , res);
+        if (res.data.data.statusCode === 400) {
+          message.error("مجددا درخواست کد اعتبارسنجی دهید")
 
-        if(res.data.code === 200){
+        } else {
           setToken(res.data.data.result);
-          props.getOtp({otp : verify_code})
+          props.getOtp({ otp: verify_code })
           setTimeout(() => {
             window.location.href = "#/register-set-password"
             message.success("گذر واژه جدید را وارد کنید")
-          }, 1000);
-          // history.push("/register-set-password")
+          }, 500);
         }
+        // if(res.data.code === 200){
+        //   setToken(res.data.data.result);
+        //   props.getOtp({otp : verify_code})
+        //   setTimeout(() => {
+        //     window.location.href = "#/register-set-password"
+        //     message.success("گذر واژه جدید را وارد کنید")
+        //   }, 1000);
+        //   // history.push("/register-set-password")
+        // }
       })
       .catch(err=>{
-        message.error("کد نامعتبر است")
+        message.error({
+          content: err_msg_resolver(err.response.data),
+          className: 'text-danger',
+          style: {
+            marginTop: '10vh',
+          },
+        })
+        // message.error("کد نامعتبر است")
         console.log("Error Message as Confrim-Mobile" , err);
       })
   }
