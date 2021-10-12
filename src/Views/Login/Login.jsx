@@ -40,7 +40,13 @@ function Login(props) {
           setToken(resp.data.data.result);
           props.setPhoneNumber({ username: payload.id })
           props.loginSuccess({ userName: payload.id })
-          message.success("به اسمارت آکشن خوش آمدید")
+          message.success({
+            content: "به اسمارت آکشن خوش آمدید",
+            className: 'text-succus',
+            style: {
+              marginTop: '10vh',
+            },
+          })
           window.location.href = "#/"
         }
       })

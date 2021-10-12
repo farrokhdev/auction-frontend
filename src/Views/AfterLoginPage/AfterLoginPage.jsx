@@ -13,6 +13,7 @@ import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import moment from "jalali-moment";
 import {Spin} from "antd";
+import { message} from "antd";
 
 function AfterLoginPage() {
 
@@ -21,6 +22,14 @@ function AfterLoginPage() {
     const [lastAuctions, setLastAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
     let numeral = require('numeral');
+
+    function err_msg_resolver(res_body) {
+        if (res_body.code == 201 || res_body.code == 200)
+            return res_body.data.error_message
+        else {
+            return res_body.message
+        }
+    }
 
     const getData = () => {
         setLoading(true)
@@ -44,6 +53,13 @@ function AfterLoginPage() {
             .catch(err => {
                 console.error(err);
                 setLoading(false)
+                message.error({
+                    content: err_msg_resolver(err.response.data),
+                    className: 'text-danger',
+                    style: {
+                        marginTop: '10vh',
+                    },
+                })
             })
     }
 

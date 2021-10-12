@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import logobw from "../../images/logo-bw.svg";
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+
 
 export default function Footer() {
+
+  const [Products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
+
+
+  console.log("Products===>>", Products)
+
+
+  const getProducts = () => {
+    setLoading(true)
+    axios.get(`${BASE_URL}/panel/contents/`)
+      .then(resp => {
+        setLoading(false)
+        if (resp.data.code === 200) {
+          setProducts(resp.data.data.result)
+        }
+
+      })
+      .catch(err => {
+        setLoading(false)
+        console.error(err);
+      })
+  }
+
+  useEffect(() => {
+    getProducts()
+  }, [])
+
   return (
     <>
       <footer>
@@ -22,20 +53,26 @@ export default function Footer() {
             </div>
             <div className="col-lg-8 col-md-10 col-sm-9 pb-5">
               <ul className="simple-menu">
-                <li>
-                  <Link>شرایط استفاده</Link>
-                </li>
-                <li>
-                  <Link>حریم خصوصی</Link>
-                </li>
-                <li>
-                  <Link>همکاری با ما</Link>
-                </li>
-                <li>
-                  <Link>سوالات متداول</Link>
-                </li>
-                <li>
+                {Products?.length && Products?.map((item, i) => (
+
+                  <li className="list-inline-item">
+                    {/* شرایط استفاده */}
+                    <Link to={`/Terms-of-use/${item?.title}`}>
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+                {/* <li>
+                    <Link>حریم خصوصی</Link>
+                  </li>
+                  <li>
+                    <Link>همکاری با ما</Link>
+                  </li>
+                  <li>
                   <Link>تماس با ما</Link>
+                </li> */}
+                <li>
+                  <Link to="/faq">سوالات متداول</Link>
                 </li>
               </ul>
             </div>

@@ -122,13 +122,6 @@ function PanelSidebar(props) {
                  <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی
                </NavLinkRouter>
               </li>
-              
-              <li>
-               <NavLinkRouter activeClassName="active-style-menu" to="/create-content">
-                 <FontAwesomeIcon icon={faCreditCard} /> دریافت محتوی
-               </NavLinkRouter>
-              </li>
-              
               <li>
                 <NavLinkRouter to="/"  onClick={()=>{
                     dispatch(clearStorageAll())
