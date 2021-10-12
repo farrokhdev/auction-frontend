@@ -49,7 +49,8 @@ import NotFound from "./Views/404";
 import OneAuction from "./Views/OneAuction";
 import { Token } from "./utils/utils";
 import UserPanelMyAuctions from "./Views/UserPanelMyAuctions";
-import CreateContent from "./Views/CreateContent";
+import TermsOfUse from "./Views/TermsOfUse";
+import Faq from "./Views/FAQ/Faq";
 
 
 function App(props) {
@@ -120,7 +121,8 @@ function App(props) {
                                 <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids} />
                                 <Route exact path="/create-reminder" component={CreateReminder} />
                                 <Route exact path="/edit-reminder" component={EditReminder} />
-                                <Route exact path="/create-content" component={CreateContent} />
+                                <Route exact path="/Terms-of-use/:name" component={TermsOfUse} />
+                                <Route exact path="/faq" component={Faq} /> 
                                 <Route exact path="/panel-artwork-list" component={UserPanelArtworkList} />
                                 {/*<Route path="/*" exact component={NotFound}/>*/}
 

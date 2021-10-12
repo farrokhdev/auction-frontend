@@ -1,19 +1,28 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Form, Input, Row, Col, message, Spin} from "antd";
+import React, { useEffect, useState } from 'react'
+import { Button, Form, Input, Row, Col, message, Spin } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
-import {EDIT_PROFILE} from "../../utils/constant";
-import {Link} from "react-router-dom";
+import { BASE_URL } from "../../utils";
+import { EDIT_PROFILE } from "../../utils/constant";
+import { Link } from "react-router-dom";
 
 function EditPanelProfile(props) {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
-    const {data} = props;
-    const {setActiveKey} = props;
+    const { data } = props;
+    const { setActiveKey } = props;
     const onFinish = (values) => {
         sendData(values)
     }
+
+    function err_msg_resolver(res_body) {
+        if (res_body.code == 201 || res_body.code == 200)
+            return res_body.data.error_message
+        else {
+            return res_body.message
+        }
+    }
+
     useEffect(() => {
         form.setFieldsValue(data)
     }, [data])
@@ -23,9 +32,11 @@ function EditPanelProfile(props) {
 
     const sendData = (values) => {
         setLoading(true)
-        axios.put(`${BASE_URL}${EDIT_PROFILE}`, {...values, "home_auction_location": {
+        axios.put(`${BASE_URL}${EDIT_PROFILE}`, {
+            ...values, "home_auction_location": {
                 "address": values?.address || ""
-            }})
+            }
+        })
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
@@ -36,7 +47,14 @@ function EditPanelProfile(props) {
             .catch(err => {
                 setLoading(false)
                 console.error(err);
-                message.error("دوباره تلاش کنید")
+                // message.error("دوباره تلاش کنید")
+                message.error({
+                    content: err_msg_resolver(err.response.data),
+                    className: 'text-danger',
+                    style: {
+                        marginTop: '10vh',
+                    },
+                })
             })
     }
 
@@ -58,8 +76,8 @@ function EditPanelProfile(props) {
     return (
         <Spin spinning={loading}>
             <Form onFinish={onFinish}
-                  form={form}
-                  wrapperCol={{span: 24}}>
+                form={form}
+                wrapperCol={{ span: 24 }}>
 
                 <div className="">
                     <div className="row">
@@ -76,7 +94,7 @@ function EditPanelProfile(props) {
                                         }
                                     ]}>
                                     <Input className="default-input"
-                                           placeholder="نام خود را وارد نمایید."/>
+                                        placeholder="نام خود را وارد نمایید." />
                                 </Form.Item>
                             </div>
                         </div>
@@ -93,7 +111,7 @@ function EditPanelProfile(props) {
                                         }
                                     ]}>
                                     <Input className="default-input"
-                                           placeholder="نام خانوادگی خود را وارد نمایید."/>
+                                        placeholder="نام خانوادگی خود را وارد نمایید." />
                                 </Form.Item>
 
                             </div>
@@ -128,8 +146,8 @@ function EditPanelProfile(props) {
 
                                             name="mobile">
                                             <Input className="default-input"
-                                                   placeholder="شماره موبایل مورد نظر را وارد نمایید."
-                                                   disabled/>
+                                                placeholder="شماره موبایل مورد نظر را وارد نمایید."
+                                                disabled />
 
                                         </Form.Item>
                                         <span className="approved input-state">تایید شده</span>
@@ -150,8 +168,8 @@ function EditPanelProfile(props) {
                                             className="w-100"
                                             name="email">
                                             <Input className="default-input"
-                                                   placeholder="ایمیل خود را وارد نمایید."
-                                                   disabled/>
+                                                placeholder="ایمیل خود را وارد نمایید."
+                                                disabled />
                                         </Form.Item>
                                         <span className="approved input-state">تایید شده</span>
                                     </>
@@ -178,7 +196,7 @@ function EditPanelProfile(props) {
                                     ]}
                                 >
                                     <Input type="number" className="default-input"
-                                           placeholder="کد پستی خود را وارد نمایید."/>
+                                        placeholder="کد پستی خود را وارد نمایید." />
                                 </Form.Item>
                             </div>
                         </div>
@@ -200,7 +218,7 @@ function EditPanelProfile(props) {
                                     ]}
                                 >
                                     <Input className="default-input"
-                                           placeholder="کد ملی خود را وارد نمایید."/>
+                                        placeholder="کد ملی خود را وارد نمایید." />
                                 </Form.Item>
                             </div>
                         </div>
@@ -211,7 +229,7 @@ function EditPanelProfile(props) {
                                     className="w-100"
                                     name="address">
                                     <TextArea className="default-input"
-                                              placeholder="آدرس خود را وارد نمایید."/>
+                                        placeholder="آدرس خود را وارد نمایید." />
                                 </Form.Item>
                             </div>
                         </div>
@@ -229,4 +247,4 @@ function EditPanelProfile(props) {
     )
 }
 
-export default EditPanelProfile; 
+export default EditPanelProfile;
