@@ -4,15 +4,14 @@ import Footer from "../../components/footer";
 import slider1 from '../../images/slider1.jpg';
 import slider2 from '../../images/slider2.jpg';
 import slider3 from '../../images/slider3.jpg';
-import pic4 from '../../images/pic4.jpg';
 import Slider from "react-slick";
-import {faBookmark} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from 'react-router-dom';
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import moment from "jalali-moment";
 import {Spin} from "antd";
+import { message} from "antd";
+import { convertToEn } from '../../utils/converTypePersion';
 
 function AfterLoginPage() {
 
@@ -21,6 +20,14 @@ function AfterLoginPage() {
     const [lastAuctions, setLastAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
     let numeral = require('numeral');
+
+    function err_msg_resolver(res_body) {
+        if (res_body.code == 201 || res_body.code == 200)
+            return res_body.data.error_message
+        else {
+            return res_body.message
+        }
+    }
 
     const getData = () => {
         setLoading(true)
@@ -44,6 +51,13 @@ function AfterLoginPage() {
             .catch(err => {
                 console.error(err);
                 setLoading(false)
+                message.error({
+                    content: err_msg_resolver(err.response.data),
+                    className: 'text-danger',
+                    style: {
+                        marginTop: '10vh',
+                    },
+                })
             })
     }
 
@@ -78,12 +92,6 @@ function AfterLoginPage() {
     }, [])
 
     const settings = {
-        // dots: false,
-        // breakpoint: 1024,
-        // infinite: false,
-        // speed: 500,
-        // slidesToShow: 4,
-        // slidesToScroll: 4,
         dots: true,
         infinite: false,
         speed: 500,
@@ -118,27 +126,6 @@ function AfterLoginPage() {
         ]
     };
 
-
-    const convertToEn = (value) => {
-
-        switch (value) {
-
-            case "ONLINE":
-                return <span className="category-icon online-icon">آنلاین</span>
-            case "LIVE":
-                return <span className="category-icon live-icon">زنده</span>
-
-            case "PERIODIC":
-                return <span className="category-icon timed-icon">مدت دار</span>
-
-            case "HIDDEN":
-                return <span className="category-icon firstoffer-icon">اولین پیشنهاد</span>
-
-            case "SECOND_HIDDEN":
-                return <span className="category-icon secondoffer-icon">دومین پیشنهاد</span>
-
-        }
-    }
 
     return (
         <React.Fragment>
@@ -245,12 +232,10 @@ function AfterLoginPage() {
                                             <div className="artwork-img">
                                                 <Link to={`/artworks/${item.id}`} className="artwork-block ">
                                                      <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}>
-                                                         {/*<img src={item.media.exact_url} className="w-100 img-fluid" alt="gallery" />*/}
                                                      </div>
 
                                                 </Link>
                                                 <div className="artwork-category">
-                                                    {/*<FontAwesomeIcon icon={faBookmark}/>*/}
                                                     <span onClick={() =>
                                                          addBookmark(
                                                             item?.following?.bookmark?.is_active?
@@ -258,7 +243,8 @@ function AfterLoginPage() {
                                                                 item?.id, item?.following?.bookmark?.is_active)
                                                     }
                                                           className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")}/>
-                                                    {convertToEn(item.latest_auction.type)}
+                                                    {/* {convertToEn(item.latest_auction.type)} */}
+                                                    <span className="">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : <span className="category-icon text-secondary">بدون حراجی</span>}</span>
                                                 </div>
                                             </div>
                                             <div className="block-body text-center">

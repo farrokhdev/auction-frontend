@@ -12,14 +12,13 @@ import queryString from 'query-string';
 import moment from "jalali-moment";
 import Timer from "react-compound-timer";
 import numberWithCommas from "../../components/threeNumber";
+import { convertToEn } from "../../utils/converTypePersion";
 
 function Artworks() {
 
     const [Products, setProducts] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [loading, setLoading] = useState(false)
-    const [Auctions, setAuctions] = useState("");
-    // const [pageSize, setPageSize] = useState(5);
     const [params, setParams] = useState({
         page: 1,
         page_size: 9,
@@ -31,8 +30,6 @@ function Artworks() {
         home_auction_name: [],
         auctions__type: [],
     })
-
-    // console.log("countProducts==>>",countProducts);
 
     const queries = queryString.stringify(params);
     const getProducts = () => {
@@ -137,29 +134,6 @@ function Artworks() {
 
     }
 
-
-    const convertToEn = (value) => {
-
-        switch (value) {
-
-            case "ONLINE":
-                return <span className="category-icon online-icon">آنلاین</span>
-            case "LIVE":
-                return <span className="category-icon live-icon">زنده</span>
-
-            case "PERIODIC":
-                return <span className="category-icon timed-icon">مدت دار</span>
-
-            case "HIDDEN":
-                return <span className="category-icon firstoffer-icon">اولین پیشنهاد</span>
-
-            case "SECOND_HIDDEN":
-                return <span className="category-icon secondoffer-icon">دومین پیشنهاد</span>
-
-        }
-    }
-
-
     function timeExpire(time) {
         let expire = new Date(time)
         let now = new Date()
@@ -170,7 +144,6 @@ function Artworks() {
 
         }
     }
-    // console.log("item.last_auction === >>>>>", Products?.latest_auction?.type('helllo'))
 
     return (
         <div style={{ overflow: 'hidden' }}>
@@ -203,13 +176,6 @@ function Artworks() {
                                                             height: "270px"
                                                         }}>
                                                         </div>
-                                                        {/*<img*/}
-                                                        {/*    src={item.media.exact_url ? item.media.exact_url : ''}*/}
-                                                        {/*    width="998"*/}
-                                                        {/*    height="880"*/}
-                                                        {/*    alt=""*/}
-                                                        {/*    className="img-fluid"*/}
-                                                        {/*/>*/}
                                                     </Link>
                                                     <div className="artwork-category">
                                                         <span onClick={() =>
@@ -219,7 +185,7 @@ function Artworks() {
                                                                     item?.id, item?.following?.bookmark?.is_active)
                                                         }
                                                             className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")} />
-                                                        <span className="px-1">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : 'بدون حراجی'}</span>
+                                                        <span className="">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : <span className="category-icon text-secondary">بدون حراجی</span>}</span>
                                                         {/* <span>{console.log(im)}</span> */}
                                                     </div>
                                                 </div>

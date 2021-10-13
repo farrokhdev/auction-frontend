@@ -8,6 +8,7 @@ import {message, Pagination, Spin} from "antd";
 import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {Link} from "react-router-dom";
+import { isApproved } from '../../utils/converTypePersion';
 
 function UserPanelSellAdvice() {
     const [Suggestions, setSuggestions] = useState("");
@@ -21,6 +22,7 @@ function UserPanelSellAdvice() {
         page_size: 10,
         is_approve: ""
     })
+    let numeral = require('numeral');
     const [Posting, setPosting] = useState(false);
 
 
@@ -117,31 +119,6 @@ function UserPanelSellAdvice() {
         })
     }
 
-    const isApproved = (value) => {
-        switch (value) {
-            case "waiting":
-                return {
-                    title: "در انتظار تایید",
-                    css: "pending"
-                }
-            case "accept":
-                return {
-                    title: "تایید شده",
-                    css: "accepted"
-                }
-            case "reject":
-                return {
-                    title: "رد شده",
-                    css: "failed"
-                }
-            default:
-                return {
-                    title: "",
-                    css: ""
-                }
-        }
-    }
-
     const SuggestList = () => {
         return (
             Suggestions && Suggestions.length >= 1 ? Suggestions.map((item, key) => {
@@ -159,7 +136,7 @@ function UserPanelSellAdvice() {
                             </button>
                         </td>
                         <td>
-                            <span>{item.product.price}</span>
+                            <span>{numeral(item.product.price).format('0,0')}</span>
                             <span className="price-unit">تومان</span>
                         </td>
                         <td>
@@ -386,7 +363,7 @@ function UserPanelSellAdvice() {
                                         <h5 className="default">{SuggestDetail?.product?.latest_auction?.title}</h5>
                                     </div>
                                     <div className="mrgt10 estimate">تخمین قیمت:
-                                        <span>{SuggestDetail?.product?.price}</span>
+                                        <span>{numeral(SuggestDetail?.product?.price).format('0,0')}</span>
                                         <span className="price-unit">تومان</span>
                                     </div>
                                 </div>

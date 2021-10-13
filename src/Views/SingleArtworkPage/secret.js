@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "../../utils/request";
-import {BASE_URL, WEB_SOCKET_BASE_URL} from "../../utils";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {w3cwebsocket as W3CWebSocket} from "websocket";
-import {Button, Form, Spin,message} from "antd";
-import {ADD_AUCTION, BID, HOME_AUCITONS, WEB_SOCKET_BID} from "../../utils/constant";
+import { BASE_URL, WEB_SOCKET_BASE_URL } from "../../utils";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { Button, Form, Spin, message } from "antd";
+import { ADD_AUCTION, BID, HOME_AUCITONS, WEB_SOCKET_BID } from "../../utils/constant";
 
 
-const Secret = ({artwork}) => {
+const Secret = ({ artwork }) => {
+    let numeral = require('numeral');
     const [loading, setLoading] = useState(false)
     const [auction, setAuction] = useState({})
     const [steps, setSteps] = useState([])
     const [currentValue, setCurrentValue] = useState(0)
     const [currentPrice, setCurrentVPrice] = useState(0)
     const [currentSuggestValue, setCurrentSuggestValue] = useState(0)
-    const {is_logged_in} = useSelector((state) => state.authReducer)
+    const { is_logged_in } = useSelector((state) => state.authReducer)
     const [form] = Form.useForm();
 
 
@@ -76,7 +77,7 @@ const Secret = ({artwork}) => {
         }
     }
     const setBid = (value) => {
-        form.setFieldsValue({price: currentValue + value})
+        form.setFieldsValue({ price: currentValue + value })
         setCurrentValue(currentValue + value)
     }
     const handleDecrease = () => {
@@ -101,7 +102,7 @@ const Secret = ({artwork}) => {
                 setLoading(false)
             })
             .catch(err => {
-                if(err.response?.data?.message)
+                if (err.response?.data?.message)
                     message.error(err.response?.data?.message)
                 else
                     message.error("با خطا مواجه شدید")
@@ -109,87 +110,87 @@ const Secret = ({artwork}) => {
             })
     }
     return (<>
-            <Spin spinning={loading}>
+        <Spin spinning={loading}>
 
-                <div className="detail-bid">
-                    <div className="db-left">
-                        <span className="db-title">تخمین</span>
-                        <div className="price-block">
+            <div className="detail-bid">
+                <div className="db-left">
+                    <span className="db-title">تخمین</span>
+                    <div className="price-block">
                         <span
-                            className="price"> {artwork?.max_price ? artwork?.max_price : 0} - {artwork?.min_price ? artwork?.min_price : 0}</span>
-                            <span className="unit"> تومان</span>
-                        </div>
-                    </div>
-                    <span className="seprator brdrbefor"></span>
-                    <div className="db-right ">
-                        <span className="db-title bluecolor">قیمت فعلی</span>
-                        <div className="price-block bluecolor">
-                            <span className="price">{artwork?.price}</span>
-                            <span className="unit"> تومان</span>
-                            <span className="bids-num">(<span
-                                className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : ''}</span>پیشنهاد)</span>
-                        </div>
+                            className="price"> {numeral(artwork?.max_price).format('0,0') ? numeral(artwork?.max_price).format('0,0') : 0} - {numeral(artwork?.min_price).format('0,0') ? numeral(artwork?.min_price).format('0,0') : 0}</span>
+                        <span className="unit"> تومان</span>
                     </div>
                 </div>
-                {is_logged_in ? <div className="detail-placebid general-bid">
-                        {/*<div className="general-bid-block">*/}
-                        {/*    <div className="search-input">*/}
-                        {/*        <input type="text" className="default-input"*/}
-                        {/*               placeholder="حداکثر پیشنهاد خود را وارد نمایید."/>*/}
-                        {/*        <span className="unit">تومان</span>*/}
-                        {/*    </div>*/}
-                        {/*    <button type="button" className="btn-lightpink">ثبت</button>*/}
-                        {/*</div>*/}
-                        {((artwork?.product_status==="on_stage") && (artwork?.join_auction_request_state)) ? <Form onFinish={onFinish} form={form} className="m-0"
-                            // initialValues={{ inputValue: 0 }}
-                                                                      wrapperCol={{span: 24}}>
-                            <div className="general-bid-block">
-                                <div className="number-input">
+                <span className="seprator brdrbefor"></span>
+                <div className="db-right ">
+                    <span className="db-title bluecolor">قیمت فعلی</span>
+                    <div className="price-block bluecolor">
+                        <span className="price">{numeral(artwork?.price).format('0,0')}</span>
+                        <span className="unit"> تومان</span>
+                        <span className="bids-num">(<span
+                            className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : ''}</span>پیشنهاد)</span>
+                    </div>
+                </div>
+            </div>
+            {is_logged_in ? <div className="detail-placebid general-bid">
+                {/*<div className="general-bid-block">*/}
+                {/*    <div className="search-input">*/}
+                {/*        <input type="text" className="default-input"*/}
+                {/*               placeholder="حداکثر پیشنهاد خود را وارد نمایید."/>*/}
+                {/*        <span className="unit">تومان</span>*/}
+                {/*    </div>*/}
+                {/*    <button type="button" className="btn-lightpink">ثبت</button>*/}
+                {/*</div>*/}
+                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state)) ? <Form onFinish={onFinish} form={form} className="m-0"
+                    // initialValues={{ inputValue: 0 }}
+                    wrapperCol={{ span: 24 }}>
+                    <div className="general-bid-block">
+                        <div className="number-input">
 
-                                    <Form.Item
-                                        className="w-100"
-                                        name="price"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: "تکمیل این فیلد ضروری است",
-                                            },
-                                        ]}>
-                                        <input className="default-inputquantity" min="0" name="quantity" type="number"
-                                               placeholder="انتخاب پیشنهاد"/>
-                                    </Form.Item>
-                                    <span className="unit">تومان</span>
-                                </div>
-                                 <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
-                            </div>
-                        </Form> : <p className="text-center category-icon">
-                            {artwork?.sale_status ? 'محصول فروخته شد':
-                                <p>
-                                    <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
-                                        {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
-                                    { (artwork?.product_status !== "after_stage") ?<div>
-                                        {artwork?.join_auction_request_state ?? <p>
-                                            <span>برای ثبت پیشنهاد باید   </span>
-                                            <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
-                                                  className="d-inline-block"> عضو حراجی </Link>
-                                            <span>   باشید</span>
-                                        </p>}
-                                        {artwork?.join_auction_request_state === false && <p>
-                                            درخواست عضویت شما در انتظار تایید حراجی است
-                                        </p>}
-                                    </div> :''}
-
+                            <Form.Item
+                                className="w-100"
+                                name="price"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "تکمیل این فیلد ضروری است",
+                                    },
+                                ]}>
+                                <input className="default-inputquantity" min="0" name="quantity" type="number"
+                                    placeholder="انتخاب پیشنهاد" />
+                            </Form.Item>
+                            <span className="unit">تومان</span>
+                        </div>
+                        <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
+                    </div>
+                </Form> : <p className="text-center category-icon">
+                    {artwork?.sale_status ? 'محصول فروخته شد' :
+                        <p>
+                            <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
+                                {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
+                            {(artwork?.product_status !== "after_stage") ? <div>
+                                {artwork?.join_auction_request_state ?? <p>
+                                    <span>برای ثبت پیشنهاد باید   </span>
+                                    <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
+                                        className="d-inline-block"> عضو حراجی </Link>
+                                    <span>   باشید</span>
                                 </p>}
+                                {artwork?.join_auction_request_state === false && <p>
+                                    درخواست عضویت شما در انتظار تایید حراجی است
+                                </p>}
+                            </div> : ''}
+
                         </p>}
-                    </div> :
-                    <p className="text-center mt-4 ">
-                        برای ثبت پیشنهاد
-                        <Link to="/login" className="d-inline-block px-1 color-link"> وارد </Link>
-                        شوید
-                    </p>
-                }
-            </Spin>
-        </>
+                </p>}
+            </div> :
+                <p className="text-center mt-4 ">
+                    برای ثبت پیشنهاد
+                    <Link to="/login" className="d-inline-block px-1 color-link"> وارد </Link>
+                    شوید
+                </p>
+            }
+        </Spin>
+    </>
 
     );
 };

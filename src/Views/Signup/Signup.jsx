@@ -19,7 +19,13 @@ function Signup(props) {
   const [confirmedPassword, setconfirmedPassword] = useState("");
   const [form] = Form.useForm();
 
-
+  function err_msg_resolver(res_body) {
+    if (res_body.code == 201 || res_body.code == 200)
+      return res_body.data.error_message
+    else {
+      return res_body.message
+    }
+  }
 
   const handleRequestSignUp = (value) => {
 
@@ -44,10 +50,13 @@ function Signup(props) {
         }
       })
       .catch(err => {
-        message.error("دوباره تلاش کنید")
-        // message.error("تمام فیلدها تکمیل نشده است")
-        // message.error("رمز عبور همخوانی ندارد")
-        // message.error("کاربری با این شماره موبایل ثبت شده است")
+        message.error({
+          content: err_msg_resolver(err.response.data),
+          className: 'text-danger',
+          style: {
+            marginTop: '10vh',
+          },
+        })
         console.log("Error Message", err);
       })
   }

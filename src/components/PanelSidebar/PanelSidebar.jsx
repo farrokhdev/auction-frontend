@@ -45,11 +45,11 @@ function PanelSidebar(props) {
                   <FontAwesomeIcon icon={faPen} /> پروفایل
                 </NavLinkRouter>
               </li>
-              {/*<li>*/}
-              {/*  <NavLinkRouter activeClassName="active-style-menu" to="/">*/}
-              {/*    <FontAwesomeIcon icon={faGavel} /> حراج‌های من*/}
-              {/*  </NavLinkRouter>*/}
-              {/*</li>*/}
+              <li>
+               <NavLinkRouter activeClassName="active-style-menu" to="/panel-auctions">
+                 <FontAwesomeIcon icon={faGavel} /> حراج‌های من
+               </NavLinkRouter>
+              </li>
               {role=== "home_auction" ?<li>
                 <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
                   <FontAwesomeIcon icon={faPlusCircle}/> حراج‌های ساخته‌شده
@@ -122,7 +122,6 @@ function PanelSidebar(props) {
                  <FontAwesomeIcon icon={faCreditCard} /> اطلاعات مالی
                </NavLinkRouter>
               </li>
-
               <li>
                 <NavLinkRouter to="/"  onClick={()=>{
                     dispatch(clearStorageAll())

@@ -25,13 +25,8 @@ function VerificationCode(props) {
         console.log("Verification",res);
 
         if(res.data.data.statusCode === 400){
-          message.error("کد نامعتبر است")
-          // setTimeout(() => {
-          //   window.location.href = "#/register-set-password";
-          // }, 1000);
-          // history.push("/register-set-password")
+          message.error("مجددا درخواست کد اعتبارسنجی دهید")
         }else{
-          // message.error success("کد نامعتبر است")
           setTimeout(() => {
             message.success("لطفا وارد شوید")
             window.location.href = "#/login"

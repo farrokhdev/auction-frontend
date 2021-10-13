@@ -3,9 +3,9 @@ import {Button} from "antd";
 
 const Recommender = (props) => {
     const {setSelectComponent, selectComponent, setRecommender} = props
-    const [name, setName] = useState(false)
-    const [family, setFamily] = useState(false)
-    const [phone, setPhone] = useState(false)
+    const [name, setName] = useState("")
+    const [family, setFamily] = useState("")
+    const [phone, setPhone] = useState("")
     const sendData = () => {
         setRecommender({"first_name": name, "last_name": family, "mobile_number": phone})
         setSelectComponent(selectComponent + 1)
