@@ -22,6 +22,7 @@ function UserPanelSellAdvice() {
         page_size: 10,
         is_approve: ""
     })
+    let numeral = require('numeral');
     const [Posting, setPosting] = useState(false);
 
 
@@ -135,7 +136,7 @@ function UserPanelSellAdvice() {
                             </button>
                         </td>
                         <td>
-                            <span>{item.product.price}</span>
+                            <span>{numeral(item.product.price).format('0,0')}</span>
                             <span className="price-unit">تومان</span>
                         </td>
                         <td>
@@ -362,7 +363,7 @@ function UserPanelSellAdvice() {
                                         <h5 className="default">{SuggestDetail?.product?.latest_auction?.title}</h5>
                                     </div>
                                     <div className="mrgt10 estimate">تخمین قیمت:
-                                        <span>{SuggestDetail?.product?.price}</span>
+                                        <span>{numeral(SuggestDetail?.product?.price).format('0,0')}</span>
                                         <span className="price-unit">تومان</span>
                                     </div>
                                 </div>

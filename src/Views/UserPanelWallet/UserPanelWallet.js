@@ -10,7 +10,7 @@ import ModalWithdrawal from './ModalWithdrawal';
 
 function UserPanelWallet() {
     const [Wallet, setWallet] = useState("");
-    
+    let numeral = require('numeral');
     const [isModalWithdrawalVisible, setIsModalWithdrawalVisible] = useState(false);
     const [isModalIncreaseChargeVisible, setIsModalIncreaseChargeVisible] = useState(false);
 
@@ -45,7 +45,7 @@ function UserPanelWallet() {
                                 <div className="col">
                                     <div className="wallet-block">
                                         <h3 className="default gray50">اعتبار نقدی</h3>
-                                        <h2 className="default">{Wallet?.inventory} <span className="price-unit">تومان</span></h2>
+                                        <h2 className="default">{numeral(Wallet?.inventory).format('0,0')} <span className="price-unit">تومان</span></h2>
                                         <div className="btn-group">
                                             <button 
                                                 // show modal increase charge wallet

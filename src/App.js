@@ -89,41 +89,50 @@ function App(props) {
                         {props.auth.is_logged_in ?
                             <>
 
+                                <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
+                                <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
                                 <Route exact path="/" component={AfterLoginPage} />
+
+                                {role === "home_auction" ?
+                                    <Route exact path="/auctions-list" component={AuctionsList} /> : ''}
+
+                                <Route exact path="/add-artworks" component={AddArtWorks} />
+                                <Route exact path="/buyer-register/:id" component={BuyerRegister} />
+
+                                <Route exact path="/create-reminder" component={CreateReminder} />
+                                <Route exact path="/edit-reminder" component={EditReminder} />
+                                <Route exact path="/favorite" component={Favorite} />
+                                <Route exact path="/financial-information/:id" component={Financialinformation} />
+                                <Route exact path="/faq" component={Faq} />
+                                <Route exact path="/my-purchases" component={MyPurchases} />
 
                                 <Route exact path="/panel-profile" component={PanelProfile} />
                                 <Route exact path="/panel-financial" component={PanelFinancial} />
                                 <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction} />
-                                {/*<Route exact path="/panel-add-auction" component={AddAuction}/>*/}
                                 <Route exact path="/panel-reminders" component={PanelRemindersPage} />
-                                <Route exact path="/buyer-register/:id" component={BuyerRegister} />
-                                <Route exact path="/financial-information/:id" component={Financialinformation} />
-                                <Route exact path="/works-of-interest" component={WorksOfInterest} />
-                                <Route exact path="/signing-contract" component={SigningContract} />
-                                <Route exact path="/wallet" component={Wallet} />
-                                <Route exact path="/reagent" component={Reagent} />
-                                <Route exact path="/auctions-list/bids/:id" component={AuctionsListBids} />
-                                <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
                                 {role === "home_auction" ?
                                     <Route exact path="/panel-add-auction/:auctionId" component={AddAuction} /> : ''}
-                                {role === "home_auction" ?
-                                    <Route exact path="/auctions-list" component={AuctionsList} /> : ''}
-                                <Route exact path="/add-artworks" component={AddArtWorks} />
-                                {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}
+
                                 <Route exact path="/panel-wallet" component={UserPanelWallet} />
                                 <Route exact path="/panel-message" component={UserPanelMessage} />
                                 <Route exact path="/panel-sell-advice" component={UserPanelSellAdvice} />
                                 <Route exact path="/panel-auctions" component={UserPanelMyAuctions} />
                                 {role === "home_auction" ? <Route exact path="/panel-sell-recommendation"
                                     component={UserPanelSellRecommendation} /> : ''}
-                                <Route exact path="/my-purchases" component={MyPurchases} />
-                                <Route exact path="/favorite" component={Favorite} />
+
                                 <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids} />
-                                <Route exact path="/create-reminder" component={CreateReminder} />
-                                <Route exact path="/edit-reminder" component={EditReminder} />
-                                <Route exact path="/Terms-of-use/:name" component={TermsOfUse} />
-                                <Route exact path="/faq" component={Faq} /> 
                                 <Route exact path="/panel-artwork-list" component={UserPanelArtworkList} />
+                                
+                                <Route exact path="/reagent" component={Reagent} />
+
+                                <Route exact path="/signing-contract" component={SigningContract} />
+                                
+                                <Route exact path="/Terms-of-use/:name" component={TermsOfUse} />
+                                <Route exact path="/works-of-interest" component={WorksOfInterest} />
+                                <Route exact path="/wallet" component={Wallet} />
+                                
+                                {/*<Route exact path="/create-auctions-timed" component={UserPanelCreateAuctionsTimedaction}/>*/}
+                                {/*<Route exact path="/panel-add-auction" component={AddAuction}/>*/}
                                 {/*<Route path="/*" exact component={NotFound}/>*/}
 
 

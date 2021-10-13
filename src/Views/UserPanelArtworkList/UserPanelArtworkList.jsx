@@ -20,7 +20,7 @@ function UserPanelArtworkList() {
     const [data, setData] = useState([])
     const [dataCount, setDataCount] = useState(0)
     const { role, id } = useSelector((state) => state.profileReducer)
-
+    let numeral = require('numeral');
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -113,13 +113,13 @@ function UserPanelArtworkList() {
                                                     <td> {item?.persian_artist_name}</td>
                                                     <td>{item?.id}</td>
                                                     <td>
-                                                        <span>{item?.min_price} </span>
+                                                        <span>{numeral(item?.min_price).format('0,0')} </span>
                                                         <span> - </span>
-                                                        <span>{item?.max_price}</span>
+                                                        <span>{numeral(item?.max_price).format('0,0')}</span>
                                                         <span className="price-unit">تومان</span>
                                                     </td>
                                                     <td>{item?.bidding_details?.total_bids}</td>
-                                                    <td>{item?.price}<span className="price-unit">تومان</span></td>
+                                                    <td>{numeral(item?.price).format('0,0')}<span className="price-unit">تومان</span></td>
                                                     <td>
                                                         <button type="button"><FontAwesomeIcon icon={faTimes} />
                                                         </button>
