@@ -152,7 +152,7 @@ const Bid = ({ artwork }) => {
                 <div className="db-right ">
                     <span className="db-title bluecolor">قیمت فعلی</span>
                     <div className="price-block bluecolor">
-                        <span className="price">{currentPrice}</span>
+                        <span className="price">{numeral(currentPrice).format('0,0')}</span>
                         <span className="unit"> تومان</span>
                         <span className="bids-num">(<span
                             className="mx-1">{currentSuggest}</span>پیشنهاد)</span>

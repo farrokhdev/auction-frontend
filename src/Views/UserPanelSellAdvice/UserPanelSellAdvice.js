@@ -29,6 +29,7 @@ function UserPanelSellAdvice() {
     })
     const { id } = useSelector((state) => state.profileReducer)
     const [Posting, setPosting] = useState(false);
+    let numeral = require('numeral');
 
 
     const queries = queryString.stringify(params);
@@ -124,7 +125,7 @@ function UserPanelSellAdvice() {
                         </td>
                         <td>
                             <p className="">پیشنهاد شما: <span
-                                className="bid-style">{item.price} <span
+                                className="bid-style">{numeral(item.price).format('0,0')} <span
                                     className="price-unit">تومان</span></span></p>
                         </td>
                         <td>

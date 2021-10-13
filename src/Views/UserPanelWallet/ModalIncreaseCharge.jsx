@@ -7,7 +7,7 @@ import { failNotification, successNotification } from '../../utils/notification'
 
 function ModalWidrawal({setIsModalIncreaseChargeVisible , isModalIncreaseChargeVisible , Wallet}) {
 
-    
+    let numeral = require('numeral');
     const [amountCharge, setAmountCharge] = useState()
 
     const handleOk = () => {
@@ -69,7 +69,7 @@ function ModalWidrawal({setIsModalIncreaseChargeVisible , isModalIncreaseChargeV
                             </div>
                         </div>
                         <div className="modal-body textalign-center">
-                            <h3 className="default">{Wallet?.inventory} <span className="price-unit">تومان</span></h3>
+                            <h3 className="default">{numeral(Wallet?.inventory).format('0,0')} <span className="price-unit">تومان</span></h3>
                             <h6 className="default">اعتبار نقدی</h6>
                             <div className="search-input">
                                 <label className="default-lable mb-2">مبلغ مورد نظر خود را وارد نمایید.</label>

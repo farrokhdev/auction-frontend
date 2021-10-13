@@ -6617,3 +6617,23 @@ input#add-new-artwork_price {
   border-radius: 38px;
   box-shadow: none !important;
 }
+
+.animate-scroll {
+  // width: 3px;
+  // height: 8px;
+  // background-color: $tertiary3-color;
+  // border-radius: 100% !important;
+  position: relative;
+  animation: animataScroll 1.5s infinite;
+  animation-timing-function: ease !important;
+}
+
+@keyframes animataScroll {
+  from {
+      top: 0px;
+  }
+
+  to {
+      top: 10px;
+  }
+}

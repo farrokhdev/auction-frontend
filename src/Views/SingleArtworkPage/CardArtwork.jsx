@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 
 function CardArtwork({price_base , price_range , house_auction , title , lot_num , url }) {
     // const {is_logged_in} = useSelector((state) => state.authReducer)
+    let numeral = require('numeral');
     const [is_saved, setIs_saved] = useState(false)
 
     const handleToggleBookmark = () => {
@@ -42,7 +43,7 @@ return (
                 <div className="db-left">
                     <span className="db-title">تخمین</span>
                     <div className="price-block">
-                        <span className="price">{price_range}</span>
+                        <span className="price">{numeral(price_range).format('0,0')}</span>
                         <span className="unit"> تومان</span>
                     </div>
                 </div>
@@ -50,8 +51,7 @@ return (
                 <div className="db-right ">
                     <span className="db-title">قیمت پایه</span>
                     <div className="price-block">
-                        {/* <span className="price">100,000,000</span> */}
-                        <span className="price">{price_base}</span>
+                        <span className="price">{numeral(price_base).format('0,0')}</span>
                         <span className="unit"> تومان</span>
                     </div>
                 </div>
