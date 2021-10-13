@@ -10,18 +10,23 @@ import MainInfoArtwork from "./MainInfoArtwork";
 import { BASE_URL } from "../../utils";
 import { ONE_PRODUCT } from "../../utils/constant";
 import {Spin} from "antd";
+import queryString from "query-string";
 
 
 function SigningContract(props) {
 
     const [artwork, setArtwork] = useState()
-    const [params, setParams] = useState({})
+    // const [params, setParams] = useState({})
     const [loading, setLoading] = useState(false)
+    const [params, setParams] = useState({
+        search: props.match.params.id,
+    })
 
     useEffect(() => {
         getProduct();
     }, [params , props.match.params.id])
 
+    
     const getProduct = ()=>{
         setLoading(true)
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}`).then(res => {
@@ -30,6 +35,13 @@ function SigningContract(props) {
         }).catch(err => {
             setLoading(false)
             console.error(err)
+        })
+    }
+
+    // for search need to api call //
+    const handleSearchProducts = (value) => {
+        setParams({
+            ...params, search: value
         })
     }
 
@@ -58,7 +70,7 @@ function SigningContract(props) {
                     </div>
                 </div>
 
-            <MainInfoArtwork artwork={artwork} />
+            <MainInfoArtwork artwork={artwork} handleSearchProducts={handleSearchProducts}/>
             <DetailAboutArtworkInfo artwork={artwork}/>
             <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
 

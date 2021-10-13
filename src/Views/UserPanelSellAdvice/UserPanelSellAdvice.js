@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import ModalAddNewArtwork from './ModalAddNewArtwork';
 import 'antd/dist/antd.css';
+import { isApproved } from '../../utils/converTypePersion';
 
 function UserPanelSellAdvice() {
     const [Products, setProducts] = useState("");
@@ -107,32 +108,7 @@ function UserPanelSellAdvice() {
             ...params, page: 1, is_approve: e
         })
     }
-
-    const isApproved = (value) => {
-        switch (value) {
-            case "waiting":
-                return {
-                    title: "در انتظار تایید",
-                    css: "pending"
-                }
-            case "accept":
-                return {
-                    title: "تایید شده",
-                    css: "accepted"
-                }
-            case "reject":
-                return {
-                    title: "رد شده",
-                    css: "failed"
-                }
-            default:
-                return {
-                    title: "",
-                    css: ""
-                }
-        }
-    }
-
+    
     const ProducList = () => {
         return (
             Products && Products.length >= 1 ? Products.map((item, key) => {

@@ -39,12 +39,6 @@ function LastAuctionsSection(props) {
     }, [id , artwork_id])
 
     const settings = {
-        // dots: false,
-        // breakpoint: 1024,
-        // infinite: false,
-        // speed: 500,
-        // slidesToShow: 4,
-        // slidesToScroll: 4,
         dots: true,
         infinite: false,
         speed: 500,

@@ -8,6 +8,7 @@ import {message, Pagination, Spin} from "antd";
 import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {Link} from "react-router-dom";
+import { isApproved } from '../../utils/converTypePersion';
 
 function UserPanelSellAdvice() {
     const [Suggestions, setSuggestions] = useState("");
@@ -115,31 +116,6 @@ function UserPanelSellAdvice() {
         setParams({
             ...params, is_approve: e
         })
-    }
-
-    const isApproved = (value) => {
-        switch (value) {
-            case "waiting":
-                return {
-                    title: "در انتظار تایید",
-                    css: "pending"
-                }
-            case "accept":
-                return {
-                    title: "تایید شده",
-                    css: "accepted"
-                }
-            case "reject":
-                return {
-                    title: "رد شده",
-                    css: "failed"
-                }
-            default:
-                return {
-                    title: "",
-                    css: ""
-                }
-        }
     }
 
     const SuggestList = () => {
