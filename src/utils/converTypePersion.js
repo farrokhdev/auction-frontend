@@ -1,18 +1,18 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export function convertTypePersian(value) {
-    
+
     switch (value) {
-        case"melli":
+        case "melli":
             return 'ملی'
 
-        case"user":
+        case "user":
             return 'کاربر'
-        
-        case"admin":
+
+        case "admin":
             return 'ادمین'
 
-        case"home_auction":
+        case "home_auction":
             return 'خانه حراج'
 
         default:
@@ -23,22 +23,22 @@ export function convertTypePersian(value) {
 
 export function convertTypeAuctionToPersian(value) {
     switch (value) {
-        case"LIVE":
+        case "LIVE":
             return 'زنده'
 
-        case"ONLINE":
+        case "ONLINE":
             return 'آنلاین'
 
-        case"OFFLINE":
+        case "OFFLINE":
             return 'آفلاین'
-        
-        case"PERIODIC":
+
+        case "PERIODIC":
             return 'زمان‌دار'
 
-        case"HIDDEN":
+        case "HIDDEN":
             return ' با پیشنهاد قیمت مخفی'
-        
-        case"SECOND_HIDDEN":
+
+        case "SECOND_HIDDEN":
             return ' با دومین پیشنهاد قیمت مخفی'
 
         default:
@@ -48,23 +48,23 @@ export function convertTypeAuctionToPersian(value) {
 
 
 export function convertMouthToPersian(value) {
-    
+
     switch (value) {
-        case '01' :
+        case '01':
             return 'فرودین'
 
-        case '02' :
+        case '02':
             return 'اردیبهشت'
-        
+
         case '03':
             return 'خرداد'
 
         case '04':
             return 'تیر'
-        
+
         case '05':
-            return 'مرداد'   
-            
+            return 'مرداد'
+
         case '06':
             return 'شهریور'
 
@@ -73,16 +73,16 @@ export function convertMouthToPersian(value) {
 
         case '08':
             return 'آذر'
-    
+
         case '09':
             return 'دی'
-            
+
         case '10':
-            return 'بهمن'   
-                
+            return 'بهمن'
+
         case '11':
             return 'اسفند'
-    
+
 
         default:
             return ''
@@ -91,16 +91,16 @@ export function convertMouthToPersian(value) {
 
 
 export function convertStatusShowAuctionPersian(value) {
-    
+
     switch (value) {
 
-        case ("PERIODIC" ||  "ONLINE") :
+        case ("PERIODIC" || "ONLINE"):
             return 'مشاهده حراج'
 
-        case"LIVE":
+        case "LIVE":
             return 'مشاهده زنده'
-    
-        
+
+
 
         default:
             return ''
@@ -108,12 +108,12 @@ export function convertStatusShowAuctionPersian(value) {
 }
 
 export function convertStatus(value) {
-    
+
     switch (value) {
 
-        case true :
+        case true:
             return 'فعال'
-        case false :
+        case false:
             return 'غیر فعال'
 
         default:
@@ -123,12 +123,12 @@ export function convertStatus(value) {
 
 // Conver Currency English String To Persion
 export function convertCurrencyType(value) {
-    
+
     switch (value) {
 
-        case "toman" :
+        case "toman":
             return 'تومان'
-        case "dollar" :
+        case "dollar":
             return 'دلار'
 
         default:
@@ -153,22 +153,92 @@ export function AuctionType(type) {
     }
 }
 
+export function convertToEn(type) {
+
+    switch (type) {
+
+        case "ONLINE":
+            return <span className="category-icon online-icon">آنلاین</span>
+        case "LIVE":
+            return <span className="category-icon live-icon">زنده</span>
+
+        case "PERIODIC":
+            return <span className="category-icon timed-icon">مدت دار</span>
+
+        case "HIDDEN":
+            return <span className="category-icon firstoffer-icon">اولین پیشنهاد</span>
+
+        case "SECOND_HIDDEN":
+            return <span className="category-icon secondoffer-icon">دومین پیشنهاد</span>
+
+    }
+}
+
+export function isApproved(value) {
+    switch (value) {
+        case "waiting":
+            return {
+                title: "در انتظار تایید",
+                css: "pending"
+            }
+        case "accept":
+            return {
+                title: "تایید شده",
+                css: "accepted"
+            }
+        case "reject":
+            return {
+                title: "رد شده",
+                css: "failed"
+            }
+        default:
+            return {
+                title: "",
+                css: ""
+            }
+    }
+}
+
+export function isAwaitingApproval(value) {
+    switch (value) {
+        case null:
+            return {
+                title: "در انتظار تایید",
+                css: "pending"
+            }
+        case true:
+            return {
+                title: "تایید شده",
+                css: "accepted"
+            }
+        case false:
+            return {
+                title: "رد شده",
+                css: "failed"
+            }
+        default:
+            return {
+                title: "",
+                css: ""
+            }
+    }
+}
 
 // check status auction type and enrolled then generate btn 
-export function AuctionStatusTextBtn(type , enrolled , id) {
+export function AuctionStatusTextBtn(type, enrolled, id) {
     // auction ended and user not allow to join auction
-    if(type === "CLOSED"){
+    if (type === "CLOSED") {
         return <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>
         // user registred to auction then user not allow to join auction
-    }else if(enrolled){
+    } else if (enrolled) {
         return <button type="button" className="btn btn-lightgreenbg">در حراجی ثبت‌نام کرده‌اید</button>
         // user not register to auction and auction is preparing or started then user allow to join auction
-    }else {
-        return <Link to ={`/buyer-register/${id}`}>
-                    <button type="button" className="btn btn-main join">
-                        عضویت <span class="">در حراج</span>
-                    </button>
-                </Link>
+    } else {
+        return <Link to={`/buyer-register/${id}`}>
+            <button type="button" className="btn btn-main join">
+                عضویت <span class="">در حراج</span>
+            </button>
+        </Link>
     }
 
 }

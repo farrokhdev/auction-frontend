@@ -147,6 +147,7 @@ function Auctions() {
         }
     }
 
+    
     return (
         <div dir="rtl">
             <Header />
