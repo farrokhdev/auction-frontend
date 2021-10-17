@@ -100,7 +100,7 @@ function App(props) {
                                 <Route exact path="/buyer-register/:id" component={BuyerRegister} />
 
                                 <Route exact path="/create-reminder" component={CreateReminder} />
-                                <Route exact path="/edit-reminder" component={EditReminder} />
+                                <Route exact path="/edit-reminder/:id" component={EditReminder} />
                                 <Route exact path="/favorite" component={Favorite} />
                                 <Route exact path="/financial-information/:id" component={Financialinformation} />
                                 <Route exact path="/faq" component={Faq} />

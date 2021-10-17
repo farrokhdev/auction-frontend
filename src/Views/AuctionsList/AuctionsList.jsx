@@ -192,7 +192,7 @@ function AuctionsList() {
 
                                                     </td>
                                                     <td>
-                                                        {item.status !== "CLOSED" && item.status !== "ACTIVE"  ?
+                                                        {item.status == "CLOSED" && item.status !== "ACTIVE"  ?
                                                         <>
                                                         <Link onClick={() => dispatch(removeAUCTION())}
                                                               to={`/panel-add-auction/${item.id}`} type="button">

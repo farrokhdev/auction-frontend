@@ -1,28 +1,21 @@
 import React, { useState } from 'react'
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
-import { Button, Form, Input, Spin, Select,message } from "antd";
+import { Form, Input, Spin,message } from "antd";
 import { Link } from 'react-router-dom';
-import {setToken} from "../../utils/utils";
-
-
-import { ConfigProvider ,DatePicker } from "antd";
-import { DatePicker as DatePickerJalali } from "antd-jalali";
-import fa_IR from "antd/lib/locale/fa_IR";
 import "antd/dist/antd.css";
 import axios from '../../utils/request';
 import { BASE_URL } from '../../utils';
-// import moment from "moment-jalaali";
+import { ConfigProvider ,DatePicker } from "antd";
+import { DatePicker as DatePickerJalali } from "antd-jalali";
+import fa_IR from "antd/lib/locale/fa_IR";
 import moment from "jalali-moment"
 
 function CreateReminder(props) {
+
     const [reminders, setReminders] = useState({});
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
-    // const [params, setParams] = useState({
-    //     date_after: '',
-    //     date_before: '',
-    // })
 
     const [NewReminder, setNewReminder] = useState(
         {
@@ -219,24 +212,6 @@ function CreateReminder(props) {
                                             className="rounded" />
                                         </div>
                                     </ConfigProvider>
-                                        {/* <div className="row row-cols-2">
-                                            {["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه"].map((item) =>
-                                                <div div className="col" >
-                                                    <div className="form-check ">
-                                                        <Input 
-                                                           
-                                                            onChange={(e)=>{
-                                                                setNewReminder({...NewReminder , ReminderDays:[ moment(Date.now()).format("YYYY-MM-DD") ] });
-                                                            }}
-                                                            className="form-check-input" type="checkbox" value=""
-                                                            id="checkbox44" />
-                                                        <label className="form-check-label" for="" >
-                                                            {item}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div> */}
                                     </div>
                                     <div className="panel-button-group">
                                         <Link to="/panel-reminders">
