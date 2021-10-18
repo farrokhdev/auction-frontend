@@ -114,3 +114,19 @@
 .ant-rate{
   direction: ltr !important;
 }
+
+.ant-pagination-item{
+  border: none;
+}
+
+.ant-carousel .slick-dots li button{
+display: none;
+}
+.ant-carousel .slick-dots li.slick-active{
+  display: none;
+}
+
+.ant-carousel .slick-dots li.slick-active button{
+  background: #777 !important;
+  
+}

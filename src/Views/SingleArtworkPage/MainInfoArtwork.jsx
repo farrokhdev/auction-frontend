@@ -6,9 +6,19 @@ import Bid from "./bid";
 import Secret from "./secret";
 import { Rate } from 'antd';
 
-function MainInfoArtwork({ artwork, handleSearchProducts }) {
+function MainInfoArtwork({ artwork }) {
+
     const { is_logged_in } = useSelector((state) => state.authReducer)
-    console.log("artwork==>>>> ", artwork);
+
+    // console.log("artwork==>>>> ", artwork);
+
+    const handleSearchArtworkByLat = (value) => {
+        if (value > 0) {
+            window.location.href = `#/artworks/${value}`
+        } else {
+            return null
+        }
+    }
     return (
         <div className="row">
             <div className="col-lg-6">
@@ -73,13 +83,13 @@ function MainInfoArtwork({ artwork, handleSearchProducts }) {
                 <div className="detail-block">
                     {/*<div className="detail-block-header">*/}
                     {/*    <a href="#" className="btn-lot prev"><span className="d-none d-md-block">لت قبلی</span></a>*/}
-                    
+
                     <div className="search-input my-3 w-50 mx-auto">
                         <input
                             id="product-searchh"
-                            type="text"
+                            type="number"
                             className="default-input"
-                            onChange={(e) => handleSearchProducts(document.querySelector('#product-searchh').value)}
+                            onChange={(e) => handleSearchArtworkByLat(e?.target?.value)}
                             placeholder="شماره لت مورد نظر را وارد نمایید." />
                         <button type="button" className="btn-search"></button>
                     </div>

@@ -316,9 +316,10 @@ function Artworks() {
                                 </div>
 
                                 <Pagination
-                                    style={{ direction: 'ltr', textAlign: 'center' }}
+                                    style={{ direction: 'ltr', textAlign: 'center'}}
                                     showSizeChanger={false}
                                     responsive
+                                    size="small"
                                     onShowSizeChange={(current, pageSize) => {
                                         getProducts(pageSize)
                                         // getProduct(pageSize)

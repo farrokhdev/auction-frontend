@@ -27,7 +27,6 @@ function EditPanelProfile(props) {
         form.setFieldsValue(data)
     }, [data])
 
-    // console.log("form =>>>" , form);
 
 
     const sendData = (values) => {
@@ -58,21 +57,6 @@ function EditPanelProfile(props) {
             })
     }
 
-    // const getData = () => {
-    //     setLoading(true)
-    //     axios.get(`${BASE_URL}${EDIT_PROFILE}`)
-    //         .then(resp => {
-    //             setLoading(false)
-    //             if ((resp.data.code === 200) && resp.data?.data?.result) {
-    //
-    //             }
-    //         })
-    //         .catch(err => {
-    //             setLoading(false)
-    //             console.error(err);
-    //             message.error("صفحه را دوباره لود کنید")
-    //         })
-    // }
     return (
         <Spin spinning={loading}>
             <Form onFinish={onFinish}
@@ -117,26 +101,6 @@ function EditPanelProfile(props) {
                             </div>
                         </div>
                         <div className="col-md-6">
-
-
-                            {/* <div class="input-group notapproved">
-                        <label class="default-lable">ایمیل</label>
-                        {data.mobile &&  data.mobile.length ?
-                        <>
-                        <input type="email" class="default-input" placeholder="ایمیل خود را وارد نمایید."
-                               value="Nima.heirdari@gmail.com"/>
-                         <span class="input-note">برای تایید ایمیل خود اینجا کلیک کنید.</span>
-                        <span class="notapproved input-state">تایید نشده</span>
-                        </>
-                        :
-                        
-                        <button onClick={()=> setActiveKey("3")} className="input-note text-muted" >
-                        برای تغییر و تایید شماره موبایل خود اینجا کلیک کنید.
-                        </button>
-}
-                    </div> */}
-
-
                             <div className="input-group notapproved">
                                 <label className="default-lable">شماره همراه</label>
                                 {data?.mobile && data?.mobile.length ?

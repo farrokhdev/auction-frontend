@@ -88,7 +88,7 @@ function Auctions() {
 
     const handleSearchProducts = (value) => {
         setParams({
-            ...params,page:1, search: value
+            ...params, page: 1, search: value
         })
     }
 
@@ -147,7 +147,7 @@ function Auctions() {
         }
     }
 
-    
+
     return (
         <div dir="rtl">
             <Header />
@@ -209,16 +209,14 @@ function Auctions() {
                                                         </div>
                                                     </div>
                                                     <div className="block-main">
-                                                        {/* <Link to="/"> */}
-                                                            <h5 className="default">
-                                                                {item.description}
-                                                            </h5>
-                                                        {/* </Link> */}
+                                                        <h5 className="default">{item.title}</h5>
+
                                                         <div className="block-detail">
-                                                            <h6 className="default">{item.title}</h6>
-                                                            {/* <Link to="/" className="default"> */}
-                                                                <h6 className="default gray50">{item.house}</h6>
-                                                            {/* </Link> */}
+
+                                                            <h6 className="default">{item.house_type}</h6>
+
+                                                            <h6 className="default gray50">{item.house}</h6>
+
                                                         </div>
                                                     </div>
                                                     <div className="block-footer row">
@@ -287,7 +285,7 @@ function Auctions() {
                                 }) : ""}
 
                                 <PaginationComponent count={countAuctions} handeSelectPage={handeSelectPage} />
-{/* 
+                                {/* 
                                 <Pagination
                                     style={{ direction: 'ltr', textAlign: 'center' }}
                                     showSizeChanger
