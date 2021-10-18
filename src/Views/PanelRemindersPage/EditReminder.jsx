@@ -27,11 +27,11 @@ function EditReminder(props) {
                 // console.log("resp====>>", moment(resp.data.data.result.reminder_days[0]));
 
                 if (resp.data.code === 200) {
-                    
+
                     let data = resp.data.data.result;
                     setReminder(data)
                     // console.log("GetDate===>>", data);
-                    
+
                     form.setFieldsValue({
                         ...data,
                         start_time: moment(data.reminder_days[0]),
@@ -75,7 +75,14 @@ function EditReminder(props) {
                 setLoading(false)
 
                 if (resp.data.code === 200) {
-                    message.success("پروفایل شما با موفقیت ویرایش شد")
+                    message.success({
+                        content: "پروفایل شما با موفقیت ویرایش شد",
+                        className: 'text-muted',
+                        style: {
+                            marginTop: '10vh',
+                        },
+                    })
+
                     setTimeout(() => {
                         window.location.href = "#/panel-reminders"
                     }, 900);
@@ -202,7 +209,7 @@ function EditReminder(props) {
                                         </div>
                                     </div>
                                     <h5 className="default mrgb20">زمان ارسال</h5>
-                                    <div className="col-md-6">
+                                    <div className="col-md-4">
                                         <div className="input-group">
                                             <label className="default-lable">تاریخ شروع</label>
                                             <Form.Item
@@ -234,7 +241,7 @@ function EditReminder(props) {
                                             </Form.Item>
                                         </div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-4">
                                         <div className="input-group">
                                             <label className="default-lable">تاریخ پایان</label>
                                             <Form.Item

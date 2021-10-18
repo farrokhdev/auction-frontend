@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
-import { faTimes, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from '../../utils/request';
 import { BASE_URL } from '../../utils';
 import { DELETE_REMINDER, LIST_REMINDERS } from '../../utils/constant';
-import { convertStatus } from '../../utils/converTypePersion';
-import { Modal, Button, Space } from 'antd';
+import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ModalShowResultsReminder from './ModalShowResultsReminder';
 import { Link } from 'react-router-dom';
-import { removeAUCTION, setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import { useDispatch, useSelector } from "react-redux";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { removeAUCTION, setAUCTION } from "../../redux/reducers/auction/auction.actions";
+import { convertStatus } from '../../utils/converTypePersion';
 
 const { confirm } = Modal;
 
@@ -80,11 +80,11 @@ function RemindersPage() {
                     <div className="panel-container">
                         <Link to="/create-reminder" >
                             <button type="button" className="btn btn-default mrgt30">
-                                <FontAwesomeIcon icon={faPlus} /> یادآوری جدید
+                            <i class="fal fa-plus"></i> یادآوری جدید
                             </button>
                         </Link>
                         <div className="row">
-                            <div className=" col-xxl-6">
+                            <div className=" col-xxl-8">
 
                                 <div collapse className="table-responsive ">
                                     <table className="panel-table reminder mrgt50">
@@ -105,7 +105,7 @@ function RemindersPage() {
                                                                 <div className="col">
                                                                     <div className="d-flex justify-content-end">
                                                                         <button onClick={(e) => showConfirm(e, reminder?.id)} type="button" className="operations">
-                                                                            <FontAwesomeIcon icon={faTimes} />
+                                                                            <i class="fal fa-times"></i>
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -114,7 +114,7 @@ function RemindersPage() {
 
                                                                         <Link to={`/edit-reminder/${reminder?.id}`}>
                                                                             <button type="button" className="operations">
-                                                                                <FontAwesomeIcon icon={faEdit} />
+                                                                                <i class="fal fa-pen"></i>
                                                                             </button>
                                                                         </Link>
 
