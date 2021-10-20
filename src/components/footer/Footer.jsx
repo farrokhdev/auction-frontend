@@ -12,8 +12,6 @@ export default function Footer() {
   const [loading, setLoading] = useState(false)
 
 
-  console.log("Products===>>", Products)
-
 
   const getProducts = () => {
     setLoading(true)

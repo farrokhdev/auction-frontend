@@ -14,6 +14,7 @@ import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import ModalAddNewArtwork from './ModalAddNewArtwork';
 import 'antd/dist/antd.css';
 import { isApproved } from '../../utils/converTypePersion';
+import PaginationComponent from '../../components/PaginationComponent';
 
 function UserPanelSellAdvice() {
     const [Products, setProducts] = useState("");
@@ -109,7 +110,7 @@ function UserPanelSellAdvice() {
             ...params, page: 1, is_approve: e
         })
     }
-    
+
     const ProducList = () => {
         return (
             Products && Products.length >= 1 ? Products.map((item, key) => {
@@ -283,14 +284,7 @@ function UserPanelSellAdvice() {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <Pagination
-                                            style={{ direction: 'ltr', textAlign: 'center', marginTop: 5 }}
-                                            responsive
-                                            onChange={(e) => handeSelectPage(e)}
-                                            defaultCurrent={1}
-                                            total={countProducts}
-                                            defaultPageSize={10}
-                                        />
+                                        <PaginationComponent count={countProducts} handeSelectPage={handeSelectPage} />
                                     </div>
                                 </div>
                             </Spin>

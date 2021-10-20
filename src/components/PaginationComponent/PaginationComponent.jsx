@@ -8,7 +8,7 @@ function PaginationComponent({count , handeSelectPage}) {
             <div style={{direction : 'ltr'}} className="d-none d-sm-flex justify-content-center pt-4">
                 <Pagination
                     responsive
-                    size="small"
+                    // size="small"
                     showSizeChanger={false}
                     onChange={(e) => handeSelectPage(e)}
                     defaultCurrent={1}
@@ -18,7 +18,7 @@ function PaginationComponent({count , handeSelectPage}) {
             <div style={{direction : 'ltr'}} className="d-flex d-sm-none justify-content-center pt-4">
                 <Pagination
                     onChange={(e) => handeSelectPage(e)}
-                    size="small"
+                    // size="small"
                     defaultCurrent={1}
                     total={count}
                     defaultPageSize={10}
