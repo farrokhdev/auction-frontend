@@ -131,6 +131,16 @@ function Artworks() {
         })
     }
 
+    const handleSetOrderingOld = () => {
+        setParams({
+            // since the ordering field on the product is different from auctions we have to
+            // set this explicitly
+            ...params, ordering: '-creation_date'
+        })
+    }
+
+    
+
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
             ...params,
@@ -158,7 +168,7 @@ function Artworks() {
             <Spin spinning={loading}>
                 <main class="innercontent" id="all-artworks">
                     <div class="container innercontainer">
-                        <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} />
+                        <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
                         <div class="row">
                             <Sidebar
                                 params={params}
