@@ -170,8 +170,13 @@ display: none;
   color:var(--pink) !important;
 }
 
-.anticon svg {
-  display: none;
+.ant-pagination-next .anticon svg {
+  display:none
+
+}
+
+.ant-pagination-prev .anticon svg {
+  display:none
 
 }
 
