@@ -9,7 +9,7 @@ import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import queryString from "query-string";
-import { Pagination, Spin } from "antd";
+import { Pagination, Spin, Tag, Button } from "antd";
 import Timer from 'react-compound-timer'
 import { AuctionStatusTextBtn, AuctionType } from '../../utils/converTypePersion';
 import moment from "jalali-moment";
@@ -20,6 +20,7 @@ function Auctions() {
     const [Auctions, setAuctions] = useState("");
     const [countAuctions, setCountAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
+    // const [visible, setVisible] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -30,7 +31,8 @@ function Auctions() {
         ordering: '',
         home_auction_name: [],
         type: [],
-        visible_in_site: true
+        visible_in_site: true,
+        status: []
     })
 
     const queries = queryString.stringify(params);
@@ -92,6 +94,11 @@ function Auctions() {
         })
     }
 
+    const handleAuctionStatus = (value) => {
+        setParams({
+            ...params, page: 1, status: value
+        })
+    }
     const handleSetCategory = (value) => {
         setParams({
             ...params, page: 1, category: value
@@ -133,6 +140,14 @@ function Auctions() {
         })
 
     }
+    const handleSetDateEN = (dateFrom, dateTo) => {
+        setParams({
+            ...params,
+            start_date_before: dateTo,
+            start_date_after: dateFrom,
+            page: 1,
+        })
+    }
 
 
 
@@ -155,16 +170,28 @@ function Auctions() {
                 <main className="innercontent" id="all-auctions">
                     <div className="container innercontainer">
                         <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} />
+                        {/* <Tag
+                                closable
+                                visible={visible}
+                                onClose={() => setVisible({ visible: false })}
+                            >
+                                Movies
+                            </Tag>
+                            <Button size="small" onClick={() => setVisible({ visible: !visible })}>
+                                Toggle
+                            </Button> */}
                         <div className="row">
                             <Sidebar
                                 params={params}
                                 setParams={setParams}
+                                handleAuctionStatus={handleAuctionStatus}
                                 handleSetHomeAuction={handleSetHomeAuction}
                                 handleSearchProducts={handleSearchProducts}
                                 handleSetCategory={handleSetCategory}
                                 handleSetType={handleSetType}
                                 handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
                                 handleSetDate={handleSetDate}
+                                handleSetDateEN={handleSetDateEN}
                                 typeCategory="خانه های حراج"
                             />
 
@@ -285,20 +312,6 @@ function Auctions() {
                                 }) : ""}
 
                                 <PaginationComponent count={countAuctions} handeSelectPage={handeSelectPage} />
-                                {/* 
-                                <Pagination
-                                    style={{ direction: 'ltr', textAlign: 'center' }}
-                                    showSizeChanger
-                                    responsive
-                                    onShowSizeChange={(current, pageSize) => {
-                                        getProducts(pageSize)
-                                    }}
-                                    onChange={(e) => handeSelectPage(e)}
-                                    defaultCurrent={1}
-                                    total={countAuctions}
-                                    pageSizeOptions={[9, 18, 36, 48]}
-                                    defaultPageSize={10}
-                                /> */}
                             </div>
                         </div>
                     </div>
