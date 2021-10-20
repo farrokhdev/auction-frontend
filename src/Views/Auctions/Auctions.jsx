@@ -131,6 +131,16 @@ function Auctions() {
         })
     }
 
+    const handleSetOrderingOld = () => {
+        setParams({
+            // since the ordering field on the product is different from auctions we have to
+            // set this explicitly
+            ...params, ordering: '-creation_time'
+        })
+    }
+
+    
+
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
             ...params,
@@ -169,7 +179,7 @@ function Auctions() {
             <Spin spinning={loading}>
                 <main className="innercontent" id="all-auctions">
                     <div className="container innercontainer">
-                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} />
+                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld}/>
                         {/* <Tag
                                 closable
                                 visible={visible}

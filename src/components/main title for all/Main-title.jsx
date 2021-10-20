@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Maintitle({handleSetOrdering  , title}) {
+function Maintitle({handleSetOrdering, handleSetOrderingOld ,title}) {
   return (
     <>
       <div className="row sm-mrgb50">
@@ -29,9 +29,9 @@ function Maintitle({handleSetOrdering  , title}) {
             </span>
             <ul className="sort-list">
               <li onClick={(e)=>handleSetOrdering()} className="">جدیدترین</li>
-              {/* <li disabled>نزدیک‌ترین</li>
-              <li disabled>محبوب‌ترین</li>
-              <li disabled>پرفروش‌ترین</li> */}
+                <li onClick={(e)=>handleSetOrderingOld()}>قدیمی ترین</li> 
+              {/*// <li disabled>محبوب‌ترین</li>
+              // <li disabled>پرفروش‌ترین</li> */}
             </ul>
           </div>
         </div>
