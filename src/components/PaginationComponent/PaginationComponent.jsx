@@ -7,6 +7,7 @@ function PaginationComponent({count , handeSelectPage}) {
         <React.Fragment>
             <div style={{direction : 'ltr'}} className="d-none d-sm-flex justify-content-center pt-4">
                 <Pagination
+                
                     responsive
                     // size="small"
                     showSizeChanger={false}
