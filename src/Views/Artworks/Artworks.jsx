@@ -29,6 +29,7 @@ function Artworks() {
         ordering: '',
         home_auction_name: [],
         auctions__type: [],
+        auctions__status: []
     })
 
     const queries = queryString.stringify(params);
@@ -98,6 +99,12 @@ function Artworks() {
         })
     }
 
+    const handleAuctionStatus = (value) => {
+        setParams({
+            ...params, page: 1, auctions__status: value
+        })
+    }
+
     const handleSetHomeAuction = (value) => {
         setParams({
             ...params, page: 1, home_auction_name: value
@@ -157,6 +164,7 @@ function Artworks() {
                                 params={params}
                                 setParams={setParams}
                                 handleSetHomeAuction={handleSetHomeAuction}
+                                handleAuctionStatus={handleAuctionStatus}
                                 handleSearchProducts={handleSearchProducts}
                                 handleSetCategory={handleSetCategory}
                                 handleSetType={handleSetType}
@@ -314,11 +322,11 @@ function Artworks() {
 
 
                                 </div>
-
                                 <Pagination
-                                    style={{ direction: 'ltr', textAlign: 'center' }}
+                                    style={{ direction: 'ltr', textAlign: 'center'}}
                                     showSizeChanger={false}
                                     responsive
+                                    // size="small"
                                     onShowSizeChange={(current, pageSize) => {
                                         getProducts(pageSize)
                                         // getProduct(pageSize)

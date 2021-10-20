@@ -16,11 +16,11 @@ import queryString from "query-string";
 function SigningContract(props) {
 
     const [artwork, setArtwork] = useState()
-    // const [params, setParams] = useState({})
+    const [params, setParams] = useState({})
     const [loading, setLoading] = useState(false)
-    const [params, setParams] = useState({
-        search: props.match.params.id,
-    })
+    // const [params, setParams] = useState({
+    //     search: props.match.params.id,
+    // })
 
     useEffect(() => {
         getProduct();
@@ -35,13 +35,6 @@ function SigningContract(props) {
         }).catch(err => {
             setLoading(false)
             console.error(err)
-        })
-    }
-
-    // for search need to api call //
-    const handleSearchProducts = (value) => {
-        setParams({
-            ...params, search: value
         })
     }
 
@@ -70,7 +63,7 @@ function SigningContract(props) {
                     </div>
                 </div>
 
-            <MainInfoArtwork artwork={artwork} handleSearchProducts={handleSearchProducts}/>
+            <MainInfoArtwork artwork={artwork} />
             <DetailAboutArtworkInfo artwork={artwork}/>
             <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
 
