@@ -62,10 +62,11 @@ return (
 
                     {auctionsList?.length ? auctionsList?.map(auction => (
 
-                        <Link to={`/auction-details/${auction?.id}`}>
+// one-auction
+// auction-details
+                        <Link to={`/one-auction/${auction?.id}`}>
                             <CardAucitonInfo 
                                 auction={auction}
-                                img={img}
                             />
                         </Link>
 

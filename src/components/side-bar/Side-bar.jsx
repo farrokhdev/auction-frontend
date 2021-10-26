@@ -5,16 +5,25 @@ import { BASE_URL } from "../../utils";
 import { HOME_AUCITONS, CATEGORIE_ACTIVITY } from "../../utils/constant";
 import ItemHomeAuction from "./ItemHomeAuction";
 import ItemType from "./ItemType";
-
-import { ConfigProvider, DatePicker, Space } from "antd";
+import { ConfigProvider, DatePicker, Tag } from "antd";
 import { DatePicker as DatePickerJalali } from "antd-jalali";
 import fa_IR from "antd/lib/locale/fa_IR";
 import "antd/dist/antd.css";
 import en_US from "antd/lib/locale/en_US";
 import ItemStatus from "./ItemStatus";
-// import enUS from "antd/lib/calendar/locale/en_US";
 
-function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetType, handleSetHomeAuction, handleSetHomeAuctionSelect,handleAuctionStatus, handleSetDate, handleSetDateEN,typeCategory }) {
+function Sidebar({handleSearchProducts,handleRemoveFilters,
+  Tags,
+  handleClose,
+  setTags,
+  handleSetCategory,
+  params,
+  handleSetType,
+  handleSetHomeAuction,
+  handleAuctionStatus,
+  handleSetDate,
+  handleSetDateEN,
+  typeCategory }) {
 
   const { RangePicker } = DatePicker;
   const [filters, setFilters] = useState([
@@ -68,13 +77,10 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
     handleSetDate(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
   }
 
-  
-  function onChangeEN(dates , dateStrings) {
-        // console.log('From: ', dates, ', to: ', dates);
-        console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-        // console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-        // handleSetDate(dates ? dates[0] : {}, dates ? dates[1] :{} );
-        handleSetDateEN(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
+
+  function onChangeEN(dates, dateStrings) {
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    handleSetDateEN(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
   }
 
 
@@ -84,6 +90,23 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
         <button type="button" className="btn-getclose d-block d-lg-none"></button>
         <div className="left-side">
           <div className="result-box">
+            <div className="result-title">
+              <h6 className="default">نتایج:</h6>
+              <button onClick={handleRemoveFilters}  type="button" className="btn-removeall">پاک کردن همه</button>
+            </div>
+            {
+              Tags?.length ? Tags?.map(item => (
+                <Tag
+                  closable
+                  onClose={e => {
+                    e.preventDefault();
+                    handleClose(item);
+
+                  }}
+
+                >{item} </Tag>
+              )) : ""
+            }
             <div className="tags-box" >
             </div>
           </div>
@@ -134,8 +157,8 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
                       <DatePickerJalali.RangePicker onChange={onChange} className="rounded" />
                     </div>
                   </ConfigProvider>
-                  <ConfigProvider  direction="rtl"  locale={en_US}>
-                    <RangePicker className="rounded mt-3"  onChange={onChangeEN} />
+                  <ConfigProvider direction="rtl" locale={en_US}>
+                    <RangePicker className="rounded mt-3" onChange={onChangeEN} />
                   </ConfigProvider>
                 </div>
               </div>
@@ -163,9 +186,35 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
                 <div className="accordion-body">
                   <div className="list-box">
 
-                  <ItemStatus id={"checkbox36"} title={"آینده"} value="PREPARING" params={params} handleAuctionStatus={handleAuctionStatus} />
-                  <ItemStatus id={"checkbox36"} title={"فعلی"} value="ACTIVE" params={params} handleAuctionStatus={handleAuctionStatus} />
-                    <ItemStatus id={"checkbox37"} title={"گذشته"} value="CLOSED"  params={params} handleAuctionStatus={handleAuctionStatus} />
+                    <ItemStatus
+                      id={"checkbox36"}
+                      title={"آینده"}
+                      value="PREPARING"
+                      params={params}
+                      handleAuctionStatus={handleAuctionStatus}
+                      Tags={Tags}
+                      setTags={setTags}
+                    />
+
+                    <ItemStatus
+                      id={"checkbox37"}
+                      title={"فعلی"}
+                      value="ACTIVE"
+                      params={params}
+                      handleAuctionStatus={handleAuctionStatus}
+                      Tags={Tags}
+                      setTags={setTags}
+                    />
+
+                    <ItemStatus
+                      id={"checkbox38"}
+                      title={"گذشته"}
+                      value="CLOSED"
+                      params={params}
+                      handleAuctionStatus={handleAuctionStatus}
+                      Tags={Tags}
+                      setTags={setTags}
+                    />
                   </div>
                 </div>
               </div>
@@ -194,7 +243,13 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
 
                     {categories?.length >= 1 ? categories?.map((category, index) => (
                       <React.Fragment key={category?.id}>
-                        <ItemCategory title={category?.title} id={`checkbox2${++index}`} params={params} handleSetCategory={handleSetCategory} />
+                        <ItemCategory
+                          Tags={Tags}
+                          setTags={setTags}
+                          title={category?.title}
+                          id={`checkbox2${++index}`}
+                          params={params}
+                          handleSetCategory={handleSetCategory} />
                       </React.Fragment>
                     )) : ''}
 
@@ -230,6 +285,8 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
                     {homeAuctions.length >= 1 ? homeAuctions.map((home, index) => (
                       <React.Fragment key={home?.id}>
                         <ItemHomeAuction
+                          Tags={Tags}
+                          setTags={setTags}
                           title={home?.home_auction_name ? home?.home_auction_name : ''}
                           id={`checkbox2${++index}`}
                           params={params}
@@ -263,11 +320,45 @@ function Sidebar({ handleSearchProducts, handleSetCategory, params, handleSetTyp
                 <div className="accordion-body">
                   <div className="list-box">
 
-                    <ItemType id={"checkbox31"} title={"آنلاین"} params={params} handleSetType={handleSetType} />
-                    <ItemType id={"checkbox32"} title={"زنده"} params={params} handleSetType={handleSetType} />
-                    <ItemType id={"checkbox33"} title={"مدت دار"} params={params} handleSetType={handleSetType} />
-                    <ItemType id={"checkbox34"} title={"اولین پیشنهاد"} params={params} handleSetType={handleSetType} />
-                    <ItemType id={"checkbox35"} title={"دومین پیشنهاد"} params={params} handleSetType={handleSetType} />
+                    <ItemType
+                      id={"checkbox31"}
+                      title={"آنلاین"}
+                      params={params}
+                      handleSetType={handleSetType}
+                      Tags={Tags}
+                      setTags={setTags} />
+
+                    <ItemType
+                      id={"checkbox32"}
+                      title={"زنده"}
+                      params={params}
+                      handleSetType={handleSetType}
+                      Tags={Tags}
+                      setTags={setTags} />
+
+                    <ItemType
+                      id={"checkbox33"}
+                      title={"مدت دار"}
+                      params={params}
+                      handleSetType={handleSetType}
+                      Tags={Tags}
+                      setTags={setTags} />
+
+                    <ItemType
+                      id={"checkbox34"}
+                      title={"اولین پیشنهاد"}
+                      params={params}
+                      handleSetType={handleSetType}
+                      Tags={Tags}
+                      setTags={setTags} />
+
+                    <ItemType
+                      id={"checkbox35"}
+                      title={"دومین پیشنهاد"}
+                      params={params}
+                      handleSetType={handleSetType}
+                      Tags={Tags}
+                      setTags={setTags} />
                   </div>
                 </div>
               </div>

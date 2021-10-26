@@ -3,14 +3,15 @@ import classnames from 'classnames';
 import moment from 'jalali-moment';
 import { convertMouthToPersian, convertStatusAuctionToTextPersian, convertStatusShowAuctionPersian, convertTypeAuctionToPersian } from '../../utils/converTypePersion';
 
-function CardAucitonInfo({auction , img}) {
+function CardAucitonInfo({auction }) {
+    
     return (
         <div className="row-blocks">
         <div className="row">
             <div className="col-md-4">
                 <div className="bg-shadow tr-shadow10">
                     {/* <img src="img/slider1.jpg" width="500" height="500" alt="" /> */}
-                    <img src={img} width="500" height="500" alt="" />
+                    <img src={auction.media.exact_url} width="500" height="500" alt="" />
                 </div>
             </div>
             <div className="col-md-8">

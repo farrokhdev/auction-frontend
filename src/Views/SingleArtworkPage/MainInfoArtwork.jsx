@@ -6,7 +6,7 @@ import Bid from "./bid";
 import Secret from "./secret";
 import { Rate } from 'antd';
 
-function MainInfoArtwork({ artwork }) {
+function MainInfoArtwork({ artwork, rate, updateRate }) {
 
     const { is_logged_in } = useSelector((state) => state.authReducer)
 
@@ -147,16 +147,8 @@ function MainInfoArtwork({ artwork }) {
                                             <button type="button" className="btn-follow">دنبال کردن</button>
                                         </div>
                                     </div>
-                                    {/* <div className="ah-right">
-                                    <ul className="star-rate">
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                    <li></li>
-                                    </ul>
-                                </div> */}
-                                    <Rate />
+
+                                    <Rate value={rate?.user_rate} onChange={value => { updateRate(value) }} />
                                 </div>
                             </div>
                         </div>
