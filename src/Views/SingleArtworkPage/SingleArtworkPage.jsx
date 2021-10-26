@@ -17,6 +17,7 @@ function SigningContract(props) {
 
     const [artwork, setArtwork] = useState()
     const [params, setParams] = useState({})
+    const [Rate, setRate] = useState({})
     const [loading, setLoading] = useState(false)
     // const [params, setParams] = useState({
     //     search: props.match.params.id,
@@ -24,6 +25,7 @@ function SigningContract(props) {
 
     useEffect(() => {
         getProduct();
+        getRate();
     }, [params , props.match.params.id])
 
     
@@ -38,6 +40,25 @@ function SigningContract(props) {
         })
     }
 
+    const getRate = ()=>{
+        axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}rate/`)
+            .then(res =>{
+                setRate(res.data.data.result)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
+    const updateRate = (value)=>{
+        let payload = {
+            "rate": value
+        }
+        axios.put(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}rate/`, payload)
+        .then(res=>{
+            getRate()
+        }).catch(err =>{
+
+        })
+    }
 
   return (
     <div >
@@ -63,7 +84,7 @@ function SigningContract(props) {
                     </div>
                 </div>
 
-            <MainInfoArtwork artwork={artwork} />
+            <MainInfoArtwork artwork={artwork} rate={Rate} updateRate={updateRate}/>
             <DetailAboutArtworkInfo artwork={artwork}/>
             <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
 

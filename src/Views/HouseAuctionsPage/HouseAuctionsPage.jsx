@@ -12,6 +12,7 @@ import Footer from "../../components/footer";
 
 function HouseAuctionsPage() {
 
+    const [Tags, setTags] = useState([])
     const [houseAuctionList, setHouseAuctionList] = useState([])
     const [categoryActivities, setCategoryActivities] = useState([])
     const [countHousAuction, setCountHousAuction] = useState(0)
@@ -44,6 +45,25 @@ function HouseAuctionsPage() {
         }).catch(err => {
             console.error(err);
         })
+    }
+
+    const handleClose = (value) => {
+        if (params?.activity_type.indexOf(value) > -1) {
+            handleSetCategory(params?.activity_type?.filter(item => item !== value))
+        }
+        setTags(Tags?.filter((item) => item !== value))
+    };
+
+    const handleRemoveFilters = () => {
+        setTags([])
+        setParams({
+            page: 1,
+            page_size: 10,
+            activity_type: [],
+            search: '',
+            ordering: '',
+        })
+
     }
 
     const handleSetCategory = (value) => {
@@ -147,6 +167,10 @@ function HouseAuctionsPage() {
 
 
                             <SiderHouseAucitons
+                                handleClose={handleClose}
+                                Tags={Tags}
+                                setTags={setTags}
+                                handleRemoveFilters={handleRemoveFilters}
                                 params={params}
                                 handleSetCategory={handleSetCategory}
                                 categoryActivities={categoryActivities}

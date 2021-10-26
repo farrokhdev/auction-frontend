@@ -20,6 +20,43 @@ export function convertTypePersian(value) {
     }
 }
 
+export function  convertTypeEN(value){
+
+    switch (value) {
+
+      case "آنلاین":
+        return "ONLINE"
+
+      case "زنده":
+        return "LIVE"
+
+      case "مدت دار":
+          return "PERIODIC"
+
+      case "اولین پیشنهاد":
+          return "HIDDEN"
+
+      case "دومین پیشنهاد":
+          return "SECOND_HIDDEN"
+  
+    }
+}
+
+
+export function status(value){
+
+    switch (value) {
+
+        case "آینده":
+            return "PREPARING"
+        case "فعلی":
+            return "ACTIVE"
+        case "گذشته":
+            return "CLOSED"
+    }
+}
+
+
 
 export function convertTypeAuctionToPersian(value) {
     switch (value) {

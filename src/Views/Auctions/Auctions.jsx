@@ -9,18 +9,18 @@ import Sidebar from "../../components/side-bar";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import queryString from "query-string";
-import { Pagination, Spin, Tag, Button } from "antd";
+import { Spin } from "antd";
 import Timer from 'react-compound-timer'
-import { AuctionStatusTextBtn, AuctionType } from '../../utils/converTypePersion';
+import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../utils/converTypePersion';
 import moment from "jalali-moment";
 import PaginationComponent from '../../components/PaginationComponent';
 
 function Auctions() {
 
+    const [Tags, setTags] = useState([])
     const [Auctions, setAuctions] = useState("");
     const [countAuctions, setCountAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
-    // const [visible, setVisible] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -54,8 +54,9 @@ function Auctions() {
     useEffect(() => {
         getProducts()
 
-    }, [params])
+    }, [params, Tags])
 
+    // console.log("Params++++>>>>", params?.status)
 
     const Follow = (data, action) => {
         if (action) {
@@ -81,6 +82,43 @@ function Auctions() {
 
         }
     }
+
+
+    const handleClose = (value) => {
+        if (params?.status.indexOf(status(value)) > -1) {
+            handleAuctionStatus(params?.status?.filter(item => item !== status(value)))
+        }
+        if (params?.category.indexOf(value) > -1) {
+            handleSetCategory(params?.category?.filter(item => item !== value))
+        }
+        if (params?.home_auction_name.indexOf(value) > -1) {
+            handleSetHomeAuction(params?.home_auction_name?.filter(item => item !== value))
+        }
+        if (params?.type.indexOf(convertTypeEN(value)) > -1) {
+            handleSetType(params?.type?.filter(item => item !== convertTypeEN(value)))
+        }
+        setTags(Tags?.filter((item) => item !== value))
+    };
+
+    const handleRemoveFilters = () => {
+        setTags([])
+        setParams({
+            page: 1,
+            page_size: 10,
+            search: '',
+            category: [],
+            date_after: '',
+            date_before: '',
+            ordering: '',
+            home_auction_name: [],
+            type: [],
+            visible_in_site: true,
+            status: []
+        })
+
+    }
+
+    // console.log("Tags", Tags)
 
     const handeSelectPage = (e) => {
         setParams({
@@ -139,7 +177,7 @@ function Auctions() {
         })
     }
 
-    
+
 
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
@@ -179,21 +217,15 @@ function Auctions() {
             <Spin spinning={loading}>
                 <main className="innercontent" id="all-auctions">
                     <div className="container innercontainer">
-                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld}/>
-                        {/* <Tag
-                                closable
-                                visible={visible}
-                                onClose={() => setVisible({ visible: false })}
-                            >
-                                Movies
-                            </Tag>
-                            <Button size="small" onClick={() => setVisible({ visible: !visible })}>
-                                Toggle
-                            </Button> */}
+                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
                         <div className="row">
                             <Sidebar
                                 params={params}
                                 setParams={setParams}
+                                handleClose={handleClose}
+                                Tags={Tags}
+                                setTags={setTags}
+                                handleRemoveFilters={handleRemoveFilters}
                                 handleAuctionStatus={handleAuctionStatus}
                                 handleSetHomeAuction={handleSetHomeAuction}
                                 handleSearchProducts={handleSearchProducts}

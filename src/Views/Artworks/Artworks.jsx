@@ -12,10 +12,11 @@ import queryString from 'query-string';
 import moment from "jalali-moment";
 import Timer from "react-compound-timer";
 import numberWithCommas from "../../components/threeNumber";
-import { convertToEn } from "../../utils/converTypePersion";
+import { convertToEn, status, convertTypeEN } from "../../utils/converTypePersion";
 
 function Artworks() {
 
+    const [Tags, setTags] = useState([])
     const [Products, setProducts] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -79,7 +80,40 @@ function Artworks() {
     useEffect(() => {
         getProducts()
 
-    }, [params])
+    }, [params, Tags])
+
+    const handleClose = (value) => {
+        if (params?.auctions__status.indexOf(status(value)) > -1) {
+            handleAuctionStatus(params?.auctions__status?.filter(item => item !== status(value)))
+        }
+        if (params?.category.indexOf(value) > -1) {
+            handleSetCategory(params?.category?.filter(item => item !== value))
+        }
+        if (params?.home_auction_name.indexOf(value) > -1) {
+            handleSetHomeAuction(params?.home_auction_name?.filter(item => item !== value))
+        }
+        if (params?.auctions__type.indexOf(convertTypeEN(value)) > -1) {
+            handleSetType(params?.auctions__type?.filter(item => item !== convertTypeEN(value)))
+        }
+        setTags(Tags?.filter((item) => item !== value))
+    };
+
+    const handleRemoveFilters = () => {
+        setTags([])
+        setParams({
+            page: 1,
+            page_size: 9,
+            search: '',
+            category: [],
+            date_after: '',
+            date_before: '',
+            ordering: '',
+            home_auction_name: [],
+            auctions__type: [],
+            auctions__status: []
+        })
+
+    }
 
     const handeSelectPage = (e) => {
         setParams({
@@ -139,7 +173,7 @@ function Artworks() {
         })
     }
 
-    
+
 
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
@@ -171,6 +205,10 @@ function Artworks() {
                         <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
                         <div class="row">
                             <Sidebar
+                                handleClose={handleClose}
+                                Tags={Tags}
+                                setTags={setTags}
+                                handleRemoveFilters={handleRemoveFilters}
                                 params={params}
                                 setParams={setParams}
                                 handleSetHomeAuction={handleSetHomeAuction}
@@ -333,7 +371,7 @@ function Artworks() {
 
                                 </div>
                                 <Pagination
-                                    style={{ direction: 'ltr', textAlign: 'center'}}
+                                    style={{ direction: 'ltr', textAlign: 'center' }}
                                     showSizeChanger={false}
                                     responsive
                                     // size="small"
