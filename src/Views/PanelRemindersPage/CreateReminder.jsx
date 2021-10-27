@@ -30,10 +30,10 @@ function CreateReminder(props) {
             "name": values?.name,
             "keyword": values?.keyword,
             "exact_match": Reminder?.exact_match,
+            "status": Reminder?.status ? Reminder?.status : false, 
             "min_price": values?.min_price,
             "max_price": values?.max_price,
             "reminder_days": reminderDays,
-            "status": Reminder?.status
         }
 
 

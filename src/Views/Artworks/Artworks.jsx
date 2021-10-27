@@ -323,7 +323,6 @@ function Artworks() {
                                                         </div>
 
                                                     }
-                                                    {/* {item?.latest_auction?.status === "CLOSED" } */}
                                                     {item?.latest_auction?.status === "CLOSED" ? <div>
                                                         {
                                                             item?.sale_status ?
@@ -333,15 +332,8 @@ function Artworks() {
                                                                         className="price-unit">تومان</span></span>
                                                                 </div>
                                                                 :
-                                                                // <div className="price-block">
-                                                                //     <span>قیمت فعلی:</span>
-                                                                //     <span className="price">{numberWithCommas(item?.price)}<span
-                                                                //         className="price-unit">تومان</span></span>
-                                                                // </div>
                                                                 <div className="price-block">
                                                                     <span> فروخته نشده</span>
-                                                                    {/* <span className="price">{numberWithCommas(item?.price)}<span
-                                                                        className="price-unit">تومان</span></span> */}
                                                                 </div>
                                                         }
                                                     </div>
@@ -377,9 +369,7 @@ function Artworks() {
                                     // size="small"
                                     onShowSizeChange={(current, pageSize) => {
                                         getProducts(pageSize)
-                                        // getProduct(pageSize)
                                     }}
-                                    // (e) => handeSelectPage(e)
                                     onChange={(e) => handeSelectPage(e)}
                                     defaultCurrent={1}
                                     total={countProducts}

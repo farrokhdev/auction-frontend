@@ -63,28 +63,29 @@ function Signup(props) {
 
 
 
-  const responseGoogle = (response) => {
+  // const responseGoogle = (response) => {
 
-    console.log("Sign Up", response);
+  //   console.log("Sign Up", response);
 
-    let payload = {
-      "access_token": response.tokenObj.access_token
-    }
+  //   let payload = {
+  //     "access_token": response.tokenObj.access_token
+  //   }
 
-    console.log("Ehsan", payload)
+  //   console.log("Ehsan", payload)
 
-    axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
-      setToken(res.data.data.result)
-      message.success("به اسمارت آکشن خوش آمدید")
-      setTimeout(() => {
-        window.location.href = "#/"
-      }, 500);
-    })
-      .catch(err => {
-        console.log(err)
-      })
+  //   axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
+  //     setToken(res.data.data.result)
+  //     console.log("res.data.data.result===>>" ,  res.data.data.result)
+  //     message.success("به اسمارت آکشن خوش آمدید")
+  //     setTimeout(() => {
+  //       window.location.href = "#/"
+  //     }, 500);
+  //   })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
 
-  }
+  // }
 
   return (
     <div dir="rtl">
@@ -169,20 +170,20 @@ function Signup(props) {
                   ثبت نام
                 </button>
               </div>
-              <div class="s-footer-block">
+              {/* <div class="s-footer-block">
                 <div class="or-divider">
                   <span> یا </span>
                 </div>
                 <GoogleLogin
                   className="btn-google-login btn-google mt-5"
-                  clientId="204714783619-coki1sldsv5iev552dcmtcpfj1sn77sg.apps.googleusercontent.com"
+                  clientId="503975669516-jknru5bhfklk6kgd0j4fsuakg5cq00pv.apps.googleusercontent.com"
                   buttonText=" ثبت نام با گوگل"
                   onSuccess={responseGoogle}
                   onFailure={responseGoogle}
                   cookiePolicy={'single_host_origin'}
 
                 />
-              </div>
+              </div> */}
             </div>
             <p class="l-signup">
               قبلا ثبت نام کرده‌اید؟<Link to="/login"> ورود</Link>
