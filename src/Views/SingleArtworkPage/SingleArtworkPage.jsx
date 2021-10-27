@@ -28,7 +28,7 @@ function SigningContract(props) {
         getRate();
     }, [params , props.match.params.id])
 
-    
+    console.log("artwork==>>" , artwork)
     const getProduct = ()=>{
         setLoading(true)
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}`).then(res => {
@@ -60,6 +60,57 @@ function SigningContract(props) {
         })
     }
 
+    const addBookmark = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getProduct()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "product",
+                "object_id": data,
+                "activity_type": "mark"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getProduct()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
+
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getProduct()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction_house",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getProduct()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
+
+
   return (
     <div >
       <Header />
@@ -84,7 +135,7 @@ function SigningContract(props) {
                     </div>
                 </div>
 
-            <MainInfoArtwork artwork={artwork} rate={Rate} updateRate={updateRate}/>
+            <MainInfoArtwork artwork={artwork} rate={Rate} updateRate={updateRate} addBookmark={addBookmark} Follow={Follow}/>
             <DetailAboutArtworkInfo artwork={artwork}/>
             <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
 

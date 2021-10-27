@@ -107,7 +107,12 @@ function UserPanelArtworkList() {
                                             {
                                                 data && data.length ? data.map((item, i) => <tr>
                                                     <td key={i} className="artwork-img">
-                                                        <img src={item?.media?.exact_url} width="317" height="280" alt="بدون عکس" className="img-fluid" />
+                                                        <div className="image-custom-back" style={{
+                                                            backgroundImage: `url(${item.media.exact_url})`,
+                                                            height: "7rem",
+                                                            width: "7rem"
+                                                        }}></div>
+                                                        
                                                     </td>
                                                     <td>{item?.artwork_title}</td>
                                                     <td> {item?.persian_artist_name}</td>
@@ -121,9 +126,12 @@ function UserPanelArtworkList() {
                                                     <td>{item?.bidding_details?.total_bids}</td>
                                                     <td>{numeral(item?.price).format('0,0')}<span className="price-unit">تومان</span></td>
                                                     <td>
-                                                        <button type="button"><FontAwesomeIcon icon={faTimes} />
+                                                        <button type="button" className="operations">
+                                                            <i class="fal fa-times"></i>
                                                         </button>
-                                                        <button type="button"><FontAwesomeIcon icon={faPen} /></button>
+                                                        <button type="button" className="operations">
+                                                            <i class="fal fa-pen"></i>
+                                                        </button>
                                                     </td>
                                                 </tr>) : ''
                                             }

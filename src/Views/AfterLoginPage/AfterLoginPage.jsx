@@ -9,9 +9,11 @@ import { Spin } from "antd";
 import LastProductsAuctionSlider from './LastProductsAuctionSlider';
 import LastProducts from './LastProducts';
 import LastAuctions from './LastAuctions';
+import { connect } from 'react-redux';
 
 
-function AfterLoginPage() {
+function AfterLoginPage(props) {
+    console.log("After Login", props.auth.is_logged_in)
     const [loading, setLoading] = useState(false)
 
     return (
@@ -214,4 +216,13 @@ function AfterLoginPage() {
     )
 }
 
-export default AfterLoginPage;
+
+const mapStateToProps = (store) => {
+    return {
+        auth: store.authReducer,
+    }
+}
+
+export default connect(mapStateToProps, null)(AfterLoginPage)
+
+// export default AfterLoginPage;

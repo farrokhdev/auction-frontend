@@ -167,6 +167,7 @@ function HouseAuctionsPage() {
 
 
                             <SiderHouseAucitons
+                                getHouseAuction={getHouseAuction}
                                 handleClose={handleClose}
                                 Tags={Tags}
                                 setTags={setTags}
@@ -195,7 +196,7 @@ function HouseAuctionsPage() {
                                                                         src={house?.media.filter(pic => pic?.type === "profile_image")[0]?.exact_url}
                                                                         width="159" height="159"
                                                                         alt="smart auction"
-                                                                        className="img-fluid"
+                                                                        className="img-fluid image-custom-back"
                                                                     />
                                                                 </Link>
                                                             </div>

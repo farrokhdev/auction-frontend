@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEnvelope, faGlobe, faMapMarker, faPhone} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faGlobe, faMapMarker, faPhone } from "@fortawesome/free-solid-svg-icons";
 import img from '../../images/img-1.jpg';
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
+import { BASE_URL } from "../../utils";
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import '../../assets/style/leaflet.scss';
+import { Spin } from 'antd';
 
 function SiderSectionSingleHouseAuction(props) {
 
@@ -28,9 +29,9 @@ function SiderSectionSingleHouseAuction(props) {
         getHouseDetails();
     }, [])
 
-    const parseWebSite = (data , type) => {
-        for(let i in data)
-            if (data[i].type === type){
+    const parseWebSite = (data, type) => {
+        for (let i in data)
+            if (data[i].type === type) {
                 if (data[i].url.startsWith("http"))
                     return data[i].url
                 else
@@ -45,78 +46,112 @@ function SiderSectionSingleHouseAuction(props) {
             }
     }
 
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getHouseDetails()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction_house",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getHouseDetails()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
+
     return (
         <div className="ah-block">
-                        <div className="ah-block-info logo">
-                            <div className="bg-shadow tr-shadow10">
-                                <img src={parser(HouseDetail.media, 'profile')} width="159" height="159" alt={HouseDetail.home_auction_name} />
-                            </div>
+            <div className="ah-block-info logo">
+                <div className="bg-shadow tr-shadow10">
+                    <img src={parser(HouseDetail.media, 'profile')} width="159" height="159" alt={HouseDetail.home_auction_name} />
+                </div>
+            </div>
+            <div className="ah-block-info ">
+                <div className="ah-block-title">
+                    <h5 className="default">{HouseDetail.home_auction_name}</h5>
+                    <button
+                        onClick={() =>
+                            Follow(
+                                HouseDetail?.following?.follow?.is_active ?
+                                    HouseDetail?.following?.follow?.id :
+                                    HouseDetail?.id, HouseDetail?.following?.follow?.is_active)
+                        }
+                        type="button" className={" btn-follow " + (HouseDetail?.following?.follow?.is_active ? "following" : "")}>
+                        {HouseDetail?.following?.follow?.is_active ? "عدم دنبال کردن " : "دنبال کردن"}
+                    </button>
+                </div>
+
+
+                <div className="d-sm-flex d-lg-block justify-content-sm-between">
+                    <div className="">
+                        <div className="d-flex mt-3">
+                            <FontAwesomeIcon className="mx-2" icon={faGlobe} />
+                            <a href={parseWebSite(HouseDetail.info_link, 'website')} >{parseWebSite(HouseDetail.info_link, 'website')}</a>
                         </div>
-                        <div className="ah-block-info ">
-                            <div className="ah-block-title">
-                                <h5 className="default">{HouseDetail.home_auction_name}</h5>
-                                <button type="button" className="btn-follow">دنبال کردن</button>
-                            </div>
 
+                        <div className="d-flex my-2">
+                            <FontAwesomeIcon className="mx-2" icon={faEnvelope} />
+                            <a href={`mailto: ${HouseDetail.email}`}
+                                className="all-info">{HouseDetail.email}</a>
+                        </div>
 
-                            <div className="d-sm-flex d-lg-block justify-content-sm-between">
-                                <div className="">
-                                    <div className="d-flex mt-3">
-                                        <FontAwesomeIcon className="mx-2" icon={faGlobe}/>
-                                        <a href={parseWebSite(HouseDetail.info_link, 'website')} >{parseWebSite(HouseDetail.info_link, 'website')}</a>
-                                    </div>
+                        <div className="d-flex">
+                            <FontAwesomeIcon className="mx-2" icon={faPhone} />
+                            <p className="all-info" >{HouseDetail.phone ? HouseDetail.phone : HouseDetail.mobile}</p>
+                        </div>
 
-                                    <div className="d-flex my-2">
-                                        <FontAwesomeIcon className="mx-2" icon={faEnvelope}/>
-                                        <a href={`mailto: ${HouseDetail.email}`}
-                                            className="all-info">{HouseDetail.email}</a>
-                                    </div>
-
-                                    <div className="d-flex">
-                                        <FontAwesomeIcon className="mx-2" icon={faPhone}/>
-                                        <p className="all-info" >{HouseDetail.phone ? HouseDetail.phone : HouseDetail.mobile}</p>
-                                    </div>
-
-                                    <div className="d-flex">
-                                        <FontAwesomeIcon className="mx-2" icon={faMapMarker}/>
-                                        <address className="">
-                                            {HouseDetail?.home_auction_location?.address}
-                                        </address>
-                                    </div>
-                                </div>
-                                <div className="info-location">
-                                    <Map
-                                        center={ location.length > 0 ? location : ["35.790655" , "51.420518"] }
-                                        zoom={zoom}
-                                        onzoomend={e=>setZoom(e.target._zoom)}
-                                        style={{width:"100%",height:"200px"}}
-                                    >
-                                        <TileLayer
-                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                        />
-                                        <Marker
-                                            position={location.length > 0 ? location : ["35.790655" , "51.420518"]}
-                                        >
-                                            <Popup>موقعیت خانه حراجی</Popup>
-                                        </Marker>
-                                    </Map>
-                                </div>
-                            </div>
-
-                            
-                            <ul className="social">
-                                <li>
-                                    <a href={parseWebSite(HouseDetail.info_link, 'facebook')} id="facebook"/>
-                                </li>
-                                <li>
-                                    <a href={parseWebSite(HouseDetail.info_link, 'instagram')} id="instagram"/>
-                                </li>
-                                <li>
-                                    <a href={parseWebSite(HouseDetail.info_link, 'telegram')} id="telegram"/>
-                                </li>
-                            </ul>
+                        <div className="d-flex">
+                            <FontAwesomeIcon className="mx-2" icon={faMapMarker} />
+                            <address className="">
+                                {HouseDetail?.home_auction_location?.address}
+                            </address>
                         </div>
                     </div>
+                    <div className="info-location">
+                        <Map
+                            center={location.length > 0 ? location : ["35.790655", "51.420518"]}
+                            zoom={zoom}
+                            onzoomend={e => setZoom(e.target._zoom)}
+                            style={{ width: "100%", height: "200px" }}
+                        >
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <Marker
+                                position={location.length > 0 ? location : ["35.790655", "51.420518"]}
+                            >
+                                <Popup>موقعیت خانه حراجی</Popup>
+                            </Marker>
+                        </Map>
+                    </div>
+                </div>
+
+
+                <ul className="social">
+                    <li>
+                        <a href={parseWebSite(HouseDetail.info_link, 'facebook')} id="facebook" />
+                    </li>
+                    <li>
+                        <a href={parseWebSite(HouseDetail.info_link, 'instagram')} id="instagram" />
+                    </li>
+                    <li>
+                        <a href={parseWebSite(HouseDetail.info_link, 'telegram')} id="telegram" />
+                    </li>
+                </ul>
+            </div>
+        </div>
     )
 }
 
