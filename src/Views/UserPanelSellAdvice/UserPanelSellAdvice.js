@@ -117,8 +117,13 @@ function UserPanelSellAdvice() {
                 return (
                     <tr>
                         <td className="artwork-img">
-                            <img src={item.media.exact_url} width="317" height="280" alt=""
-                                className="img-fluid" />
+
+                        <div className="image-custom-back" style={{
+                            backgroundImage: `url(${item.media.exact_url})`,
+                            height: "7rem",
+                            width: "7rem"
+                        }}>
+                        </div>
                         </td>
                         <td className="textalign-left">
                             <span>{item.persian_artist_name}</span>

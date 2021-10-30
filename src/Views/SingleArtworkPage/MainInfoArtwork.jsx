@@ -122,11 +122,11 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                             <button
                                                 onClick={() =>
                                                     Follow(
-                                                        artwork?.following?.follow?.is_active ?
-                                                        artwork?.following?.follow?.id :
-                                                        artwork?.id, artwork?.following?.follow?.is_active)
+                                                        artwork?.latest_auction?.house?.following?.follow?.is_active ?
+                                                        artwork?.latest_auction?.house?.following?.follow?.id :
+                                                        artwork?.latest_auction?.house?.id, artwork?.latest_auction?.house?.following?.follow?.is_active)
                                                 }
-                                                type="button" className={" btn-follow " + (artwork?.following?.follow?.is_active ? "following" : "")}>
+                                                type="button" className={" btn-follow " + (artwork?.latest_auction?.house?.following?.follow?.is_active ? "following" : "")}>
                                                 {artwork?.following?.follow?.is_active ? "عدم دنبال کردن " : "دنبال کردن"}
                                             </button>
                                         </div>
