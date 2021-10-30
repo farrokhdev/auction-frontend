@@ -105,7 +105,7 @@ function Artwork() {
                                                                     item?.id, item?.following?.bookmark?.is_active)
                                                             }
                                                             className={"category-save artwork-bookmark " + (item?.following?.bookmark?.is_active ? "active" : "")}/>
-                                                            {convertToEn(item.latest_auction.type)}
+                                                            <span className="">{item?.latest_auction?.type ? convertToEn(item?.latest_auction?.type) : <span className="category-icon text-secondary px-3">بدون حراجی</span>}</span>
                                                         </div>
                                                     </div>
                                                     <div className="block-body text-center">
