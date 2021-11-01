@@ -1,56 +1,68 @@
 import React from 'react'
 import ItemCategoryActivity from './ItemCategoryActivity'
+import { Tag } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { openDashboard } from "../../redux/reducers/all/all.actions"
 
-function SiderHouseAucitons({params , handleSetCategory , categoryActivities , handleSetSearchFilter}) {
-
+function SiderHouseAucitons({ params,
+    handleRemoveFilters,
+    Tags,
+    handleClose,
+    setTags,
+    handleSetCategory,
+    categoryActivities,
+    handleSetSearchFilter }) {
+    
+        const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+    const dispatch = useDispatch();
 
     return (
-        <div className="col-sm-3 sidebar" id="left-side">
-        <button type="button" className="btn-getclose d-block d-lg-none"></button>
-        <div className="left-side">
-            {/*<div className="result-box">*/}
-            {/*    <div className="result-title">*/}
-            {/*        <h6 className="default">نتایج:</h6>*/}
-            {/*        <button type="button" className="btn-removeall">پاک کردن همه</button>*/}
-            {/*    </div>*/}
-            {/*    <div className="tags-box">*/}
-            {/*        <a href="#" className="tag-box date">*/}
-            {/*            <span>3 اردیبهشت - </span>*/}
-            {/*            <span>6 اردیبهشت</span>*/}
-            {/*            <button type="button" className="btn-remove"></button>*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="tag-box date">*/}
-            {/*            <span>تهران</span>*/}
-            {/*            <button type="button" className="btn-remove"></button>*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="tag-box date">*/}
-            {/*            <span>آرتیبیشن</span>*/}
-            {/*            <button type="button" className="btn-remove"></button>*/}
-            {/*        </a>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            <div className="search-box">
-                <div className="search-input">
-                    <input  
-                        id="search-house-auction"
-                        type="text" className="default-input"
-                        placeholder="جستجو..."
-                        onChange={(e)=>handleSetSearchFilter(document.querySelector('#search-house-auction').value)} 
-                        />
-                    <button 
-                        onClick={(e)=>handleSetSearchFilter(document.querySelector('#search-house-auction').value)} 
-                        type="button" 
-                        className="btn-search"
-                    />
-                </div>
-                {/*<button  type="button" className="btn-lightpink">*/}
-                {/*    <FontAwesomeIcon className="mx-2" icon={faMapMarkedAlt}/>*/}
-                {/*    جستجو بر اساس محل*/}
-                {/*</button>*/}
-            </div>
-            <div className="accordion main-accordion" id="leftside">
+        <div className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`} id="left-side">
+            <button type="button" className="btn-getclose d-block d-lg-none" onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}></button>
+            <div className="left-side">
+                <div className="result-box">
+                    <div className="result-title">
+                        <h6 className="default">نتایج:</h6>
+                        <button type="button" onClick={handleRemoveFilters} className="btn-removeall">پاک کردن همه</button>
+                    </div>
+                    <div className="tags-box">
+                        {
+                            Tags?.length ? Tags?.map(item => (
+                                <Tag
+                                    closable
+                                    onClose={e => {
+                                        e.preventDefault();
+                                        handleClose(item);
 
-                {/* <div className="accordion-item">
+                                    }}
+
+                                >{item} </Tag>
+                            )) : ""
+                        }
+                    </div>
+                </div>
+                <div className="search-box">
+                    <div className="search-input">
+                        <input
+                            id="search-house-auction"
+                            type="text" className="default-input"
+                            placeholder="جستجو..."
+                            onChange={(e) => handleSetSearchFilter(document.querySelector('#search-house-auction').value)}
+                        />
+                        <button
+                            onClick={(e) => handleSetSearchFilter(document.querySelector('#search-house-auction').value)}
+                            type="button"
+                            className="btn-search"
+                        />
+                    </div>
+                    {/*<button  type="button" className="btn-lightpink">*/}
+                    {/*    <FontAwesomeIcon className="mx-2" icon={faMapMarkedAlt}/>*/}
+                    {/*    جستجو بر اساس محل*/}
+                    {/*</button>*/}
+                </div>
+                <div className="accordion main-accordion" id="leftside">
+
+                    {/* <div className="accordion-item">
                     <h2 className="accordion-header" id="headingTwo">
                         <button className="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseTwo" aria-expanded="True" aria-controls="collapseTwo">
@@ -114,40 +126,42 @@ function SiderHouseAucitons({params , handleSetCategory , categoryActivities , h
                 </div> */}
 
 
-                <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingThree">
-                        <button className="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree" aria-expanded="True"
-                            aria-controls="collapseThree">
-                            حوزه فعالیت
-                        </button>
-                    </h2>
-                    <div id="collapseThree" className="accordion-collapse collapse show"
-                        aria-labelledby="headingThree">
-                        <div className="accordion-body">
-                            <div className="list-box">
+                    <div className="accordion-item">
+                        <h2 className="accordion-header" id="headingThree">
+                            <button className="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="True"
+                                aria-controls="collapseThree">
+                                حوزه فعالیت
+                            </button>
+                        </h2>
+                        <div id="collapseThree" className="accordion-collapse collapse show"
+                            aria-labelledby="headingThree">
+                            <div className="accordion-body">
+                                <div className="list-box">
 
-                                {categoryActivities?.length ? categoryActivities?.map((category , index )=> (
+                                    {categoryActivities?.length ? categoryActivities?.map((category, index) => (
 
-                                    <React.Fragment key={category?.id}>
-                                        <ItemCategoryActivity 
-                                            index={index} 
-                                            category={category} 
-                                            params={params} 
-                                            handleSetCategory={handleSetCategory}
-                                        />
-                                    </React.Fragment>
+                                        <React.Fragment key={category?.id}>
+                                            <ItemCategoryActivity
+                                                index={index}
+                                                category={category}
+                                                params={params}
+                                                handleSetCategory={handleSetCategory}
+                                                Tags={Tags}
+                                                setTags={setTags}
+                                            />
+                                        </React.Fragment>
 
-                                )) : ''}
+                                    )) : ''}
 
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     )
 }
 

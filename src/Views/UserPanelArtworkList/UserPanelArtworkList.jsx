@@ -8,19 +8,20 @@ import { Link } from "react-router-dom";
 import axios from "../../utils/request";
 import { UrlQuery } from "../../utils/utils";
 import { BASE_URL } from "../../utils";
-import { LIST_PRODUCTS } from "../../utils/constant";
-import { message, Pagination, Spin } from "antd";
+import { DELETE_ARTWORK_LIST, LIST_PRODUCTS } from "../../utils/constant";
+import { message, Spin, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import PaginationComponent from '../../components/PaginationComponent';
 import queryString from "query-string";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
 
 function UserPanelArtworkList() {
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
     const [dataCount, setDataCount] = useState(0)
     const { role, id } = useSelector((state) => state.profileReducer)
-    let numeral = require('numeral');
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -28,8 +29,45 @@ function UserPanelArtworkList() {
         auction_houses__id: role !== 'user' ? id : '',
 
     })
-
+    let numeral = require('numeral');
     const dispatch = useDispatch();
+    const { confirm } = Modal;
+
+
+    function showDeleteConfirm(id) {
+
+        confirm({
+            title: 'آیا قصد حذف کردن این حراجی را دارید؟',
+            icon: <ExclamationCircleOutlined />,
+            content: '',
+            okText: 'بله',
+            okType: 'danger',
+            cancelText: 'خیر',
+            onOk() {
+                setLoading(true)
+                // /api/sale/product/{id}/
+                axios.delete(`${BASE_URL}${DELETE_ARTWORK_LIST(id)}`)
+                    .then(resp => {
+                        setLoading(false)
+                        message.success("حذف حراجی با موفقیت انجام شد")
+                        getData()
+                    })
+                    .catch(err => {
+                        setLoading(false)
+                        console.error(err);
+                        if (err?.response?.data?.message)
+                            message.error(err.response.data.message)
+                        else if (err?.response?.data?.data?.result)
+                            message.error(err.response.data.message)
+                        else
+                            message.error("دوباره تلاش کنید")
+                    })
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
 
     useEffect(() => {
         // setSelectProduct([])
@@ -107,7 +145,12 @@ function UserPanelArtworkList() {
                                             {
                                                 data && data.length ? data.map((item, i) => <tr>
                                                     <td key={i} className="artwork-img">
-                                                        <img src={item?.media?.exact_url} width="317" height="280" alt="بدون عکس" className="img-fluid" />
+                                                        <div className="image-custom-back" style={{
+                                                            backgroundImage: `url(${item.media.exact_url})`,
+                                                            height: "7rem",
+                                                            width: "7rem"
+                                                        }}></div>
+
                                                     </td>
                                                     <td>{item?.artwork_title}</td>
                                                     <td> {item?.persian_artist_name}</td>
@@ -121,9 +164,21 @@ function UserPanelArtworkList() {
                                                     <td>{item?.bidding_details?.total_bids}</td>
                                                     <td>{numeral(item?.price).format('0,0')}<span className="price-unit">تومان</span></td>
                                                     <td>
-                                                        <button type="button"><FontAwesomeIcon icon={faTimes} />
-                                                        </button>
-                                                        <button type="button"><FontAwesomeIcon icon={faPen} /></button>
+                                                        {/* <button type="button" className="operations">
+                                                            <i class="fal fa-times"></i>
+                                                        </button> */}
+                                                        {item?.owner?.id === id ?
+                                                            <button type="button" className="operations" onClick={() => showDeleteConfirm(item.id)}>
+                                                                <i class="fal fa-times"></i>
+                                                            </button> : ''}
+
+
+                                                        {item?.owner?.id === id && item?.is_approve === "waiting" ?
+                                                            <Link to={`/edit-artworks/${item?.id}`} className="operations">
+                                                                <button type="button" className="operations">
+                                                                    <i class="fal fa-pen"></i>
+                                                                </button>
+                                                            </Link> : ''}
                                                     </td>
                                                 </tr>) : ''
                                             }

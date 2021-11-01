@@ -10,7 +10,13 @@ function CardItem(props) {
             <div className="col">
                 <div className="col-flex">
                     <div className="artwork-img">
-                        <img src={props?.exactUrl} width="317" height="280" alt="auction_img" className="img-fluid" />
+                        {/* <img src={props?.exactUrl} width="317" height="280" alt="auction_img" className="img-fluid" /> */}
+
+                        <div className="image-custom-back" style={{
+                            backgroundImage: `url(${props?.exactUrl})`,
+                            height: "8rem"
+                        }}>
+                        </div>
                     </div>
                     <div className="artwork-info">
                         <div className="artwork-info-left col-md-6">
@@ -31,7 +37,7 @@ function CardItem(props) {
                                 جهت ارسال و نحوه پرداخت با شما تماس خواهد گرفت.
                             </p>
 
-                            <p className="showdate mr-2"> 
+                            <p className="showdate mr-2">
                                 <span className="ml-2">تاریخ خرید :</span>
                                 <span className="mx-2">{props.date}</span>
                             </p>
@@ -42,15 +48,15 @@ function CardItem(props) {
                                         <span className="price-unit mx-2">{props.price ? convertCurrencyType(props.currency) : ''}</span>
                                     </span>
                                 </p>
-                                <TransferToPay 
-                                    paymentMethod={props.paymentMethod} 
-                                    price={props.price} 
-                                    currency={props.currency} 
-                                    artist={props.artist} 
+                                <TransferToPay
+                                    paymentMethod={props.paymentMethod}
+                                    price={props.price}
+                                    currency={props.currency}
+                                    artist={props.artist}
                                     artworkTitle={props.artworkTitle}
                                     homAuction={props.Link}
                                     url={props?.exactUrl}
-                                    />
+                                />
                             </div>
                         </div>
                     </div>

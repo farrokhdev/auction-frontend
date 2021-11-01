@@ -38,6 +38,7 @@ function Login(props) {
         console.log("token =>", resp.data.data.result);
         if (resp.data.code === 200) {
           setToken(resp.data.data.result);
+          console.log("Login google==>>", resp.data.data.result)
           props.setPhoneNumber({ username: payload.id })
           props.loginSuccess({ userName: payload.id })
           message.success({
@@ -66,22 +67,28 @@ function Login(props) {
 
     // console.log("Sign Up", response);
 
-    // let payload = {
-    //   "access_token": response.tokenObj.access_token
-    // }
+    let payload = {
+      // "access_token": response.tokenObj.access_token
+      "access_token": response.tokenObj.access_token
+    }
 
     // console.log("Ehsan", payload)
 
-    // axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
-    //   setToken(res.data.data.result)
-    //   message.success("به اسمارت آکشن خوش آمدید")
-    //   setTimeout(() => {
-    //     window.location.href = "#/"
-    //   }, 500);
-    // })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
+    axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
+      if (res.data.data.statusCode !== 400) {
+        setToken(res.data.data.result)
+        console.log("res.data.data.result  Login===>>", res.data.data.result)
+        props.loginSuccess({ })
+        message.success("به اسمارت آکشن خوش آمدید")
+        setTimeout(() => {
+          window.location.href = "#/"
+        }, 500);
+
+      }
+    })
+      .catch(err => {
+        console.log(err)
+      })
 
   }
 

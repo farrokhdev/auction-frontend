@@ -8,7 +8,8 @@ import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
 
 
-function AddArtWorks(props) {
+function 
+AddArtWorks(props) {
     const [Categories, setCategories] = useState("");
     const [ChildCategories, setChildCategories] = useState("");
     const [CoreUpload, setCoreUpload] = useState("");

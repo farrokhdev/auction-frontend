@@ -20,7 +20,7 @@ function UserPanelSellAdvice() {
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
-        is_approve: ""
+        product__is_approve: ""
     })
     let numeral = require('numeral');
     const [Posting, setPosting] = useState(false);
@@ -115,7 +115,7 @@ function UserPanelSellAdvice() {
 
     const handleApproved = (e) => {
         setParams({
-            ...params, is_approve: e
+            ...params, product__is_approve: e
         })
     }
 
@@ -125,8 +125,12 @@ function UserPanelSellAdvice() {
                 return (
                     <tr key={key}>
                         <td className="artwork-img">
-                            <img src={item.product.media.exact_url} width="317" height="280" alt=""
-                                 className="img-fluid"/>
+                        <div className="image-custom-back" style={{
+                            backgroundImage: `url(${item.product.media.exact_url})`,
+                            height: "7rem",
+                            width: "7rem"
+                        }}>
+                        </div>
                         </td>
                         <td>{item.product.artwork_title}</td>
                         <td>{item.product.persian_artist_name}</td>
@@ -167,7 +171,7 @@ function UserPanelSellAdvice() {
 
     return (
         <>
-            <HeaderPanel titlePage={'یشنهاد فروش'}/>
+            <HeaderPanel titlePage={'پیشنهاد فروش'}/>
             <div className="panel-main">
                 <PanelSidebar/>
 

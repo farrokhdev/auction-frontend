@@ -71,10 +71,7 @@ function Chooseartwork(props) {
                 <Card
                     style={{ width: "100%" }}
                     cover={
-                      <img
-                          alt="بدون تصویر"
-                          src={item?.media?.exact_url}
-                      />
+                      <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                     }
                     // actions={[
                     //   <SettingOutlined key="setting" />,

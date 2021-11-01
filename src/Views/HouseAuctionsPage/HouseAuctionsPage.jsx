@@ -9,9 +9,14 @@ import { Link } from 'react-router-dom';
 import { Spin } from "antd";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer";
+import {useDispatch,useSelector} from "react-redux";
+import {openDashboard} from "../../redux/reducers/all/all.actions"
 
 function HouseAuctionsPage() {
+    const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
+    const dispatch=useDispatch();
 
+    const [Tags, setTags] = useState([])
     const [houseAuctionList, setHouseAuctionList] = useState([])
     const [categoryActivities, setCategoryActivities] = useState([])
     const [countHousAuction, setCountHousAuction] = useState(0)
@@ -44,6 +49,25 @@ function HouseAuctionsPage() {
         }).catch(err => {
             console.error(err);
         })
+    }
+
+    const handleClose = (value) => {
+        if (params?.activity_type.indexOf(value) > -1) {
+            handleSetCategory(params?.activity_type?.filter(item => item !== value))
+        }
+        setTags(Tags?.filter((item) => item !== value))
+    };
+
+    const handleRemoveFilters = () => {
+        setTags([])
+        setParams({
+            page: 1,
+            page_size: 10,
+            activity_type: [],
+            search: '',
+            ordering: '',
+        })
+
     }
 
     const handleSetCategory = (value) => {
@@ -129,7 +153,7 @@ function HouseAuctionsPage() {
                             </div>
                             <div className="w-100 lg-mrgb50 d-lg-none d-block" />
                             <div className="col-3 d-lg-none d-block">
-                                <button type="button" className="btn-filter btn">فیلتر</button>
+                                <button type="button" className="btn-filter btn"  onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}>فیلتر</button>
                             </div>
                             <div className="col-lg-6 col-9 ">
                                 <div className="sort-block">
@@ -147,6 +171,11 @@ function HouseAuctionsPage() {
 
 
                             <SiderHouseAucitons
+                                getHouseAuction={getHouseAuction}
+                                handleClose={handleClose}
+                                Tags={Tags}
+                                setTags={setTags}
+                                handleRemoveFilters={handleRemoveFilters}
                                 params={params}
                                 handleSetCategory={handleSetCategory}
                                 categoryActivities={categoryActivities}
@@ -171,7 +200,7 @@ function HouseAuctionsPage() {
                                                                         src={house?.media.filter(pic => pic?.type === "profile_image")[0]?.exact_url}
                                                                         width="159" height="159"
                                                                         alt="smart auction"
-                                                                        className="img-fluid"
+                                                                        className="img-fluid image-custom-back"
                                                                     />
                                                                 </Link>
                                                             </div>

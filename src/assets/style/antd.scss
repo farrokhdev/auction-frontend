@@ -149,8 +149,8 @@ display: none;
   font-family: "vazir Light", sans-serif;
   color: var(--gray90);
   position: relative;
-  right: -16px;
-  top: 31px;
+  right: -1rem;
+  top: 2rem;
 }
 .ant-pagination .ant-pagination-item {
   height: 95px !important;
@@ -159,7 +159,7 @@ display: none;
 
 
 .ant-pagination-item-active {
-  font-size: 25px !important;
+  font-size: 1.5rem !important;
   color: #1b1b1b !important;
   font-weight: 400;
 }
@@ -177,11 +177,40 @@ display: none;
 
 .ant-pagination-prev .anticon svg {
   display:none
+  
+}
+
+.ant-pagination.mini .ant-pagination-item {
+  height:5.5rem !important;
+}
+
+.ant-pagination.mini .ant-pagination-prev .ant-pagination-item-link{
+  background: url("../../images/left-arrow.svg") no-repeat center;
+  background-size : 1.5rem ;
+  margin-right: 5rem;
+}
+
+.ant-modal-body .ant-btn:first-child {
+  height: 2.3rem;
+  padding-top: 0.5rem;  
+  background-color: var(--gray70) !important;
+  color: white !important;
+  border-radius: 0.5rem !important;
+}
+.ant-modal-body .ant-btn:first-child:hover{
+  background-color: var(--gray15) !important;
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn + .ant-btn {
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    border-radius: 0.5rem !important;
 
 }
 
-
-
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn + .ant-btn:hover{
+  background-color: var(--pink) !important;
+}
   // .ant-pagination .ant-pagination-item:active{
   //   font-size: 25px;
   // }
@@ -196,11 +225,6 @@ display: none;
     //   background-size : 22px;
     //   margin-left: 2rem;
     
-    // }
-    // .ant-pagination.mini .ant-pagination-prev .ant-pagination-item-link{
-    //   background: url("../../images/left-arrow.svg") no-repeat center;
-    //   background-size : 22px;
-    //   margin-right: 5rem;
     // }
     
     // .ant-pagination-disabled .ant-pagination-item-link, .ant-pagination-disabled:hover .ant-pagination-item-link,.ant-pagination-next, .ant-pagination-disabled:focus-visible .ant-pagination-item-link{
@@ -219,6 +243,3 @@ display: none;
   //   top: 26px;
   // }
   
-  // .ant-pagination.mini .ant-pagination-item {
-  //   height:75px !important;
-  // }

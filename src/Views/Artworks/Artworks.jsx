@@ -12,10 +12,11 @@ import queryString from 'query-string';
 import moment from "jalali-moment";
 import Timer from "react-compound-timer";
 import numberWithCommas from "../../components/threeNumber";
-import { convertToEn } from "../../utils/converTypePersion";
+import { convertToEn, status, convertTypeEN } from "../../utils/converTypePersion";
 
 function Artworks() {
 
+    const [Tags, setTags] = useState([])
     const [Products, setProducts] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -79,7 +80,40 @@ function Artworks() {
     useEffect(() => {
         getProducts()
 
-    }, [params])
+    }, [params, Tags])
+
+    const handleClose = (value) => {
+        if (params?.auctions__status.indexOf(status(value)) > -1) {
+            handleAuctionStatus(params?.auctions__status?.filter(item => item !== status(value)))
+        }
+        if (params?.category.indexOf(value) > -1) {
+            handleSetCategory(params?.category?.filter(item => item !== value))
+        }
+        if (params?.home_auction_name.indexOf(value) > -1) {
+            handleSetHomeAuction(params?.home_auction_name?.filter(item => item !== value))
+        }
+        if (params?.auctions__type.indexOf(convertTypeEN(value)) > -1) {
+            handleSetType(params?.auctions__type?.filter(item => item !== convertTypeEN(value)))
+        }
+        setTags(Tags?.filter((item) => item !== value))
+    };
+
+    const handleRemoveFilters = () => {
+        setTags([])
+        setParams({
+            page: 1,
+            page_size: 9,
+            search: '',
+            category: [],
+            date_after: '',
+            date_before: '',
+            ordering: '',
+            home_auction_name: [],
+            auctions__type: [],
+            auctions__status: []
+        })
+
+    }
 
     const handeSelectPage = (e) => {
         setParams({
@@ -131,6 +165,16 @@ function Artworks() {
         })
     }
 
+    const handleSetOrderingOld = () => {
+        setParams({
+            // since the ordering field on the product is different from auctions we have to
+            // set this explicitly
+            ...params, ordering: '-creation_date'
+        })
+    }
+
+
+
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
             ...params,
@@ -158,9 +202,13 @@ function Artworks() {
             <Spin spinning={loading}>
                 <main class="innercontent" id="all-artworks">
                     <div class="container innercontainer">
-                        <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} />
+                        <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
                         <div class="row">
                             <Sidebar
+                                handleClose={handleClose}
+                                Tags={Tags}
+                                setTags={setTags}
+                                handleRemoveFilters={handleRemoveFilters}
                                 params={params}
                                 setParams={setParams}
                                 handleSetHomeAuction={handleSetHomeAuction}
@@ -275,7 +323,6 @@ function Artworks() {
                                                         </div>
 
                                                     }
-                                                    {/* {item?.latest_auction?.status === "CLOSED" } */}
                                                     {item?.latest_auction?.status === "CLOSED" ? <div>
                                                         {
                                                             item?.sale_status ?
@@ -285,15 +332,8 @@ function Artworks() {
                                                                         className="price-unit">تومان</span></span>
                                                                 </div>
                                                                 :
-                                                                // <div className="price-block">
-                                                                //     <span>قیمت فعلی:</span>
-                                                                //     <span className="price">{numberWithCommas(item?.price)}<span
-                                                                //         className="price-unit">تومان</span></span>
-                                                                // </div>
                                                                 <div className="price-block">
                                                                     <span> فروخته نشده</span>
-                                                                    {/* <span className="price">{numberWithCommas(item?.price)}<span
-                                                                        className="price-unit">تومان</span></span> */}
                                                                 </div>
                                                         }
                                                     </div>
@@ -323,15 +363,13 @@ function Artworks() {
 
                                 </div>
                                 <Pagination
-                                    style={{ direction: 'ltr', textAlign: 'center'}}
+                                    style={{ direction: 'ltr', textAlign: 'center' }}
                                     showSizeChanger={false}
                                     responsive
                                     // size="small"
                                     onShowSizeChange={(current, pageSize) => {
                                         getProducts(pageSize)
-                                        // getProduct(pageSize)
                                     }}
-                                    // (e) => handeSelectPage(e)
                                     onChange={(e) => handeSelectPage(e)}
                                     defaultCurrent={1}
                                     total={countProducts}
