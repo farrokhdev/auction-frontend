@@ -23,7 +23,9 @@ import { clearStorageAll } from "../../redux/reducers/all/all.actions";
 function PanelSidebar(props) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.profileReducer)
+
   const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+
   useEffect(() => {
     if (!role)
       dispatch(getProfile())

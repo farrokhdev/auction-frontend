@@ -51,6 +51,7 @@ import { Token } from "./utils/utils";
 import UserPanelMyAuctions from "./Views/UserPanelMyAuctions";
 import TermsOfUse from "./Views/TermsOfUse";
 import Faq from "./Views/FAQ/Faq";
+import EditArtworks from "./Views/EditArtworks";
 
 
 function App(props) {
@@ -97,6 +98,11 @@ function App(props) {
                                     <Route exact path="/auctions-list" component={AuctionsList} /> : ''}
 
                                 <Route exact path="/add-artworks" component={AddArtWorks} />
+
+
+                                <Route exact path="/edit-artworks/:id" component={EditArtworks} />
+                                
+                                
                                 <Route exact path="/buyer-register/:id" component={BuyerRegister} />
 
                                 <Route exact path="/create-reminder" component={CreateReminder} />

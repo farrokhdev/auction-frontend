@@ -11,6 +11,13 @@ export const setProfile = (payload) => (
     }
 )
 
+export const setProfileID = (payload) => (
+    {
+        type: types.SET_PROFILE_ID,
+        payload
+    }
+)
+
 
 export const getProfile = () => {
     return (dispatch) => {
@@ -23,6 +30,5 @@ export const getProfile = () => {
         })
     }
 }
-
 
 

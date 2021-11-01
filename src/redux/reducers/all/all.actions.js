@@ -17,13 +17,4 @@ export const openDashboard = (payload)=>(
     }
 )
 
-// export const openDashboard = (payload) => (
-//     {
-//         type : types.OPEN_DASHBOARD, 
-//         payload
-//     }
-// )
-
-
-
  
