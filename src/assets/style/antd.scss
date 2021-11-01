@@ -190,6 +190,27 @@ display: none;
   margin-right: 5rem;
 }
 
+.ant-modal-body .ant-btn:first-child {
+  height: 2.3rem;
+  padding-top: 0.5rem;  
+  background-color: var(--gray70) !important;
+  color: white !important;
+  border-radius: 0.5rem !important;
+}
+.ant-modal-body .ant-btn:first-child:hover{
+  background-color: var(--gray15) !important;
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn + .ant-btn {
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    border-radius: 0.5rem !important;
+
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns .ant-btn + .ant-btn:hover{
+  background-color: var(--pink) !important;
+}
   // .ant-pagination .ant-pagination-item:active{
   //   font-size: 25px;
   // }

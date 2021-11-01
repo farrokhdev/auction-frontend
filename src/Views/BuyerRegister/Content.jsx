@@ -53,7 +53,7 @@ function Content(props) {
                 {
                   listComponent.map((item,i)=><li key={i} className={selectComponent===item?.value && "current"}>
                     <span className="d-none d-md-inline-block"> {item?.name}</span>
-                    <span className="wizard-mobile d-md-none">1</span>
+                    <span className="wizard-mobile d-md-none">{item.value}</span>
                   </li>)
                 }
               </ul>

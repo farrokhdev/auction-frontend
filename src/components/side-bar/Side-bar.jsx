@@ -11,6 +11,9 @@ import fa_IR from "antd/lib/locale/fa_IR";
 import "antd/dist/antd.css";
 import en_US from "antd/lib/locale/en_US";
 import ItemStatus from "./ItemStatus";
+import { useDispatch, useSelector } from "react-redux";
+import {openDashboard} from "../../redux/reducers/all/all.actions"
+
 
 function Sidebar({handleSearchProducts,handleRemoveFilters,
   Tags,
@@ -25,6 +28,9 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
   handleSetDateEN,
   typeCategory }) {
 
+
+  const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+  const dispatch=useDispatch();
   const { RangePicker } = DatePicker;
   const [filters, setFilters] = useState([
     'tehran', 'mashad', 'zabol'
@@ -86,8 +92,8 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
 
   return (
     <>
-      <div className="col-sm-3 sidebar" id="left-side">
-        <button type="button" className="btn-getclose d-block d-lg-none"></button>
+      <div className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`} id="left-side">
+        <button type="button" className="btn-getclose d-block d-lg-none"  onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}></button>
         <div className="left-side">
           <div className="result-box">
             <div className="result-title">

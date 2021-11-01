@@ -1,5 +1,5 @@
 import types from './profile.types';
-import {removeToken, Token} from '../../../utils/utils'
+import { removeToken, Token } from '../../../utils/utils'
 import typesAll from "../all/all.types";
 
 const initial_state = {
@@ -27,6 +27,12 @@ const profileReducer = (state = initial_state, {type, payload={}}) => {
                 pending: true,
                 error: null
             }
+            case types.SET_PROFILE_ID:
+                return{
+                    ...state,
+                    error: null,
+                    id: payload.id
+                }
         case typesAll.CLEAR_STORAGE_ALL:
             return initial_state
         default :

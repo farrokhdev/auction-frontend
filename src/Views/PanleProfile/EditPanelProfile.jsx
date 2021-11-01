@@ -5,6 +5,8 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { EDIT_PROFILE } from "../../utils/constant";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import { setProfileID } from '../../redux/reducers/profile/profile.actions';
 
 function EditPanelProfile(props) {
     const [form] = Form.useForm();
@@ -28,6 +30,7 @@ function EditPanelProfile(props) {
     }, [data])
 
 
+    // console.log("props.profile==>> " ,props.profile.id)
 
     const sendData = (values) => {
         setLoading(true)
@@ -39,7 +42,7 @@ function EditPanelProfile(props) {
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
-
+                    props.setProfileID({ ...props.state, id: resp.data.data.result.id })
                     message.success("پروفایل شما با موفقیت ویرایش شد")
                 }
             })
@@ -210,5 +213,17 @@ function EditPanelProfile(props) {
         </Spin>
     )
 }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setProfileID: (data) => dispatch(setProfileID(data)),
+    }
+}
 
-export default EditPanelProfile;
+const mapStateToProps = (store) => {
+    return {
+        profile: store.profileReducer,
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPanelProfile)

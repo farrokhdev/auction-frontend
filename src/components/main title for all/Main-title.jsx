@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {useDispatch,useSelector} from "react-redux";
+import {openDashboard} from "../../redux/reducers/all/all.actions"
 
 function Maintitle({handleSetOrdering, handleSetOrderingOld ,title}) {
+  const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
+  const dispatch=useDispatch();
+
+
   return (
     <>
       <div className="row sm-mrgb50">
@@ -18,7 +24,7 @@ function Maintitle({handleSetOrdering, handleSetOrderingOld ,title}) {
         </div>
         <div className="w-100 lg-mrgb50 d-lg-none d-block"></div>
         <div className="col-3 d-lg-none d-block">
-          <button type="button" className="btn-filter btn">
+          <button type="button" className="btn-filter btn"  onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}>
             فیلتر
           </button>
         </div>

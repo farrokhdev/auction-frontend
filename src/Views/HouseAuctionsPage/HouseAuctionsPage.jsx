@@ -9,8 +9,12 @@ import { Link } from 'react-router-dom';
 import { Spin } from "antd";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer";
+import {useDispatch,useSelector} from "react-redux";
+import {openDashboard} from "../../redux/reducers/all/all.actions"
 
 function HouseAuctionsPage() {
+    const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
+    const dispatch=useDispatch();
 
     const [Tags, setTags] = useState([])
     const [houseAuctionList, setHouseAuctionList] = useState([])
@@ -149,7 +153,7 @@ function HouseAuctionsPage() {
                             </div>
                             <div className="w-100 lg-mrgb50 d-lg-none d-block" />
                             <div className="col-3 d-lg-none d-block">
-                                <button type="button" className="btn-filter btn">فیلتر</button>
+                                <button type="button" className="btn-filter btn"  onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}>فیلتر</button>
                             </div>
                             <div className="col-lg-6 col-9 ">
                                 <div className="sort-block">
