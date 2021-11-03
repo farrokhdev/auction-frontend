@@ -94,8 +94,9 @@ function App(props) {
                                 <Route exact path="/auctions-list/requests/:id" component={AuctionsListRequests} />
                                 <Route exact path="/" component={AfterLoginPage} />
 
-                                {role === "home_auction" ?
-                                    <Route exact path="/auctions-list" component={AuctionsList} /> : ''}
+                                {role === "home_auction" || role === "admin" ?
+                                    <Route exact path="/auctions-list" component={AuctionsList} /> 
+                                    : ''}
 
                                 <Route exact path="/add-artworks" component={AddArtWorks} />
 
@@ -116,14 +117,14 @@ function App(props) {
                                 <Route exact path="/panel-financial" component={PanelFinancial} />
                                 <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction} />
                                 <Route exact path="/panel-reminders" component={PanelRemindersPage} />
-                                {role === "home_auction" ?
+                                {role === "home_auction" || role === "admin"  ?
                                     <Route exact path="/panel-add-auction/:auctionId" component={AddAuction} /> : ''}
 
                                 <Route exact path="/panel-wallet" component={UserPanelWallet} />
                                 <Route exact path="/panel-message" component={UserPanelMessage} />
                                 <Route exact path="/panel-sell-advice" component={UserPanelSellAdvice} />
                                 <Route exact path="/panel-auctions" component={UserPanelMyAuctions} />
-                                {role === "home_auction" ? <Route exact path="/panel-sell-recommendation"
+                                {role === "home_auction" || role === "admin"  ? <Route exact path="/panel-sell-recommendation"
                                     component={UserPanelSellRecommendation} /> : ''}
 
                                 <Route exact path="/panel-Bids" component={UserPanelCreateAuctionsBids} />

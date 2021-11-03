@@ -8,8 +8,30 @@ export const BASE_URL = "https://api.beta.smartauctionhouse.com/api";
 // export const BASE_URL = "http://192.168.0.182:9002/api";
 // export const BASE_URL ="http://192.168.0.182:9002/api";
 
-export const WEB_SOCKET_BASE_URL ="ws://api.beta.smartauctionhouse.com/ws";
 // export const WEB_SOCKET_BASE_URL ="ws://192.168.0.182:9002";
 
+export const WEB_SOCKET_BASE_URL = "ws://api.beta.smartauctionhouse.com/ws";
 export const COOKIE_EXPIRES = 1;
 
+
+// const dev = {
+//     BASE_URL: "http://192.168.0.182:9002/api",
+//     WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
+//     COOKIE_EXPIRES : 1,
+// };
+
+// const prod = {
+//     BASE_URL: "https://api.beta.smartauctionhouse.com/api",
+//     WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
+//     COOKIE_EXPIRES : 1,
+// };
+
+// const config = process.env.REACT_APP_STAGE === 'production'
+//     ? prod
+//     : dev;
+
+// module.exports = {
+//     // Add common config values here
+
+//     ...config
+// };
