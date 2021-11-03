@@ -54,7 +54,7 @@ function PanelSidebar(props) {
               حراج‌های من
             </NavLinkRouter>
           </li>
-          {role === "home_auction" ? <li>
+          {role === "home_auction" || role === "admin" ? <li>
             <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
               <i class="fal fa-plus-circle"></i>
               حراج‌های ساخته‌شده
@@ -118,7 +118,7 @@ function PanelSidebar(props) {
               یادآوری‌ها
             </NavLinkRouter>
           </li>
-          {role === "home_auction" ? <li>
+          {role === "home_auction" || role === "admin" ? <li>
             <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
               <i class="fal fa-comment-alt-smile"></i>
               پیشنهاد فروش
