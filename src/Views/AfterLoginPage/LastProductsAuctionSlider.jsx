@@ -77,6 +77,7 @@ function LastProductsAuctionSlider({setLoading}) {
                                                                 className="img-fluid"
                                                             />
                                                         </Link>
+                                                        {/* <div className="image-custom-back" style={{ backgroundImage: `url(${item?.product?.media?.exact_url})`, height: "25rem" , backgroundSize:"contain" , backgroundPosition:"center" }} /> */}
                                                     </div>
                                                 </div>
                                             )
