@@ -72,11 +72,11 @@ function Index() {
                 if ((resp.data.code === 200) && resp.data?.data?.result) {
 
                     const res = resp.data?.data?.result;
-                    let products = {}
-                    let steps = []
-                    let productsArrayDate = []
-                    let productsDate = {}
-                    let choose_product_daily = !!res?.dates_auction?.length;
+                    let productsGet = {}
+                    let stepsGet = []
+                    let productsArrayDateGet = []
+                    let productsDateGet = {}
+                    let choose_product_daily_get = !!res?.dates_auction?.length;
                     let gallery_start_date = res?.gallery_start_date ? res?.gallery_start_date : ''
                     let gallery_end_date = res?.gallery_end_date ? res?.gallery_end_date : ''
                     let start_clock = res?.start_time.slice(11)
@@ -84,28 +84,27 @@ function Index() {
                     let gallery_start_clock =res?.gallery_start_date ? moment(res?.gallery_start_date.slice(11), "HH:mm") : moment("08:00","HH:mm")
                     let gallery_end_clock =res?.gallery_end_date ? moment(res?.gallery_end_date.slice(11), "HH:mm") : moment("20:00","HH:mm")
 
-
-                    res.auction_product.map(t => products[t?.product_id] = {...t?.product, ...t, id: t?.product_id})
-                    steps = res.steps.map((t, i, array) => ({minimum: (i > 0 ? array[i - 1]?.threshold : 0), ...t}))
+                    res.auction_product.map(t => productsGet[t?.product_id] = {...t?.product, ...t, id: t?.product_id})
+                    stepsGet = res.steps.map((t, i, array) => ({minimum: (i > 0 ? array[i - 1]?.threshold : 0), ...t}))
                     if (res?.dates_auction?.length) {
                         res.dates_auction.map(t => {
                             let p = {}
                             t?.product?.length && t?.product.map(c => {
                                 p[c?.id] = c
                             })
-                            productsDate[t?.date] = p
+                            productsDateGet[t?.date] = p
                         })
-                        productsArrayDate = res.auction_product.map(t => ({...t?.product, ...t, id: t?.product_id}))
+                        productsArrayDateGet = res.auction_product.map(t => ({...t?.product, ...t, id: t?.product_id}))
                     }
                     dispatch(setAUCTION({
                         ...res,
-                        products,
-                        steps,
+                        products:productsGet,
+                        steps:stepsGet,
                         gallery_start_date,
                         gallery_end_date,
-                        productsDate,
-                        productsArrayDate,
-                        choose_product_daily,
+                        productsDate:productsDateGet,
+                        productsArrayDate:productsArrayDateGet,
+                        choose_product_daily:choose_product_daily_get,
                         start_clock: moment(start_clock, "HH:mm"),
                         end_clock: moment(end_clock, "HH:mm"),
                         gallery_start_clock:gallery_start_clock,
@@ -160,7 +159,9 @@ function Index() {
 
         let auction_product = []
         let auctions_date = []
+
         if (choose_product_daily) {
+
              Object.keys(productsDate).map(t => {
                 let p = []
                 Object.keys(productsDate[t]).map(c => p.push(productsDate[t][c]?.id))

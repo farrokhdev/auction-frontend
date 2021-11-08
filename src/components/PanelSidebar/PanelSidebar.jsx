@@ -60,12 +60,12 @@ function PanelSidebar(props) {
               حراج‌های ساخته‌شده
             </NavLinkRouter>
           </li> : ''}
-          <li>
+          {role !== "home_auction" ? <li>
             <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
               <i class="fal fa-plus-circle"></i>
               درخواست خانه حراج
             </NavLinkRouter>
-          </li>
+          </li>: ""}
           {/*<li>*/}
           {/*  <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">*/}
           {/*    <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج*/}
