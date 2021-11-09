@@ -12,19 +12,21 @@ import {Spin} from "antd";
 
 function AuctionsBids(props) {
     const [bidsCount, setBidsCount] = useState(0);
-    const [bids, setBids] = useState("");
+    const [bids, setBids] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // console.log("bids===>>>" , bids)
     const getBids = () => {
         setLoading(true)
         axios.get(`${BASE_URL}/bidding/?auction=${props.match.params.id}`)
             .then(resp => {
                 console.log(resp)
-                if (resp.status === 200) {
+                // if (resp.status === 200) {
                     setLoading(false)
-                    setBids(resp.data.results)
+                    setBids(resp.data.data.result)
                     setBidsCount(resp.data.count)
-                }
+                    console.log("resp.data.data.results===>>>" , resp.data.data.result)
+                // }
 
             })
             .catch(err => {

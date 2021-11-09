@@ -51,11 +51,11 @@ export default function Footer() {
             </div>
             <div className="col-lg-8 col-md-10 col-sm-9 pb-5">
               <ul className="simple-menu">
-                {Products?.length && Products?.map((item, i) => (
+                {Products?.length && Products?.map((item) => (
 
                   <li className="list-inline-item">
                     {/* شرایط استفاده */}
-                    <Link to={`/Terms-of-use/${item?.title}`}>
+                    <Link key={item?.id} to={`/Terms-of-use/${item?.title}`}>
                       {item.title}
                     </Link>
                   </li>

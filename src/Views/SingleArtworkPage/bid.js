@@ -203,16 +203,24 @@ const Bid = ({ artwork }) => {
                             <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
                                 {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
                             {(artwork?.product_status !== "after_stage") ? <div>
-                                {artwork?.join_auction_request_state ?? <p>
+                                {artwork?.join_auction_request_state === "approved" && <p className="text-success">
+                                    درخواست عضویت شما تایید شده است
+                                </p>}
+                                {artwork?.join_auction_request_state === "pending" && <p className="text-warning">
+                                    درخواست عضویت شما در انتظار تایید حراجی است
+                                </p>}
+                                {artwork?.join_auction_request_state === "rejected" && <p>
+                                    درخواست عضویت شما رد شده است
+                                </p>}
+                                <p>{artwork?.join_auction_request_state === null && <p>
                                     <span>برای ثبت پیشنهاد باید   </span>
                                     <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
                                         className="d-inline-block"> عضو حراجی </Link>
                                     <span>   باشید</span>
-                                </p>}
-                                {artwork?.join_auction_request_state === false && <p>
-                                    درخواست عضویت شما در انتظار تایید حراجی است
-                                </p>}
-                            </div> : ''}
+                                </p>}</p>
+                            </div> :
+                               ''
+                            }
 
                         </p>}
                 </p>}
