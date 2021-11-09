@@ -263,6 +263,7 @@ export function isAwaitingApproval(value) {
 
 // check status auction type and enrolled then generate btn 
 export function AuctionStatusTextBtn(type, enrolled, id) {
+    
     // auction ended and user not allow to join auction
     if (type === "CLOSED") {
         return <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>

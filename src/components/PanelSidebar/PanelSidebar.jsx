@@ -32,7 +32,7 @@ function PanelSidebar(props) {
   }, [])
   return (
     <>
-      <div className={`panel-sidebar ${is_Open_Dashboard && "active"} my-1`}>
+      <div className={`panel-sidebar ${is_Open_Dashboard && "active"} `}>
         <NavLinkRouter activeClassName="active-style-menu" to="/" className="d-md-none d-block">
           <img
             src={logoWhite}

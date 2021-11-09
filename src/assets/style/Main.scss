@@ -4293,13 +4293,15 @@ ul.vertical-menu {
 
 .panel-sidebar {
   background-color: var(--darkgray);
-  width: 280px;
-  height: calc(100vh - 70px);
+  width: 20.1rem;
+  height: calc(100vh - 4.5rem);
   padding: 100px 30px 30px 50px;
   transition: all 0.5s ease 0s;
   position: fixed;
   right: 0;
   z-index: 100;
+  overflow-y: scroll;
+  overflow-x: clip;
 }
 
 .panel-sidebar.active {
@@ -6234,7 +6236,7 @@ address.all-info:before {
   }
 
   footer .simple-menu {
-    justify-content: left;
+    justify-content: center;
     margin-top: 10px;
   }
 
