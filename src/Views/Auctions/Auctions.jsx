@@ -28,7 +28,7 @@ function Auctions() {
         category: [],
         date_after: '',
         date_before: '',
-        ordering: '',
+        ordering: 'start_time',
         home_auction_name: [],
         type: [],
         visible_in_site: true,

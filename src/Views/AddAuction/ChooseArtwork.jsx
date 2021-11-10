@@ -96,8 +96,10 @@ function Chooseartwork(props) {
                       avatar={<Checkbox
                           disabled={listCheck.some(t=>item?.id===t?.id)}
                                         checked={selectProduct.some(t=>item?.id===t?.id) } onChange={e=>{
-                        if(e.target.checked)
+                        if(e.target.checked){
                           setSelectProduct([...selectProduct, {base_price:item?.min_price,...item}])
+                        }
+
                         else {
                           let t=selectProduct.filter(t=>t?.id!==item?.id)
                             setSelectProduct(t)

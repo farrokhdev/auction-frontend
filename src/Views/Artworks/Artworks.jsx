@@ -30,7 +30,8 @@ function Artworks() {
         ordering: '',
         home_auction_name: [],
         auctions__type: [],
-        auctions__status: []
+        auctions__status: [],
+        joined_auction:true
     })
 
     const queries = queryString.stringify(params);
@@ -220,8 +221,8 @@ function Artworks() {
                                 handleSetDate={handleSetDate}
                                 typeCategory="آثار"
                             />
-                            <div class="col-lg-9">
-                                <div class="row row-cols-md-3 row-cols-2">
+                            <div className="col-lg-9">
+                                <div className="row row-cols-md-3 row-cols-2">
                                     {Products && Products.length >= 1 ? Products.map((item, key) => {
                                         return (
                                             <div className="col" key={key}>
