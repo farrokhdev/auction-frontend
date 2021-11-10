@@ -77,8 +77,8 @@ function Index() {
                     let productsArrayDateGet = []
                     let productsDateGet = {}
                     let choose_product_daily_get = !!res?.dates_auction?.length;
-                    let gallery_start_date = res?.gallery_start_date ? res?.gallery_start_date : ''
-                    let gallery_end_date = res?.gallery_end_date ? res?.gallery_end_date : ''
+                    let gallery_start_date_get = res?.gallery_start_date ? res?.gallery_start_date : ''
+                    let gallery_end_date_get = res?.gallery_end_date ? res?.gallery_end_date : ''
                     let start_clock = res?.start_time.slice(11)
                     let end_clock = res?.end_time.slice(11)
                     let gallery_start_clock =res?.gallery_start_date ? moment(res?.gallery_start_date.slice(11), "HH:mm") : moment("08:00","HH:mm")
@@ -100,8 +100,8 @@ function Index() {
                         ...res,
                         products:productsGet,
                         steps:stepsGet,
-                        gallery_start_date,
-                        gallery_end_date,
+                        gallery_start_date:gallery_start_date_get,
+                        gallery_end_date:gallery_end_date_get,
                         productsDate:productsDateGet,
                         productsArrayDate:productsArrayDateGet,
                         choose_product_daily:choose_product_daily_get,
@@ -142,7 +142,7 @@ function Index() {
             delete allDataMain["gallery_end_date"]
         }else{
             allDataMain["gallery_start_date"]=await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_start_clock).format("HH:mm")
-            allDataMain["gallery_end_date"]=await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_end_clock).format("HH:mm")
+            allDataMain["gallery_end_date"]=await moment(allDataMain.gallery_end_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_end_clock).format("HH:mm")
         }
         if (!allData?.gallery_start_date) {
             //error from server

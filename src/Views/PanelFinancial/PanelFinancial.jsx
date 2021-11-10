@@ -7,11 +7,14 @@ import { ACCOUNT_BANK_INFO } from '../../utils/constant';
 import Spinners from '../../components/Spinners';
 import {successNotification , failNotification} from '../../utils/notification';
 import {bankList} from './banks';
+import {useHistory, useParams} from "react-router-dom";
 
 function PanelFinancial() {
 
     const [infoBank, setInfoBank] = useState({})
     const [loading , setLoading ] = useState(true)
+    const history = useHistory();
+    const params = useParams();
 
     const getInfoBankAccount = () => {
         axios.get(`${BASE_URL}${ACCOUNT_BANK_INFO}`).then(res => {
@@ -23,7 +26,7 @@ function PanelFinancial() {
             setLoading(false)
         })
     }
-
+    console.log("props.profile==>> " ,history)
     useEffect(() => {
         getInfoBankAccount();
     }, [])
@@ -57,7 +60,10 @@ function PanelFinancial() {
 
             axios.put(`${BASE_URL}${ACCOUNT_BANK_INFO}${infoBank?.id}/` , payload).then(res => {
                 setLoading(false)
-                successNotification( "بروز رسانی اطلاعات بانکی" , "اطلاعات با موفقیت بروز‌رسانی شد")
+                successNotification( "بروز رسانی اطلاعات بانکی" , "اطلاعات با موفقیت بروز‌رسانی شد");
+                if (params?.id && params?.id!=="check" ) {
+                    history.push(`/buyer-register/${params?.id}`)
+                }
                 setTimeout(() => {
                    window.location.reload(); 
                 }, 1500);
@@ -84,7 +90,10 @@ function PanelFinancial() {
 
                 axios.post(`${BASE_URL}${ACCOUNT_BANK_INFO}` , payload).then(res => {
                     setLoading(false)
-                    successNotification( "بروز رسانی اطلاعات بانکی" , " با موفقیت انجام شد")
+                    successNotification( "بروز رسانی اطلاعات بانکی" , " با موفقیت انجام شد");
+                    if (params?.id && params?.id!=="check") {
+                        history.push(`/buyer-register/${params?.id}`);
+                    }
                     setTimeout(() => {
                         window.location.reload();
                     }, 1500);

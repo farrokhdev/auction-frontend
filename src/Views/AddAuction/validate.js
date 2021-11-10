@@ -8,11 +8,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import PriceAddValidate from "./PriceAddValidate";
-import {UploadOutlined} from "@ant-design/icons";
+import {UploadOutlined,DownloadOutlined} from "@ant-design/icons";
 import UploadAxios from "../../utils/uploadRequest";
 import {BASE_URL} from "../../utils";
 import {UPLOAD_EXEL_AUCTION} from "../../utils/constant";
-
+import ExampleExel from "../../assets/exel/sample-exel-auction.xlsx"
 
 const Validate = (props) => {
 
@@ -91,6 +91,7 @@ const Validate = (props) => {
                         {is_send_invitation ? <div className="col-12 mb-4" dir="ltr">
                                 {/*<button type="button" className="btn-outline-pink" >آپلود لیست</button>*/}
                                 <div className="text-end">
+                                    <a href={ExampleExel} download={true} className="text-secondary m-0"> نمونه  <DownloadOutlined/></a>
                                     <Upload {...props} className="btn-outline-pink" style={{color: "#e6007e"}}
                                             customRequest={
                                                 async (e) => {
@@ -115,8 +116,11 @@ const Validate = (props) => {
                                             }>
                                         <Button className="btn-outline-pink border-0 m-0" style={{color: "#e6007e"}}
                                                 icon={<UploadOutlined/>}>آپلود لیست </Button>
+
                                     </Upload>
+
                                 </div>
+                            {/*<div className="text-end pe-2 mt-2"></div>*/}
 
                             </div>
                             :
