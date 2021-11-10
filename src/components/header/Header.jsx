@@ -210,7 +210,7 @@ const handleRedirect = () => {
               <div className="col col-lg-4">
                 <ul className="navbar-nav flex-row-reverse rightnav justify-content-center justify-content-lg-start">
                   <li className="nav-item ">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/en">
                       EN
                     </Link>
                   </li>
