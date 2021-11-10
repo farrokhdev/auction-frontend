@@ -103,6 +103,7 @@ function LastAuctionsSection(props) {
                                             house_auction={item?.latest_auction.title}
                                             title={item?.artwork_title}
                                             lot_num={key + 1}
+                                            
                                         />
                                     </Link>
                                 </div>

@@ -104,6 +104,8 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                         <h5 className="default lot-num">{artwork?.id}</h5>
                                     </div>
                                 </div>
+
+                                
                                 {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC')) ?
                                     <Bid artwork={artwork} /> : ''}
                                 {((artwork?.latest_auction?.type === 'HIDDEN') || (artwork?.latest_auction?.type === 'SECOND_HIDDEN')) ?
