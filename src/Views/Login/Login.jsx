@@ -65,30 +65,30 @@ function Login(props) {
 
   const responseGoogle = (response) => {
 
-    // console.log("Sign Up", response);
+    // // console.log("Sign Up", response);
 
-    let payload = {
-      // "access_token": response.tokenObj.access_token
-      "access_token": response.tokenObj.access_token
-    }
+    // let payload = {
+    //   // "access_token": response.tokenObj.access_token
+    //   "access_token": response.tokenObj.access_token
+    // }
 
-    // console.log("Ehsan", payload)
+    // // console.log("Ehsan", payload)
 
-    axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
-      if (res.data.data.statusCode !== 400) {
-        setToken(res.data.data.result)
-        console.log("res.data.data.result  Login===>>", res.data.data.result)
-        props.loginSuccess({ })
-        message.success("به اسمارت آکشن خوش آمدید")
-        setTimeout(() => {
-          window.location.href = "#/"
-        }, 500);
+    // axios.post(`${BASE_URL}/rest-auth/google/`, payload).then(res => {
+    //   if (res.data.data.statusCode !== 400) {
+    //     setToken(res.data.data.result)
+    //     console.log("res.data.data.result  Login===>>", res.data.data.result)
+    //     props.loginSuccess({ })
+    //     message.success("به اسمارت آکشن خوش آمدید")
+    //     setTimeout(() => {
+    //       window.location.href = "#/"
+    //     }, 500);
 
-      }
-    })
-      .catch(err => {
-        console.log(err)
-      })
+    //   }
+    // })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
 
   }
 
@@ -166,7 +166,7 @@ function Login(props) {
                 clientId="204714783619-coki1sldsv5iev552dcmtcpfj1sn77sg.apps.googleusercontent.com"
                 buttonText=" ثبت نام با گوگل"
                 onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                // onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
 
               />
