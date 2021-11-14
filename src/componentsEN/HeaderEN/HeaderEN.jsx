@@ -9,7 +9,7 @@ import house from "../../imgEN/location-icon.svg";
 import artwork from "../../imgEN/artist-icon.svg";
 
 
-import { clearStorageAll } from '../../redux/reducers/all/all.actions'
+import { changeLanguage, clearStorageAll } from '../../redux/reducers/all/all.actions'
 import { Link } from "react-router-dom";
 import { connect, useDispatch, useSelector } from 'react-redux';
 
@@ -58,12 +58,12 @@ function HeaderEN(props) {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="/" className="nav-link">
+                                        <Link to="/en/house-auctions" className="nav-link">
                                             <img src={house} width="16" height="16" alt="auctions" />
                                             House Auctions
                                         </Link>
                                     </li>
-                                    
+
                                     <li className="nav-item">
                                         <Link to="/en" className="nav-link" data-target="nav-help">
                                             <img src={help} width="16" height="16" alt="auctions" />
@@ -100,7 +100,7 @@ function HeaderEN(props) {
                                                 </div>
                                                 <div className="col nav-container-right d-none d-lg-block">
                                                     <div className="nav-container">
-                                                        <div className="main-title faq ">
+                                                        <div className="main-titleEN faq ">
                                                             <h2 className="default titr">FAQ</h2>
                                                             <Link to="/" className="btn-view">View all</Link>
                                                         </div>
@@ -130,7 +130,12 @@ function HeaderEN(props) {
                             <div className="col col-lg-4">
                                 <ul className="navbar-nav flex-row-reverse rightnav justify-content-center justify-content-lg-start">
                                     <li className="nav-item ">
-                                        <Link className="nav-link" to="/">
+                                        <Link className="nav-link" to="/" onClick={() => {
+                                            setTimeout(() => {
+                                                dispatch(changeLanguage('fa'))
+                                                window.location.reload()
+                                            }, 300);
+                                        }}>
                                             FA
                                         </Link>
                                     </li>

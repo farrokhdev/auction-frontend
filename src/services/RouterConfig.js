@@ -52,15 +52,17 @@ import Faq from "../Views/FAQ/Faq";
 import EditArtworks from "../Views/EditArtworks";
 
 
-// import "../assets/style/Main.scss";
-// import "../assets/style/style.scss";
-// import "../assets/style/fontawesome-all.min.css";
-// import "../i18n";
-// import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+import "../assets/style/Main.scss";
+import "../assets/style/style.scss";
+import "../assets/style/fontawesome-all.min.css";
+import "../i18n";
+import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 
 
 const RouterConfig = (props) => {
     console.log("Login ->> ", props.auth.is_logged_in)
+    const { check_Language } = useSelector((state) => state.allReducer)
+
     const token = Token()
     const { role } = useSelector((state) => state.profileReducer)
     const dispatch = useDispatch();
@@ -74,6 +76,10 @@ const RouterConfig = (props) => {
             <HashRouter>
                 <Router history={createHashHistory()}>
                     <Switch>
+                        {check_Language === 'en' ? 
+                        <Redirect to="/en"/>
+                        :""
+                    }
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={Login}/>}*/}
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={AfterLoginPage}/>}*/}
                         <Route exact path="/" component={AfterLoginPage} />

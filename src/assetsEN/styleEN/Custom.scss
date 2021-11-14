@@ -3650,14 +3650,25 @@ main {
 }
 
 .panel-sidebar {
+    // background-color: var(--darkgray);
+    // width: 280px;
+    // height: calc(100vh - 70px);
+    // padding: 100px 30px 30px 50px;
+    // transition: all 0.5s ease 0s;
+    // position: fixed;
+    // left: 0;
+    // z-index: 100;
+
     background-color: var(--darkgray);
-    width: 280px;
-    height: calc(100vh - 70px);
+    width: 20.1rem;
+    height: calc(100vh - 4.5rem);
     padding: 100px 30px 30px 50px;
     transition: all 0.5s ease 0s;
     position: fixed;
-    left: 0;
+    right: 0;
     z-index: 100;
+    overflow-y: scroll;
+    overflow-x: clip;
 }
 
 
@@ -3695,7 +3706,7 @@ main {
     background-color: var(--bgcolor);
 }
 
-.panel-body {
+.panel-bodyEN {
     width: 100%;
     padding: 30px;
     display: flex;
