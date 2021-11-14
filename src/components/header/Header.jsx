@@ -7,27 +7,28 @@ import help from "../../images/help.svg";
 import login from "../../images/login.svg";
 import artwork from "../../images/artist-icon.svg";
 import Search from "./Search";
-import {connect, useDispatch, useSelector} from 'react-redux';
-import {clearStorage} from '../../redux/reducers/auth/auth.actions'
-import {clearStorageAll} from '../../redux/reducers/all/all.actions'
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { clearStorage } from '../../redux/reducers/auth/auth.actions'
+import { changeLanguage, clearStorageAll } from '../../redux/reducers/all/all.actions'
 import { Link } from "react-router-dom";
-import {removeToken} from "../../utils/utils";
+import { removeToken } from "../../utils/utils";
+
 
 function Header(props) {
   const dispatch = useDispatch()
-  const {is_logged_in} = useSelector((state) => state.authReducer)
+  const { is_logged_in } = useSelector((state) => state.authReducer)
 
-const handleRedirect = () => {
+  const handleRedirect = () => {
 
-  if(props.auth.is_logged_in){
-    props.clearStorage();
-    setTimeout(() => {
-      window.location.href = "#/login"
-    }, 1000);
-  }else{
-    window.location.href = "#/sign-up";
+    if (props.auth.is_logged_in) {
+      props.clearStorage();
+      setTimeout(() => {
+        window.location.href = "#/login"
+      }, 1000);
+    } else {
+      window.location.href = "#/sign-up";
+    }
   }
-}
 
   return (
     <>
@@ -119,9 +120,9 @@ const handleRedirect = () => {
                                 <span>عمومی</span>
                                 <ul className="nav-secondlevel">
                                   <li>
-                                    
-                                      {/* <div onClick={handleRegisterRedirect}>{props.auth.is_logged_in ? "خروج" : "تبت‌نام"}</div> */}
-                                    
+
+                                    {/* <div onClick={handleRegisterRedirect}>{props.auth.is_logged_in ? "خروج" : "تبت‌نام"}</div> */}
+
                                   </li>
                                   <li>
                                     {/* <div onClick={handleLoginRedirect}>{props.auth.is_logged_in ? "خروج" : "ورود"}</div> */}
@@ -210,7 +211,14 @@ const handleRedirect = () => {
               <div className="col col-lg-4">
                 <ul className="navbar-nav flex-row-reverse rightnav justify-content-center justify-content-lg-start">
                   <li className="nav-item ">
-                    <Link className="nav-link" to="/">
+                    {/* window.location.reload();  */}
+
+                    <Link className="nav-link" to="/en" onClick={() => {
+                      setTimeout(() => {
+                        dispatch(changeLanguage('en'))
+                        window.location.reload()
+                      }, 300);
+                    }}>
                       EN
                     </Link>
                   </li>
@@ -230,7 +238,7 @@ const handleRedirect = () => {
                     }}>
                       خروج
                     </Link>
-                  </li> :''}
+                  </li> : ''}
                 </ul>
               </div>
             </div>
@@ -246,17 +254,17 @@ const handleRedirect = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      clearStorage : () => dispatch(clearStorage()),
-      // setProfile : (data) => dispatch(setProfile(data)),
-      // loginSuccess : (data) => dispatch(loginSuccess(data)),
+    clearStorage: () => dispatch(clearStorage()),
+    // setProfile : (data) => dispatch(setProfile(data)),
+    // loginSuccess : (data) => dispatch(loginSuccess(data)),
   }
 }
 
 const mapStateToProps = (store) => {
   return {
-      auth : store.authReducer,
+    auth: store.authReducer,
   }
 }
 
 
-export default connect(mapStateToProps , mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

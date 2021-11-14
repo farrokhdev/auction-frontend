@@ -16,5 +16,11 @@ export const openDashboard = (payload)=>(
         payload
     }
 )
-
+// CHANGE_LANGUAGE
  
+export const changeLanguage = (payload)=>(
+    {
+        type : types.CHANGE_LANGUAGE,
+        payload
+    }
+)
