@@ -1,4 +1,5 @@
 @import "./mixin.scss";
+@import "./variables.scss";
 
 @font-face {
   font-family: IRANSans_light;
@@ -6645,3 +6646,98 @@ input#add-new-artwork_price {
   font-family: Font Awesome\ 5 Pro !important;
 }
 
+
+
+// ---------- multiple upload style ---------
+
+.ant-upload-list-item-info {
+  height: 100%;
+  padding: 20px;
+  transition: background-color 0.3s;
+}
+
+.ant-upload-list-item-info {
+  height: 51%;
+  padding: 0 4px;
+  transition: background-color 0.3s;
+}
+
+
+
+.ant-upload-list-item-card-actions .anticon {
+  color: rgba(0, 0, 0, 0.45);
+  margin-top: 15px;
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+
+.ant-upload-list-item-card-actions-btn:focus, .ant-upload-list-item-card-actions.picture .ant-upload-list-item-card-actions-btn {
+  opacity: 1;
+  background-color: transparent;
+  margin-top: 13px !important;
+}
+
+
+.ant-upload-list-picture .ant-upload-list-item, .ant-upload-list-picture-card .ant-upload-list-item {
+  position: relative;
+  height: 56px !important;
+  padding: 8px;
+ border: 1px solid #d9d9d9; 
+  border-radius: 2px;
+}
+
+
+span.anticon.anticon-delete {
+  margin: 0px !important;
+}
+
+button.ant-btn.ant-btn-text.ant-btn-sm.ant-btn-icon-only.ant-upload-list-item-card-actions-btn {
+  margin: 0px !important;
+}
+
+.ant-upload-list-picture-container {
+  height: 66px;
+}
+
+.default-checkbox-image-upload.d-flex.justify-content-end {
+  display: flex !important;
+  justify-content: start !important;
+  position: relative;
+  top: -28px;
+  margin-right: 65px !important;
+}
+span.ant-upload-list-item-name {
+  display: flex !important;
+  justify-content: start !important;
+  position: relative;
+  right: 0px;
+  font-size: 0.9rem !important;
+  height: 65px !important;
+}
+
+a.ant-upload-list-item-thumbnail {
+  display: flex !important;
+  align-items: center !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+a.ant-upload-list-item-thumbnail img {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden;
+}
+
+input[type="radio"]{
+  position: relative !important;
+  width: 12px !important;
+  height: 12px !important;
+  -webkit-appearance : none !important;
+  border-radius: 2px !important;
+  border : 1px solid gray !important;
+  outline: none !important;
+}
+
+input[type="radio"]:checked{
+  background-color: $dark-color !important;
+}
