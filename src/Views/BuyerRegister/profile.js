@@ -120,7 +120,7 @@ function EditPanelProfile(props) {
                                            placeholder="شماره موبایل مورد نظر را وارد نمایید."
                                            disabled/>
                                 </Form.Item>
-                                <Link to="/panel-profile" className="input-note text-muted" >
+                                <Link to="/panel-profile/check" className="input-note text-muted" >
                                       برای تغییر و تایید شماره همراه خود اینجا کلیک کنید.
                                     </Link>
                             </div>
@@ -143,7 +143,7 @@ function EditPanelProfile(props) {
                                            placeholder="ایمیل خود را وارد نمایید."
                                            disabled/>
                                 </Form.Item>
-                                <Link to="/panel-profile" className="input-note text-muted" >
+                                <Link to="/panel-profile/check" className="input-note text-muted" >
                                     برای تغییر و تایید ایمیل خود اینجا کلیک کنید.
                                 </Link>
 

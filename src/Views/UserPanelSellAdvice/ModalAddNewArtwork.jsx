@@ -53,13 +53,13 @@ const getListCategory = () => {
         "persian_artist_name": values.persian_artist_name,
         "persian_description": values.persian_description,
         "price": values.price,
-        "media": {
+        "media":[ {
           "media_path": image.url,
           "bucket_name":image.name,
           "file_key": image.key,
           "type": "image",
           "file_name": image.name,
-        },
+        }],
         "category_id": newArtwork.category_id,
         "offer_home_auction" : "required"
       }

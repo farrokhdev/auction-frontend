@@ -4,12 +4,12 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 
 function BuyerRegister(props) {
     const [hasPerm, setHasPerm] = useState(true);
     const [redirectUrl, setRedirectUrl] = useState("");
-
+    const history = useHistory();
     const getProfile = () => {
         axios.get(`${BASE_URL}/account/profile/`)
             .then(resp => {
@@ -46,7 +46,12 @@ function BuyerRegister(props) {
         )
     } else {
         return (
-            <Redirect to={redirectUrl}/>
+        <Redirect
+            to={{
+                pathname: `${redirectUrl}/${props?.match?.params?.id}`,
+                state: { prevPath: `/buyer-register/${props?.match?.params?.id}` }
+            }}
+        />
         )
     }
 }

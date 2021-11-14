@@ -1,68 +1,30 @@
-// export const BASE_URL = "http://backend.auction.amln.ir/api";
-// export const BASE_URL = "https://api.beta.smartauctionhouse.com/api";
-// export const BASE_URL = "http://192.168.0.38:8010/api";
-// export const BASE_URL = "https://api.beta.smartauctionhouse.com/api";
-// export const BASE_URL = "http://192.168.0.38:8010/api";
-// export const BASE_URL = "http://192.168.0.182:9000/api";
-// export const BASE_URL = "http://192.168.0.140:8003/api";
-// export const BASE_URL = "http://192.168.0.182:9002/api";
-// export const BASE_URL ="http://192.168.0.182:9002/api";
+const dev = {
+  BASE_URL: "http://192.168.0.182:9002/api",
+  // PARAMS:
+  COOKIE_EXPIRES: 1,
+  WEB_SOCKET_BASE_URL: "ws://api.beta.smartauctionhouse.com/ws",
+};
 
-// export const WEB_SOCKET_BASE_URL ="ws://192.168.0.182:9002";
+const test = {
+  BASE_URL: "https://api.beta.smartauctionhouse.com/api",
+  // PARAMS:
+  COOKIE_EXPIRES: 1,
+  WEB_SOCKET_BASE_URL: "ws://api.beta.smartauctionhouse.com/ws",
+};
 
-// export const WEB_SOCKET_BASE_URL = "ws://api.beta.smartauctionhouse.com/ws";
-// export const COOKIE_EXPIRES = 1;
+const prod = {
+  BASE_URL: "https://api.beta.smartauctionhouse.com/api",
+  // PARAMS:
+  COOKIE_EXPIRES: 1,
+  WEB_SOCKET_BASE_URL: "ws://api.beta.smartauctionhouse.com/ws",
+};
 
+let config = dev;
 
-// const dev = {
-//     BASE_URL: "http://192.168.0.182:9002/api",
-//     WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
-//     COOKIE_EXPIRES : 1,
-// };
+if (process.env.REACT_APP_STAGE === "production") {
+  config = prod;
+} else if (process.env.REACT_APP_STAGE === "test") {
+  config = test;
+}
 
-// const prod = {
-//     BASE_URL: "https://api.beta.smartauctionhouse.com/api",
-//     WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
-//     COOKIE_EXPIRES : 1,
-// };
-
-// const config = process.env.REACT_APP_STAGE === 'production'
-//     ? prod
-//     : dev;
-
-//     Object.assign(module.exports,config)
-
-
-
-    const dev = {
-        BASE_URL : "http://192.168.0.182:9002/api",
-        // PARAMS:
-        COOKIE_EXPIRES : 1 ,
-        WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
-      }
-      
-      const test = {
-        BASE_URL : "https://api.beta.smartauctionhouse.com/api",
-        // PARAMS:
-        COOKIE_EXPIRES : 1 ,
-        WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
-      }
-      
-      const prod = {
-        BASE_URL : "https://api.beta.smartauctionhouse.com/api",
-        // PARAMS:
-        COOKIE_EXPIRES : 1 ,
-        WEB_SOCKET_BASE_URL :"ws://api.beta.smartauctionhouse.com/ws",
-      }
-      
-      let config = dev;
-      
-      if(process.env.REACT_APP_STAGE === 'production'){
-         config =  prod ;
-      
-      }else if(process.env.REACT_APP_STAGE === 'test'){
-         config = test ;
-      
-      }
-      
-      Object.assign(module.exports , config)
+Object.assign(module.exports, config);

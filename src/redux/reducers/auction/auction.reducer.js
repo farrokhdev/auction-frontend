@@ -30,7 +30,7 @@ const initial_state = {
 }
 
 
-const auctionReducer = (state = initial_state, {type, payload = {}}) => {
+const auctionReducer = (state = initial_state, {type, payload }) => {
     switch (type) {
         case types.SET_ADD_AUCTION:
             return {

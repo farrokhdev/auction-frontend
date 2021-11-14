@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Row, Col, message, Spin } from "antd";
+import React, {useEffect, useState} from 'react'
+import {Button, Form, Input, Row, Col, message, Spin} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "../../utils/request";
-import { BASE_URL } from "../../utils";
-import { EDIT_PROFILE } from "../../utils/constant";
-import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
-import { setProfileID } from '../../redux/reducers/profile/profile.actions';
+import {BASE_URL} from "../../utils";
+import {EDIT_PROFILE} from "../../utils/constant";
+import {Link, useHistory, useParams} from "react-router-dom";
+import {connect} from 'react-redux';
+import {setProfileID} from '../../redux/reducers/profile/profile.actions';
 
 function EditPanelProfile(props) {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
-    const { data } = props;
-    const { setActiveKey } = props;
+    const {data} = props;
+    const {setActiveKey} = props;
+    const history = useHistory();
+    const params = useParams();
     const onFinish = (values) => {
         sendData(values)
     }
@@ -30,7 +32,7 @@ function EditPanelProfile(props) {
     }, [data])
 
 
-    // console.log("props.profile==>> " ,props.profile.id)
+    console.log("props.profile==>> " ,params?.id)
 
     const sendData = (values) => {
         setLoading(true)
@@ -42,8 +44,11 @@ function EditPanelProfile(props) {
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
-                    props.setProfileID({ ...props.state, id: resp.data.data.result.id })
-                    message.success("پروفایل شما با موفقیت ویرایش شد")
+                    props.setProfileID({...props.state, id: resp.data.data.result.id})
+                    message.success("پروفایل شما با موفقیت ویرایش شد");
+                    if (params?.id && params?.id!=="check" && resp.data.data.result.complete_profile) {
+                        history.push(`/buyer-register/${params?.id}`)
+                    }
                 }
             })
             .catch(err => {
@@ -63,8 +68,8 @@ function EditPanelProfile(props) {
     return (
         <Spin spinning={loading}>
             <Form onFinish={onFinish}
-                form={form}
-                wrapperCol={{ span: 24 }}>
+                  form={form}
+                  wrapperCol={{span: 24}}>
 
                 <div className="">
                     <div className="row">
@@ -81,7 +86,7 @@ function EditPanelProfile(props) {
                                         }
                                     ]}>
                                     <Input className="default-input"
-                                        placeholder="نام خود را وارد نمایید." />
+                                           placeholder="نام خود را وارد نمایید."/>
                                 </Form.Item>
                             </div>
                         </div>
@@ -98,7 +103,7 @@ function EditPanelProfile(props) {
                                         }
                                     ]}>
                                     <Input className="default-input"
-                                        placeholder="نام خانوادگی خود را وارد نمایید." />
+                                           placeholder="نام خانوادگی خود را وارد نمایید."/>
                                 </Form.Item>
 
                             </div>
@@ -113,8 +118,8 @@ function EditPanelProfile(props) {
 
                                             name="mobile">
                                             <Input className="default-input"
-                                                placeholder="شماره موبایل مورد نظر را وارد نمایید."
-                                                disabled />
+                                                   placeholder="شماره موبایل مورد نظر را وارد نمایید."
+                                                   disabled/>
 
                                         </Form.Item>
                                         <span className="approved input-state">تایید شده</span>
@@ -135,8 +140,8 @@ function EditPanelProfile(props) {
                                             className="w-100"
                                             name="email">
                                             <Input className="default-input"
-                                                placeholder="ایمیل خود را وارد نمایید."
-                                                disabled />
+                                                   placeholder="ایمیل خود را وارد نمایید."
+                                                   disabled/>
                                         </Form.Item>
                                         <span className="approved input-state">تایید شده</span>
                                     </>
@@ -163,7 +168,7 @@ function EditPanelProfile(props) {
                                     ]}
                                 >
                                     <Input type="number" className="default-input"
-                                        placeholder="کد پستی خود را وارد نمایید." />
+                                           placeholder="کد پستی خود را وارد نمایید."/>
                                 </Form.Item>
                             </div>
                         </div>
@@ -185,7 +190,7 @@ function EditPanelProfile(props) {
                                     ]}
                                 >
                                     <Input className="default-input"
-                                        placeholder="کد ملی خود را وارد نمایید." />
+                                           placeholder="کد ملی خود را وارد نمایید."/>
                                 </Form.Item>
                             </div>
                         </div>
@@ -196,7 +201,7 @@ function EditPanelProfile(props) {
                                     className="w-100"
                                     name="address">
                                     <TextArea className="default-input"
-                                        placeholder="آدرس خود را وارد نمایید." />
+                                              placeholder="آدرس خود را وارد نمایید."/>
                                 </Form.Item>
                             </div>
                         </div>
@@ -213,6 +218,7 @@ function EditPanelProfile(props) {
         </Spin>
     )
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
         setProfileID: (data) => dispatch(setProfileID(data)),

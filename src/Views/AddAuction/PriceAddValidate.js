@@ -97,7 +97,7 @@ const PriceAddValidate = (props) => {
                             </div>
                             <div className="col-md-6">
                                 <div className="input-group">
-                                    <label className="default-lable">واحد افزایش</label>
+                                    <label className="default-lable"> اعتبار مورد نیاز</label>
                                     <Form.Item
                                         className="w-100 mb-0"
                                         name="sufficient_inventory"
