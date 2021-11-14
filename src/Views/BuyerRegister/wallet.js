@@ -14,6 +14,8 @@ const Wallet = (props) => {
     const [data, setData] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [msg, setMsg] = useState(false)
+    const [thresholdList, setThresholdList] = useState([])
+
     useEffect(()=>{
         getData()
     },[])
@@ -45,6 +47,26 @@ const Wallet = (props) => {
                 message.error("صفحه را دوباره لود کنید")
             })
     }
+
+
+
+    const getTresholdsData = (id) => {
+
+        axios.post(`${BASE_URL}​/sale​/auctions​/${id}​/thresholds​/`)
+            .then(resp=>{
+                if(resp.data.code === 200){
+                    setThresholdList(resp.data.data.result)
+                }
+            })
+            .catch(err=>{
+                message.error(err.response.data.data.error_message);
+            })
+    }
+
+
+
+    console.log("props -->>>" , props.match.params.id);
+
     return (
         <div>
             <div className="container container-form">
@@ -60,10 +82,10 @@ const Wallet = (props) => {
 
                         <div className="price-block">{msg}</div>
                     </div>
-                    <Link data-bs-toggle="modal" data-bs-target="#charge-modal">
+                    <Link onClick={()=>getTresholdsData(props.id)} data-bs-toggle="modal" data-bs-target="#charge-modal">
                         چقدر باید شارژ کنم؟
                     </Link>
-                    <button type="button" className="btn-outline-pink"        onClick={() => setIsModalVisible(true)}>
+                    <button type="button" className="btn-outline-pink"  onClick={() => setIsModalVisible(true)}>
                         افزایش اعتبار
                     </button>
                 </div>
@@ -125,16 +147,38 @@ const Wallet = (props) => {
                                     سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
                                     بهبود ابزارهای کاربردی می باشد</p>
                             </div>
+
+
                             <div className="amount-list">
-                                <div className="amount-block">
-                                    <div className="amount-range">
-                                        0 - 100<span className="unit">تومان</span>
-                                    </div>
-                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
-                                    <div className="amount-range">
-                                        1,000,000<span className="unit">تومان</span>
-                                    </div>
-                                </div>
+
+
+                                {thresholdList?.length ? thresholdList?.map((item , key) => (
+                                    <React.Fragment key={key}>
+                                        <div className="amount-block">
+                                            <div className="amount-range">
+                                                0 - {item?.threshold}<span className="unit">تومان</span>
+                                            </div>
+                                            <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                            <div className="amount-range">
+                                                {item?.sufficient_inventory}<span className="unit">تومان</span>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                )) : '' }
+
+
+{/*                                 
+<div className="amount-block">
+                                            <div className="amount-range">
+                                                0 - 100<span className="unit">تومان</span>
+                                            </div>
+                                            <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                            <div className="amount-range">
+                                                1,000,000<span className="unit">تومان</span>
+                                            </div>
+                                        </div> */}
+
+{/* 
                                 <div className="amount-block">
                                     <div className="amount-range">
                                         101 - 200<span className="unit">تومان</span>
@@ -179,7 +223,10 @@ const Wallet = (props) => {
                                     <div className="amount-range">
                                         6,000,000<span className="unit">تومان</span>
                                     </div>
-                                </div>
+                                </div> */}
+
+
+
                             </div>
                         </div>
                     </div>

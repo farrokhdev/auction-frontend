@@ -136,7 +136,7 @@ const PriceAddValidate = (props) => {
                 {(validations_auction && validations_auction.length) ? <table className="panel-table create-auctions table">
                     <thead>
                     <tr>
-                        <th>شماره</th>آخرین آثار حراج
+                        <th>شماره</th>
                         <th>کمترین قیمت</th>
                         <th> بیشترین قیمت</th>
                         <th> واحد افزایش</th>
