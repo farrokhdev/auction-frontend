@@ -9,7 +9,9 @@ function EditEmailPanelProfile(props) {
     const [loading, setLoading] = useState(false)
     const [showNumber, setShowNumber] = useState(true)
     const [number, setNumber] = useState("")
-    const [newField, setNewField] = useState(null)
+    const [newField, setNewField] = useState(null);
+
+
     const {data, getProfile} = props;
     useEffect(() => {
         if (data.email) {
@@ -23,7 +25,7 @@ function EditEmailPanelProfile(props) {
     const onFinish = (values) => {
         if (values?.email)
             // setNumber(values?.email)
-        sendData(values)
+            sendData(values)
     }
 
     const onSub = (values) => {

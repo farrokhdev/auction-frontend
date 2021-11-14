@@ -223,7 +223,7 @@ function Header(props) {
                     </Link>
                   </li>
                   <li className="nav-item ">
-                    <Link className="nav-link" to="/panel-profile">
+                    <Link className="nav-link" to="/panel-profile/check">
                       <img
                         src={login}
                         width="13"

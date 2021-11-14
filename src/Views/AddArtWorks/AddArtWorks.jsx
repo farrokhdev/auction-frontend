@@ -115,12 +115,12 @@ AddArtWorks(props) {
             "category_id": [Category],
             "persion_description": DescriptionFa,
             "english_description": "fasdf",
-            "media": {
+            "media":[ {
                 "media_path": Uploaded ? CoreUpload.upload_url : "",
                 "type": "image",
                 "bucket_name": "image",
                 "file_key": Uploaded ? CoreUpload.file_key : ""
-            },
+            }],
             "artwork_link" : Link,
             "min_price":MinPrice,
             "max_price": MaxPrice,
@@ -138,7 +138,7 @@ AddArtWorks(props) {
                 }
             })
             .catch(err=>{
-                message.error(err.response.data.data.error_message);
+                message.error(err.response.data?.data?.error_message);
                 setPosting(false)
             })
     }

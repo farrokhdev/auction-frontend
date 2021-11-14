@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { message, Pagination, Spin } from 'antd';
+import {Button, message, Modal, Pagination, Spin} from 'antd';
 import 'antd/dist/antd.css';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
@@ -14,12 +14,13 @@ import { useSelector } from "react-redux";
 import { AuctionStatusTextBtn } from "../../utils/converTypePersion";
 import numberWithCommas from "../../components/threeNumber";
 import { convertToEn } from "../../utils/converTypePersion";
-
+import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
+import {HomeOutlined} from '@ant-design/icons';
 
 function OneAuction(props) {
     const myRef = useRef(null)
     const scrollToRef = (ref) => myRef.current.scrollIntoView(0, ref.current.offsetTop)
-
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
     const executeScroll = () => scrollToRef(myRef)
 
@@ -220,6 +221,7 @@ function OneAuction(props) {
                                                         }
                                                         type="button" className={" reminder-icon " + (item?.following?.follow?.is_active ? "active" : "")} */}
                                         </div>
+
                                         <div className="auction-calender">
                                             {Auction?.status !== "CLOSED" ?
                                                 <>
@@ -246,6 +248,12 @@ function OneAuction(props) {
                                                 </div>
                                             }
                                         </div>
+                                        {Auction?.has_gallery ? <div>
+                                            <Button className="border-0 p-0 text-secondary" onClick={() => {
+                                                setIsModalVisible(true)
+                                            }}>اطلاعات نمایشگاه فیزیکی </Button>
+
+                                        </div> :''}
                                         <div className="auction-moreinfo">
                                             <a href="#" className="d-info category"><h6
                                                 className="default">{Auction.category ? Auction.category[0]?.title : ""}</h6>
@@ -617,6 +625,48 @@ function OneAuction(props) {
 
 
                 <Footer />
+                <Modal centered title={
+                    <div className='d-flex align-items-center justify-content-between'>
+                        <span className="default titr">اطلاعات نمایشگاه فیزیکی</span>
+
+                        <button
+                            type="button"
+                            className="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            onClick={() => setIsModalVisible(false)}
+                        />
+
+                    </div>
+                } className="text-end" width={1000} visible={isModalVisible}
+                       onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}
+                       footer={[<div className="text-center">
+                           <Button key={2} type="" onClick={() => {
+                               setIsModalVisible(false)
+                           }}
+                                   className="btn-default">
+                               تایید
+                           </Button></div>]}>
+                    <div>
+                        <address>
+                            <span>آدرس : </span>
+                            <span>     {Auction?.address}</span>
+
+                        </address>
+                        <address >
+                            <span>تاریخ و ساعت شروع  :</span>
+                            <span>
+
+                                {Auction && Auction?.gallery_start_date !== 'None' ? moment(Auction?.gallery_start_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
+                         </span>
+
+                        </address>
+                        <address >
+                            <span>تاریخ و ساعت پایان  :</span>
+                            {Auction && Auction?.gallery_end_date !== 'None' ? moment(Auction?.gallery_end_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
+                        </address>
+                    </div>
+                </Modal>
             </Spin>
         </>
     );

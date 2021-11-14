@@ -76,10 +76,11 @@ const RouterConfig = (props) => {
             <HashRouter>
                 <Router history={createHashHistory()}>
                     <Switch>
-                        {check_Language === 'en' ? 
-                        <Redirect to="/en"/>
-                        :""
-                    }
+                        {check_Language === 'en' ?
+                            <Redirect to="/en" />
+                            : ""
+                        }
+                        
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={Login}/>}*/}
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={AfterLoginPage}/>}*/}
                         <Route exact path="/" component={AfterLoginPage} />
@@ -124,9 +125,11 @@ const RouterConfig = (props) => {
                                 <Route exact path="/faq" component={Faq} />
                                 <Route exact path="/my-purchases" component={MyPurchases} />
 
-                                <Route exact path="/panel-profile" component={PanelProfile} />
-                                <Route exact path="/panel-financial" component={PanelFinancial} />
-                                <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction} />
+                                <Route exact path="/panel-profile/:id" component={PanelProfile} />
+                                <Route exact path="/panel-financial/:id" component={PanelFinancial} />
+                                {role !== "home_auction" ? <Route exact path="/panel-request-houseAuction" component={RequestHouseAuction} /> : ''}
+
+
                                 <Route exact path="/panel-reminders" component={PanelRemindersPage} />
                                 {role === "home_auction" || role === "admin" ?
                                     <Route exact path="/panel-add-auction/:auctionId" component={AddAuction} /> : ''}

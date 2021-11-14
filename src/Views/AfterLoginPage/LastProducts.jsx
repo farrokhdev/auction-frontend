@@ -57,7 +57,7 @@ function LastProducts() {
     };
     const getLastProducts = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/product/?page_size=8`)
+        axios.get(`${BASE_URL}/sale/product/?page_size=8&joined_auction=true`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setLastProducts(resp.data.data.result)

@@ -43,7 +43,7 @@ function PanelSidebar(props) {
         </NavLinkRouter>
         <ul className="panel-list">
           <li  >
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-profile">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-profile/check">
               <i class="fal fa-pen"></i>
               پروفایل
             </NavLinkRouter>
@@ -60,12 +60,12 @@ function PanelSidebar(props) {
               حراج‌های ساخته‌شده
             </NavLinkRouter>
           </li> : ''}
-          <li>
+          {role !== "home_auction" ? <li>
             <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
               <i class="fal fa-plus-circle"></i>
               درخواست خانه حراج
             </NavLinkRouter>
-          </li>
+          </li>: ""}
           {/*<li>*/}
           {/*  <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">*/}
           {/*    <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج*/}
@@ -132,7 +132,7 @@ function PanelSidebar(props) {
           </li>
 
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial/check">
               <i class="fal fa-credit-card"></i>
               اطلاعات مالی
             </NavLinkRouter>
