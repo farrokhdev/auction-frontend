@@ -5,6 +5,7 @@ import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
 import { message } from "antd";
 import { CheckCircleTwoTone, LoadingOutlined } from '@ant-design/icons';
+import MultipleUpload from './MultipleUpload';
 
 
 function EditArtworks(props) {
@@ -41,52 +42,50 @@ function EditArtworks(props) {
     }
 
 
-    const handleUpload = (e) => {
-        let payload = { "content_type": "image" }
-        axios.post(`${BASE_URL}/core/upload/`, payload)
-            .then(resp => {
-                if (resp.data.code === 200) {
-                    setCoreUpload(resp.data.data.result)
-                    setUploading(true)
-                    axios.put(resp.data.data.result.upload_url, e.target.files[0])
-                        .then(resp1 => {
-                            if (resp1.status === 200) {
-                                axios.post(`${BASE_URL}/core/media/photos/`, {
-                                    "media_path": resp.data.data.result.upload_url,
-                                    "type": "image",
-                                    "bucket_name": "image",
-                                    "file_key": resp.data.data.result.file_key
-                                })
-                                    .then(resp2 => {
-                                        if (resp2.data.code === 201) {
-                                            setCoreUpload(resp2.data.data.result)
-                                            setUploaded(true)
-                                            setUploading(false)
-                                            console.log(resp2.data.data.result)
-                                        }
-                                    })
-                                    .catch(err => {
-                                        console.log("Error Message", err.response);
-                                        setUploading(false)
-                                    })
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err.response);
-                            setUploading(false)
-                        })
-                }
-            })
-            .catch(err => {
-                console.log("Error Message", err.response);
-            })
+    // const handleUpload = (e) => {
+    //     let payload = { "content_type": "image" }
+    //     axios.post(`${BASE_URL}/core/upload/`, payload)
+    //         .then(resp => {
+    //             if (resp.data.code === 200) {
+    //                 setCoreUpload(resp.data.data.result)
+    //                 setUploading(true)
+    //                 axios.put(resp.data.data.result.upload_url, e.target.files[0])
+    //                     .then(resp1 => {
+    //                         if (resp1.status === 200) {
+    //                             axios.post(`${BASE_URL}/core/media/photos/`, {
+    //                                 "media_path": resp.data.data.result.upload_url,
+    //                                 "type": "image",
+    //                                 "bucket_name": "image",
+    //                                 "file_key": resp.data.data.result.file_key
+    //                             })
+    //                                 .then(resp2 => {
+    //                                     if (resp2.data.code === 201) {
+    //                                         setCoreUpload(resp2.data.data.result)
+    //                                         setUploaded(true)
+    //                                         setUploading(false)
+    //                                         console.log(resp2.data.data.result)
+    //                                     }
+    //                                 })
+    //                                 .catch(err => {
+    //                                     console.log("Error Message", err.response);
+    //                                     setUploading(false)
+    //                                 })
+    //                         }
+    //                     })
+    //                     .catch(err => {
+    //                         console.error(err.response);
+    //                         setUploading(false)
+    //                     })
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log("Error Message", err.response);
+    //         })
 
-    }
+    // }
 
-    console.log("formDataArtwork==><><", formDataArtwork)
 
     let handleFormSubmit = () => {
-        console.log("formDataArtwork?.persian_description", formDataArtwork?.persian_description)
         let payload = {
             "artwork_title": formDataArtwork?.artwork_title,
             "persian_artist_name": formDataArtwork?.persian_artist_name,
@@ -99,17 +98,11 @@ function EditArtworks(props) {
             "category_id": [formDataArtwork?.category_id],
             "persian_description": formDataArtwork?.persian_description,
             "english_description": "fasdf",
-            "media": {
-                "media_path": Uploaded ? CoreUpload.upload_url : "",
-                "type": "image",
-                "bucket_name": "image",
-                "file_key": Uploaded ? CoreUpload.file_key : ""
-            },
+            "media" : formDataArtwork?.media ,
             "artwork_link": formDataArtwork?.artwork_link,
             "min_price": formDataArtwork?.min_price,
             "max_price": formDataArtwork?.max_price,
             "offer_home_auction": "unrequired"
-            //    صاحب اثر هم هست
         }
         setPosting(true)
 
@@ -118,7 +111,7 @@ function EditArtworks(props) {
                 if (resp.data.data.statusCode !== 400 && resp.data.data.statusCode !== 403) {
                     message.success('اثر با موفقیت ویرایش شد.');
                     setPosting(false)
-                    window.location.href = "#/panel-artwork-list"
+                    // window.location.href = "#/panel-artwork-list"
                 } else {
                     message.error(resp.data.data.error_message);
                 }
@@ -155,7 +148,7 @@ function EditArtworks(props) {
             category_id: productInfo?.category[0]?.id,
             persian_description: productInfo?.persian_description,
             english_description: "fasdf",
-
+            media : productInfo?.media ,
             artwork_link: productInfo?.artwork_link,
             min_price: productInfo?.min_price,
             max_price: productInfo?.max_price,
@@ -164,6 +157,8 @@ function EditArtworks(props) {
 
 
     }, [productInfo])
+
+
     return (
         <>
             <HeaderPanel titlePage={'ویرایش اثر'} />
@@ -174,7 +169,16 @@ function EditArtworks(props) {
                     <div className="panel-container">
 
                         <div className="col-xxxxl-8">
-                            <div className="d-flex mb-3">
+
+
+                        {formDataArtwork?.media?.length && 
+                            <MultipleUpload  
+                                formDataArtwork={formDataArtwork}
+                                setFormDataArtwork={setFormDataArtwork} 
+                            /> 
+                       } 
+
+                            {/* <div className="d-flex mb-3">
                                 <label htmlFor={"file"} className="btn-outline-pink">
                                     انتخاب تصویر
                                 </label>
@@ -192,10 +196,10 @@ function EditArtworks(props) {
                                     defaultValue={productInfo?.media?.exact_url}
                                 />
 
-                            </div>
-                            <img className="image-custom-back" style={{ backgroundImage: `url(${productInfo?.media?.exact_url})`, height: "5rem", width: "7rem" }} />
+                            </div> */}
+                            {/* <img className="image-custom-back" style={{ backgroundImage: `url(${productInfo?.media?.exact_url})`, height: "5rem", width: "7rem" }} /> */}
 
-                            <div className="row addartwork">
+                            <div className="row addartwork mt-5">
                                 <div className="col-md-6">
                                     <div className="input-group">
                                         <label className="default-lable">دسته‌بندی</label>
