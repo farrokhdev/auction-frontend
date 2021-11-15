@@ -18,7 +18,6 @@ function EditArtworks(props) {
     const [Uploaded, setUploaded] = useState(false);
     const [Uploading, setUploading] = useState(false);
     const [Posting, setPosting] = useState(false);
-    const [uploadList, setUploadList] = useState([])
 
     const getproduct = () => {
         setLoading(true)
@@ -160,9 +159,6 @@ function EditArtworks(props) {
     }, [productInfo])
 
 
-
-    console.log("uploadList --->>>" , uploadList);
-    console.log("formDataArtwork?.media?.length --->>>" , formDataArtwork?.media?.length);
     return (
         <>
             <HeaderPanel titlePage={'ویرایش اثر'} />
@@ -177,9 +173,6 @@ function EditArtworks(props) {
 
                         {formDataArtwork?.media?.length && 
                             <MultipleUpload  
-                                uploadList={uploadList} 
-                                setUploadList={setUploadList} 
-                                media={formDataArtwork?.media} 
                                 formDataArtwork={formDataArtwork}
                                 setFormDataArtwork={setFormDataArtwork} 
                             /> 

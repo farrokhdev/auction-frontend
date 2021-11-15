@@ -1,23 +1,20 @@
-import React , {useEffect} from "react";
+import React  from "react";
 import { Upload, message } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
 import { BASE_URL } from '../../utils';
 import {PRE_UPLOAD} from '../../utils/constant';
 import axios from '../../utils/request';
 import UploadAxios from "../../utils/uploadRequest";
-import { file } from "@babel/types";
 
 const { Dragger } = Upload;
 
-function MultipleUpload({uploadList , setUploadList , media , setFormDataArtwork , formDataArtwork}) {
+function MultipleUpload(props) {
 
-useEffect(() => {
-    console.log("formDataArtwork?.media  ---->>>" , formDataArtwork?.media );
-}, [formDataArtwork?.media])
-
+  // props data required
+  const {setFormDataArtwork , formDataArtwork} = props
 
 
-
+  // drager config data
   const propsUpload = {
     listType: "picture",
 
@@ -29,8 +26,11 @@ useEffect(() => {
       if (status === "done") {
 
       } else if (status === "error") {
-        //if status error, image not added to list upload 
-        setFormDataArtwork({...formDataArtwork , media : media?.filter((item) => item.uid !== info.file.uid)  });
+        // if status error, image not added to list upload 
+        setFormDataArtwork({
+          ...formDataArtwork , 
+          media : formDataArtwork?.media?.filter((item) => item.uid !== info.file.uid) 
+        });
       }
 
       return info;
@@ -45,8 +45,15 @@ useEffect(() => {
       format: (percent) => `${parseFloat(percent.toFixed(2))}%`,
     },
 
+
     onRemove: (file) => {
-        setFormDataArtwork({...formDataArtwork  , media : media?.filter((item) => item.file_key !== (file.file_key ? file?.file_key : file?.originFileObj?.file_key )) });
+        // check file_key ... 
+        //  when we add the image(uploaded image), 'file_key' exist in  '/file.file_key'
+        //  when we get images from backend, 'file_key' exist in '/file.originFileObj.file_key' 
+        setFormDataArtwork({
+          ...formDataArtwork  , 
+          media : formDataArtwork?.media?.filter((item) => item.file_key !== (file.file_key ? file?.file_key : file?.originFileObj?.file_key )) 
+        });
     },
 
     showUploadList: {
@@ -58,7 +65,6 @@ useEffect(() => {
 
     itemRender: (OriginNode, file, fileList, actions) => {
 
-console.log("file &&&&&" , file);
       return [
         OriginNode,
         <div className="default-checkbox-image-upload d-flex justify-content-end ">
@@ -74,20 +80,21 @@ console.log("file &&&&&" , file);
       ];
     },
 
-
-    fileList : formDataArtwork?.media ? formDataArtwork?.media?.map(item => ({...item , name : item?.file_name , exact_url : file?.exact_url })) : []
+    
+    // get media from server(or add media to list) and set 'name' and 'url_image', then show to user
+    fileList :  formDataArtwork?.media?.map(item => ({...item , name : item?.file_name , thumbUrl : item?.exact_url ? item?.exact_url : item?.thumbUrl })) ,
   };
 
 
   // function for set default image between images that uploaded 
   const defaultImageHandler = (e, id) => {
+    // when radio button clicked, 'is_default' attribute of this iamge is true and others is false 
     let newList = formDataArtwork?.media?.map(item => (
         item.file_key === id
         ? { ...item, is_default: true }
         : { ...item, is_default: false }
     ));
 
-    console.log("newList --->>>" , newList);
     setFormDataArtwork( {...formDataArtwork , media : newList});
   };
 
@@ -95,8 +102,8 @@ console.log("file &&&&&" , file);
     <React.Fragment>
       <Dragger
         {...propsUpload}
-            className="upload-list-inline"
-            customRequest={async (e) => {
+        className="upload-list-inline"
+        customRequest={async (e) => {
           const { file, onSuccess, onError } = e;
 
           await axios
@@ -105,29 +112,32 @@ console.log("file &&&&&" , file);
             })
             .then((res) => {
               onSuccess({ status: "success" });
+              
+              file.file_key = res.data.data.result.file_key;
 
-              console.log("file ***" , file);
-              console.log("upload_url ***" , res.data.data.result.upload_url);
-                file.file_key = res.data.data.result.file_key;
-                
+              // create object of data image(and add to list of images) for send to server backend
               let uploadImage;
               uploadImage = {
                 file_key: res.data.data.result.file_key,
                 media_path: res.data.data.result.upload_url,
+                thumbUrl :  URL.createObjectURL(file) ,
                 name : file.name,
                 file_name : file.name,
                 type: "image",
                 bucket_name: "image",
                 is_default: false,
                 uid: file.uid,
+                percent: 100
               };
+
 
               if (res.data.data.result.upload_url && (file?.type.split("/")[0] === "image")) {
 
                 UploadAxios.put(res.data.data.result.upload_url , file)
                   .then((res) => {
-                    // setUploadList([...uploadList, uploadImage]);
-                    setFormDataArtwork({...formDataArtwork, media : [...media , uploadImage]});
+
+                    // when upload done, object of image add to list of media for send to server backend
+                    setFormDataArtwork({...formDataArtwork, media : [...formDataArtwork?.media , uploadImage ]});
                     message.success(` با موفقیت بازگذاری شد.`);
                   })
                   .catch((err) => {
@@ -137,6 +147,7 @@ console.log("file &&&&&" , file);
                   });
 
               } else {
+                onError({ status: "error" });
               }
             })
             .catch((err) => {

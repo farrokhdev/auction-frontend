@@ -145,11 +145,14 @@ function UserPanelArtworkList() {
                                             {
                                                 data && data.length ? data.map((item, i) => <tr>
                                                     <td key={i} className="artwork-img">
-                                                        <div className="image-custom-back" style={{
-                                                            backgroundImage: `url(${item.media.exact_url})`,
+                                                        <div className="image-custom-back" 
+                                                        style={{
+                                                            // backgroundImage: `url(${item.media?.filter(item => item?.is_default === true)[0]?.exact_url})`,
+                                                            backgroundImage: `url(${item.media[0]?.exact_url})`,
                                                             height: "7rem",
                                                             width: "7rem"
-                                                        }}></div>
+                                                        }}
+                                                        ></div>
 
                                                     </td>
                                                     <td>{item?.artwork_title}</td>
