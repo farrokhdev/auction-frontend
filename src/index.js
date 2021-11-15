@@ -5,10 +5,6 @@ import store, {persistor} from '../src/redux/store';
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {PersistGate} from 'redux-persist/integration/react';
-import "./assets/style/Main.scss";
-import "./assets/style/style.scss";
-import "./assets/style/fontawesome-all.min.css";
-import "./i18n";
 
 ReactDOM.render(
   <Suspense fallback={null}>
