@@ -117,7 +117,7 @@ function PanelSideBar(props) {
                     </li>
 
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial/check">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-financial">
                             <i class="fal fa-credit-card"></i>
                             Financial Information
                         </NavLinkRouter>

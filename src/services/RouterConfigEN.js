@@ -8,11 +8,6 @@ import AfterLogin from '../viewsEN/AfterLogin';
 import Auctions from '../viewsEN/Auctions';
 import Artworks from '../viewsEN/Artworks';
 import HouseAuctions from '../viewsEN/HouseAuctions';
-
-import '../assetsEN/styleEN/Custom.scss';
-import '../assetsEN/styleEN/fontawesome-all.min.css';
-import '../assetsEN/styleEN/antd.scss'
-import '../assetsEN/styleEN/Main.scss'
 import SignUp from '../viewsEN/SignUp';
 import Login from '../viewsEN/Login';
 import VerificationCode from '../viewsEN/VerificationCode';
@@ -23,18 +18,17 @@ import PanelProfile from '../viewsEN/PanelProfile';
 import SingleHouseAuctionPage from '../viewsEN/SingleHouseAuctionPage';
 import SingleAuctionPage from '../viewsEN/SingleAuctionPage';
 import SingleArtworkPage from '../viewsEN/SingleArtworkPage';
+import PanelFinancial from '../viewsEN/PanelFinancial'
 import PanelFavorits from '../viewsEN/PanelFavorits';
 import PanelPurchases from '../viewsEN/PanelPurchases';
 import PanelWallet from '../viewsEN/PanelWallet';
 
 
 
-// import "../assetsEN/styleEN/style.scss";
-// import "../i18n";
-// import "../../node_modules/bootstrap/dist/css/bootstrap.css";
-
-
-
+import '../assetsEN/styleEN/Custom.scss';
+import '../assetsEN/styleEN/fontawesome-all.min.css';
+import '../assetsEN/styleEN/antd.scss'
+import '../assetsEN/styleEN/Main.scss'
 const RouterConfigEN = (props) => {
 
 
@@ -55,7 +49,7 @@ const RouterConfigEN = (props) => {
             <HashRouter>
                 <Router history={createHashHistory()}>
                     <Switch>
-               
+
                         <Route exact path="/en/sign-up" component={SignUp} />
                         <Route exact path="/en/login" component={Login} />
                         <Route exact path="/en/verification-code" component={VerificationCode} />
@@ -74,7 +68,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/panel-myPurchases" component={PanelPurchases} />
                         <Route exact path="/en/panel-wallet" component={PanelWallet} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
-                        
+                        <Route exact path="/en/panel-financial" component={PanelFinancial} />
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>
