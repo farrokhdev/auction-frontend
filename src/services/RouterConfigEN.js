@@ -52,10 +52,7 @@ const RouterConfigEN = (props) => {
             <HashRouter>
                 <Router history={createHashHistory()}>
                     <Switch>
-                        {check_Language === 'fa' ?
-                            <Redirect to="/" />
-                            : ""
-                        }
+               
                         <Route exact path="/en/sign-up" component={SignUp} />
                         <Route exact path="/en/login" component={Login} />
                         <Route exact path="/en/verification-code" component={VerificationCode} />
@@ -64,7 +61,6 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/register-set-password" component={RegistersetPassword} />
 
 
-                        <Route exact path="/en" component={AfterLogin} />
                         <Route exact path="/en/auctions" component={Auctions} />
                         <Route exact path="/en/auctions/:id" component={SingleAuctionPage} />
                         <Route exact path="/en/artworks" component={Artworks} />
@@ -72,6 +68,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
                         <Route exact path="/en/panel-profile" component={PanelProfile} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
+                        <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>
             </HashRouter>

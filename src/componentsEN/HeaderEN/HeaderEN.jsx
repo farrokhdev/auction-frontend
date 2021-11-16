@@ -25,7 +25,7 @@ function HeaderEN(props) {
             <header className="mainnav boxshadow-cs" style={props.boxShadow}>
                 <div className=" container containercs">
                     <nav className="navbar navbar-expand-lg">
-                        <Link to="/en" className="navbar-brand">
+                        <Link to="/" className="navbar-brand">
                             <img src={logo} width="156" height="34" alt="auction logo" />
                         </Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -37,7 +37,7 @@ function HeaderEN(props) {
                             <div className="col col-lg-8">
                                 <ul className="navbar-nav mb-2 mb-lg-0" id="mainnav">
                                     <li className="nav-item">
-                                        <Link to="/en" className="nav-link active" aria-current="page" data-target="nav-search"
+                                        <Link to="/" className="nav-link active" aria-current="page" data-target="nav-search"
                                             id="navsearch">
                                             <img src={search} width="16" height="16" alt="Search in auction" />
                                             Search
@@ -65,7 +65,7 @@ function HeaderEN(props) {
                                     </li>
 
                                     <li className="nav-item">
-                                        <Link to="/en" className="nav-link" data-target="nav-help">
+                                        <Link to="/" className="nav-link" data-target="nav-help">
                                             <img src={help} width="16" height="16" alt="auctions" />
                                             Help
                                         </Link>
