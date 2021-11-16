@@ -20,6 +20,9 @@ import Passwordrecovery from '../viewsEN/PasswordRecovery';
 import ConfirmMobileNumber from '../viewsEN/ConfirmMobileNumber';
 import RegistersetPassword from '../viewsEN/RegisterSetPassword/RegisterSetPassword';
 import PanelProfile from '../viewsEN/PanelProfile';
+import SingleHouseAuctionPage from '../viewsEN/SingleHouseAuctionPage';
+import SingleAuctionPage from '../viewsEN/SingleAuctionPage';
+
 
 
 // import "../assetsEN/styleEN/style.scss";
@@ -62,9 +65,11 @@ const RouterConfigEN = (props) => {
 
                         <Route exact path="/en" component={AfterLogin} />
                         <Route exact path="/en/auctions" component={Auctions} />
+                        <Route exact path="/en/auctions/:id" component={SingleAuctionPage} />
                         <Route exact path="/en/artworks" component={Artworks} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
                         <Route exact path="/en/panel-profile" component={PanelProfile} />
+                        <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
                     </Switch>
                 </Router>
             </HashRouter>
