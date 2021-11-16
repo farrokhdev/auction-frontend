@@ -70,13 +70,13 @@
     position: relative !important;
   }
   .ant-tabs-ink-bar{
-    background-color:  var(--darkgray) !important;
+    background-color:  var(--darkgray) ;
     // position: relative !important;
   }
   
   
   .ant-input{
-    background-color: var(--bgcolor) !important; 
+    background-color: var(--bgcolor) ; 
   }
   .ant-card-actions > li > span a:not(.ant-btn):hover, .ant-card-actions > li > span > .anticon:hover {
     color: #e6007e;
