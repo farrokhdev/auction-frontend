@@ -73,7 +73,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-myPurchases">
                             <i class="fal fa-shopping-cart"></i>
                             My purchases
                         </NavLinkRouter>
