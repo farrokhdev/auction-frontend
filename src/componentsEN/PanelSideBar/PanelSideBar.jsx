@@ -67,7 +67,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li> : ""}
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/favorite">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-favorites">
                             <i class="fal fa-heart"></i>
                             Favorites
                         </NavLinkRouter>
