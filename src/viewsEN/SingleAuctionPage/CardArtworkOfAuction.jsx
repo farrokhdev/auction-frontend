@@ -2,47 +2,47 @@ import React from "react";
 
 function CardArtworkOfAuction() {
   return (
-    <div class="artwork-block">
-      <div class="artwork-img">
+    <div className="artwork-block">
+      <div className="artwork-img">
         <img
           src="img/img-6.jpg"
           width="317"
           height="280"
           alt=""
-          class="img-fluid w-100"
+          className="img-fluid w-100"
         />
-        <div class="artwork-category">
-          <span class="category-save artwork-bookmark"></span>
+        <div className="artwork-category">
+          <span className="category-save artwork-bookmark"></span>
         </div>
       </div>
-      <div class="block-body">
-        <div class="ra-row">
-          <div class="ra-col">
-            <h6 class="default gray50 ">Sohrab Sepehri</h6>
-            <h4 class="default">From the Saqakhaneh series</h4>
+      <div className="block-body">
+        <div className="ra-row">
+          <div className="ra-col">
+            <h6 className="default gray50 ">Sohrab Sepehri</h6>
+            <h4 className="default">From the Saqakhaneh series</h4>
           </div>
-          <div class="ra-col">
-            <h5 class="default lot-num">1</h5>
-          </div>
-        </div>
-        <div class="detail-bid">
-          <div class="db-left">
-            <span class="db-title">Estimate</span>
-            <div class="price-block">
-              <span class="price">500-700</span>
-              <span class="unit"> USD</span>
-            </div>
-          </div>
-          <span class="seprator brdrbefor"></span>
-          <div class="db-right ">
-            <span class="db-title">Start bid</span>
-            <div class="price-block">
-              <span class="price">100</span>
-              <span class="unit"> USD</span>
-            </div>
+          <div className="ra-col">
+            <h5 className="default lot-num">1</h5>
           </div>
         </div>
-        <button type="button" class="btn-lightpink">
+        <div className="detail-bid">
+          <div className="db-left">
+            <span className="db-title">Estimate</span>
+            <div className="price-block">
+              <span className="price">500-700</span>
+              <span className="unit"> USD</span>
+            </div>
+          </div>
+          <span className="seprator brdrbefor"></span>
+          <div className="db-right ">
+            <span className="db-title">Start bid</span>
+            <div className="price-block">
+              <span className="price">100</span>
+              <span className="unit"> USD</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" className="btn-lightpink">
           Place bid
         </button>
       </div>

@@ -1,30 +1,30 @@
 import React from "react";
 
-function NavbarTabsInfoAuction() {
+function NavBarDetailSection() {
   return (
     <ul
       className="nav nav-tabs justify-content-star main-tab"
-      id="auction-tab"
+      id="da-tab"
       role="tablist"
     >
       <li className="nav-item" role="presentation">
         <button
           className="nav-link active"
           data-bs-toggle="tab"
-          data-bs-target="#auction1"
+          data-bs-target="#detail-artwork1"
           type="button"
           role="tab"
           aria-controls="catsearch1"
           aria-selected="true"
         >
-          Artworks (100)
+          About artwork
         </button>
       </li>
       <li className="nav-item" role="presentation">
         <button
           className="nav-link"
           data-bs-toggle="tab"
-          data-bs-target="#auction2"
+          data-bs-target="#detail-artwork2"
           type="button"
           role="tab"
           aria-controls="tab2"
@@ -33,8 +33,21 @@ function NavbarTabsInfoAuction() {
           Auction details
         </button>
       </li>
+      <li className="nav-item" role="presentation">
+        <button
+          className="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#detail-artwork3"
+          type="button"
+          role="tab"
+          aria-controls="tab3"
+          aria-selected="false"
+        >
+          Auction terms
+        </button>
+      </li>
     </ul>
   );
 }
 
-export default NavbarTabsInfoAuction;
+export default NavBarDetailSection;

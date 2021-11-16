@@ -20,6 +20,7 @@ import ConfirmMobileNumber from '../viewsEN/ConfirmMobileNumber';
 import RegistersetPassword from '../viewsEN/RegisterSetPassword/RegisterSetPassword';
 import SingleHouseAuctionPage from '../viewsEN/SingleHouseAuctionPage';
 import SingleAuctionPage from '../viewsEN/SingleAuctionPage';
+import SingleArtworkPage from '../viewsEN/SingleArtworkPage';
 
 
 // import "../assetsEN/styleEN/style.scss";
@@ -64,6 +65,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/auctions" component={Auctions} />
                         <Route exact path="/en/auctions/:id" component={SingleAuctionPage} />
                         <Route exact path="/en/artworks" component={Artworks} />
+                        <Route exact path="/en/artworks/:id" component={SingleArtworkPage} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
                     </Switch>

@@ -81,15 +81,15 @@ function SingleAuctionPage(props) {
                 <div className="container innercontainer">
                     <MainTitle title={'Collection7'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
 
-            <div class="w-100 lg-mrgb50 d-lg-none d-block"></div>
-            <div class="col-lg-6 ">
-                <p class="auction-link">More information about this auction, <a href="#">Click here.</a></p>
+            <div className="w-100 lg-mrgb50 d-lg-none d-block"></div>
+            <div className="col-lg-6 ">
+                <p className="auction-link">More information about this auction, <a href="#">Click here.</a></p>
             </div>
        
-        <div class="inner-cover"></div>
-        <div class="flex-row-reverse d-flex over-cover ">
-            <div class="col-xl-4 col-lg-5 col-md-6 col-12">
-                <div class="bg-shadow br-shadow10">
+        <div className="inner-cover"></div>
+        <div className="flex-row-reverse d-flex over-cover ">
+            <div className="col-xl-4 col-lg-5 col-md-6 col-12">
+                <div className="bg-shadow br-shadow10">
 
 
                     <AuctionCardDetailInfo/>
@@ -98,15 +98,15 @@ function SingleAuctionPage(props) {
             </div>
         </div>
 
-        <div class="" >
+        <div className="" >
 
             <NavbarTabsInfoAuction/>
 
-            <div class="tab-content main-tab-content " id="auction-content">
+            <div className="tab-content main-tab-content " id="auction-content">
 
 
                 <div 
-                    class="tab-pane fade show active" 
+                    className="tab-pane fade show active" 
                     id="auction1" 
                     role="tabpanel"
                     aria-labelledby="home-tab">
@@ -116,7 +116,7 @@ function SingleAuctionPage(props) {
 
 
 
-                    <div class="row mrgt30 all-artwork "  >
+                    <div className="row mrgt30 all-artwork "  >
 
                         <div className="col-12 col-md-6 col-lg-4">
                             <CardArtworkOfAuction/>
@@ -158,7 +158,7 @@ function SingleAuctionPage(props) {
 
 
                 <div 
-                    class="tab-pane fade " 
+                    className="tab-pane fade " 
                     id="auction2" 
                     role="tabpanel"
                     aria-labelledby="profile-tab">
