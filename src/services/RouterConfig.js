@@ -76,10 +76,6 @@ const RouterConfig = (props) => {
             <HashRouter>
                 <Router history={createHashHistory()}>
                     <Switch>
-                        {check_Language === 'en' ?
-                            <Redirect to="/en" />
-                            : ""
-                        }
                         
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={Login}/>}*/}
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={AfterLoginPage}/>}*/}

@@ -213,7 +213,7 @@ function Header(props) {
                   <li className="nav-item ">
                     {/* window.location.reload();  */}
 
-                    <Link className="nav-link" to="/en" onClick={() => {
+                    <Link className="nav-link" to="/" onClick={() => {
                       setTimeout(() => {
                         dispatch(changeLanguage('en'))
                         window.location.reload()
