@@ -26,7 +26,7 @@ function ModalPayment(props) {
                                     {/* <h2 class="default titr">Transfer to Paypal</h2> */}
                                     <h2 class="default ">Transfer to Paypal</h2>
                                 </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button onClick={() => setVisibleModalPayment(false)} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                         </div>
                         <div class="modal-body">
