@@ -22,6 +22,7 @@ import RegistersetPassword from '../viewsEN/RegisterSetPassword/RegisterSetPassw
 import PanelProfile from '../viewsEN/PanelProfile';
 import SingleHouseAuctionPage from '../viewsEN/SingleHouseAuctionPage';
 import SingleAuctionPage from '../viewsEN/SingleAuctionPage';
+import SingleArtworkPage from '../viewsEN/SingleArtworkPage';
 
 
 
@@ -67,6 +68,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/auctions" component={Auctions} />
                         <Route exact path="/en/auctions/:id" component={SingleAuctionPage} />
                         <Route exact path="/en/artworks" component={Artworks} />
+                        <Route exact path="/en/artworks/:id" component={SingleArtworkPage} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
                         <Route exact path="/en/panel-profile" component={PanelProfile} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
