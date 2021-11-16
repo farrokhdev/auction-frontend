@@ -67,19 +67,19 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li> : ""}
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/favorite">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-favorites">
                             <i class="fal fa-heart"></i>
                             Favorites
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-myPurchases">
                             <i class="fal fa-shopping-cart"></i>
                             My purchases
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-wallet">
                             <i class="fal fa-wallet"></i>
                             Wallet
                         </NavLinkRouter>

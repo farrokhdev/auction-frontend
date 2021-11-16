@@ -19,6 +19,10 @@ import SingleHouseAuctionPage from '../viewsEN/SingleHouseAuctionPage';
 import SingleAuctionPage from '../viewsEN/SingleAuctionPage';
 import SingleArtworkPage from '../viewsEN/SingleArtworkPage';
 import PanelFinancial from '../viewsEN/PanelFinancial'
+import PanelFavorits from '../viewsEN/PanelFavorits';
+import PanelPurchases from '../viewsEN/PanelPurchases';
+import PanelWallet from '../viewsEN/PanelWallet';
+
 
 
 import '../assetsEN/styleEN/Custom.scss';
@@ -26,7 +30,7 @@ import '../assetsEN/styleEN/fontawesome-all.min.css';
 import '../assetsEN/styleEN/antd.scss'
 import '../assetsEN/styleEN/Main.scss'
 const RouterConfigEN = (props) => {
-    
+
 
     const { check_Language } = useSelector((state) => state.allReducer)
     console.log("Login ->> ", props.auth.is_logged_in)
@@ -45,7 +49,7 @@ const RouterConfigEN = (props) => {
             <HashRouter>
                 <Router history={createHashHistory()}>
                     <Switch>
-               
+
                         <Route exact path="/en/sign-up" component={SignUp} />
                         <Route exact path="/en/login" component={Login} />
                         <Route exact path="/en/verification-code" component={VerificationCode} />
@@ -60,9 +64,11 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/artworks/:id" component={SingleArtworkPage} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
                         <Route exact path="/en/panel-profile" component={PanelProfile} />
+                        <Route exact path="/en/panel-favorites" component={PanelFavorits} />
+                        <Route exact path="/en/panel-myPurchases" component={PanelPurchases} />
+                        <Route exact path="/en/panel-wallet" component={PanelWallet} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
                         <Route exact path="/en/panel-financial" component={PanelFinancial} />
-                        
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>

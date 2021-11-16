@@ -3778,6 +3778,11 @@ input:disabled {
     margin-top: 5px;
 }
 
+.btn-close{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .inner-text-list li {
     position: relative;
     padding-left: 15px;
@@ -6057,5 +6062,9 @@ input[type=number]::-webkit-outer-spin-button {
         flex: 0 0 auto;
         width: 33.3333333333%;
     }
+}
+
+.modal-pyment-mypurchase .ant-modal-body{
+    padding : 0px !important;
 }
 
