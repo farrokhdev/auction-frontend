@@ -140,7 +140,7 @@ function HeaderEN(props) {
                                         </Link>
                                     </li>
                                     <li className="nav-item ">
-                                        <Link className="nav-link" to="/">
+                                        <Link className="nav-link" to="/en/panel-profile">
                                             <img
                                                 src={login}
                                                 // width="30"
