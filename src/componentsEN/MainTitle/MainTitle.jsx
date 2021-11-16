@@ -15,7 +15,7 @@ function MainTitle({handleSetOrdering, handleSetOrderingOld ,title}) {
                     <div className="main-title d-inline-flex">
                         <h2 className="default titr">{title}</h2>
                         <ul className="breadcrumb-cs">
-                            <li><Link to="/en">Homepage</Link></li>
+                            <li><Link to="/">Homepage</Link></li>
                             <li className="active">{title}</li>
                         </ul>
                     </div>
