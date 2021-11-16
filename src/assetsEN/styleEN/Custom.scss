@@ -3650,22 +3650,13 @@ main {
 }
 
 .panel-sidebar {
-    // background-color: var(--darkgray);
-    // width: 280px;
-    // height: calc(100vh - 70px);
-    // padding: 100px 30px 30px 50px;
-    // transition: all 0.5s ease 0s;
-    // position: fixed;
-    // left: 0;
-    // z-index: 100;
-
     background-color: var(--darkgray);
     width: 20.1rem;
-    height: calc(100vh - 4.5rem);
+    height: calc(100vh - 4.4rem);
     padding: 100px 30px 30px 50px;
     transition: all 0.5s ease 0s;
     position: fixed;
-    right: 0;
+    left: 0;
     z-index: 100;
     overflow-y: scroll;
     overflow-x: clip;
@@ -3696,7 +3687,7 @@ main {
 .panel-list li.active a i,
 .panel-list li:hover a i,
 .panel-list li:hover a {
-    color: var(--bs-white);
+    color: var(--bs-white) !important;
 }
 
 .panel-main {
@@ -3706,7 +3697,7 @@ main {
     background-color: var(--bgcolor);
 }
 
-.panel-bodyEN {
+.panel-body {
     width: 100%;
     padding: 30px;
     display: flex;
@@ -5704,7 +5695,7 @@ input[type=number]::-webkit-outer-spin-button {
 
     .panel-head {
         background-color: var(--gray15);
-        padding: 15px;
+        padding: 19.5px;
         margin-left: 0;
         position: fixed;
         z-index: 100;
@@ -5715,7 +5706,7 @@ input[type=number]::-webkit-outer-spin-button {
         height: calc(100vh - 60px);
         margin-left: -280px;
         padding: 30px 15px 30px 50px;
-        margin-top: 60px;
+        margin-top:0px;
     }
 
     .panel-sidebar > a {

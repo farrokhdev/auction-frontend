@@ -12,12 +12,14 @@ import HouseAuctions from '../viewsEN/HouseAuctions';
 import '../assetsEN/styleEN/Custom.scss';
 import '../assetsEN/styleEN/fontawesome-all.min.css';
 import '../assetsEN/styleEN/antd.scss'
+import '../assetsEN/styleEN/Main.scss'
 import SignUp from '../viewsEN/SignUp';
 import Login from '../viewsEN/Login';
 import VerificationCode from '../viewsEN/VerificationCode';
 import Passwordrecovery from '../viewsEN/PasswordRecovery';
 import ConfirmMobileNumber from '../viewsEN/ConfirmMobileNumber';
 import RegistersetPassword from '../viewsEN/RegisterSetPassword/RegisterSetPassword';
+import PanelProfile from '../viewsEN/PanelProfile';
 
 
 // import "../assetsEN/styleEN/style.scss";
@@ -62,6 +64,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/auctions" component={Auctions} />
                         <Route exact path="/en/artworks" component={Artworks} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
+                        <Route exact path="/en/panel-profile" component={PanelProfile} />
                     </Switch>
                 </Router>
             </HashRouter>
