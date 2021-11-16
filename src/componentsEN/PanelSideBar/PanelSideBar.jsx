@@ -79,7 +79,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-wallet">
                             <i class="fal fa-wallet"></i>
                             Wallet
                         </NavLinkRouter>

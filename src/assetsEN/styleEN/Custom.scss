@@ -3778,6 +3778,11 @@ input:disabled {
     margin-top: 5px;
 }
 
+.btn-close{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .inner-text-list li {
     position: relative;
     padding-left: 15px;
