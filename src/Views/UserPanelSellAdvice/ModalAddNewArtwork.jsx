@@ -6,6 +6,7 @@ import {PRE_UPLOAD} from '../../utils/constant';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { failNotification, successNotification } from "../../utils/notification";
+import MultipleUpload from "./MultipleUpload";
 
 const formItemLayout = {
   labelCol: {
@@ -21,12 +22,13 @@ const { Dragger } = Upload;
 function ModalAddNewArtwork({ setVisibleAddNewArtwork, visibleAddNewArtwork }) {
 
   const [form] = Form.useForm();
-  const [image, setImage] = useState({
-      url : '',
-      name : '',
-      key : '',
-      type : '',
-  })
+  const [uploadList, setUploadList] = useState([])
+  // const [image, setImage] = useState({
+  //     url : '',
+  //     name : '',
+  //     key : '',
+  //     type : '',
+  // })
   const [categories, setCategories] = useState()
   const [newArtwork, setNewArtwork] = useState({ category_id : []})
 
@@ -53,13 +55,14 @@ const getListCategory = () => {
         "persian_artist_name": values.persian_artist_name,
         "persian_description": values.persian_description,
         "price": values.price,
-        "media":[ {
-          "media_path": image.url,
-          "bucket_name":image.name,
-          "file_key": image.key,
-          "type": "image",
-          "file_name": image.name,
-        }],
+        "media" : uploadList,
+        // "media":[ {
+        //   "media_path": image.url,
+        //   "bucket_name":image.name,
+        //   "file_key": image.key,
+        //   "type": "image",
+        //   "file_name": image.name,
+        // }],
         "category_id": newArtwork.category_id,
         "offer_home_auction" : "required"
       }
@@ -80,25 +83,25 @@ const getListCategory = () => {
     
   };
 
-  const props = {
-    listType: "picture",
+  // const props = {
+  //   listType: "picture",
 
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
+  //   onChange(info) {
+  //     const { status } = info.file;
+  //     if (status !== "uploading") {
 
-      }
-      if (status === "done" && !!image.url) {
-        // setUploadList([...uploadList , url_image])
-        message.success(`${info.file.name} با موفقیت آپلود شد.`);
-      } else if (status === "error") {
-        message.error(`آپلود ${info.file.name} با خطا مواجه شد.`);
-      }
+  //     }
+  //     if (status === "done" && !!image.url) {
+  //       // setUploadList([...uploadList , url_image])
+  //       message.success(`${info.file.name} با موفقیت آپلود شد.`);
+  //     } else if (status === "error") {
+  //       message.error(`آپلود ${info.file.name} با خطا مواجه شد.`);
+  //     }
 
-    },
+  //   },
     
 
-  };
+  // };
 
 
   // function for set categories id
@@ -130,7 +133,14 @@ const getListCategory = () => {
           <div className="row">
             <div className="col">
               <div className="d-block">
-                <Dragger
+
+
+              <MultipleUpload  
+                uploadList={uploadList} 
+                setUploadList={setUploadList} 
+              />
+
+                {/* <Dragger
                   {...props}
                   maxCount={1}
                 //   onRemove={()=>setUploadList([...uploadList])}
@@ -187,7 +197,10 @@ const getListCategory = () => {
                   <p className="ant-upload-text">
                     تصاویر خود را در اینجا رها کنید
                   </p>
-                </Dragger>
+                </Dragger> */}
+
+
+
               </div>
                 
             {/* ----------- input title of artwork -------------- */}

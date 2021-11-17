@@ -15,7 +15,7 @@ import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import PaginationComponent from '../../components/PaginationComponent';
 import queryString from "query-string";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-
+import {DEFAULT_URL_IMAGE} from '../../utils/defaultImage';
 
 function UserPanelArtworkList() {
     const [loading, setLoading] = useState(false)
@@ -111,6 +111,14 @@ function UserPanelArtworkList() {
     }
 
 
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
     return (
         <>
             <HeaderPanel titlePage={"لیست آثار"} />
@@ -144,11 +152,12 @@ function UserPanelArtworkList() {
 
                                             {
                                                 data && data.length ? data.map((item, i) => <tr>
+
                                                     <td key={i} className="artwork-img">
                                                         <div className="image-custom-back" 
                                                         style={{
                                                             // backgroundImage: `url(${item.media?.filter(item => item?.is_default === true)[0]?.exact_url})`,
-                                                            backgroundImage: `url(${item.media[0]?.exact_url})`,
+                                                            backgroundImage: `url(${ item && handleShowImage(item)})`,
                                                             height: "7rem",
                                                             width: "7rem"
                                                         }}

@@ -6,6 +6,7 @@ import moment from "jalali-moment";
 import { message } from "antd";
 import { convertToEn } from '../../utils/converTypePersion';
 import { Link } from 'react-router-dom';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 function LastProducts() {
 
@@ -105,6 +106,15 @@ function LastProducts() {
         getLastProducts()
     }, [])
 
+
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
     return (
         <React.Fragment>
 
@@ -115,7 +125,7 @@ function LastProducts() {
                         <div className=" w-75" key={key}>
                             <div className="artwork-img">
                                 <Link to={`/artworks/${item.id}`} className="artwork-block ">
-                                    <div className="image-custom-back" style={{ backgroundImage: `url(${item.media.exact_url})`, height: "250px" }}>
+                                    <div className="image-custom-back" style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" }}>
                                     </div>
 
                                 </Link>
