@@ -6064,7 +6064,11 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
-.modal-pyment-mypurchase .ant-modal-body{
+.modal-pyment-mypurchase , .modal-new-ticket , .modal-reply-ticket , .modal-more-details-message , .ant-modal-body{
     padding : 0px !important;
+}
+
+.modal-pyment-mypurchase , .modal-new-ticket , .modal-reply-ticket , .modal-more-details-message , .ant-modal-footer{
+    display: none !important;
 }
 
