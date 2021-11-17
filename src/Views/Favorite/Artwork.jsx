@@ -4,6 +4,7 @@ import {BASE_URL} from "../../utils";
 import {message , Spin} from "antd";
 import moment from "jalali-moment";
 import {Link} from "react-router-dom";
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 
 
@@ -79,6 +80,15 @@ function Artwork() {
 
         }
     }
+
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
     return (
         <>
             <Spin spinning={loading}> 
@@ -94,7 +104,7 @@ function Artwork() {
                                                 
                                                     <div className="artwork-img">
                                                         {/*<img src={item.media.exact_url} width="998" height="880" alt="" className="img-fluid" />*/}
-                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"200px"}}/>
+                                                        <div className="image-custom-back" style={{backgroundImage:`url(${item && handleShowImage(item)})` ,height:"200px"}}/>
                                                         <div className="artwork-category">
 
                                                         <span 

@@ -13,6 +13,7 @@ import moment from "jalali-moment";
 import Timer from "react-compound-timer";
 import numberWithCommas from "../../components/threeNumber";
 import { convertToEn, status, convertTypeEN } from "../../utils/converTypePersion";
+import { DEFAULT_URL_IMAGE } from "../../utils/defaultImage";
 
 function Artworks() {
 
@@ -197,6 +198,14 @@ function Artworks() {
         }
     }
 
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
     return (
         <div style={{ overflow: 'hidden' }}>
             <Header />
@@ -229,7 +238,7 @@ function Artworks() {
                                                 <div className="artwork-img">
                                                     <Link to={`/artworks/${item?.id}`} class="artwork-block">
                                                         <div className="image-custom-back" style={{
-                                                            backgroundImage: `url(${item.media.exact_url})`,
+                                                            backgroundImage: `url(${item && handleShowImage(item)})`,
                                                             height: "270px"
                                                         }}>
                                                         </div>
