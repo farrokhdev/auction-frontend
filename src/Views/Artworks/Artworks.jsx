@@ -350,7 +350,7 @@ function Artworks() {
                                                                 </div> :
                                                                 <div className="price-block">
                                                                     <span>قیمت فعلی:</span>
-                                                                    <span className="price">{numberWithCommas(item?.price)}<span
+                                                                    <span className="price">{numberWithCommas(item?.bidding_details?.max_bid)}<span
                                                                         className="price-unit">تومان</span></span>
                                                                 </div>
                                                             }
