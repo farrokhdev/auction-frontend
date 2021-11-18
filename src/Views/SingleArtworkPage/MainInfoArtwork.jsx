@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Bid from "./bid";
 import Secret from "./secret";
 import { Rate } from 'antd';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
@@ -19,6 +20,16 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
             return null
         }
     }
+
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
+    
     return (
         <div className="row">
             <div className="col-lg-6">
@@ -26,11 +37,22 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                     <div className="carousel-indicators">
                         <button type="button" data-bs-target="#inner-artwork" data-bs-slide-to="0" className="active"
                             aria-current="true" aria-label="Slide 1">
-                            <img src={artwork?.media?.exact_url} width="547" height="547" className="img-fluid d-xl-block" alt="..." />
+                            {/* <img src={ artwork?.media?.exact_url} width="547" height="547" className="img-fluid d-xl-block" alt="..." /> */}
+                            <img src={ artwork?.media && handleShowImage(artwork)} width="547" height="547" className="img-fluid d-xl-block" alt="..." />
                         </button>
                     </div>
                     <div className="carousel-inner">
-                        <div className="carousel-item active">
+
+                        {artwork?.media?.length ? artwork?.media?.map((item , key) => (
+                            <React.Fragment key={key}>
+                                <div className="carousel-item active">
+                                    <img src={item?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
+                                </div>
+                            </React.Fragment>
+                        )) : ''}
+
+
+                        {/* <div className="carousel-item active">
                             <img src={artwork?.media?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
                         </div>
                         <div className="carousel-item ">
@@ -45,7 +67,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
                         <div className="carousel-item ">
                             <img src={artwork?.media?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

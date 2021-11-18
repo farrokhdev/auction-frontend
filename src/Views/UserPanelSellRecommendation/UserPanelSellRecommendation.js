@@ -9,6 +9,7 @@ import 'antd/dist/antd.css';
 import queryString from "query-string";
 import {Link} from "react-router-dom";
 import { isApproved } from '../../utils/converTypePersion';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 function UserPanelSellAdvice() {
     const [Suggestions, setSuggestions] = useState("");
@@ -119,6 +120,14 @@ function UserPanelSellAdvice() {
         })
     }
 
+    const handleShowImage = (item) => {
+        return (
+            (item?.product?.media?.length && item?.product?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.product?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
     const SuggestList = () => {
         return (
             Suggestions && Suggestions.length >= 1 ? Suggestions.map((item, key) => {
@@ -126,7 +135,7 @@ function UserPanelSellAdvice() {
                     <tr key={key}>
                         <td className="artwork-img">
                         <div className="image-custom-back" style={{
-                            backgroundImage: `url(${item.product.media.exact_url})`,
+                            backgroundImage: `url(${item && handleShowImage(item)})`,
                             height: "7rem",
                             width: "7rem"
                         }}>

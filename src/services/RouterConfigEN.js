@@ -34,6 +34,7 @@ import '../assetsEN/styleEN/antd.scss'
 import '../assetsEN/styleEN/Main.scss'
 import UserPanelArtworkList from '../viewsEN/UserPanelArtworkList/UserPanelArtworkList';
 import CreateReminder from '../viewsEN/PanelRemindersPage/CreateReminder';
+import PanelMessages from '../viewsEN/PanelMessages';
 const RouterConfigEN = (props) => {
 
 
@@ -72,6 +73,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/panel-favorites" component={PanelFavorits} />
                         <Route exact path="/en/panel-myPurchases" component={PanelPurchases} />
                         <Route exact path="/en/panel-wallet" component={PanelWallet} />
+                        <Route exact path="/en/panel-messages" component={PanelMessages} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
                         <Route exact path="/en/panel-financial" component={PanelFinancial} />
                         <Route exact path="/en/buyer-register/:id" component={BuyerRegister} />

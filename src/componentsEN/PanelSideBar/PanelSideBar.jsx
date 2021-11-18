@@ -110,7 +110,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li> : ''}
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-messages">
                             <i class="fal fa-envelope"></i>
                             Messages
                         </NavLinkRouter>

@@ -2,7 +2,7 @@ const dev = {
   BASE_URL: "http://192.168.0.182:9002/api",
   // PARAMS:
   COOKIE_EXPIRES: 1,
-  WEB_SOCKET_BASE_URL: "ws://api.beta.smartauctionhouse.com/ws",
+  WEB_SOCKET_BASE_URL: "ws://192.168.0.182:9002",
 };
 
 const test = {

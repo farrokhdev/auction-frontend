@@ -15,6 +15,7 @@ import ModalAddNewArtwork from './ModalAddNewArtwork';
 import 'antd/dist/antd.css';
 import { isApproved } from '../../utils/converTypePersion';
 import PaginationComponent from '../../components/PaginationComponent';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 function UserPanelSellAdvice() {
     const [Products, setProducts] = useState("");
@@ -111,6 +112,14 @@ function UserPanelSellAdvice() {
         })
     }
 
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
+
     const ProducList = () => {
         return (
             Products && Products.length >= 1 ? Products.map((item, key) => {
@@ -119,7 +128,7 @@ function UserPanelSellAdvice() {
                         <td className="artwork-img">
 
                         <div className="image-custom-back" style={{
-                            backgroundImage: `url(${item.media.exact_url})`,
+                            backgroundImage: `url(${item && handleShowImage(item)})`,
                             height: "7rem",
                             width: "7rem"
                         }}>

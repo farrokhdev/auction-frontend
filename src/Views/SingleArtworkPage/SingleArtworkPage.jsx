@@ -28,7 +28,6 @@ function SigningContract(props) {
         getRate();
     }, [params , props.match.params.id])
 
-    console.log("artwork==>>" , artwork)
     const getProduct = ()=>{
         setLoading(true)
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}`).then(res => {
