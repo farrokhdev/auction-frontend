@@ -1,5 +1,5 @@
 import React , {useState , useEffect} from 'react';
-import HeaderPanel from '../../componentsEN/HeaderPanel.jsx';
+import HeaderPanel from '../../componentsEN/HeaderPanel/index.js';
 import PanelSideBar from '../../componentsEN/PanelSideBar/PanelSideBar.jsx';
 import { Spin } from "antd";
 import {bankList} from './banks';

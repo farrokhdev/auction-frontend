@@ -91,14 +91,14 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-artwork-list" >
                             <i class="fal fa-wallet"></i>
                             Sell list artwork
                         </NavLinkRouter>
                     </li>
 
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-reminders" >
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-reminders" >
                             <i class="fal fa-bell"></i>
                             Reminders
                         </NavLinkRouter>
