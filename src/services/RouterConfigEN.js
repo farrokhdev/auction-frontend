@@ -22,6 +22,9 @@ import PanelFinancial from '../viewsEN/PanelFinancial'
 import PanelFavorits from '../viewsEN/PanelFavorits';
 import PanelPurchases from '../viewsEN/PanelPurchases';
 import PanelWallet from '../viewsEN/PanelWallet';
+import BuyerRegister from '../viewsEN/BuyerRegister';
+import PanelRemindersPage from '../viewsEN/PanelRemindersPage'
+import EditReminder from '../viewsEN/PanelRemindersPage/EditReminder';
 
 
 
@@ -29,6 +32,8 @@ import '../assetsEN/styleEN/Custom.scss';
 import '../assetsEN/styleEN/fontawesome-all.min.css';
 import '../assetsEN/styleEN/antd.scss'
 import '../assetsEN/styleEN/Main.scss'
+import UserPanelArtworkList from '../viewsEN/UserPanelArtworkList/UserPanelArtworkList';
+import CreateReminder from '../viewsEN/PanelRemindersPage/CreateReminder';
 const RouterConfigEN = (props) => {
 
 
@@ -69,6 +74,11 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/panel-wallet" component={PanelWallet} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
                         <Route exact path="/en/panel-financial" component={PanelFinancial} />
+                        <Route exact path="/en/buyer-register/:id" component={BuyerRegister} />
+                        <Route exact path="/en/panel-artwork-list" component={UserPanelArtworkList} />
+                        <Route exact path="/en/panel-reminders" component={PanelRemindersPage} />
+                        <Route exact path="/en/create-reminder" component={CreateReminder} />
+                        <Route exact path="/en/edit-reminder/:id" component={EditReminder} />
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>
