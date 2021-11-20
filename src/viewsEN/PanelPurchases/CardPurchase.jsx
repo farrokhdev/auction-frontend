@@ -56,10 +56,7 @@ function CardPurchase(props) {
                 Pay now
               </button>
 
-              <ModalPayment 
-                setVisibleModalPayment={setVisibleModalPayment}
-                visibleModalPayment={visibleModalPayment}
-            />
+          
             </div>
           </div>
         </div>
