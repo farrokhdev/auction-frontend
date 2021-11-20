@@ -236,6 +236,31 @@ export function isApproved(value) {
     }
 }
 
+export function isApprovedEN(value) {
+    switch (value) {
+        case "waiting":
+            return {
+                title: "Pending	",
+                css: "pending"
+            }
+        case "accept":
+            return {
+                title: "accepted",
+                css: "accepted"
+            }
+        case "reject":
+            return {
+                title: "failed",
+                css: "failed"
+            }
+        default:
+            return {
+                title: "",
+                css: ""
+            }
+    }
+}
+
 export function isAwaitingApproval(value) {
     switch (value) {
         case null:
