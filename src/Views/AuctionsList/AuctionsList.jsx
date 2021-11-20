@@ -14,17 +14,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeAUCTION, setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import { DELETE_AUCTION, EDIT_AUCTION } from "../../utils/constant";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
+import queryString from "query-string";
+import PaginationComponent from "../../components/PaginationComponent";
 
 function AuctionsList() {
+    const { role, id } = useSelector((state) => state.profileReducer)
 
     const [Auctions, setAuctions] = useState("");
-    const [pageSize, setPageSize] = useState(30);
-    const [bidsCount, setBidsCount] = useState(0);
+    const [productsCount, setProductsCount] = useState(0);
     const [bids, setBids] = useState("");
+    const [params, setParams] = useState({
+        page : 1 , 
+        page_size : 10 , 
+        home_auction : id , 
+    })
     const [loading, setLoading] = useState(false);
     const { confirm } = Modal;
     const dispatch = useDispatch();
-    const { role, id } = useSelector((state) => state.profileReducer)
     function showDeleteConfirm(id) {
 
         confirm({
@@ -59,14 +65,22 @@ function AuctionsList() {
         });
     }
 
+    const handeSelectPage = (e) => {
+        setParams({
+            ...params, page: e
+        })
+    }
 
-    const getProducts = (page_size = pageSize) => {
+    const getProducts = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/auctions/?home_auction=${id}&page_size=${page_size}`)
+        const queries = queryString.stringify(params);
+        // axios.get(`${BASE_URL}/sale/auctions/?home_auction=${id}&page_size=${page_size}`)
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
                     setAuctions(resp.data.data.result)
+                    setProductsCount(resp.data.data.count)
                 }
 
             })
@@ -88,17 +102,13 @@ function AuctionsList() {
             })
     }
 
-    // useEffect(() => {
-    //     getProducts()
-    //
-    // }, [])
+
     useEffect(() => {
-        // setSelectProduct([])
         if (id)
             getProducts()
         if (!id)
             dispatch(getProfile())
-    }, [])
+    }, [params])
 
     function AuctionType(type) {
 
@@ -212,6 +222,8 @@ function AuctionsList() {
                                     </table>
                                     {(Auctions && Auctions.length < 1) ? <p className="text-center ">شما تا به حال حراجی ثبت نکرده اید</p> : ''}
                                 </div>
+
+                                <PaginationComponent count={productsCount} handeSelectPage={handeSelectPage} />
 
                             </div>
                         </Spin>
