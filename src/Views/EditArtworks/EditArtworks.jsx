@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect} from 'react'
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import HeaderPanel from '../../components/HeaderPanel';
@@ -42,48 +42,6 @@ function EditArtworks(props) {
     }
 
 
-    // const handleUpload = (e) => {
-    //     let payload = { "content_type": "image" }
-    //     axios.post(`${BASE_URL}/core/upload/`, payload)
-    //         .then(resp => {
-    //             if (resp.data.code === 200) {
-    //                 setCoreUpload(resp.data.data.result)
-    //                 setUploading(true)
-    //                 axios.put(resp.data.data.result.upload_url, e.target.files[0])
-    //                     .then(resp1 => {
-    //                         if (resp1.status === 200) {
-    //                             axios.post(`${BASE_URL}/core/media/photos/`, {
-    //                                 "media_path": resp.data.data.result.upload_url,
-    //                                 "type": "image",
-    //                                 "bucket_name": "image",
-    //                                 "file_key": resp.data.data.result.file_key
-    //                             })
-    //                                 .then(resp2 => {
-    //                                     if (resp2.data.code === 201) {
-    //                                         setCoreUpload(resp2.data.data.result)
-    //                                         setUploaded(true)
-    //                                         setUploading(false)
-    //                                         console.log(resp2.data.data.result)
-    //                                     }
-    //                                 })
-    //                                 .catch(err => {
-    //                                     console.log("Error Message", err.response);
-    //                                     setUploading(false)
-    //                                 })
-    //                         }
-    //                     })
-    //                     .catch(err => {
-    //                         console.error(err.response);
-    //                         setUploading(false)
-    //                     })
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log("Error Message", err.response);
-    //         })
-
-    // }
-
 
     let handleFormSubmit = () => {
         let payload = {
@@ -112,6 +70,11 @@ function EditArtworks(props) {
                     message.success('اثر با موفقیت ویرایش شد.');
                     setPosting(false)
                     // window.location.href = "#/panel-artwork-list"
+                    
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1200);
+
                 } else {
                     message.error(resp.data.data.error_message);
                 }
@@ -170,34 +133,10 @@ function EditArtworks(props) {
 
                         <div className="col-xxxxl-8">
 
-
-                        {formDataArtwork?.media?.length && 
                             <MultipleUpload  
                                 formDataArtwork={formDataArtwork}
                                 setFormDataArtwork={setFormDataArtwork} 
                             /> 
-                       } 
-
-                            {/* <div className="d-flex mb-3">
-                                <label htmlFor={"file"} className="btn-outline-pink">
-                                    انتخاب تصویر
-                                </label>
-
-                                {Uploading ? <span style={{ marginRight: 5 }}> درحال آپلود </span> : ""}
-                                {Uploaded ?
-
-                                    // <img className="image-custom-back" style={{ backgroundImage: `url(${productInfo?.media?.exact_url})`, height: "3rem", width: "7rem" }} />
-                                    <CheckCircleTwoTone style={{ marginRight: 5 }} twoToneColor="#52c41a" />
-                                    : ""}
-
-                                <input
-                                    onChange={(e) => handleUpload(e)}
-                                    id={'file'} type="file" accept=".jpg, .jpeg, .png" style={{ display: "none" }}
-                                    defaultValue={productInfo?.media?.exact_url}
-                                />
-
-                            </div> */}
-                            {/* <img className="image-custom-back" style={{ backgroundImage: `url(${productInfo?.media?.exact_url})`, height: "5rem", width: "7rem" }} /> */}
 
                             <div className="row addartwork mt-5">
                                 <div className="col-md-6">
