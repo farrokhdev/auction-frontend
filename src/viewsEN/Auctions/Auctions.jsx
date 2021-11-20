@@ -7,8 +7,9 @@ import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../
 import moment from 'jalali-moment';
 import pic6 from '../../imgEN/pic6.jpg';
 import PaginationComponent from '../../componentsEN/PaginationComponent';
+import { Link } from 'react-router-dom';
 
-function Auctions() {
+function Auctions(props) {
 
     const [Tags, setTags] = useState([])
     const [Auctions, setAuctions] = useState([1, 2, 3, 4]);
@@ -162,10 +163,10 @@ function Auctions() {
     return (
         <>
             <HeaderEN />
-            <main class="innercontent" id="all-auctions">
-                <div class="container innercontainer">
+            <main className="innercontent" id="all-auctions">
+                <div className="container innercontainer">
                     <MainTitle title={'Auctions'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
-                    <div class="row">
+                    <div className="row">
                         <SideBar
                             params={params}
                             setParams={setParams}
@@ -183,61 +184,64 @@ function Auctions() {
                             handleSetDateEN={handleSetDateEN}
                         //    typeCategory="خانه های حراج" 
                         />
-                        <div class="col-lg-9">
+                        <div className="col-lg-9">
                             {Auctions && Auctions.length >= 1 ? Auctions.map((item, key) => {
                                 return (
-                                    <div class="row-blocks">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <a href="#" class="bg-shadow tl-shadow10">
+                                    <div className="row-blocks">
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Link to="/" className="bg-shadow tl-shadow10">
                                                     <img src={pic6} width="500" height="500" alt="" />
-                                                </a>
+                                                </Link>
                                             </div>
-                                            <div class="col-md-8">
-                                                <div class="block-head row">
-                                                    <div class="col-xl-3 col-sm-4 col-3">
-                                                        <span class="category-icon live-icon">Live<span class="d-none d-md-inline-block">Auction</span></span>
+                                            <div className="col-md-8">
+                                                <div className="block-head row">
+                                                    <div className="col-xl-3 col-sm-4 col-3">
+                                                        <span className="category-icon live-icon">Live<span className="d-none d-md-inline-block">Auction</span></span>
                                                     </div>
-                                                    <div class="col-xl-9 col-sm-8 col-9 textalign-right">
-                                                        <span class="reminder-icon">Reminde me</span>
-                                                        <button type="button" class="link-source">
+                                                    <div className="col-xl-9 col-sm-8 col-9 textalign-right">
+                                                        <span className="reminder-icon">Reminde me</span>
+                                                        <button type="button" className="link-source">
                                                             <span><span
-                                                                class="d-none d-sm-inline-block">View </span>artworks (<span>25</span>)</span>
+                                                                className="d-none d-sm-inline-block">View </span>artworks (<span>25</span>)</span>
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div class="block-main">
-                                                    <a href="#">
-                                                        <h5 class="default">Live online only Mid Century Modern, Decorative Arts and
+                                                <div className="block-main">
+                                                    <Link to="/">
+                                                        <h5 className="default">Live online only Mid Century Modern, Decorative Arts and
                                                             Pictures
                                                             Antiques, Books </h5>
-                                                    </a>
-                                                    <div class="block-detail">
-                                                        <h6 class="default">Contemprory art</h6>
-                                                        <a href="#" class="default">
-                                                            <h6 class="default gray50">Arthibition gallery</h6>
-                                                        </a>
+                                                    </Link>
+                                                    <div className="block-detail">
+                                                        <h6 className="default">Contemprory art</h6>
+                                                        <Link to="/" className="default">
+                                                            <h6 className="default gray50">Arthibition gallery</h6>
+                                                        </Link>
                                                     </div>
                                                 </div>
-                                                <div class="block-footer row">
-                                                    <div class="col-sm-5">
-                                                        <div class="jumbotron countdown show end date-show"
+                                                <div className="block-footer row">
+                                                    <div className="col-sm-5">
+                                                        <div className="jumbotron countdown show end date-show"
                                                             data-Date='2021/5/13 16:09:00'>
-                                                            <div class="running">
+                                                            <div className="running">
                                                                 <timer>
-                                                                    <span class="days">13</span>:12<span class="hours"></span>:21<span
-                                                                        class="minutes"></span><span class="show-text"></span>
+                                                                    <span className="days">13</span>:12<span className="hours"></span>:21<span
+                                                                        className="minutes"></span><span className="show-text"></span>
                                                                 </timer>
-                                                                <div class="break"></div>
+                                                                <div className="break"></div>
                                                             </div>
-                                                            <div class="ended">
-                                                                <div class="text">Offer is ended</div>
+                                                            <div className="ended">
+                                                                <div className="text">Offer is ended</div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-7 textalign-right">
-                                                        <button type="button" class="btn btn-gray view me-2">View live</button>
-                                                        <button type="button" class="btn btn-main join">Join this auction</button>
+                                                    <div className="col-sm-7 textalign-right">
+                                                        <button type="button" className="btn btn-gray view me-2">View live</button>
+
+                                                        <Link to={`/en/buyer-register/${Auctions?.id}`}>
+                                                        <button type="button" className="btn btn-main join">Join this auction</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>

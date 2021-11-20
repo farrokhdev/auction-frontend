@@ -657,13 +657,13 @@ function OneAuction(props) {
                             <span>تاریخ و ساعت شروع  :</span>
                             <span>
 
-                                {Auction && Auction?.gallery_start_date !== 'None' ? moment(Auction?.gallery_start_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
+                                {(Auction && !!Auction?.gallery_start_date  &&  Auction?.gallery_start_date !== 'None' ) ? moment(Auction?.gallery_start_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
                          </span>
 
                         </address>
                         <address >
                             <span>تاریخ و ساعت پایان  :</span>
-                            {Auction && Auction?.gallery_end_date !== 'None' ? moment(Auction?.gallery_end_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
+                            {(Auction && !!Auction?.gallery_start_date  && Auction?.gallery_end_date !== 'None') ? moment(Auction?.gallery_end_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
                         </address>
                     </div>
                 </Modal>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HeaderPanel from '../../componentsEN/HeaderPanel.jsx';
+import HeaderPanel from '../../componentsEN/HeaderPanel/index.js';
 import PanelSideBar from '../../componentsEN/PanelSideBar/PanelSideBar.jsx';
 import { message, Tabs } from 'antd';
 import EditPanelProfile from './EditPanelProfile';

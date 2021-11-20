@@ -7,6 +7,7 @@ import CardArtwork from './CardArtwork';
 import axios from "../../utils/request";
 import {BASE_URL} from '../../utils';
 import {Link} from "react-router-dom";
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 function LastAuctionsSection(props) {
     
@@ -73,7 +74,13 @@ function LastAuctionsSection(props) {
         ]
     };
 
-
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
 
     return (<>
         {id &&
@@ -97,7 +104,7 @@ function LastAuctionsSection(props) {
                                 <div className="px-3" key={item?.id}>
                                     <Link to={`/artworks/${item?.id}`}>
                                         <CardArtwork
-                                            url={item?.media?.exact_url}
+                                            url={item && handleShowImage(item)}
                                             price_base={item?.price}
                                             price_range={item?.min_price + " - " + item?.max_price}
                                             house_auction={item?.latest_auction.title}

@@ -27,15 +27,18 @@ const Bid = ({ artwork }) => {
             };
             client.onmessage = (message) => {
                 console.log(message);
-                if (message?.data?.length > 4) {
-                    let messageArray = message.data.slice(2, message.data.length - 2).split(',');
-                    let priceFinal = Math.floor(messageArray[3]);
+
+                if (message?.data?.length >= 1) {
+                    // let messageArray = message.data.slice(2, message.data.length - 2).split(',');
+                    let artworkData = JSON.parse(message.data).filter(obj => {
+                        return obj.product_id === artwork?.id
+                    })[0]
+                    let priceFinal = Math.floor(artworkData.last_price);
                     setCurrentVPrice(priceFinal);
                     setCurrentValue(priceFinal)
-                    setCurrentSuggest(Math.floor(messageArray[2]))
+                    setCurrentSuggest(Math.floor(artworkData.bid_count))
                     form.setFieldsValue({ price: 0 })
                 }
-
             };
             client.onclose = (event) => {
                 console.log('The connection has been closed successfully.', event);
