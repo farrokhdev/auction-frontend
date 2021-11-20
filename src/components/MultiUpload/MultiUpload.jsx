@@ -78,7 +78,6 @@ function MultipleUpload({uploadList , setUploadList }) {
   };
 
 
-  console.log("uploadList ---->>>" , uploadList);
 
   return (
     <React.Fragment>

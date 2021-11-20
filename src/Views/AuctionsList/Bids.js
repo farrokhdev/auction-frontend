@@ -9,25 +9,28 @@ import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
 import {Link} from "react-router-dom";
 import {Spin} from "antd";
+import queryString from "query-string";
+import PaginationComponent from "../../components/PaginationComponent";
 
 function AuctionsBids(props) {
     const [bidsCount, setBidsCount] = useState(0);
     const [bids, setBids] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [params, setParams] = useState({
+        page : 1 , 
+        page_size : 10 , 
+        auction : props.match.params.id
+    })
 
-    // console.log("bids===>>>" , bids)
     const getBids = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/bidding/?auction=${props.match.params.id}`)
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}/bidding/?${queries}`)
             .then(resp => {
                 console.log(resp)
-                // if (resp.status === 200) {
                     setLoading(false)
                     setBids(resp.data.data.result)
-                    setBidsCount(resp.data.count)
-                    console.log("resp.data.data.results===>>>" , resp.data.data.result)
-                // }
-
+                    setBidsCount(resp.data.data.count)
             })
             .catch(err => {
                 console.error(err.response);
@@ -38,8 +41,14 @@ function AuctionsBids(props) {
     useEffect(() => {
         getBids()
 
-    }, [])
+    }, [params])
 
+
+    const handeSelectPage = (e) => {
+        setParams({
+            ...params, page: e
+        })
+    }
 
     return (
         <div>
@@ -76,11 +85,16 @@ function AuctionsBids(props) {
                                     </div>
                                 )
                             }) : ""}
+
+
+                                <PaginationComponent count={bidsCount} handeSelectPage={handeSelectPage} />
                         </div>
                     </div>
                 </div>
                 {/**Main**/}
 
+
+                
             </Spin>
 
         </div>
