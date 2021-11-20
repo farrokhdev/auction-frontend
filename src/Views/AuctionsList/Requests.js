@@ -7,16 +7,25 @@ import {Link} from "react-router-dom";
 import {Spin, Modal, Row, Col, message, Button} from "antd";
 import {faTimes, faEdit, faPlus, faCheck} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PaginationComponent from "../../components/PaginationComponent";
+import queryString from "query-string";
+
 function AuctionsRequests(props) {
     const [RequestsCount, setRequestsCount] = useState(0);
     const [Requests, setRequests] = useState("");
     const [Details, setDetails] = useState("");
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [params, setParams] = useState({
+        page : 1 , 
+        page_size : 10 , 
+        sale__id : props.match.params.id
+    })
 
-    const getBids = () => {
-        setLoading(true)
-        axios.get(`${BASE_URL}/sale/join-auction?sale__id=${props.match.params.id}`)
+    const getRequests = () => {
+        setLoading(true);
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}/sale/join-auction/?${queries}`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setLoading(false)
@@ -50,10 +59,15 @@ function AuctionsRequests(props) {
     }
 
     useEffect(() => {
-        getBids()
+        getRequests()
+    }, [params])
 
-    }, [])
 
+    const handeSelectPage = (e) => {
+        setParams({
+            ...params, page: e
+        })
+    }
 
     return (
         <div>
@@ -94,7 +108,10 @@ function AuctionsRequests(props) {
                                     </div>
                                 )
                             }) : ""}
+
+                            <PaginationComponent count={RequestsCount} handeSelectPage={handeSelectPage} />
                         </div>
+
                     </div>
                 </div>
                 {/**Main**/}
@@ -111,7 +128,7 @@ function AuctionsRequests(props) {
             //     axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
             //         console.log(res.data);
             //         setLoading(false)
-            //         getBids()
+            //         getRequests()
             //         setIsModalVisible(false);
             //         message.success("کاربر تایید شد")
             //
@@ -132,7 +149,7 @@ function AuctionsRequests(props) {
             //             console.log(res.data);
             //             setLoading(false)
             //             message.success("کاربر رد شد")
-            //             getBids()
+            //             getRequests()
             //             setIsModalVisible(false);
             //
             //         }).catch(err => {
@@ -153,7 +170,7 @@ function AuctionsRequests(props) {
                         axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
                             console.log(res.data);
                             setLoading(false)
-                            getBids()
+                            getRequests()
                             setIsModalVisible(false);
                             message.success("کاربر تایید شد")
 
@@ -175,7 +192,7 @@ function AuctionsRequests(props) {
                             console.log(res.data);
                             setLoading(false)
                             message.success("کاربر رد شد")
-                            getBids()
+                            getRequests()
                             setIsModalVisible(false);
 
                         }).catch(err => {
