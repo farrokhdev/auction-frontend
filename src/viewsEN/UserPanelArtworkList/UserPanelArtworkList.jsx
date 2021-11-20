@@ -50,12 +50,12 @@ function UserPanelArtworkList() {
                 <PanelSidebar />
                 <div className="panel-body">
                     <div className="panel-container">
-                        {/* {role === "home_auction" ?
-                            <Link to="/add-artworks">
+                        {role === "home_auction" ?
+                            <Link to="/en/add-artworks">
                                 <button type="button" className="btn btn-default" data-bs-toggle="modal"
                                     data-bs-target="#new-ticket"><FontAwesomeIcon icon={faPlus} /> Add artwork
                                 </button>
-                            </Link> : ''} */}
+                            </Link> : ''}
 
                         <Spin spinning={loading}>
                             <div className="mrgt30">

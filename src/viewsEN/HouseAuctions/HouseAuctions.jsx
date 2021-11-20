@@ -5,6 +5,7 @@ import MainTitle from '../../componentsEN/MainTitle/MainTitle';
 import SiderHouseAucitons from './SiderHouseAucitons';
 import logo from "../../imgEN/logo-1.jpg"
 import PaginationComponent from '../../componentsEN/PaginationComponent';
+import { Link } from 'react-router-dom';
 
 function HouseAuctions() {
 
@@ -101,8 +102,10 @@ function HouseAuctions() {
                                                 <div className="row">
                                                     <div className="col-xl-5 col-3">
                                                         <div className="h-block-img">
+                                                            <Link to={`/en/house-auctions/${house.id}`}>
                                                             <img src={logo} width="159" height="159" alt="smart auction"
                                                                 className="img-fluid" />
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                     <div className="col-xl-7 col-9">

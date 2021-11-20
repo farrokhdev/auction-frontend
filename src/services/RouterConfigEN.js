@@ -37,6 +37,7 @@ import CreateReminder from '../viewsEN/PanelRemindersPage/CreateReminder';
 import PanelMessages from '../viewsEN/PanelMessages';
 import UserPanelSellRecommendation from '../viewsEN/UserPanelSellRecommendation';
 import UserPanelSellAdvice from '../viewsEN/UserPanelSellAdvice';
+import AddArtWorks from '../viewsEN/AddArtWorks';
 const RouterConfigEN = (props) => {
 
 
@@ -85,6 +86,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/edit-reminder/:id" component={EditReminder} />
                         <Route exact path="/en/panel-sell-recommendation" component={UserPanelSellRecommendation} />
                         <Route exact path="/en/panel-sell-advice" component={UserPanelSellAdvice} />
+                        <Route exact path="/en/add-artworks" component={AddArtWorks} />
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>
