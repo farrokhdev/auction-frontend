@@ -2,6 +2,7 @@ import React , {useState} from "react";
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSideBar from "../../componentsEN/PanelSideBar/PanelSideBar";
 import CardPurchase from "./CardPurchase";
+import ModalPayment from "./ModalPayment";
 
 function PanelPurchases() {
 
@@ -30,7 +31,10 @@ function PanelPurchases() {
                         
                     ))}
 
- 
+                  <ModalPayment 
+                      setVisibleModalPayment={setVisibleModalPayment}
+                      visibleModalPayment={visibleModalPayment}
+                  />
 
                 </div>
               </div>
