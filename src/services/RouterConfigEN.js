@@ -35,6 +35,8 @@ import '../assetsEN/styleEN/Main.scss'
 import UserPanelArtworkList from '../viewsEN/UserPanelArtworkList/UserPanelArtworkList';
 import CreateReminder from '../viewsEN/PanelRemindersPage/CreateReminder';
 import PanelMessages from '../viewsEN/PanelMessages';
+import UserPanelSellRecommendation from '../viewsEN/UserPanelSellRecommendation';
+import UserPanelSellAdvice from '../viewsEN/UserPanelSellAdvice';
 const RouterConfigEN = (props) => {
 
 
@@ -81,6 +83,8 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/panel-reminders" component={PanelRemindersPage} />
                         <Route exact path="/en/create-reminder" component={CreateReminder} />
                         <Route exact path="/en/edit-reminder/:id" component={EditReminder} />
+                        <Route exact path="/en/panel-sell-recommendation" component={UserPanelSellRecommendation} />
+                        <Route exact path="/en/panel-sell-advice" component={UserPanelSellAdvice} />
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>

@@ -85,7 +85,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-advice">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-sell-advice">
                             <i class="fal fa-wallet"></i>
                             Sell advice
                         </NavLinkRouter>
@@ -104,7 +104,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li>
                     {role === "home_auction" || role === "admin" ? <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-sell-recommendation">
                             <i class="fal fa-comment-alt-smile"></i>
                             Sell reommendation
                         </NavLinkRouter>
