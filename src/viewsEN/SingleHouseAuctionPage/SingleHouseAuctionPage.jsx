@@ -2,7 +2,7 @@ import React, { useState , useEffect} from 'react';
 import HeaderEN from '../../componentsEN/HeaderEN';
 import Footer from '../../componentsEN/Footer';
 import MainTitle from '../../componentsEN/MainTitle/MainTitle';
-import logo from "../../imgEN/logo-1.jpg"
+import logo3 from "../../imgEN/logo-3.png"
 import PaginationComponent from '../../componentsEN/PaginationComponent';
 import CardHouseAuction from './CardHouseAuction';
 import queryString from 'query-string';
@@ -81,7 +81,7 @@ function SingleHouseAuctionPage(props) {
                             <div className="ah-block">
                                 <div className="ah-block-info logo">
                                     <div className="bg-shadow tl-shadow10">
-                                        <img src="img/logo-3.png" width="159" height="159" alt="arthibition gallery"/>
+                                        <img src={logo3} width="159" height="159" alt="arthibition gallery"/>
                                     </div>
                                 </div>
                                 <div className="ah-block-info ">

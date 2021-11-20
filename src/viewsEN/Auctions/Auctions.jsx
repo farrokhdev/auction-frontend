@@ -190,7 +190,7 @@ function Auctions(props) {
                                     <div className="row-blocks">
                                         <div className="row">
                                             <div className="col-md-4">
-                                                <Link to="/" className="bg-shadow tl-shadow10">
+                                                <Link to={`/en/auctions/${item.id}`} className="bg-shadow tl-shadow10">
                                                     <img src={pic6} width="500" height="500" alt="" />
                                                 </Link>
                                             </div>

@@ -3,7 +3,7 @@ import logo from "../../imgEN/logo.svg";
 import search from "../../imgEN/search.svg";
 import auction from "../../imgEN/auction.svg";
 import help from "../../imgEN/help.svg";
-import login from "../../imgEN/login-active.png";
+import login from "../../imgEN/login.svg";
 import Search from "./Search";
 import house from "../../imgEN/location-icon.svg";
 import artwork from "../../imgEN/artist-icon.svg";

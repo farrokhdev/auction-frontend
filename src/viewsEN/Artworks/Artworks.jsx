@@ -188,7 +188,7 @@ function Artworks() {
                                 {Products && Products.length >= 1 ? Products.map((item, key) => {
                                     return (
                                         <div className="col">
-                                            <Link to="/" className="artwork-block">
+                                            <Link to={`/en/artworks/${item.id}`} className="artwork-block">
                                                 <div className="artwork-img">
                                                     <img src={pic2} width="998" height="880" alt="" className="img-fluid" />
                                                     <div className="artwork-category">
