@@ -6068,7 +6068,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding : 0px !important;
 }
 
-.modal-pyment-mypurchase , .modal-new-ticket , .modal-reply-ticket , .modal-more-details-message , .ant-modal-footer{
+.modal-pyment-mypurchase .ant-modal-footer , .modal-new-ticket .ant-modal-footer, .modal-reply-ticket .ant-modal-footer , .modal-more-details-message .ant-modal-footer{
     display: none !important;
 }
 

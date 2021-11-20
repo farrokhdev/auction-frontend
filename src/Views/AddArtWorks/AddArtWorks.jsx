@@ -6,6 +6,7 @@ import { message } from 'antd';
 import 'antd/dist/antd.css';
 import HeaderPanel from "../../components/HeaderPanel";
 import PanelSidebar from "../../components/PanelSidebar";
+import MultipleUpload from "../../components/MultiUpload/MultiUpload";
 
 
 function 
@@ -31,6 +32,7 @@ AddArtWorks(props) {
     const [Technique, setTechnique] = useState("");
     const [DescriptionFa, setDescriptionFa] = useState("");
     const [Link, setLink] = useState("");
+    const [uploadList, setUploadList] = useState([])
 
     useEffect(() => {
         axios.get(`${BASE_URL}/sale/category/`)
@@ -115,12 +117,7 @@ AddArtWorks(props) {
             "category_id": [Category],
             "persion_description": DescriptionFa,
             "english_description": "fasdf",
-            "media":[ {
-                "media_path": Uploaded ? CoreUpload.upload_url : "",
-                "type": "image",
-                "bucket_name": "image",
-                "file_key": Uploaded ? CoreUpload.file_key : ""
-            }],
+            "media" : uploadList,
             "artwork_link" : Link,
             "min_price":MinPrice,
             "max_price": MaxPrice,
@@ -156,17 +153,12 @@ AddArtWorks(props) {
 
                     <div className="col-xxxxl-8">
 
-                        <div className="d-flex mb-3">
-                            <label htmlFor={"file"} className="btn-outline-pink">
-                                        انتخاب تصویر
-                                    </label>
-
-                                    { Uploading ? <span style={{marginRight: 5}}> درحال آپلود </span> : "" }
-                                    { Uploaded ? <CheckCircleTwoTone style={{marginRight: 5}} twoToneColor="#52c41a" /> : "" }
-
-                                <input onChange={(e) => handleUpload(e)} id={'file'} type="file" accept=".jpg, .jpeg, .png" style={{display: "none"}}/>
-                        </div>
-                        <div className="row addartwork">
+                    <MultipleUpload  
+                            uploadList={uploadList} 
+                            setUploadList={setUploadList} 
+                        />
+           
+                        <div className="row addartwork mt-5">
 
                             {/* <div className="col-md-6">
                                 <div className="input-group">
