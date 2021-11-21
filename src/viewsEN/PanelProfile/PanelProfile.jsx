@@ -22,9 +22,9 @@ function PanelProfile() {
                 <div class="panel-main">
                     <PanelSideBar />
                     <div className="panel-body">
-                        <div className="panel-container" style={{ paddingLeft: '1.7rem' }}>
+                        <div className="panel-container">
                             <Tabs activeKey={activeKey} onChange={callback}
-                                className="nav nav-tabs justify-content-star main-tab " unmountInactiveTabs={true}>
+                                className="nav nav-tabs justify-content-star main-tab p-1" unmountInactiveTabs={true}>
                                 <TabPane tab=" Edit profile" key="1" className="nav-item ">
                                     <EditPanelProfile setActiveKey={setActiveKey} />
                                 </TabPane>

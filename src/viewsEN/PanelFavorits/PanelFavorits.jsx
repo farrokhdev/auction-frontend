@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import HeaderPanel from '../../components/HeaderPanel';
+import HeaderPanel from '../../componentsEN/HeaderPanel';
 import PanelSideBar from '../../componentsEN/PanelSideBar/PanelSideBar';
 import { Tabs } from 'antd';
 import FavoriteArtworksTab from './FavoriteArtworksTab';

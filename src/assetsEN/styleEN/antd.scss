@@ -192,7 +192,7 @@
   
   .ant-modal-body .ant-btn:first-child {
     height: 2.3rem;
-    padding-top: 0.5rem;  
+    // padding-top: 0.5rem;  
     background-color: var(--gray70) !important;
     color: white !important;
     border-radius: 0.5rem !important;
@@ -211,36 +211,12 @@
   .ant-modal-confirm .ant-modal-confirm-btns .ant-btn + .ant-btn:hover{
     background-color: var(--pink) !important;
   }
-    // .ant-pagination .ant-pagination-item:active{
-    //   font-size: 25px;
-    // }
-    // .ant-pagination-disabled .ant-pagination-item-link, .ant-pagination-disabled:hover .ant-pagination-item-link, .ant-pagination-disabled:focus-visible .ant-pagination-item-link{
-      //   background: url("../../images/left-arrow.svg") no-repeat center;
-      //   background-size : 22px;
-      //   margin-right: 5rem;
-      //   border: none;
-      // }
-      // .ant-pagination.mini .ant-pagination-next .ant-pagination-item-link{
-      //   background: url("../../images/right-arrow.svg") no-repeat center;
-      //   background-size : 22px;
-      //   margin-left: 2rem;
-      
-      // }
-      
-      // .ant-pagination-disabled .ant-pagination-item-link, .ant-pagination-disabled:hover .ant-pagination-item-link,.ant-pagination-next, .ant-pagination-disabled:focus-visible .ant-pagination-item-link{
-      //   background: url("../../images/right-arrow.svg") no-repeat center;
-      //   background-size : 22px;
-      //   margin-right: 5rem;
-      //   border: none;
-      // }
-    
-    // .ant-pagination.mini .ant-pagination-item:before {
-    //   content: "/";
-    //   font-family: "vazir Light", sans-serif;
-    //   color: var(--gray90);
-    //   position: relative;
-    //   right: -10px;
-    //   top: 26px;
-    // }
-    
-  
+
+  .ant-modal-confirm-body{
+    padding-top: 2rem !important;
+    padding-left: 2rem;
+  }
+
+  .ant-modal-confirm .ant-modal-confirm-btns {
+    padding-bottom: 1.5rem;
+  }

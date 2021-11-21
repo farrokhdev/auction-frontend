@@ -40,6 +40,7 @@ function AuctionsRequests(props) {
             })
     }
 
+
     const getDetails = (pid) => {
         setLoading(true)
         axios.get(`${BASE_URL}/sale/join-auction/${pid}`)

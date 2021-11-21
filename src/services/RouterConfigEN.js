@@ -25,19 +25,22 @@ import PanelWallet from '../viewsEN/PanelWallet';
 import BuyerRegister from '../viewsEN/BuyerRegister';
 import PanelRemindersPage from '../viewsEN/PanelRemindersPage'
 import EditReminder from '../viewsEN/PanelRemindersPage/EditReminder';
-
-
-
-import '../assetsEN/styleEN/Custom.scss';
-import '../assetsEN/styleEN/fontawesome-all.min.css';
-import '../assetsEN/styleEN/antd.scss'
-import '../assetsEN/styleEN/Main.scss'
 import UserPanelArtworkList from '../viewsEN/UserPanelArtworkList/UserPanelArtworkList';
 import CreateReminder from '../viewsEN/PanelRemindersPage/CreateReminder';
 import PanelMessages from '../viewsEN/PanelMessages';
 import UserPanelSellRecommendation from '../viewsEN/UserPanelSellRecommendation';
 import UserPanelSellAdvice from '../viewsEN/UserPanelSellAdvice';
 import AddArtWorks from '../viewsEN/AddArtWorks';
+import UserPanelMyAuctions from '../viewsEN/UserPanelMyAuctions';
+import AuctionsList from '../viewsEN/AuctionsList';
+import AuctionsListBids from '../viewsEN/AuctionsList/Bids';
+import AuctionsListRequests from '../viewsEN/AuctionsList/AuctionsListRequests'
+
+
+import '../assetsEN/styleEN/Custom.scss';
+import '../assetsEN/styleEN/fontawesome-all.min.css';
+import '../assetsEN/styleEN/antd.scss'
+import '../assetsEN/styleEN/Main.scss'
 const RouterConfigEN = (props) => {
 
 
@@ -87,6 +90,12 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/panel-sell-recommendation" component={UserPanelSellRecommendation} />
                         <Route exact path="/en/panel-sell-advice" component={UserPanelSellAdvice} />
                         <Route exact path="/en/add-artworks" component={AddArtWorks} />
+                        <Route exact path="/en/panel-auctions" component={UserPanelMyAuctions} />
+
+                        <Route exact path="/en/auctions-list" component={AuctionsList} />
+                        <Route exact path="/en/auctions-list/bids/:id" component={AuctionsListBids} />
+                        <Route exact path="/en/auctions-list/requests/:id" component={AuctionsListRequests} />
+
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>
                 </Router>
