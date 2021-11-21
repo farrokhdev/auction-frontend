@@ -19,6 +19,14 @@ function HeaderEN(props) {
     const dispatch = useDispatch()
     const { is_logged_in } = useSelector((state) => state.authReducer)
 
+    const handleRedirect = () => {
+        if(is_logged_in){
+            window.location.href = "#/en/panel-profile"
+        }else{
+            window.location.href = "#/en/login"
+        }
+    }
+
     return (
         <>
 
@@ -140,14 +148,15 @@ function HeaderEN(props) {
                                         </Link>
                                     </li>
                                     <li className="nav-item ">
-                                        <Link className="nav-link" to="/en/panel-profile">
-                                            <img
-                                                src={login}
-                                                // width="30"
-                                                // height="30"
-                                                alt="Login in auction"
-                                            />
-                                        </Link>
+                                        {/* <Link className="nav-link" to="/en/panel-profile"> */}
+                                            <div className="nav-link">
+                                                <img
+                                                    src={login}
+                                                    alt="Login in auction"
+                                                    onClick={handleRedirect}
+                                                />
+                                            </div>
+                                        {/* </Link> */}
                                     </li>
                                     {is_logged_in ? <li className="nav-item">
                                         <Link className="nav-link" to="/" onClick={() => {
