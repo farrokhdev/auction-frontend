@@ -649,6 +649,9 @@ section {
     background: var(--darkgray);
 }
 
+.nav-link img{
+    cursor: pointer !important;
+}
 
 .main-tab.nav-tabs .nav-link {
     color: var(--gray50);

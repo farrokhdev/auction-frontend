@@ -1,51 +1,48 @@
-// import React,{useState,useContext} from "react";
-import React,{useState} from "react";
+import React from "react";
 import Logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/index";
-import {setToken} from "../../utils/utils";
 import {connect} from 'react-redux';
 import {Form, Input,message} from "antd";
 
 function VerificationCode(props) {
   
-//   const [verify_code, setverify_code] = useState("");
-  const [form] = Form.useForm();
+    const [form] = Form.useForm();
 
+    const onFinish = (values)=>{
 
-//   const handleRequestVerifyCode = (value)=>{
-    
-//     let payload ={
-//       "user_name" :  props.auth.username,
-//       "verify_code" : verify_code,
-//     }
-//     axios.post(`${BASE_URL}/account/approve/` ,payload)
-//       .then(res=>{
-//         console.log("Verification",res);
+    let payload ={
+      "user_name" :  props.auth.username,
+      "verify_code" : values.verify_code,
+    }
 
-//         if(res.data.data.statusCode === 400){
-//           message.error("مجددا درخواست کد اعتبارسنجی دهید")
-//         }else{
-//           setTimeout(() => {
-//             message.success("لطفا وارد شوید")
-//             window.location.href = "#/login"
-//           }, 500);
+    axios.post(`${BASE_URL}/account/approve/` ,payload)
+      .then(res=>{
 
-//         }
-//       })
-//       .catch(err=>{
-//         message.error("کد نامعتبر است")
-//         console.log("Can not Login" , err);
-//       })
-//   }
+        if(res.data.data.statusCode === 400){
+          message.error("Please request a validation code again")
+        }else{
+          setTimeout(() => {
+            window.location.href = "#/en/login"
+          }, 700);
+
+        }
+      })
+      .catch(err=>{
+        message.error("Invalid verify code")
+      })
+  }
   return (
     <>
       <div
         className="container innercontainer align-items-center"
         id="login-page"
       >
-        <Form className="login-container" form={form}>
+        <Form 
+            onFinish={onFinish}
+            className="login-container" 
+            form={form}>
           <Link to="/" className="logo">
             <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
           </Link>
@@ -56,28 +53,21 @@ function VerificationCode(props) {
             <div className="main-title"></div>
             <Form.Item
                 className="w-100"
-                name="username"
+                name="verify_code"
                 
                 rules={[
                   {
                     required: true,
-                    message: "تکمیل این فیلد ضروری است",
+                    message: "Please input your verify code!",
                   },
-                  {
-                    min: 4,
-                    message: "حداقل 4 کارکتر مورد نیاز است",
-                }
-              
             ]}>
                 <Input className="default-input"
                     type="number"
-                    // onChange={(e)=>{setverify_code(e.target.value)}}
                   placeholder="Confirm the code"/>
               </Form.Item>
             <div className="text-center pt-5">
                 <button
-                // onClick={handleRequestVerifyCode} 
-                type="submit"
+                 htmlType="submit"
                 className="btn-default">
                   verification
                 </button>
@@ -89,12 +79,10 @@ function VerificationCode(props) {
   );
 }
 
-export default VerificationCode;
-// const mapStateToProps = (store) => {
-//   return {
-//       auth : store.authReducer,
-//   }
-// }
+const mapStateToProps = (store) => {
+  return {
+      auth : store.authReducer,
+  }
+}
 
-
-// export default connect(mapStateToProps , null)(VerificationCode)
+export default connect(mapStateToProps , null)(VerificationCode)
