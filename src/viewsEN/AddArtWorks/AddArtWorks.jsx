@@ -144,7 +144,7 @@ function
 
     return (
         <div>
-            <HeaderPanel titlePage={'َAdd artwork'} />
+            <HeaderPanel titlePage={'Add artwork'} />
             <div className="panel-main">
                 <PanelSidebar />
                 {/**Main**/}

@@ -35,7 +35,7 @@ function ModalEditReminder({reminder}) {
             <button onClick={(e)=>handleShowResultsModal(reminder?.id)} type="button" className="btn-outline-gray">Result</button>
 
             <Modal
-                title="لیست محصولات"
+                title="products List"
                 centered
                 className="modal-list-product-result "
                 visible={visibleShowResults}
@@ -76,7 +76,7 @@ function ModalEditReminder({reminder}) {
                                             </td >
                                             <td style={{minWidth : '100px'}}>
                                                 <div className="d-flex text-center">
-                                                    {`${product?.max_price} تومان`}
+                                                    {`${product?.max_price} USD`}
                                                 </div>   
                                             </td>
                                     

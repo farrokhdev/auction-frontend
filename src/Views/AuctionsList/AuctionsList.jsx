@@ -173,9 +173,9 @@ function AuctionsList() {
                                                         <td>{item.end_time !== "None" ? moment(item.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY') : ""}</td>
 
                                                         <td>
-                                                            {item.product_count > 0 ?
+                                                            {item.products_count > 0 ?
                                                                 <button type="button" className="btn-outline-gray">
-                                                                    {item.product_count} اثر
+                                                                    {item.products_count} اثر
                                                                 </button> :
                                                                 <Link to="/add-artworks">
                                                                     <button type="button" className="btn-outline-gray">
@@ -240,6 +240,7 @@ function AuctionsList() {
 }
 
 export default AuctionsList;
+
 const ShowCheckbox = (props) => {
     const { auctionId, visible_in_site } = props;
     const [loading, setLoading] = useState(false);

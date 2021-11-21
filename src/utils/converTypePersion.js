@@ -190,6 +190,23 @@ export function AuctionType(type) {
     }
 }
 
+export function AuctionTypeEN(type) {
+    switch (type) {
+        case "SECOND_HIDDEN":
+            return "SECOND_HIDDEN"
+        case "HIDDEN":
+            return "HIDDEN"
+        case "PERIODIC":
+            return "PERIODIC "
+        case "ONLINE":
+            return "ONLINE"
+        case "LIVE":
+            return "LIVE"
+        default:
+            return ""
+    }
+}
+
 export function convertToEn(type) {
 
     switch (type) {
@@ -207,6 +224,27 @@ export function convertToEn(type) {
 
         case "SECOND_HIDDEN":
             return <span className="category-icon secondoffer-icon">دومین پیشنهاد</span>
+
+    }
+}
+
+export function convertToEnForEnglish(type) {
+
+    switch (type) {
+
+        case "ONLINE":
+            return <span className="category-icon online-icon">ONLINE</span>
+        case "LIVE":
+            return <span className="category-icon live-icon">LIVE</span>
+
+        case "PERIODIC":
+            return <span className="category-icon timed-icon">PERIODIC</span>
+
+        case "HIDDEN":
+            return <span className="category-icon firstoffer-icon">HIDDEN</span>
+
+        case "SECOND_HIDDEN":
+            return <span className="category-icon secondoffer-icon">SECOND_HIDDEN</span>
 
     }
 }
@@ -276,6 +314,31 @@ export function isAwaitingApproval(value) {
         case false:
             return {
                 title: "رد شده",
+                css: "failed"
+            }
+        default:
+            return {
+                title: "",
+                css: ""
+            }
+    }
+}
+
+export function isAwaitingApprovalEN(value) {
+    switch (value) {
+        case null:
+            return {
+                title: "pending",
+                css: "pending"
+            }
+        case true:
+            return {
+                title: "accepted",
+                css: "accepted"
+            }
+        case false:
+            return {
+                title: "failed",
                 css: "failed"
             }
         default:
