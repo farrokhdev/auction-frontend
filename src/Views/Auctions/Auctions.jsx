@@ -10,7 +10,7 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import queryString from "query-string";
 import { Spin } from "antd";
-import Timer from 'react-compound-timer'
+import Timer from 'react-compound-timer';
 import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../utils/converTypePersion';
 import moment from "jalali-moment";
 import PaginationComponent from '../../components/PaginationComponent';
