@@ -725,12 +725,17 @@ section {
     position: relative;
     font-size: 13px;
     color: var(--pink);
-    padding: 0 10px 0 26px;
+    padding: 0 1px 0 26px !important;
     margin-right: 10px;
     background-size: 20px !important;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+
+.category-title-auction{
+    color: var(--pink);
 }
 
 .live-icon {
@@ -2434,7 +2439,7 @@ address .province {
 }
 
 .bg-shadow.tl-shadow10 {
-    width: calc(100% - 10px);
+    // width: calc(100% - 10px);
 }
 
 .ah-block-title {
@@ -6075,3 +6080,9 @@ input[type=number]::-webkit-outer-spin-button {
     display: none !important;
 }
 
+.image-auction{
+    min-width: 245px !important;
+    max-width: 245px !important;
+    max-height: 245px !important;
+    min-height: 245px !important;
+}
