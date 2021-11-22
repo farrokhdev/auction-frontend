@@ -163,7 +163,7 @@ function Artworks() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: 'creation_date'
+            ...params, ordering: '-creation_date'
         })
     }
 
@@ -171,7 +171,7 @@ function Artworks() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: '-creation_date'
+            ...params, ordering: 'creation_date'
         })
     }
 

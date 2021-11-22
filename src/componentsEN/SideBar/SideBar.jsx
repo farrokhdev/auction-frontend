@@ -47,7 +47,6 @@ function SideBar({
 
     const getCategories = () => {
         axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?${typeCategory}`).then(res => {
-            console.log("category **** : " , res.data.data.result[setNumbCategory(typeCategory)].children);
           setCategories(res.data.data.result[setNumbCategory(typeCategory)].children)
         }).catch(err => {
           console.error(err);

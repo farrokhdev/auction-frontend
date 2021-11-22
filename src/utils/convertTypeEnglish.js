@@ -5,18 +5,18 @@ export function convertTypeToEn(type) {
     switch (type) {
 
         case "ONLINE":
-            return <span className="category-icon online-icon mx-0 pr-0">Online</span>
+            return <span className="category-icon online-icon mx-0 pr-0">Online auction</span>
         case "LIVE":
-            return <span className="category-icon live-icon mx-0 pr-0">Live</span>
+            return <span className="category-icon live-icon mx-0 pr-0">Live auction</span>
 
         case "PERIODIC":
-            return <span className="category-icon timed-icon mx-0 pr-0">Timed</span>
+            return <span className="category-icon timed-icon px-2">Timed auction</span>
 
         case "HIDDEN":
-            return <span className="category-icon firstoffer-icon mx-0 pr-0">Hidden</span>
+            return <span className="category-icon firstoffer-icon mx-0 pr-0">Hidden auction</span>
 
         case "SECOND_HIDDEN":
-            return <span className="category-icon secondoffer-icon mx-0 pr-0">Second hidden</span>
+            return <span className="category-icon secondoffer-icon mx-0 pr-0">Second hidden auction</span>
 
     }
 }

@@ -86,7 +86,7 @@ function Auctions(props) {
             home_auction_name: [],
             type: [],
             visible_in_site: true,
-            status: []
+            auctions__status: []
         })
 
     }
