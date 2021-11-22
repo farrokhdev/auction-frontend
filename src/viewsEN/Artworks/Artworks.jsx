@@ -8,7 +8,14 @@ import moment from 'jalali-moment';
 import PaginationComponent from '../../componentsEN/PaginationComponent';
 import { Link } from 'react-router-dom';
 import pic2 from '../../imgEN/pic2.jpg';
-
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import queryString from 'query-string';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
+import { handleShowImage } from '../../utils/showImageProduct';
+import { convertTypeToEn } from '../../utils/convertTypeEnglish';
+import numberWithCommas from '../../components/threeNumber';
+import Timer from "react-compound-timer";
 
 function Artworks() {
 
@@ -25,15 +32,15 @@ function Artworks() {
         date_before: '',
         ordering: '',
         home_auction_name: [],
-        type: [],
+        auctions__type: [],
         visible_in_site: true,
-        status: []
+        auctions__status: []
     })
 
 
     const handleClose = (value) => {
-        if (params?.status.indexOf(status(value)) > -1) {
-            handleAuctionStatus(params?.status?.filter(item => item !== status(value)))
+        if (params?.auctions__status.indexOf(status(value)) > -1) {
+            handleAuctionStatus(params?.auctions__status?.filter(item => item !== status(value)))
         }
         if (params?.category.indexOf(value) > -1) {
             handleSetCategory(params?.category?.filter(item => item !== value))
@@ -41,8 +48,8 @@ function Artworks() {
         if (params?.home_auction_name.indexOf(value) > -1) {
             handleSetHomeAuction(params?.home_auction_name?.filter(item => item !== value))
         }
-        if (params?.type.indexOf(convertTypeEN(value)) > -1) {
-            handleSetType(params?.type?.filter(item => item !== convertTypeEN(value)))
+        if (params?.auctions__type.indexOf(convertTypeEN(value)) > -1) {
+            handleSetType(params?.auctions__type?.filter(item => item !== convertTypeEN(value)))
         }
         setTags(Tags?.filter((item) => item !== value))
     };
@@ -58,9 +65,9 @@ function Artworks() {
             date_before: '',
             ordering: '',
             home_auction_name: [],
-            type: [],
+            auctions__type: [],
             visible_in_site: true,
-            status: []
+            auctions__status: []
         })
 
     }
@@ -81,7 +88,7 @@ function Artworks() {
 
     const handleAuctionStatus = (value) => {
         setParams({
-            ...params, page: 1, status: value
+            ...params, page: 1, auctions__status: value
         })
     }
     const handleSetCategory = (value) => {
@@ -104,7 +111,7 @@ function Artworks() {
 
     const handleSetType = (value) => {
         setParams({
-            ...params, page: 1, type: value
+            ...params, page: 1, auctions__type: value
         })
     }
 
@@ -112,7 +119,7 @@ function Artworks() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: 'creation_time'
+            ...params, ordering: '-creation_date'
         })
     }
 
@@ -120,7 +127,7 @@ function Artworks() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: '-creation_time'
+            ...params, ordering: 'creation_date'
         })
     }
 
@@ -129,8 +136,8 @@ function Artworks() {
     const handleSetDate = (dateFrom, dateTo) => {
         setParams({
             ...params,
-            start_date_before: dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
-            start_date_after: dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
+            date_before: dateTo ? moment.from(dateTo, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
+            date_after: dateFrom ? moment.from(dateFrom, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY-MM-DD') : "",
             page: 1,
         })
 
@@ -138,8 +145,8 @@ function Artworks() {
     const handleSetDateEN = (dateFrom, dateTo) => {
         setParams({
             ...params,
-            start_date_before: dateTo,
-            start_date_after: dateFrom,
+            date_before: dateTo,
+            date_after: dateFrom,
             page: 1,
         })
     }
@@ -157,9 +164,58 @@ function Artworks() {
         }
     }
 
-    useEffect(() => {
+    const getProducts = () => {
+        const queries = queryString.stringify(params);
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/product/?${queries}`)
+            .then(resp => {
+                if (resp.data.code === 200) {
+                    console.log(resp)
+                    setProducts(resp.data.data.result)
+                    setCountProducts(resp.data.data.count)
+                    setLoading(false)
+                }
 
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        getProducts()
     }, [params, Tags])
+
+
+    const addBookmark = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getProducts()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "product",
+                "object_id": data,
+                "activity_type": "mark"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getProducts()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
+
+
+
+
     return (
         <div>
             <HeaderEN />
@@ -180,26 +236,42 @@ function Artworks() {
                             handleSetCategory={handleSetCategory}
                             handleSetType={handleSetType}
                             handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
+                            handleSetDateEN={handleSetDateEN}
                             handleSetDate={handleSetDate}
-                            typeCategory="آثار"
+                            typeCategory="products"
                         />
                         <div className="col-lg-9">
                             <div className="row row-cols-md-3 row-cols-2">
                                 {Products && Products.length >= 1 ? Products.map((item, key) => {
                                     return (
                                         <div className="col">
-                                            <Link to={`/en/artworks/${item.id}`} className="artwork-block">
                                                 <div className="artwork-img">
-                                                    <img src={pic2} width="998" height="880" alt="" className="img-fluid" />
+                                                    <Link to={`/en/artworks/${item?.id}`} className="artwork-block">
+                                                        <img src={item && handleShowImage(item)} width="998" height="880" alt="" className="img-fluid" />
+                                                    </Link>
                                                     <div className="artwork-category">
-                                                        <span className="category-save artwork-bookmark"></span>
-                                                        <span className="category-icon live-icon">Live</span>
+
+                                                        <span onClick={() =>
+                                                            addBookmark(
+                                                                item?.following?.bookmark?.is_active ?
+                                                                    item?.following?.bookmark?.id :
+                                                                    item?.id, item?.following?.bookmark?.is_active)
+                                                        }
+                                                            className={"category-save artwork-bookmark ms-2 " + (item?.following?.bookmark?.is_active ? "active" : "")} />
+                                                        <span className="">{item?.latest_auction?.type ? convertTypeToEn(item?.latest_auction?.type) : 
+                                                        <span className="category-icon text-secondary"> <span className="mx-2">Without auction</span></span>}</span>
+
+
+                                                        {/* <span className="category-save artwork-bookmark"></span>
+                                                        <span className="category-icon live-icon">Live</span> */}
                                                     </div>
                                                 </div>
                                                 <div className="block-body text-center">
-                                                    <h6 className="default gray50 ">Sohrab Sepehri</h6>
-                                                    <h4 className="default">From the Saqakhaneh series</h4>
-                                                    <div className="auction-calender">
+                                                    <h6 className="default gray50 ">{item?.english_artist_name}</h6>
+                                                    <h4 className="default">{item?.artwork_title_en}</h4>
+
+
+                                                    {/* <div className="auction-calender">
                                                         <div className="auction-date">
                                                             <span className="start-date">19 June</span>
                                                             <span className="end-date">22 June</span>
@@ -207,14 +279,126 @@ function Artworks() {
                                                         <div className="auction-time">
                                                             <span className="start-time">10 AM</span>
                                                         </div>
+                                                    </div> */}
+
+                                                    {item?.latest_auction?.status === "CLOSED" ?
+                                                        <div className="auction-calender">
+                                                            حراجی به پایان رسید
+                                                        </div>
+                                                        :
+                                                        <div>
+                                                            {
+                                                                item?.latest_auction?.status === "ACTIVE" ?
+                                                                    <div className="auction-calender">
+                                                                        <Timer
+                                                                            initialTime={timeExpire(item?.latest_auction.end_time)}
+                                                                            direction="backward"
+                                                                        >
+                                                                            {({
+                                                                                start,
+                                                                                resume,
+                                                                                pause,
+                                                                                stop,
+                                                                                reset,
+                                                                                timerState
+                                                                            }) => (
+                                                                                <div style={{
+                                                                                    direction: 'ltr',
+                                                                                    textAlign: "center",
+                                                                                }}>
+
+                                                                                    <span className="d-inline-block">
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"></span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"><Timer.Hours /> </span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"> : </span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"><Timer.Minutes /></span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"> : </span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"><Timer.Seconds /></span>
+
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger mx-2">  and  </span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger">  Day  </span>
+                                                                                        <span
+                                                                                            className="d-inline-block text-danger"><Timer.Days /></span>
+                                                                                    </span>
+                                                                                    <span className="d-inline-block text-secondary mx-2">/</span>
+                                                                                    <span className="d-inline-block text-secondary">to finish</span>     
+
+
+                                                                                </div>
+
+                                                                            )}
+                                                                        </Timer></div>
+                                                                    : <div>{
+                                                                        item?.latest_auction?.status ?
+                                                                            <div className="auction-calender">
+                                                                                <div className="auction-date">
+                                                                                    <span className="start-date">
+                                                                                        {item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY-MM-DD').locale('en').format('DD MMMM') : ""}
+                                                                                    </span>
+                                                                                    <span
+                                                                                        className="end-date">{item?.latest_auction?.end_time ? moment(item?.latest_auction?.end_time, 'YYYY-MM-DD').locale('en').format('DD MMMM') : ""}</span>
+                                                                                </div>
+                                                                                <div className="auction-time">
+                                                                                    <span
+                                                                                        className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY-MM-DD HH').locale('en').format('HH') : ""}</span>
+                                                                                </div>
+                                                                            </div> :
+                                                                            ""
+                                                                    }</div>
+                                                            }
+                                                        </div>
+
+                                                    }
+
+                                                    {item?.latest_auction?.status === "CLOSED" ? <div>
+                                                        {
+                                                            item?.sale_status ?
+                                                                <div className="price-block">
+                                                                    <span>Sold price :</span>
+                                                                    <span className="price mx-2">{numberWithCommas(item?.price)}<span
+                                                                        className="price-unit mx-2">{item?.latest_auction?.currency !== "dollar" ? item?.latest_auction?.currency : '$'}</span></span>
+                                                                </div>
+                                                                :
+                                                                <div className="price-block">
+                                                                    <span> Not sold</span>
+                                                                </div>
+                                                        }
                                                     </div>
-                                                    <div className="price-block">
-                                                        <span>Start bid:</span>
-                                                        <span className="price">100<span className="price-unit">$</span></span>
+                                                        : <div>
+                                                            {item?.latest_auction?.status === "ACTIVE" ?
+                                                                <div>
+                                                                    <div className="price-block">
+                                                                        <span>Base price :</span>
+                                                                        <span className="price mx-2">{numberWithCommas(item?.price)}<span
+                                                                            className="price-unit mx-2">{item?.latest_auction?.currency !== "dollar" ? item?.latest_auction?.currency : '$'}</span></span>
+                                                                    </div>
+
+                                                                </div> :
+                                                                item?.latest_auction?.type ? <div className="price-block">
+                                                                    <span>Current price :</span>
+                                                                        <span className="price mx-2">
+                                                                            { numberWithCommas(item?.bidding_details?.max_bid)}
+                                                                        <span
+                                                                            className="price-unit mx-2">{item?.latest_auction?.currency !== "dollar" ? item?.latest_auction?.currency : '$'}
+                                                                        </span>
+                                                                    </span>
+                                                                </div> : ''
+                                                            }
+                                                        </div>
+                                                    }
+                                                        {/* <span>Start bid:</span>
+                                                        <span className="price">{numberWithCommas(item?.bidding_details?.max_bid)}<span className="price-unit">$</span></span> */}
                                                     </div>
                                                 </div>
-                                            </Link>
-                                        </div>
+                                        // </div>
                                     )
                                 }) : ""}
                             </div>
