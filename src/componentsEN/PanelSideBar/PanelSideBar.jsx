@@ -49,13 +49,13 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li>
                     <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-auctions">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-auctions">
                             <i class="fal fa-gavel"></i>
                             My auctions
                         </NavLinkRouter>
                     </li>
                     {role === "home_auction" || role === "admin" ? <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/auctions-list">
                             <i class="fal fa-plus-circle"></i>
                             Made auctions
                         </NavLinkRouter>
