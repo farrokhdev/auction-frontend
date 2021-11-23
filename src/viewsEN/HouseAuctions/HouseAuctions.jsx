@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import HeaderEN from '../../componentsEN/HeaderEN';
 import Footer from '../../componentsEN/Footer';
 import MainTitle from '../../componentsEN/MainTitle/MainTitle';
@@ -6,13 +6,19 @@ import SiderHouseAucitons from './SiderHouseAucitons';
 import logo from "../../imgEN/logo-1.jpg"
 import PaginationComponent from '../../componentsEN/PaginationComponent';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
+import { BASE_URL } from '../../utils';
+import axios from '../../utils/request';
+import { HOME_AUCITONS } from '../../utils/constant';
 
 function HouseAuctions() {
 
     const [Tags, setTags] = useState([])
-    const [houseAuctionList, setHouseAuctionList] = useState([1, 2, 3, 4, 5])
+    const [houseAuctionList, setHouseAuctionList] = useState([])
     const [categoryActivities, setCategoryActivities] = useState(['Painting', 'Painting 2', 'Painting 3', 'Statue', 'Collector'])
     const [countProducts, setCountProducts] = useState(1)
+    const [countHousAuction, setCountHousAuction] = useState(1)
+    const [loading, setLoading] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -20,6 +26,25 @@ function HouseAuctions() {
         search: '',
         ordering: '',
     })
+
+
+    const queries = queryString.stringify(params);
+
+    const getHouseAuction = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}${HOME_AUCITONS}?${queries}`).then(res => {
+            setHouseAuctionList(res.data.data.result)
+            setCountHousAuction(res.data.data.count)
+            setLoading(false)
+        }).catch(err => {
+            console.error(err);
+            setLoading(false)
+        })
+    }
+
+    useEffect(() => {
+        getHouseAuction();
+    }, [params])
 
     const handleSetCategory = (value) => {
         setParams({
@@ -74,6 +99,30 @@ function HouseAuctions() {
         })
     }
 
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getHouseAuction()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction_house",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getHouseAuction()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
 
     return (
         <>
@@ -103,7 +152,8 @@ function HouseAuctions() {
                                                     <div className="col-xl-5 col-3">
                                                         <div className="h-block-img">
                                                             <Link to={`/en/house-auctions/${house.id}`}>
-                                                            <img src={logo} width="159" height="159" alt="smart auction"
+                                                            {/* <img src={house?.media?.media_path} width="159" height="159" alt="smart auction" */}
+                                                            <img src={'https://picsum.photos/159/159'} width="159" height="159" alt="smart auction"
                                                                 className="img-fluid" />
                                                             </Link>
                                                         </div>
@@ -111,16 +161,35 @@ function HouseAuctions() {
                                                     <div className="col-xl-7 col-9">
                                                         <div className="h-block-header">
                                                             <div className="h-block-title">
-                                                                <h3 className="default">Sareban gallery</h3>
-                                                                <h6 className="default">Visual art, ...</h6>
+                                                                <h3 className="default">{house?.home_auction_name_en}</h3>
+                                                                <h6 className="default">{house?.home_auction_type ? house?.home_auction_type : ''}</h6>
                                                             </div>
-                                                            <button type="button" className="btn-follow">Follow</button>
+                                                            <button
+                                                                    onClick={() =>
+                                                                        Follow(
+                                                                            house?.following?.follow?.is_active ?
+                                                                                house?.following?.follow?.id :
+                                                                                house?.id, house?.following?.follow?.is_active)
+                                                                    }
+                                                                    type="button" className={" btn-follow " + (house?.following?.follow?.is_active ? "following" : "")}>
+                                                                    {house?.following?.follow?.is_active ? "Unfollow" : "Follow"}
+                                                                </button>
                                                         </div>
                                                         <div className="h-block-info">
-                                                            <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
+
+                                                            <a href={house?.phone ? house?.phone : house?.mobile}
+                                                                className="info-tel all-info">{house?.phone ? house?.phone : house?.mobile}
+                                                            </a>
+                                                
+                                                            <address className="all-info">
+                                                                {house?.home_auction_location?.address_en ? house?.home_auction_location?.address_en : ''}
+                                                            </address>
+
+
+                                                            {/* <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
                                                             <address className="all-info"><span className="province">Tehran Province,</span>Tehran,
                                                                 Hoveyzeh St, No.130
-                                                            </address>
+                                                            </address> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,7 +200,7 @@ function HouseAuctions() {
                                 )) : ''}
                             </div>
                         </div>
-                        <PaginationComponent count={countProducts} handeSelectPage={handeSelectPage} />
+                        <PaginationComponent count={countHousAuction} handeSelectPage={handeSelectPage} />
                     </div>
                 </div>
             </main>

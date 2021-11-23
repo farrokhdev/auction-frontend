@@ -6,23 +6,23 @@ function ItemCategoryActivity({ index, category, handleSetCategory, params, Tags
             <input onClick={(e) => {
 
                 if (e.currentTarget.checked) {
-                    handleSetCategory([...params.activity_type, category])
-                    setTags([...Tags, category])
+                    handleSetCategory([...params.activity_type, category?.title_en])
+                    setTags([...Tags, category?.title_en])
                 }
                 else {
-                    handleSetCategory(params.activity_type.filter(item => item !== category))
-                    setTags(Tags.filter((item) => item !== category))
+                    handleSetCategory(params.activity_type.filter(item => item !== category?.title_en))
+                    setTags(Tags.filter((item) => item !== category?.title_en))
 
                 }
             }}
 
                 className="form-check-input"
                 type="checkbox"
-                checked={Tags.indexOf(category) > -1 ? true : false}
+                checked={Tags.indexOf(category?.title_en) > -1 ? true : false}
                 value=""
                 id={`checkbox1${++index}`}
             />
-            <label className="form-check-label" htmlFor={`checkbox1${++index}`}>{category}</label>
+            <label className="form-check-label" htmlFor={`checkbox1${++index}`}>{category?.title_en}</label>
         </div>
     )
 }

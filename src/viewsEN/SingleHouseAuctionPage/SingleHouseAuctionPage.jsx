@@ -121,7 +121,7 @@ function SingleHouseAuctionPage(props) {
                 {auctionsOfHouseAuction?.length ? auctionsOfHouseAuction?.map(auction => 
 
                     <React.Fragment>
-                        <CardHouseAuction/>
+                        <CardHouseAuction auction={auction} getListAuctions={getListAuctions}/>
                     </React.Fragment>
 
                 ) :  ''}
