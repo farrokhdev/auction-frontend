@@ -9,13 +9,13 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import { BASE_URL } from '../../utils';
 import axios from '../../utils/request';
-import { HOME_AUCITONS } from '../../utils/constant';
+import { CATEGORIE_ACTIVITY, HOME_AUCITONS } from '../../utils/constant';
 
 function HouseAuctions() {
 
     const [Tags, setTags] = useState([])
     const [houseAuctionList, setHouseAuctionList] = useState([])
-    const [categoryActivities, setCategoryActivities] = useState(['Painting', 'Painting 2', 'Painting 3', 'Statue', 'Collector'])
+    const [categoryActivities, setCategoryActivities] = useState()
     const [countProducts, setCountProducts] = useState(1)
     const [countHousAuction, setCountHousAuction] = useState(1)
     const [loading, setLoading] = useState(false)
@@ -42,8 +42,17 @@ function HouseAuctions() {
         })
     }
 
+    const getCategoryActivity = () => {
+        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}`).then(res => {
+            setCategoryActivities(res.data.data.result[0].children)
+        }).catch(err => {
+            console.error(err);
+        })
+    }
+
     useEffect(() => {
         getHouseAuction();
+        getCategoryActivity()
     }, [params])
 
     const handleSetCategory = (value) => {
@@ -62,7 +71,7 @@ function HouseAuctions() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: 'creation_time'
+            ...params, ordering: 'date_joined'
         })
     }
 
@@ -70,7 +79,7 @@ function HouseAuctions() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: '-creation_time'
+            ...params, ordering: '-date_joined'
         })
     }
     const handleClose = (value) => {
@@ -150,11 +159,10 @@ function HouseAuctions() {
                                             <div className="h-block">
                                                 <div className="row">
                                                     <div className="col-xl-5 col-3">
-                                                        <div className="h-block-img">
+                                                        <div className="h-block-img box-image-house-auction">
                                                             <Link to={`/en/house-auctions/${house.id}`}>
-                                                            {/* <img src={house?.media?.media_path} width="159" height="159" alt="smart auction" */}
-                                                            <img src={'https://picsum.photos/159/159'} width="159" height="159" alt="smart auction"
-                                                                className="img-fluid" />
+                                                            <img src={house?.media[0]?.exact_url} className="image-house-auction" alt="smart auction"
+                                                                className="img-fluid w-100 h-100" />
                                                             </Link>
                                                         </div>
                                                     </div>

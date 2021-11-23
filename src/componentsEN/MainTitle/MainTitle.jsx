@@ -29,7 +29,7 @@ function MainTitle({handleSetOrdering, handleSetOrderingOld ,title}) {
                         <span className="btn-sort">Sort by<span className="d-none d-md-inline-block">:</span></span>
                         <ul className="sort-list">
                             <li onClick={(e)=>handleSetOrdering()}>Most recent</li>
-                            <li className="" onClick={(e)=>handleSetOrderingOld()}>Nearby you</li>
+                            {/* <li className="" onClick={(e)=>handleSetOrderingOld()}>Nearby you</li> */}
                             {/* <li>Popular</li>
                             <li>Sell</li> */}
                         </ul>

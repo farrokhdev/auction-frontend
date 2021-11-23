@@ -1,6 +1,8 @@
 import React from 'react'
 
 function ItemCategoryActivity({ index, category, handleSetCategory, params, Tags, setTags }) {
+
+    console.log("category?.title_en : " , category?.title_en);
     return (
         <div className="form-check">
             <input onClick={(e) => {

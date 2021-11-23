@@ -194,13 +194,14 @@ function HouseAuctionsPage() {
 
                                                     <div className="row">
                                                         <div className="col-xl-5 col-3">
-                                                            <div className="h-block-img">
+                                                            <div className="h-block-img box-image-house-auction">
                                                                 <Link to={`/house-acutions/${house?.id}`}>
                                                                     <img
                                                                         src={house?.media.filter(pic => pic?.type === "profile_image")[0]?.exact_url}
                                                                         width="159" height="159"
                                                                         alt="smart auction"
-                                                                        className="img-fluid image-custom-back"
+                                                                        className="img-fluid w-100 h-100"
+                                                                        className="image-house-auction"
                                                                     />
                                                                 </Link>
                                                             </div>

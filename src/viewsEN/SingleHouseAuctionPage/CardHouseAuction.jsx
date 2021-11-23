@@ -1,5 +1,5 @@
 import React from "react";
-import { convertTypeToEn } from "../../utils/convertTypeEnglish";
+import { AuctionStatusTextBtn, AuctionType, convertTypeToEn } from "../../utils/convertTypeEnglish";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { Link } from "react-router-dom";
@@ -33,13 +33,24 @@ function CardHouseAuction({auction , getListAuctions}) {
     }
 }
 
+function timeExpire(time) {
+  let expire = new Date(time)
+  let now = new Date()
+  if (expire > now) {
+      return expire - now
+  } else {
+      return 0
+
+  }
+}
+
   return (
     <React.Fragment>
       <div className="row-blocks">
         <div className="row">
           <div className="col-md-4">
             <div className="bg-shadow tl-shadow10">
-              <img src="img/slider1.jpg" width="500" height="500" alt="" />
+              <img  src={auction?.media?.exact_url} className="image-auction" alt="image-auction" />
             </div>
           </div>
           <div className="col-md-8">
@@ -76,7 +87,7 @@ function CardHouseAuction({auction , getListAuctions}) {
                     <h5 className="default">{auction?.title_en}</h5>
                 </Link>
                 <div className="block-detail">
-                    <h6 className="default">{!!auction?.house_type_en ? auction?.house_type_en : ''}</h6>
+                    <h6 className="default">{!!auction?.house_type ? auction?.house_type : ''}</h6>
                     <Link to="/" className="default">
                         <h6 className="default gray50">{auction?.house_en}</h6>
                     </Link>

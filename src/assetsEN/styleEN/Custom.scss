@@ -2313,6 +2313,11 @@ footer .brdrtop span {
     background: var(--bs-white);
 }
 
+.box-image-house-auction{
+    width: 159px !important;
+    height: 159px !important;
+}
+
 .btn-follow {
     font-size: 13px;
     border: 1px solid var(--gray90);
@@ -6098,4 +6103,11 @@ input[type=number]::-webkit-outer-spin-button {
     max-width: 245px !important;
     max-height: 245px !important;
     min-height: 245px !important;
+}
+
+.image-detail-house-auction {
+    min-width: 159px !important;
+    max-width: 159px !important;
+    max-height: 159px !important;
+    min-height: 159px !important;
 }
