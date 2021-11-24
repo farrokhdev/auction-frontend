@@ -1,33 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import HeaderPanel from '../../componentsEN/HeaderPanel';
 import PanelSideBar from '../../componentsEN/PanelSideBar';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeAUCTION } from '../../redux/reducers/auction/auction.actions';
-import { Spin, Modal ,message } from 'antd';
+import { Spin, Modal, message } from 'antd';
 import { AuctionTypeEN } from '../../utils/converTypePersion';
 import moment from 'jalali-moment'
 import ShowCheckbox from './ShowCheckbox';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import queryString from "query-string";
+import { getProfile } from "../../redux/reducers/profile/profile.actions";
+import PaginationComponent from '../../components/PaginationComponent';
+
+
 
 function AuctionsList() {
 
+    const { role, id } = useSelector((state) => state.profileReducer)
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
+    const [productsCount, setProductsCount] = useState(0);
     const { confirm } = Modal;
+    const [params, setParams] = useState({
+        page: 1,
+        page_size: 10,
+        home_auction: id,
+    })
+
     const [auctionsList, setAuctionsList] = useState([
-        {
-            title: 'Collection7',
-            type: 'ONLINE',
-            product_count: 2,
-            bids_count: 3,
-            id: 1,
-            start_time: '2021-08-27 15:30:00+00:00',
-            end_time: '2022-10-05 23:40:00+00:00',
-            registrations_count: 1,
-            visible_in_site: true,
-            status: 'PREPARING'
-        }]);
+    ]);
 
     function showDeleteConfirm(id) {
         confirm({
@@ -45,6 +49,51 @@ function AuctionsList() {
             },
         });
     }
+
+    const getProducts = () => {
+        setLoading(true)
+        const queries = queryString.stringify(params);
+        // axios.get(`${BASE_URL}/sale/auctions/?home_auction=${id}&page_size=${page_size}`)
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    setAuctionsList(resp.data.data.result)
+                    setProductsCount(resp.data.data.count)
+                }
+
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
+    // const getBids = () => {
+    //     axios.get(`${BASE_URL}/bidding/?auction=${id}`)
+    //         .then(resp => {
+    //             if (resp.data.code === 200) {
+    //                 setAuctions(resp.data.data.result)
+    //             }
+
+    //         })
+    //         .catch(err => {
+    //             console.error(err);
+    //         })
+    // }
+
+
+    const handeSelectPage = (e) => {
+        setParams({
+            ...params, page: e
+        })
+    }
+
+    useEffect(() => {
+        if (id)
+            getProducts()
+        if (!id)
+            dispatch(getProfile())
+    }, [params])
     return (
         <>
             <HeaderPanel titlePage={"Made auctions"} />
@@ -52,16 +101,16 @@ function AuctionsList() {
                 <PanelSideBar />
                 <div className="panel-body">
                     <div className="panel-container">
-                        <Link to="/panel-add-auction/new" onClick={() => dispatch(removeAUCTION())}>
+                        <Link to="/en/panel-add-auction/new" onClick={() => dispatch(removeAUCTION())}>
                             <button type="button" className="btn btn-default">
                                 <i class="fal fa-plus"></i>
                                 New auction
                             </button>
                         </Link>
                         <Spin spinning={loading} >
-                            <div className="col-xxxxl-8 mrgt30">
-                                <div className="table-responsive">
-                                    <table className="panel-table create-auctions table ">
+                            <div className=" col-xxxxl-8 mrgt30">
+                                <div className="table-responsive" style={{overflowX: 'auto'}}>
+                                    <table className="panel-table create-auctions ">
                                         <thead>
                                             <tr>
                                                 <td>Auction name</td>
@@ -71,7 +120,7 @@ function AuctionsList() {
                                                 <td>Artworks</td>
                                                 <td>Bids</td>
                                                 <td>membership request</td>
-                                                <td className="text-center">Show on site</td>
+                                                <td>Show on site</td>
                                                 <td>operations</td>
                                             </tr>
                                         </thead>
@@ -79,7 +128,7 @@ function AuctionsList() {
                                             {(auctionsList && auctionsList.length >= 1) ? auctionsList.map((item, key) => {
                                                 return (
                                                     <tr key={key}>
-                                                        <td>{item.title}</td>
+                                                        <td>{item.title_en}</td>
                                                         <td>{AuctionTypeEN(item.type)}</td>
                                                         <td>{moment(item.start_time, 'YYYY/MM/DD').locale('en').format('DD MMMM YYYY')}</td>
                                                         <td>{moment(item.end_time, 'YYYY/MM/DD').locale('en').format('DD MMMM YYYY')}</td>
@@ -117,8 +166,8 @@ function AuctionsList() {
                                                             {item.status !== "CLOSED" && item.status !== "ACTIVE" ?
                                                                 <>
                                                                     <Link onClick={() => dispatch(removeAUCTION())}
-                                                                        to={`/panel-add-auction/${item.id}`} type="button" >
-                                                                            <i class="fal fa-pen"></i>
+                                                                        to={`/en/panel-add-auction/${item.id}`} type="button" >
+                                                                        <i class="fal fa-pen"></i>
                                                                     </Link>
                                                                     <button type="button"
                                                                         onClick={() => showDeleteConfirm(item.id)}>
@@ -132,6 +181,8 @@ function AuctionsList() {
                                         </tbody>
                                     </table>
                                 </div>
+                                <PaginationComponent count={productsCount} handeSelectPage={handeSelectPage} />
+
                             </div>
                         </Spin>
                     </div>

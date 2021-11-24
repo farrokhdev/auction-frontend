@@ -220,3 +220,20 @@
   .ant-modal-confirm .ant-modal-confirm-btns {
     padding-bottom: 1.5rem;
   }
+
+  .ant-picker-time-panel{
+    direction: rtl !important;
+  }
+
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+    background-color: var(--bgcolor);
+  }
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--gray15);
+    border-color: var(--gray15);
+}
+
+.ant-btn .ant-btn-button .btn-gray:hover{
+  color: var(--gray50)!important;
+}

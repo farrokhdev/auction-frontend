@@ -65,7 +65,7 @@ const Wallet = (props) => {
 
 
 
-    console.log("props -->>>" , props.match.params.id);
+    // console.log("props -->>>" , props?.match?.params?.id);
 
     return (
         <div>

@@ -2197,6 +2197,11 @@ footer .brdrtop span {
     background-color: var(--gray95);
 }
 
+.btn-gray:hover{
+    background: var(--gray90);
+    color: var(--gray50);
+}
+
 .btn-gray.view:before {
     content: "\f06e";
     font-family: "Font Awesome\ 5 Pro";
@@ -2575,10 +2580,10 @@ p a {
 
 .btn-default,
 .btn-default:hover {
-    background: var(--pink);
+    background: var(--pink) !important;
     padding: 7px 15px;
     min-width: 100px;
-    color: var(--bs-white);
+    color: var(--bs-white) !important;
     border-radius: 20px;
     font-size: 13px;
 }
@@ -4115,15 +4120,15 @@ input:disabled {
     color: var(--darkgray) !important;
 }
 
-.panel-table tbody tr td:first-child {
-    padding-left: 0;
-    text-align: left;
-}
+// .panel-table tbody tr td:first-child {
+//     padding-left: 0;
+//     text-align: left;
+// }
 
-.panel-table tr td:last-child {
-    padding-right: 0;
-    text-align: right;
-}
+// .panel-table tr td:last-child {
+//     padding-right: 0;
+//     text-align: right;
+// }
 
 .btn-outline-gray {
     border: 1px solid var(--gray80);
@@ -4615,7 +4620,7 @@ p.help i {
 
 .newauction .btn-outline-pink {
     padding: 5px 15px;
-    margin-left: 30px;
+    // margin-left: 30px;
 }
 
 .form-check.radio {
