@@ -35,7 +35,7 @@ import UserPanelMyAuctions from '../viewsEN/UserPanelMyAuctions';
 import AuctionsList from '../viewsEN/AuctionsList';
 import AuctionsListBids from '../viewsEN/AuctionsList/Bids';
 import AuctionsListRequests from '../viewsEN/AuctionsList/AuctionsListRequests'
-
+import AddAuction from '../viewsEN/AddAuction/AddAuction'
 
 import '../assetsEN/styleEN/Custom.scss';
 import '../assetsEN/styleEN/fontawesome-all.min.css';
@@ -95,6 +95,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/auctions-list" component={AuctionsList} />
                         <Route exact path="/en/auctions-list/bids/:id" component={AuctionsListBids} />
                         <Route exact path="/en/auctions-list/requests/:id" component={AuctionsListRequests} />
+                        <Route exact path="/en/panel-add-auction/:auctionId" component={AddAuction} />
 
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>

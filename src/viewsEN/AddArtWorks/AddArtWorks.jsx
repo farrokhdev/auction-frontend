@@ -129,7 +129,7 @@ function
         axios.post(`${BASE_URL}/sale/product/`, payload)
             .then(resp => {
                 if (resp.data.code === 201) {
-                    message.success('اثر با موفقیت ثبت شد.');
+                    message.success('The work was successfully registered.');
                     setPosting(false)
                     window.location.href = "#/panel-artwork-list"
                 }
