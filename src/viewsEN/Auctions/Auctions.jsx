@@ -3,11 +3,17 @@ import HeaderEN from '../../componentsEN/HeaderEN';
 import Footer from '../../componentsEN/Footer';
 import MainTitle from '../../componentsEN/MainTitle/MainTitle';
 import SideBar from '../../componentsEN/SideBar';
-import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../utils/converTypePersion';
+import { AuctionStatusTextBtn, AuctionType , status } from '../../utils/convertTypeEnglish';
+import { convertTypeToEn } from '../../utils/convertTypeEnglish';
 import moment from 'jalali-moment';
-import pic6 from '../../imgEN/pic6.jpg';
 import PaginationComponent from '../../componentsEN/PaginationComponent';
 import { Link } from 'react-router-dom';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import queryString from "query-string";
+import Timer from 'react-compound-timer';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 function Auctions(props) {
 
@@ -30,6 +36,27 @@ function Auctions(props) {
     })
 
 
+
+    const getAuctions = () => {
+        setLoading(true)
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
+            .then(resp => {
+                setLoading(false)
+                setCountAuctions(resp.data.data.count)
+                setAuctions(resp.data.data.result)
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
+
+    useEffect(() => {
+        getAuctions()
+    }, [params, Tags])
+
+
     const handleClose = (value) => {
         if (params?.status.indexOf(status(value)) > -1) {
             handleAuctionStatus(params?.status?.filter(item => item !== status(value)))
@@ -40,8 +67,8 @@ function Auctions(props) {
         if (params?.home_auction_name.indexOf(value) > -1) {
             handleSetHomeAuction(params?.home_auction_name?.filter(item => item !== value))
         }
-        if (params?.type.indexOf(convertTypeEN(value)) > -1) {
-            handleSetType(params?.type?.filter(item => item !== convertTypeEN(value)))
+        if (params?.type.indexOf(convertTypeToEn(value)) > -1) {
+            handleSetType(params?.type?.filter(item => item !== convertTypeToEn(value)))
         }
         setTags(Tags?.filter((item) => item !== value))
     };
@@ -59,7 +86,7 @@ function Auctions(props) {
             home_auction_name: [],
             type: [],
             visible_in_site: true,
-            status: []
+            auctions__status: []
         })
 
     }
@@ -142,6 +169,51 @@ function Auctions(props) {
             page: 1,
         })
     }
+    const getProducts = () => {
+        setLoading(true)
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
+            .then(resp => {
+                setLoading(false)
+                setCountAuctions(resp.data.data.count)
+                setAuctions(resp.data.data.result)
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
+
+    useEffect(() => {
+        getProducts()
+
+    }, [params, Tags])
+
+
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getProducts()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getProducts()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
 
 
 
@@ -182,7 +254,7 @@ function Auctions(props) {
                             handleSetHomeAuctionSelect={handleSetHomeAuctionSelect}
                             handleSetDate={handleSetDate}
                             handleSetDateEN={handleSetDateEN}
-                        //    typeCategory="خانه های حراج" 
+                            typeCategory='auctions'
                         />
                         <div className="col-lg-9">
                             {Auctions && Auctions.length >= 1 ? Auctions.map((item, key) => {
@@ -191,38 +263,94 @@ function Auctions(props) {
                                         <div className="row">
                                             <div className="col-md-4">
                                                 <Link to={`/en/auctions/${item.id}`} className="bg-shadow tl-shadow10">
-                                                    <img src={pic6} width="500" height="500" alt="" />
+                                                    <img className="image-auction" src={item?.media?.exact_url}  alt="" />
                                                 </Link>
                                             </div>
                                             <div className="col-md-8">
                                                 <div className="block-head row">
                                                     <div className="col-xl-3 col-sm-4 col-3">
-                                                        <span className="category-icon live-icon">Live<span className="d-none d-md-inline-block">Auction</span></span>
+                                                        <span className="">{convertTypeToEn(item?.type)}<span className="d-none d-md-inline-block category-title-auction ">Auction</span></span>
                                                     </div>
                                                     <div className="col-xl-9 col-sm-8 col-9 textalign-right">
-                                                        <span className="reminder-icon">Reminde me</span>
+                                                            <button
+                                                                onClick={() =>
+                                                                    Follow(
+                                                                        item?.following?.follow?.is_active ?
+                                                                            item?.following?.follow?.id :
+                                                                            item?.id, item?.following?.follow?.is_active)
+                                                                }
+                                                                type="button" className={" reminder-icon " + (item?.following?.follow?.is_active ? "active" : "")}>
+                                                                Reminde me
+                                                            </button>
+
                                                         <button type="button" className="link-source">
-                                                            <span><span
-                                                                className="d-none d-sm-inline-block">View </span>artworks (<span>25</span>)</span>
+                                                            { !!item?.products_count ?
+                                                                <span>
+                                                                    <span className="d-none d-sm-inline-block">View </span>artworks (<span>{item?.products_count}</span>)
+                                                                </span>
+                                                            : null }
                                                         </button>
                                                     </div>
                                                 </div>
                                                 <div className="block-main">
                                                     <Link to="/">
-                                                        <h5 className="default">Live online only Mid Century Modern, Decorative Arts and
-                                                            Pictures
-                                                            Antiques, Books </h5>
+                                                        <h5 className="default">{item?.title_en}</h5>
                                                     </Link>
                                                     <div className="block-detail">
-                                                        <h6 className="default">Contemprory art</h6>
+                                                        <h6 className="default">{item?.house_type}</h6>
                                                         <Link to="/" className="default">
-                                                            <h6 className="default gray50">Arthibition gallery</h6>
+                                                            <h6 className="default gray50">{item?.house_en}</h6>
                                                         </Link>
                                                     </div>
                                                 </div>
                                                 <div className="block-footer row">
                                                     <div className="col-sm-5">
-                                                        <div className="jumbotron countdown show end date-show"
+
+
+                                                    {item?.status === "CLOSED" ?
+
+                                                        <div className="ended">
+                                                            <div className="text">Offer is ended</div>
+                                                        </div>
+                                                        : <div>
+                                                            {item?.status === "ACTIVE" &&
+                                                                <Timer
+                                                                    initialTime={timeExpire(item?.end_time)}
+                                                                    direction="backward"
+                                                                >
+                                                                    {({ start, resume, pause, stop, reset, timerState }) => (
+                                                                        <div style={{
+                                                                            direction: 'ltr',
+                                                                            textAlign: "right"
+                                                                        }}>
+
+                                                                            <span className="d-inline-block ">ساعت</span>
+                                                                            <span className="d-inline-block"><Timer.Hours /> </span>
+                                                                            <span className="d-inline-block">:</span>
+                                                                            <span className="d-inline-block"><Timer.Minutes /></span>
+                                                                            <span className="d-inline-block">:</span>
+                                                                            <span className="d-inline-block "><Timer.Seconds /></span>
+
+                                                                            <span className="d-inline-block mx-2">  و  </span>
+                                                                            <span className="d-inline-block ">  روز  </span>
+                                                                            <span className="d-inline-block "><Timer.Days /></span>
+                                                                        </div>
+                                                                    )}
+                                                                </Timer>
+                                                            }
+                                                            {
+                                                                item?.status === "PREPARING" && <span>Offer in preparation</span>
+                                                            }
+
+                                                        </div>
+                                                        }
+
+
+
+
+
+
+                                                        {/* <div className="jumbotron countdown show end date-show"
                                                             data-Date='2021/5/13 16:09:00'>
                                                             <div className="running">
                                                                 <timer>
@@ -234,14 +362,30 @@ function Auctions(props) {
                                                             <div className="ended">
                                                                 <div className="text">Offer is ended</div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                     <div className="col-sm-7 textalign-right">
-                                                        <button type="button" className="btn btn-gray view me-2">View live</button>
 
-                                                        <Link to={`/en/buyer-register/${Auctions?.id}`}>
-                                                        <button type="button" className="btn btn-main join">Join this auction</button>
+
+                                                    {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item?.id}`}>
+                                                                <button type="button" className="btn btn-gray mx-2">
+                                                                    <FontAwesomeIcon className="mx-1" icon={faEye} />
+                                                                    {AuctionType(item?.type)}
+                                                                </button>
+                                                            </Link> : null}
+
+                                                            {AuctionStatusTextBtn(item?.status, item?.user_is_enrolled, item.id)}
+
+                                                        {/* <Link to={`/en/one-auction/${item?.id}/`}>
+                                                            <button type="button" className="btn btn-gray view me-2">View live</button>
                                                         </Link>
+
+                                                        <Link to={`/en/buyer-register/${item?.id}/`}>
+                                                            <button type="button" className="btn btn-main join">Join this auction</button>
+                                                        </Link> */}
+
+
+
                                                     </div>
                                                 </div>
                                             </div>

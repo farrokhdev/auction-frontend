@@ -32,9 +32,7 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
   const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
   const dispatch=useDispatch();
   const { RangePicker } = DatePicker;
-  const [filters, setFilters] = useState([
-    'tehran', 'mashad', 'zabol'
-  ])
+
 
   const [categories, setCategories] = useState([])
   const [homeAuctions, setHomeAuctions] = useState([])

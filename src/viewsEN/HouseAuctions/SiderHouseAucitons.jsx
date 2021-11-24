@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { openDashboard } from "../../redux/reducers/all/all.actions"
@@ -16,7 +16,13 @@ function SiderHouseAucitons({ params,
     const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
     const dispatch = useDispatch();
 
-    const [Activitis, setActivitis] = useState(['Painting', 'Painting 2', 'Painting 3', 'Statue', 'Collector'])
+    const [Activitis, setActivitis] = useState([])
+
+    useEffect(() => {
+        console.log("categoryActivities  : " , categoryActivities);
+    }, [categoryActivities])
+
+    
     return (
         <>
             <div className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`} id="left-side">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { openDashboard } from "../../redux/reducers/all/all.actions"
@@ -11,6 +11,9 @@ import ItemStatus from './ItemStatus';
 import ItemCategory from './ItemCategory';
 import ItemHomeAuction from './ItemHomeAuction';
 import ItemType from './ItemType';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import { CATEGORIE_ACTIVITY, HOME_AUCITONS } from '../../utils/constant';
 
 function SideBar({
     handleSearchProducts, handleRemoveFilters,
@@ -24,23 +27,60 @@ function SideBar({
     handleAuctionStatus,
     handleSetDate,
     handleSetDateEN,
+    typeCategory
 }) {
 
     const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
-    const [categories, setCategories] = useState(['Grouping 1', 'Grouping 2', 'Gallery', 'Statue', 'Collector'])
-    const [homeAuctions, setHomeAuctions] = useState(['Artibistion', 'Gallery Test 1', 'Gallery Test 2'])
+    const [categories, setCategories] = useState([])
+    const [homeAuctions, setHomeAuctions] = useState([])
 
     function onChange(dates, dateStrings) {
-        // console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-        // handleSetDate(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
+        handleSetDate(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
     }
 
     function onChangeEN(dates, dateStrings) {
-        // console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-        // handleSetDateEN(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
+        handleSetDateEN(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
     }
+
+
+    const getCategories = () => {
+        axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?${typeCategory}`).then(res => {
+          setCategories(res.data.data.result[setNumbCategory(typeCategory)].children)
+        }).catch(err => {
+          console.error(err);
+        })
+    }
+
+          // this function set index of categories result for set categories children
+          const setNumbCategory = (typeCategory) => {
+            switch (typeCategory) {
+              case 'auction houses':
+                return 0
+              case 'products':
+                return 1
+              case 'auctions':
+                return 2
+      
+              default:
+                break;
+            }
+          }
+
+    const getHouseAuctions = () => {
+        axios.get(`${BASE_URL}${HOME_AUCITONS}`).then(res => {
+              setHomeAuctions(res.data.data.result)
+            }).catch(err => {
+              console.error(err);
+        })
+    }
+
+    useEffect(() => {
+        getCategories()
+        getHouseAuctions()
+    }, [])
+
 
     return (
         <>
@@ -163,8 +203,7 @@ function SideBar({
                                                 <ItemCategory
                                                     Tags={Tags}
                                                     setTags={setTags}
-                                                    // title={category?.title}
-                                                    title={category}
+                                                    title={category?.title_en}
                                                     id={`checkbox2${++index}`}
                                                     params={params}
                                                     handleSetCategory={handleSetCategory} />
@@ -200,9 +239,7 @@ function SideBar({
                                                 <ItemHomeAuction
                                                     Tags={Tags}
                                                     setTags={setTags}
-                                                    // title={home?.home_auction_name ? home?.home_auction_name : ''}
-                                                    title={home}
-
+                                                    title={home?.home_auction_name_en ? home?.home_auction_name_en : ''}
                                                     id={`checkbox2${++index}`}
                                                     params={params}
                                                     handleSetHomeAuction={handleSetHomeAuction}
