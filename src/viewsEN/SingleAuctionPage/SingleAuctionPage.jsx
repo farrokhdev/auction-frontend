@@ -16,8 +16,6 @@ import AuctionCardDetailInfo from './AuctionCardDetailInfo';
 
 function SingleAuctionPage(props) {
 
-    const [countAuctionsOfHouseAuction, setCountAuctionsOfHouseAuction] = useState(0)
-    const [auctionsOfHouseAuction, setAuctionsOfHouseAuction] = useState([])
     const [countArtworksOfAuction, setCountArtworksOfAuction] = useState(0)
     const [loading, setLoading] = useState(false);
     const [HouseDetail, setHouseDetail] = useState([])
@@ -100,8 +98,6 @@ function SingleAuctionPage(props) {
     }
 
 
-    console.log("products : " , products);
-
     return (
         <>
         <Spin spinning={loading}>
@@ -142,8 +138,6 @@ function SingleAuctionPage(props) {
                     
                     <SerchAndFiltersPanel setParams={setParams} params={params}/>
 
-
-
                     <div className="row mrgt30 all-artwork "  >
 
                         {products?.length ? products?.map((product , key) => (
@@ -153,35 +147,6 @@ function SingleAuctionPage(props) {
                                 </div> 
                             </React.Fragment>
                         )) : ''}
-
-
-
-
-                        {/* <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>       */}
-        
 
                     </div>
 
@@ -197,8 +162,6 @@ function SingleAuctionPage(props) {
                     aria-labelledby="profile-tab">
                     <AuctionDetailInfo HouseDetail={HouseDetail} getAuction={getAuction} auction={auction}/>
                 </div>
-
-
 
             </div>
         </div>

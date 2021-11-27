@@ -56,7 +56,6 @@ function Auctions() {
 
     }, [params, Tags])
 
-    // console.log("Params++++>>>>", params?.status)
 
     const Follow = (data, action) => {
         if (action) {
@@ -118,7 +117,6 @@ function Auctions() {
 
     }
 
-    // console.log("Tags", Tags)
 
     const handeSelectPage = (e) => {
         setParams({

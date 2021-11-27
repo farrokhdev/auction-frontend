@@ -50,18 +50,7 @@ function CardArtworkOfAuction({product , key , setBookmark , bookmark , getProdu
               
           }} />
       </Link>
-        {/* <img
-          src="img/img-6.jpg"
-          width="317"
-          height="280"
-          alt=""
-          className="img-fluid w-100"
-        /> */}
-        {/* <div className="artwork-category">
-          <span className="category-save artwork-bookmark">
-            
-          </span>
-        </div> */}
+
 
       <div className="artwork-category"
           onClick={() => setBookmark(!bookmark)}>

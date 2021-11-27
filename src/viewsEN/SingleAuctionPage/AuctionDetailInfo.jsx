@@ -252,34 +252,6 @@ function AuctionDetailInfo({HouseDetail , getAuction , auction}) {
                 </li>
             </ul>
         </div>
-
-
-            {/* <div className="auction-gallery-info bg-warning">
-                <div className="ah-left">
-                    <div className="h-block-img">
-                        <img src="img/logo-3.png" width="159" height="159"
-                             alt="arthibition gallery"/>
-                    </div>
-                    <div className="detail-ahm">
-                        <a href="#" className="ah-link"><h3 className="default">Arthibition gallery</h3></a>
-                        <button type="button" className="btn-follow">Follow</button>
-                    </div>
-                </div>
-                <div className="ah-block-all-info">
-                    <a href="#" className="link-info all-info">www.sarebangallery.com</a>
-                    <a href="mailto: Info@sarebangallery.com"
-                       className="all-info mail-info">Info@sarebangallery.com</a>
-                    <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
-                    <address className="all-info"><span className="province">Tehran Province,</span>Tehran,
-                        Hoveyzeh St, No.130
-                    </address>
-                </div>
-                <ul className="social">
-                    <li><a href="#" id="facebook"></a></li>
-                    <li><a href="#" id="instagram"></a></li>
-                    <li><a href="#" id="telegram"></a></li>
-                </ul>
-            </div> */}
         </div>
     </div>
     )

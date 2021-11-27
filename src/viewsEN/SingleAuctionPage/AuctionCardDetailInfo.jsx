@@ -80,15 +80,6 @@ function AuctionCardDetailInfo({auction ,getAuction}) {
           </div>
       }
 
-
-        {/* <div className="auction-date">
-          <span className="start-date">19 June</span>
-          <span className="end-date">22 June</span>
-        </div>
-        <div className="auction-time">
-          <span className="start-time">10 AM</span>
-          <span className="end-time">10 PM</span>
-        </div> */}
       </div>
       <div className="auction-moreinfo">
         <a href="#" className="d-info category">
@@ -105,11 +96,6 @@ function AuctionCardDetailInfo({auction ,getAuction}) {
                       <button type="button" className="btn btn-gray view">
                           View live
                       </button> : ""}
-                  {/* <Link to={`/buyer-register/${Auction?.id}`}>
-                      <button type="button" className="btn btn-main join">عضویت <span
-                          className="">در حراج</span>
-                      </button>
-                  </Link> */}
 
                   {AuctionStatusTextBtn(auction?.status, auction?.user_is_enrolled, auction?.id)}
               </>
@@ -122,14 +108,8 @@ function AuctionCardDetailInfo({auction ,getAuction}) {
                       <span>{numberWithCommas(auction?.products_total_price)} {auction?.currency !== "dollar" ? auction?.currency : "USD"}</span>
                   </div>
               </>
-
-          }
-                              {/* <button type="button" className="btn btn-gray view">
-                                View live
-                              </button>
-                              <button type="button" className="btn btn-main join">
-                                Join <span className="">this auction</span>
-                              </button> */}
+      }
+                   
       </div>
           <div className="detail-bid">
             <div className="db-left">
