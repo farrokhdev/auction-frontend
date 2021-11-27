@@ -2,8 +2,6 @@ import React, { useState , useEffect} from 'react';
 import HeaderEN from '../../componentsEN/HeaderEN';
 import Footer from '../../componentsEN/Footer';
 import MainTitle from '../../componentsEN/MainTitle/MainTitle';
-import logo from "../../imgEN/logo-1.jpg"
-
 import queryString from 'query-string';
 import axios from '../../utils/request';
 import { BASE_URL } from '../../utils';
@@ -18,32 +16,59 @@ import AuctionCardDetailInfo from './AuctionCardDetailInfo';
 
 function SingleAuctionPage(props) {
 
-    const [countAuctionsOfHouseAuction, setCountAuctionsOfHouseAuction] = useState(0)
-    const [auctionsOfHouseAuction, setAuctionsOfHouseAuction] = useState([])
     const [countArtworksOfAuction, setCountArtworksOfAuction] = useState(0)
     const [loading, setLoading] = useState(false);
-
-
+    const [HouseDetail, setHouseDetail] = useState([])
+    const [auction, setAuction] = useState([])
+    const [products, setProducts] = useState([])
+    const [countProducts, setCountProducts] = useState(0)
+    const [reminder, setReminder] = useState(false)
+    const [bookmark, setBookmark] = useState(false)
     const [params, setParams] = useState({
         home_auction : props.match.params.id ,
         page : 1 , 
         page_size : 10 
     })
 
-    const getListAuctions = () => {
-        setLoading(true)
+    const getProducts = () => {
         const queries = queryString.stringify(params);
-        axios.get(`${BASE_URL}${LIST_AUCTIONS}?${queries}`).then(res => {
-            setAuctionsOfHouseAuction(res.data.data.result);
-            setCountAuctionsOfHouseAuction(res.data.data.count)
-            setLoading(false)
-        }).catch(err => {
-            console.error(err)
-            setLoading(false)
-        })
+        axios.get(`${BASE_URL}/sale/product/?${queries}`)
+            .then(resp => {
+                if ((resp.data.code === 200) && resp.data?.data?.result) {
+                    const res = resp.data?.data?.result;
+                    setProducts(res)
+                    setCountProducts(resp.data?.data?.count)
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false)
+            })
+    }
+
+    const getAuction = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/auctions/${props?.match?.params?.id}/`)
+            .then(resp => {
+                if (resp.data.code === 200) {
+                    setAuction(resp.data.data.result)
+                    axios.get(`${BASE_URL}/account/home-auction/${resp.data.data.result?.house?.id}/`).then(res => {
+                        setHouseDetail(res.data.data.result);
+                    }).catch(err => {
+                        console.error(err)
+                    })
+                }
+                getProducts()
+                setLoading(false)
+
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false)
+            })
     }
     useEffect(() => {
-        getListAuctions();
+        getAuction()
     }, [params])
 
 
@@ -79,7 +104,7 @@ function SingleAuctionPage(props) {
             <HeaderEN />
             <main className="innercontent" id="all-auctions">
                 <div className="container innercontainer">
-                    <MainTitle title={'Collection7'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
+                    <MainTitle title={auction?.title_en} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
 
             <div className="w-100 lg-mrgb50 d-lg-none d-block"></div>
             <div className="col-lg-6 ">
@@ -91,8 +116,7 @@ function SingleAuctionPage(props) {
             <div className="col-xl-4 col-lg-5 col-md-6 col-12">
                 <div className="bg-shadow br-shadow10">
 
-
-                    <AuctionCardDetailInfo/>
+                    <AuctionCardDetailInfo auction={auction} reminder={reminder} setReminder={setReminder} getAuction={getAuction}/>
 
                 </div>
             </div>
@@ -112,43 +136,17 @@ function SingleAuctionPage(props) {
                     aria-labelledby="home-tab">
 
                     
-                    <SerchAndFiltersPanel/>
-
-
+                    <SerchAndFiltersPanel setParams={setParams} params={params}/>
 
                     <div className="row mrgt30 all-artwork "  >
 
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div> 
-
-
-
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>  
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <CardArtworkOfAuction/>
-                        </div>      
-        
+                        {products?.length ? products?.map((product , key) => (
+                            <React.Fragment key={key}>
+                                <div className="col-12 col-md-6 col-lg-4">
+                                    <CardArtworkOfAuction getProducts={getProducts} product={product} key={key} setBookmark={setBookmark} bookmark={bookmark} auction={auction}/>
+                                </div> 
+                            </React.Fragment>
+                        )) : ''}
 
                     </div>
 
@@ -162,10 +160,8 @@ function SingleAuctionPage(props) {
                     id="auction2" 
                     role="tabpanel"
                     aria-labelledby="profile-tab">
-                    <AuctionDetailInfo/>
+                    <AuctionDetailInfo HouseDetail={HouseDetail} getAuction={getAuction} auction={auction}/>
                 </div>
-
-
 
             </div>
         </div>
