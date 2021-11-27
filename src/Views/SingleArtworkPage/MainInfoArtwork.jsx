@@ -11,7 +11,6 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
     const { is_logged_in } = useSelector((state) => state.authReducer)
 
-    // console.log("artwork==>>>> ", artwork);
 
     const handleSearchArtworkByLat = (value) => {
         if (value > 0) {
@@ -119,7 +118,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                             <h6 className="default">{artwork?.category ? artwork?.category[0]?.title : ''}</h6>
                                         </p>
                                         <p className="d-info gallery">
-                                            <h6 className="default">{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : '--'}</h6>
+                                            <h6 className="default">{artwork?.auctions?.latest_auction?.house?.home_auction_name ? artwork?.auctions?.latest_auction?.house?.home_auction_name : ''}</h6>
                                         </p>
                                     </div>
                                     <div className="d-artwork-right">
@@ -142,7 +141,6 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                             <h6 className="ah-link">
                                                 <h3 className="default">{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</h3>
                                             </h6>
-                                            {/* <button type="button" className="btn-follow">دنبال کردن</button> */}
                                             <button
                                                 onClick={() =>
                                                     Follow(
