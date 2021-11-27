@@ -238,12 +238,12 @@ function Auctions() {
                             />
 
                             <div className="col-lg-9">
-                                {Auctions && Auctions.length >= 1 ? Auctions.map((item, key) => {
+                                {Auctions && Auctions?.length >= 1 ? Auctions.map((item, key) => {
                                     return (
                                         <div key={key} className="row-blocks">
                                             <div className="row">
                                                 <div className="col-md-4">
-                                                    <Link to={`/one-auction/${item.id}`}
+                                                    <Link to={`/one-auction/${item?.id}`}
                                                         className="bg-shadow tr-shadow10">
                                                         <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                                                     </Link>
@@ -253,7 +253,7 @@ function Auctions() {
                                                         <div className="col-xl-3 col-sm-4 col-3">
                                                             <span className="category-icon live-icon">
                                                                 <span
-                                                                    className="d-none d-md-inline-block"> </span> {AuctionType(item.type)}
+                                                                    className="d-none d-md-inline-block"> </span> {AuctionType(item?.type)}
                                                             </span>
                                                         </div>
                                                         <div className="col-xl-9 col-sm-8 col-9 textalign-left">

@@ -153,7 +153,7 @@ function OneAuction(props) {
         if (action) {
             axios.delete(`${BASE_URL}/following/${data}`)
                 .then(resp => {
-                    getProducts()
+                    getAuction()
                 })
         } else {
             axios.post(`${BASE_URL}/following/`, {
@@ -163,7 +163,7 @@ function OneAuction(props) {
             })
                 .then(resp => {
                     if (resp.data.code === 201) {
-                        getProducts()
+                        getAuction()
                     }
 
                 })
@@ -173,6 +173,7 @@ function OneAuction(props) {
 
         }
     }
+
 
     return (
         <>
@@ -204,22 +205,19 @@ function OneAuction(props) {
                                             <div className="col-6">
                                                 {convertToEn(Auction.type)}
                                             </div>
-                                            <div className="col-6 textalign-left"
-                                                onClick={() => setReminder(!reminder)}>
-                                                <Link to={`/panel-reminders`}>
-                                                    <span className={"reminder-icon " + (reminder ? "active" : "")}>
-                                                        {reminder ? "در حال یادآوری" : "یادآوری"}
-                                                    </span>
-                                                </Link>
-                                            </div>
-                                            {/* 
-                                            onClick={() =>
-                                                            Follow(
-                                                                item?.following?.follow?.is_active ?
-                                                                    item?.following?.follow?.id :
-                                                                    item?.id, item?.following?.follow?.is_active)
+                                            <div className="col-6 textalign-left">
+
+                                                <button
+                                                    onClick={() =>
+                                                        Follow(
+                                                            Auction?.following?.follow?.is_active ?
+                                                            Auction?.following?.follow?.id :
+                                                            Auction?.id, Auction?.following?.follow?.is_active)
                                                         }
-                                                        type="button" className={" reminder-icon " + (item?.following?.follow?.is_active ? "active" : "")} */}
+                                                    type="button" className={" reminder-icon " + (Auction?.following?.follow?.is_active ? "active" : "")}>
+                                                    {Auction?.following?.follow?.is_active ? 'در حال یادآوری' : 'یادآوری'}
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div className="auction-calender">
@@ -400,7 +398,7 @@ function OneAuction(props) {
                                                         <div className="ra-row">
                                                             <div className="ra-col">
                                                                 <h6 className="default gray50 ">{item?.artwork_title}</h6>
-                                                                <h4 className="default">از {Auction.title}</h4>
+                                                                <h4 className="default">از {Auction?.title}</h4>
                                                             </div>
                                                             <div className="ra-col">
                                                                 <h5 className="default lot-num">{key + 1}</h5>
@@ -573,38 +571,38 @@ function OneAuction(props) {
                                             <div className="auction-gallery-info">
                                                 <div className="ah-left">
                                                     <div className="h-block-img">
-                                                        <img src={parser(HouseDetail.media, 'profile')} width="159"
+                                                        <img src={parser(HouseDetail?.media, 'profile')} width="159"
                                                             height="159"
-                                                            alt={HouseDetail.home_auction_name} />
+                                                            alt={HouseDetail?.home_auction_name} />
                                                     </div>
                                                     <div className="detail-ahm">
                                                         <a href="#" className="ah-link"><h3
-                                                            className="default">{HouseDetail.home_auction_name}</h3></a>
+                                                            className="default">{HouseDetail?.home_auction_name}</h3></a>
                                                         <button type="button" className="btn-follow">دنبال کردن</button>
                                                     </div>
                                                 </div>
                                                 <div className="ah-block-all-info">
-                                                    <a href={parseWebSite(HouseDetail.info_link, 'website')}
-                                                        className="link-info all-info">{parseWebSite(HouseDetail.info_link, 'website')}</a>
-                                                    <a href={`mailto: ${HouseDetail.email}`}
+                                                    <a href={parseWebSite(HouseDetail?.info_link, 'website')}
+                                                        className="link-info all-info">{parseWebSite(HouseDetail?.info_link, 'website')}</a>
+                                                    <a href={`mailto: ${HouseDetail?.email}`}
                                                         className="all-info mail-info">{HouseDetail.email}</a>
-                                                    <a href={HouseDetail.phone ? HouseDetail.phone : HouseDetail.mobile}
-                                                        className="info-tel all-info">{HouseDetail.phone ? HouseDetail.phone : HouseDetail.mobile}</a>
+                                                    <a href={HouseDetail?.phone ? HouseDetail?.phone : HouseDetail?.mobile}
+                                                        className="info-tel all-info">{HouseDetail?.phone ? HouseDetail?.phone : HouseDetail?.mobile}</a>
                                                     <address className="all-info">
                                                         {HouseDetail?.home_auction_location?.address}
                                                     </address>
                                                 </div>
                                                 <ul className="social">
                                                     <li>
-                                                        <a href={parseWebSite(HouseDetail.info_link, 'facebook')}
+                                                        <a href={parseWebSite(HouseDetail?.info_link, 'facebook')}
                                                             id="facebook" />
                                                     </li>
                                                     <li>
-                                                        <a href={parseWebSite(HouseDetail.info_link, 'instagram')}
+                                                        <a href={parseWebSite(HouseDetail?.info_link, 'instagram')}
                                                             id="instagram" />
                                                     </li>
                                                     <li>
-                                                        <a href={parseWebSite(HouseDetail.info_link, 'telegram')}
+                                                        <a href={parseWebSite(HouseDetail?.info_link, 'telegram')}
                                                             id="telegram" />
                                                     </li>
                                                 </ul>
