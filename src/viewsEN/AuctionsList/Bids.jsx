@@ -4,17 +4,15 @@ import PanelSidebar from "../../componentsEN/PanelSideBar";
 import {Link} from "react-router-dom";
 import {Spin} from "antd";
 import PaginationComponent from "../../components/PaginationComponent";
+import queryString from "query-string";
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
 
 function AuctionsBids(props) {
 
     const [bidsCount, setBidsCount] = useState(0);
 
-    const [bids, setBids] = useState([{
-        first_name : 'Ehsan' ,
-        last_name : 'Mashali' ,
-        price : 200 ,
-
-    }]);
+    const [bids, setBids] = useState([]);
     const [loading, setLoading] = useState(false);
     const [params, setParams] = useState({
         page : 1 , 
@@ -33,6 +31,29 @@ function AuctionsBids(props) {
         })
     }
 
+    const getBids = () => {
+        setLoading(true)
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}/bidding/?${queries}`)
+            .then(resp => {
+                console.log(resp)
+                    setLoading(false)
+                    setBids(resp.data.data.result)
+                    setBidsCount(resp.data.data.count)
+            })
+            .catch(err => {
+                console.error(err.response);
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        getBids()
+
+    }, [params])
+
+
+  
     return (
         <>
             <HeaderPanel titlePage={'Bids'}/>
@@ -59,9 +80,9 @@ function AuctionsBids(props) {
                                 return(
                                     <div className="amount-list" key={key}>
                                         <div className="amount-block">
-                                            <div className="amount-range">{item.first_name + " " + item.last_name}</div>
+                                            <div className="amount-range">{item?.user?.first_name_en + " " + item?.user?.last_name_en}</div>
                                             <div className="amount-range">
-                                                {item.price}<span className="unit">USD</span>
+                                                {item.price}<span className="unit">{item?.currency}</span>
                                             </div>
                                         </div>
                                     </div>

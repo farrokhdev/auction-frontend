@@ -19,9 +19,10 @@ function AuctionsRequests(props) {
     const [params, setParams] = useState({
         page : 1 , 
         page_size : 10 , 
-        sale__id : props.match.params.id
+        sale__id : props?.match?.params?.id
     })
 
+// console.log("params=" , params)
     const getRequests = () => {
         setLoading(true);
         const queries = queryString.stringify(params);
@@ -45,7 +46,7 @@ function AuctionsRequests(props) {
         setLoading(true)
         axios.get(`${BASE_URL}/sale/join-auction/${pid}`)
             .then(resp => {
-                console.log(resp)
+                // console.log(resp)
                 if (resp.data.code === 200) {
                     setLoading(false)
                     setDetails(resp.data.data.result)
@@ -168,8 +169,8 @@ function AuctionsRequests(props) {
                         let payload = {
                             "is_approve": true
                         }
-                        axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
-                            console.log(res.data);
+                        axios.patch(`${BASE_URL}/sale/join-auction/${Details?.id}/`, payload).then(res => {
+                            // console.log(res.data);
                             setLoading(false)
                             getRequests()
                             setIsModalVisible(false);
@@ -189,8 +190,8 @@ function AuctionsRequests(props) {
                         let payload = {
                             "is_approve": false
                         }
-                        axios.patch(`${BASE_URL}/sale/join-auction/${Details.id}/`, payload).then(res => {
-                            console.log(res.data);
+                        axios.patch(`${BASE_URL}/sale/join-auction/${Details?.id}/`, payload).then(res => {
+                            // console.log(res.data);
                             setLoading(false)
                             message.success("کاربر رد شد")
                             getRequests()
