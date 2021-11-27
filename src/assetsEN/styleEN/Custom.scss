@@ -1804,8 +1804,8 @@ footer .brdrtop span {
 .btn-lightpink {
     height: 34px;
     border-radius: 17px;
-    color: var(--pink);
-    padding: 5px 15px;
+    color: var(--pink) !important;
+    padding: 8px 15px;
     font-size: 12px;
     position: relative;
     background-color: var(--lightpink);
@@ -2095,6 +2095,7 @@ footer .brdrtop span {
     cursor: pointer;
     position: relative;
     z-index: 15;
+    outline: none !important;
 }
 
 .reminder-icon.active {

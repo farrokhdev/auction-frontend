@@ -1,6 +1,53 @@
-import React from 'react'
+import React from 'react';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
 
-function AuctionDetailInfo() {
+function AuctionDetailInfo({HouseDetail , getAuction , auction}) {
+
+    console.log("getAuction : " , auction);
+
+    const parser = (data, type) => {
+        for (let i in data)
+            if (data[i].type === type) {
+                return data[i].exact_url
+            }
+    }
+
+    const parseWebSite = (data, type) => {
+        for (let i in data)
+            if (data[i].type === type) {
+                if (data[i].url.startsWith("http"))
+                    return data[i].url
+                else
+                    return "http://" + data[i].url
+            }
+    }
+
+    const Follow = (data, action) => {
+        if (action) {
+            axios.delete(`${BASE_URL}/following/${data}`)
+                .then(resp => {
+                    getAuction()
+                })
+        } else {
+            axios.post(`${BASE_URL}/following/`, {
+                "content_type": "auction",
+                "object_id": data,
+                "activity_type": "follow"
+            })
+                .then(resp => {
+                    if (resp.data.code === 201) {
+                        getAuction()
+                    }
+
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+        }
+    }
+
     return (
         <div className="row">
         <div className="col-lg-8">
@@ -156,32 +203,55 @@ function AuctionDetailInfo() {
             </div>
         </div>
         <div className="col-lg-4">
-            <div className="auction-gallery-info">
-                <div className="ah-left">
-                    <div className="h-block-img">
-                        <img src="img/logo-3.png" width="159" height="159"
-                             alt="arthibition gallery"/>
-                    </div>
-                    <div className="detail-ahm">
-                        <a href="#" className="ah-link"><h3 className="default">Arthibition gallery</h3></a>
-                        <button type="button" className="btn-follow">Follow</button>
-                    </div>
+        <div className="auction-gallery-info">
+            <div className="ah-left">
+                <div className="h-block-img">
+                    <img src={parser(HouseDetail?.media, 'profile')} width="159"
+                        height="159"
+                        alt={HouseDetail?.home_auction_name} />
                 </div>
-                <div className="ah-block-all-info">
-                    <a href="#" className="link-info all-info">www.sarebangallery.com</a>
-                    <a href="mailto: Info@sarebangallery.com"
-                       className="all-info mail-info">Info@sarebangallery.com</a>
-                    <a href="+982144258856" className="info-tel all-info">+98 21 4425 8856</a>
-                    <address className="all-info"><span className="province">Tehran Province,</span>Tehran,
-                        Hoveyzeh St, No.130
-                    </address>
+                <div className="detail-ahm">
+                    <a href="#" className="ah-link"><h3
+                        className="default">{HouseDetail?.home_auction_name}</h3></a>
+                    {/* <button type="button" className="btn-follow">دنبال کردن</button> */}
+                    <button
+                        onClick={() =>
+                            Follow(
+                                auction?.house?.following?.follow?.is_active ?
+                                auction?.house?.following?.follow?.id :
+                                auction?.id, auction?.house?.following?.follow?.is_active)
+                            }
+                        type="button" className={" reminder-icon " + (auction?.house?.following?.follow?.is_active ? "active" : "")}>
+                        {auction?.house?.following?.follow?.is_active ? "Reminding" : "Reminde me"}
+                    </button>
                 </div>
-                <ul className="social">
-                    <li><a href="#" id="facebook"></a></li>
-                    <li><a href="#" id="instagram"></a></li>
-                    <li><a href="#" id="telegram"></a></li>
-                </ul>
             </div>
+            <div className="ah-block-all-info">
+                <a href={parseWebSite(HouseDetail?.info_link, 'website')}
+                     className="link-info all-info">{parseWebSite(HouseDetail?.info_link, 'website')}</a>
+                <a href={`mailto: ${HouseDetail?.email}`}
+                     className="all-info mail-info">{HouseDetail.email}</a>
+                <a href={HouseDetail?.phone ? HouseDetail?.phone : HouseDetail?.mobile}
+                    className="info-tel all-info">{HouseDetail?.phone ? HouseDetail?.phone : HouseDetail?.mobile}</a>
+                <address className="all-info">
+                    {HouseDetail?.home_auction_location?.address_en}
+                </address>
+            </div>
+            <ul className="social">
+                <li>
+                    <a href={parseWebSite(HouseDetail?.info_link, 'facebook')}
+                        id="facebook" />
+                </li>
+                <li>
+                    <a href={parseWebSite(HouseDetail?.info_link, 'instagram')}
+                        id="instagram" />
+                </li>
+                <li>
+                    <a href={parseWebSite(HouseDetail?.info_link, 'telegram')}
+                        id="telegram" />
+                </li>
+            </ul>
+        </div>
         </div>
     </div>
     )
