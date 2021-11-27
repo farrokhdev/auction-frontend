@@ -36,7 +36,7 @@ import AuctionsList from '../viewsEN/AuctionsList';
 import AuctionsListBids from '../viewsEN/AuctionsList/Bids';
 import AuctionsListRequests from '../viewsEN/AuctionsList/AuctionsListRequests'
 import AddAuction from '../viewsEN/AddAuction/AddAuction'
-
+import TermsOfUse from '../viewsEN/TermsOfUse'
 import '../assetsEN/styleEN/Custom.scss';
 import '../assetsEN/styleEN/fontawesome-all.min.css';
 import '../assetsEN/styleEN/antd.scss'
@@ -96,6 +96,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/auctions-list/bids/:id" component={AuctionsListBids} />
                         <Route exact path="/en/auctions-list/requests/:id" component={AuctionsListRequests} />
                         <Route exact path="/en/panel-add-auction/:auctionId" component={AddAuction} />
+                        <Route exact path="/en/terms-of-use/:name" component={TermsOfUse} />
 
                         <Route exact path="/" component={AfterLogin} />
                     </Switch>

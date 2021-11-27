@@ -389,6 +389,25 @@ export function AuctionStatusText(type, enrolled, id) {
 
 }
 
+export function AuctionStatusTextEN(type, enrolled, id) {
+    // auction ended and user not allow to join auction
+    if (type === "CLOSED") {
+        return <button type="button" className="btn btn-lightpink">The auction is over</button>
+        // user registred to auction then user not allow to join auction
+    } else if (enrolled) {
+        return <button type="button" className="btn btn-lightgreenbg">You have registered in the auction</button>
+        // user not register to auction and auction is preparing or started then user allow to join auction
+    } else {
+        return <Link to={`/en/buyer-register/${id}`}>
+            <button type="button" className="btn btn-basic">
+            Join<span class="">the auction</span>
+            </button>
+        </Link>
+    }
+
+}
+
+
 
 
 
