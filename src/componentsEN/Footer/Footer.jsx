@@ -1,8 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import logo from '../../imgEN//logo-bw.svg';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
 
 function Footer() {
+
+    const [Products, setProducts] = useState([])
+    const [loading, setLoading] = useState(false)
+
+
+
+    const getProducts = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/panel/contents/`)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    setProducts(resp.data.data.result)
+                }
+
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
+
+    useEffect(() => {
+        getProducts()
+    }, [])
+
+
     return (
         <>
             <footer>
@@ -15,11 +44,20 @@ function Footer() {
                         </div>
                         <div className="col-lg-8 col-md-10 col-sm-9">
                             <ul className="simple-menu">
-                                <li><Link to="/">Term of us</Link></li>
+
+                                {Products?.length && Products?.map((item) => (
+
+                                    <li className="list-inline-item">
+                                        <Link key={item?.id} to={`/en/terms-of-use/${item?.title}`}>
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                                {/* <li><Link to="/">Term of us</Link></li>
                                 <li><Link to="/">Privacy</Link></li>
                                 <li><Link to="/">Work with us</Link></li>
                                 <li><Link to="/">FAQ</Link></li>
-                                <li><Link to="/">Contact us</Link></li>
+                                <li><Link to="/">Contact us</Link></li> */}
                             </ul>
                         </div>
                         <div className="col-md-2 col-sm-3">

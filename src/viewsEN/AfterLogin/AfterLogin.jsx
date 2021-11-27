@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import HeaderEN from '../../componentsEN/HeaderEN';
 import LastAuctions from './LastAuctions';
@@ -8,22 +8,27 @@ import Footer from "../../componentsEN/Footer"
 import pic8 from '../../imgEN/pic8.jpg';
 import pic9 from '../../imgEN/pic9.jpg';
 import pic10 from '../../imgEN/pic10.jpg';
+import { Spin } from "antd";
 
 
 function AfterLogin() {
+
+    const [loading, setLoading] = useState(false)
     return (
         <>
-            <HeaderEN boxShadow={{ boxShadow: " none" }}/>
+            <HeaderEN boxShadow={{ boxShadow: " none" }} />
             <main>
+            <Spin spinning={loading}>
                 <div className="container containercs ">
-                    <LastProductsAuctionSlider />
+
+                    <LastProductsAuctionSlider setLoading={setLoading}/>
                     <section className="Categorized-artworks">
                         <div className="container innercontainer">
                             <div className="row">
                                 <div className="col-md-3 col-sm-12">
                                     <div className="main-title">
                                         <h2 className="default titr">Latest Artworks</h2>
-                                        <Link to="/" className="btn-view">View all</Link>
+                                        <Link to="/en/artworks/" className="btn-view">View all</Link>
                                     </div>
                                 </div>
                             </div>
@@ -37,11 +42,11 @@ function AfterLogin() {
                             <div className="col">
                                 <div className="main-title">
                                     <h2 className="default titr">Latest Auctions</h2>
-                                    <Link to="/" className="btn-view">View all</Link>
+                                    <Link to="/en/auctions/" className="btn-view">View all</Link>
                                 </div>
                             </div>
                         </div>
-                        <LastAuctions />
+                        <LastAuctions setLoading={setLoading}/>
                     </section>
                 </div>
                 <div className="container containercs ">
@@ -207,6 +212,7 @@ function AfterLogin() {
                         </div>
                     </section>
                 </div>
+                </Spin>
             </main>
             <Footer />
         </>

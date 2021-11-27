@@ -1,10 +1,38 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Carousel } from "antd";
-import slider1 from "../../imgEN/slider1.jpg"
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import { Link } from 'react-router-dom';
+import moment from "jalali-moment";
+import { AuctionStatusTextEN, AuctionTypeEN } from '../../utils/converTypePersion';
 
-function LastProductsAuctionSlider() {
+function LastProductsAuctionSlider({ setLoading }) {
     const sliderRef = useRef()
     const [curentIndex, setcurentIndex] = useState(1)
+
+    const [LastAuctionOnStandBy, setLastAuctionOnStandBy] = useState([])
+    const [auctionProduct, setAuctionProduct] = useState([])
+
+    const getLastAuctionOnStandBy = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/auctions/on_standby/`)
+            .then(resp => {
+                setLastAuctionOnStandBy(resp.data.data.result)
+                setAuctionProduct(resp.data.data.result.auction_product)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        getLastAuctionOnStandBy()
+
+    }, [])
+
+
 
     return (
         <>
@@ -19,26 +47,30 @@ function LastProductsAuctionSlider() {
                                         afterChange={(e) => setcurentIndex(e + 1)}
                                         ref={sliderRef}
                                     >
-                                        {[1, 2, 3].map((item, index) => {
+                                        {auctionProduct?.length ? auctionProduct?.map((item, index) => {
                                             return (
                                                 <div className="carousel-item active ">
                                                     <div className="bg-shadow tr-shadow20 max-width-500">
-                                                        <img src={slider1} width="500" height="500" className="img-fluid" />
+                                                        <Link to={`/en/artworks/${item?.product?.id}`} >
+                                                            <img src={item?.product?.media?.exact_url}
+                                                                onClick={() => setcurentIndex(index)}
+                                                                width="500" height="500" className="img-fluid" />
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             )
-                                        })}
+                                        }) : ""}
                                     </Carousel>
                                 </div>
                                 <div className="carousel-controls">
                                     <button className="carousel-control-prev" type="button"
                                         data-bs-target="#main-carousel" data-bs-slide="prev">
-                                        <span className="carousel-control-prev-icon" aria-hidden="true"  onClick={() => sliderRef.current.prev()}></span>
+                                        <span className="carousel-control-prev-icon" aria-hidden="true" onClick={() => sliderRef.current.prev()}></span>
                                         <span className="visually-hidden">Previous</span>
                                     </button>
                                     <div className="carousel-number-indicator">
                                         <span className="now-slide">{curentIndex}</span>
-                                        <span className="all-slide">03</span>
+                                        <span className="all-slide">{auctionProduct?.length}</span>
                                     </div>
                                     <button className="carousel-control-next" type="button"
                                         data-bs-target="#main-carousel" data-bs-slide="next">
@@ -53,33 +85,45 @@ function LastProductsAuctionSlider() {
 
                         </div>
                         <div className="col-sm-6 col-lg-7 leftslider order-sm-1">
-                            <h1 className="default">Contemporary Iranian Art Jan 2020</h1>
+                            <h1 className="default">{LastAuctionOnStandBy?.title_en}</h1>
                             <p className="font15">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                tincidunt ut laoreet dolore magna aliquam erat volutpat
+                                {LastAuctionOnStandBy?.description_en}
                             </p>
-                            <button type="button" className="btn btn-basic">Join this auction</button>
+                            {AuctionStatusTextEN(LastAuctionOnStandBy?.status, LastAuctionOnStandBy?.user_is_enrolled, LastAuctionOnStandBy.id)}
+
+                            {/* <button type="button" className="btn btn-basic">Join this auction</button> */}
                         </div>
                         <div className="col-sm-12 col-lg-7 mrgtop150slider order-sm-3">
                             <div className="row">
                                 <div className="col-sm-3 ">
                                     <h6 className="slider-title">Presentor:</h6>
-                                    <span>Tehran auction</span>
+                                    <span>{LastAuctionOnStandBy?.house?.home_auction_name_en}</span>
                                 </div>
                                 <div className="col-sm-3">
                                     <h6 className="slider-title">Type:</h6>
-                                    <span>Online auction</span>
+                                    <span>{AuctionTypeEN(LastAuctionOnStandBy.type)}</span>
                                 </div>
                                 <div className="col-sm-6">
                                     <h6 className="slider-title">Date:</h6>
                                     <div className="auction-calender">
                                         <div className="auction-date">
-                                            <span className="start-date">19 JAN</span>
-                                            <span className="end-date">22 JAN</span>
+                                            <span className="start-date">
+                                                {LastAuctionOnStandBy?.start_time ?
+                                                    moment(LastAuctionOnStandBy?.start_time, 'YYYY/MM/DD').locale('en').format('DD MMMM')
+                                                    : ""}</span>
+                                            <span className="end-date">
+                                                {LastAuctionOnStandBy?.end_time ?
+                                                    moment(LastAuctionOnStandBy?.end_time, 'YYYY/MM/DD').locale('en').format('DD MMMM')
+                                                    : ""}</span>
                                         </div>
                                         <div className="auction-time">
-                                            <span className="start-time">10 AM</span>
-                                            <span className="end-time">10 PM</span>
+                                            <span className="start-time">
+                                                {LastAuctionOnStandBy?.start_time ?
+                                                    moment(LastAuctionOnStandBy?.start_time, 'YYYY/MM/DD HH:mm').locale('en').format('HH:mm:ss')
+                                                    : ""}</span>
+                                            <span className="end-time">{LastAuctionOnStandBy?.end_time ?
+                                                moment(LastAuctionOnStandBy?.end_time, 'YYYY/MM/DD HH:mm').locale('en').format('HH:mm:ss')
+                                                : ""}</span>
                                         </div>
                                     </div>
                                 </div>
