@@ -33,7 +33,7 @@ export function AuctionStatusTextBtn(type, enrolled, id) {
         return <button type="button" className="btn btn-lightgreenbg">You have registered in the auction</button>
         // user not register to auction and auction is preparing or started then user allow to join auction
     } else {
-        return <Link to={`/buyer-register/${id}`}>
+        return <Link to={`/en/buyer-register/${id}`}>
             <button type="button" className="btn btn-main join">
                 Join <span class="">this auction</span>
             </button>

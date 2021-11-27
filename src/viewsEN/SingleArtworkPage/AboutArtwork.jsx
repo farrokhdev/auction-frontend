@@ -1,6 +1,7 @@
 import React from "react";
+import momentJalaali from 'moment-jalaali';
 
-function AboutArtwork() {
+function AboutArtwork({artwork}) {
   return (
     <div
       className="tab-pane fade show active "
@@ -10,21 +11,27 @@ function AboutArtwork() {
     >
       <table className="table-main" id="about-artwork">
         <tbody>
-          <tr>
+          {/* <tr>
             <td>Signed</td>
             <td>Sadeq Adhaam 1939 - 2018 (bottom,right)</td>
-          </tr>
+          </tr> */}
           <tr>
             <td>Category</td>
-            <td>Sculpture</td>
+            <td>{ artwork?.category ?  artwork?.category?.map(item => (
+                    <span className="mx-1">{item?.title_en}</span>
+                )) : ''}</td>
           </tr>
           <tr>
             <td>Size</td>
-            <td>50 * 70 cm</td>
+            <td>
+              <span>
+                <div> {`${artwork?.artwork_height ? artwork?.artwork_height + ' * ' : ''}  ${artwork?.artwork_width ? artwork?.artwork_width : ''} * ${artwork?.artwork_length ? artwork?.artwork_length : ''}`} </div>                 
+              </span>
+            </td>
           </tr>
           <tr>
             <td>Date</td>
-            <td>1989.08.09</td>
+            <td>{artwork?.creation_date ? momentJalaali(artwork?.creation_date).format(`YYYY.MM.DD`) : ''}</td>
           </tr>
         </tbody>
       </table>

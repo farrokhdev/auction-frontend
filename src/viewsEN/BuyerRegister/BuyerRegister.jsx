@@ -26,7 +26,7 @@ function BuyerRegister(props) {
         <Redirect
             to={{
                 pathname: `${redirectUrl}/${props?.match?.params?.id}`,
-                state: { prevPath: `/buyer-register/${props?.match?.params?.id}` }
+                state: { prevPath: `/en/buyer-register/${props?.match?.params?.id}` }
             }}
         />
         )
