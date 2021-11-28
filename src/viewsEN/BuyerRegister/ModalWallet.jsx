@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, Row, Col, message, Spin } from "antd";
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
+import {TRANSACTION, ACCOUNT_BANK_Edit} from "../../utils/constant"
 
 function ModalWallet(props) {
-    const { setIsModalVisible, refreshTable } = props
+    const {setIsModalVisible,refreshTable} = props
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
 
 
     const onFinish = (values) => {
-
+            sendData(values)
     }
     useEffect(() => {
-        form.resetFields()
+            form.resetFields()
     }, [])
+
+    const sendData = (values) => {
+        setLoading(true)
+        axios.post(`${BASE_URL}${TRANSACTION}`, {amount:Number(values.amount),"transaction_type":"increase"})
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 201 && resp.data?.data?.result) {
+                    message.success("Inventory increase was successful")
+                    refreshTable()
+                    setIsModalVisible(false)
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("Try again")
+            })
+    }
+
+
 
 
     return (

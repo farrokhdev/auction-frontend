@@ -75,13 +75,13 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/artworks" component={Artworks} />
                         <Route exact path="/en/artworks/:id" component={SingleArtworkPage} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
-                        <Route exact path="/en/panel-profile" component={PanelProfile} />
+                        <Route exact path="/en/panel-profile/:id" component={PanelProfile} />
                         <Route exact path="/en/panel-favorites" component={PanelFavorits} />
                         <Route exact path="/en/panel-myPurchases" component={PanelPurchases} />
                         <Route exact path="/en/panel-wallet" component={PanelWallet} />
                         <Route exact path="/en/panel-messages" component={PanelMessages} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
-                        <Route exact path="/en/panel-financial" component={PanelFinancial} />
+                        <Route exact path="/en/panel-financial/:id" component={PanelFinancial} />
                         <Route exact path="/en/buyer-register/:id" component={BuyerRegister} />
                         <Route exact path="/en/panel-artwork-list" component={UserPanelArtworkList} />
                         <Route exact path="/en/panel-reminders" component={PanelRemindersPage} />

@@ -367,7 +367,7 @@ function Auctions(props) {
                                                     <div className="col-sm-7 textalign-right">
 
 
-                                                    {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item?.id}`}>
+                                                    {item?.status !== "CLOSED" ? <Link to={`/en/auctions/${item?.id}`}>
                                                                 <button type="button" className="btn btn-gray mx-2">
                                                                     <FontAwesomeIcon className="mx-1" icon={faEye} />
                                                                     {AuctionType(item?.type)}

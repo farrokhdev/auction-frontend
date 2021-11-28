@@ -1,19 +1,84 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { Button, Form, Input, Row, Col, message, Spin } from "antd";
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
+import {ACCOUNT_APPROVE, EDIT_PROFILE} from "../../utils/constant";
 
 
-function EditPhoneNumberPanelProfile() {
+function EditPhoneNumberPanelProfile(props) {
     const [form] = Form.useForm();
-    const [showNumber, setShowNumber] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [showNumber, setShowNumber] = useState(true)
     const [createField, setCreateField] = useState(null)
+    const [number, setNumber] = useState("")
+    const {data,getProfile} = props;
+
+    useEffect(()=>{
+        if(data.mobile){
+            setNumber(data.mobile)
+            form.setFieldsValue({mobile:data.mobile})
+        }else{
+            setNumber(data.email)
+        }
+
+    },[data])
+    const onFinish = (values) => {
+
+        if (values?.mobile)
+        sendData(values)
+    }
+    
+    const onSub = (values) => {
+        sendCode(values)
+    }
+    
+    const sendData = (values) => {
+        setLoading(true)
+        axios.put(`${BASE_URL}${EDIT_PROFILE}`, values)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.data.statusCode === 400) {
+                    message.error("Try again")
+                } else {
+                    setCreateField(values?.mobile)
+                    setShowNumber(false)
+                    message.success(" Verification code sent to your mobile")
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                // message.error("Try again")
+            })
+    }
+    const sendCode = (values) => {
+        setLoading(true)
+        axios.post(`${BASE_URL}${ACCOUNT_APPROVE}`, {...values, user_name: number, tmp_user_name: createField})
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.data.statusCode === 400) {
+                    message.error("Request a validation code again")
+                }else{
+                    setShowNumber(true)
+                    message.success(" Your mobile has been successfully verified")
+                    getProfile()
+
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                // message.error("Try again")
+            })
+    }
 
 
     return (
         <>
             <Spin spinning={loading}>
                 {showNumber ? <Form
-                    // onFinish={onFinish}
+
+                    onFinish={onFinish}
                     form={form}
                     wrapperCol={{ span: 24 }}>
                     <div>
@@ -54,7 +119,7 @@ function EditPhoneNumberPanelProfile() {
                 </Form>
                     :
                     <Form
-                        // onFinish={onSub}
+                        onFinish={onSub}
                         form={form}
                         wrapperCol={{ span: 24 }}>
                         <div>

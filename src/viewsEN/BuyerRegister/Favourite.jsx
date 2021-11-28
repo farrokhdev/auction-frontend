@@ -5,7 +5,7 @@ import Chooseartwork from './ChooseArtwork';
 
 const Favourite = (props) => {
     const { setSelectComponent, selectComponent, setSelectProducts } = props
-    const [selectProduct, setSelectProduct] = useState([1, 2, 3])
+    const [selectProduct, setSelectProduct] = useState([])
     const [loading, setLoading] = useState(false)
     const [auction, setAuction] = useState(0)
     const [next, setNext] = useState(false)
@@ -37,14 +37,12 @@ const Favourite = (props) => {
                                 <Card
                                     style={{ width: "100%" }}
                                     cover={
-                                        <div className="image-custom-back" style={{ backgroundImage: `url(${img6})`, height: "250px" }} />
+                                        <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                                     }
                                 >
                                     <Meta
-                                        // title={item?.artwork_title}
-                                        // description={item?.technique}
-                                        title={'From the Saqakhaneh series'}
-                                        description={'Sohrab Sepehri'}
+                                        title={item?.artwork_title_en}
+                                        description={item?.technique_en}
                                     />
                                 </Card>
                             </div>
