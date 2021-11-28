@@ -19,9 +19,10 @@ function
     const [Posting, setPosting] = useState(false);
 
     //form
+    
     const [Title, setTitle] = useState("");
     const [Category, setCategory] = useState("");
-    const [ArtistFa, setArtistFa] = useState("");
+    // const [ArtistFa, setArtistFa] = useState("");
     const [ArtistEn, setArtistEn] = useState("");
     const [Number, setNumber] = useState("");
     const [Length, setLength] = useState("");
@@ -30,7 +31,7 @@ function
     const [MinPrice, setMinPrice] = useState("");
     const [MaxPrice, setMaxPrice] = useState("");
     const [Technique, setTechnique] = useState("");
-    const [DescriptionFa, setDescriptionFa] = useState("");
+    const [DescriptionEn, setDescriptionEn] = useState("");
     const [Link, setLink] = useState("");
     const [uploadList, setUploadList] = useState([])
 
@@ -107,22 +108,22 @@ function
     let handleFormSubmit = () => {
         let payload = {
             "artwork_title": Title,
-            "persian_artist_name": ArtistFa,
-            "english_artist_name": "adf",
+            "persian_artist_name": ArtistEn,
+            "english_artist_name": ArtistEn,
             "artwork_num": parseInt(Number),
             "artwork_length": parseInt(Length),
             "artwork_width": parseInt(Width),
             "artwork_height": parseInt(Height),
             "technique": Technique,
+            "technique_en": Technique,
             "category_id": [Category],
-            "persion_description": DescriptionFa,
-            "english_description": "fasdf",
+            "persion_description": DescriptionEn,
+            "english_description": DescriptionEn,
             "media": uploadList,
             "artwork_link": Link,
             "min_price": MinPrice,
             "max_price": MaxPrice,
             "offer_home_auction": "unrequired"
-            //    صاحب اثر هم هست
         }
         setPosting(true)
 
@@ -131,7 +132,7 @@ function
                 if (resp.data.code === 201) {
                     message.success('The work was successfully registered.');
                     setPosting(false)
-                    window.location.href = "#/panel-artwork-list"
+                    window.location.href = "#/en/panel-artwork-list"
                 }
             })
             .catch(err => {
@@ -171,7 +172,7 @@ function
                                                     <option
                                                         key={key}
                                                         value={item?.id}>
-                                                        {item?.title}
+                                                        {item?.title_en}
                                                     </option>
                                                 )
                                             }) :
@@ -184,9 +185,9 @@ function
                                     <div className="input-group">
                                         <label className="default-lable">artist</label>
                                         <input type="text" className="default-input"
-                                            onChange={(e) => setArtistFa(e.target.value)}
+                                            onChange={(e) => setArtistEn(e.target.value)}
                                             placeholder="Enter the artist name."
-                                            value={ArtistFa} />
+                                            value={ArtistEn} />
                                     </div>
                                 </div>
                                 <div className="col-12">
@@ -277,7 +278,7 @@ function
                                     <div className="input-group">
                                         <label className="default-lable">description</label>
                                         <textarea rows="3" className="default-input"
-                                            onChange={(e) => setDescriptionFa(e.target.value)}
+                                            onChange={(e) => setDescriptionEn(e.target.value)}
                                             placeholder="Entert the description." />
                                     </div>
                                 </div>
