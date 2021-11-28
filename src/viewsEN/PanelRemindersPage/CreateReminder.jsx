@@ -12,7 +12,6 @@ import moment from 'moment-jalaali'
 
 function CreateReminder(props) {
 
-    const [reminders, setReminders] = useState({});
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
     const [Reminder, setReminder] = useState({})
@@ -21,8 +20,52 @@ function CreateReminder(props) {
 
         let reminderDays = [];
 
-      
+        reminderDays = [
+            values?.start_time.format("YYYY-MM-DD"),
+            values?.end_time.format("YYYY-MM-DD")
+        ]
+
+        let payload = {
+            "name": values?.name,
+            "keyword": values?.keyword,
+            "exact_match": Reminder?.exact_match,
+            "status": Reminder?.status ? Reminder?.status : false, 
+            "min_price": values?.min_price,
+            "max_price": values?.max_price,
+            "reminder_days": reminderDays,
+        }
+
+
+        axios.post(`${BASE_URL}/notification/auction-reminders/`, payload)
+            .then(res => {
+                setLoading(true)
+                if (res.data.code === 201) {
+
+                    let data = res.data.data.result;
+                    setReminder(data)
+
+                    message.success({
+                        content: "Your information was successfully registered",
+                        className: 'text-muted',
+                        style: {
+                            marginTop: '10vh',
+                        },
+                    })
+
+                    setTimeout(() => {
+                        window.location.href = "#/en/panel-reminders"
+                    }, 900);
+
+
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+                message.error("Please try again")
+            })
     }
+
 
 
     return (
@@ -152,7 +195,7 @@ function CreateReminder(props) {
                                                     // value={this.state.date}
                                                     // setTodayOnBlur={false}
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)
@@ -185,7 +228,7 @@ function CreateReminder(props) {
                                                     // setTodayOnBlur={false}
 
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)

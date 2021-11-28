@@ -3,8 +3,10 @@ import HeaderPanel from '../../componentsEN/HeaderPanel';
 import PanelSidebar from '../../componentsEN/PanelSideBar';
 import { Form, Input, Spin, message, Checkbox } from "antd";
 import { Link } from 'react-router-dom';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
 import DatePicker from 'react-datepicker2';
-import moment from 'moment-jalaali'
+import moment from "jalali-moment";
 import "antd/dist/antd.css";
 
 
@@ -15,14 +17,80 @@ function EditReminder(props) {
 
 
 
-  
+    const getData = () => {
+        setLoading(true)
+
+        axios.get(`${BASE_URL}/notification/auction-reminders/${props.match.params.id}/`)
+            .then(resp => {
+
+                setLoading(false)
+
+                if (resp.data.code === 200) {
+
+                    let data = resp.data.data.result;
+                    setReminder(data)
+                    form.setFieldsValue({
+                        ...data,
+                        start_time: moment(data.reminder_days[0]) ,
+                        end_time : moment(data.reminder_days[data.reminder_days.length - 1]) ,
+                    })
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("Please Reload the page")
+            })
+    }
 
     const onFinish = (values) => {
 
+
+        setLoading(true)
+        let reminderDays = [];
+
+        reminderDays = [
+            values.start_time.format("YYYY-MM-DD"),
+            values.end_time.format("YYYY-MM-DD")
+        ]
+
+        let payload = {
+            "name": values?.name,
+            "keyword": values?.keyword,
+            "exact_match": Reminder?.exact_match,
+            "min_price": values?.min_price,
+            "max_price": values?.max_price,
+            "reminder_days": reminderDays,
+            "status": Reminder?.status
+        }
+
+        axios.put(`${BASE_URL}/notification/auction-reminders/${props.match.params.id}/`, payload)
+            .then(resp => {
+                setLoading(false)
+
+                if (resp.data.code === 200) {
+                    message.success({
+                        content: "Your profile has been successfully edited",
+                        className: 'text-muted',
+                        style: {
+                            marginTop: '10vh',
+                        },
+                    })
+
+                    setTimeout(() => {
+                        window.location.href = "#/en/panel-reminders"
+                    }, 900);
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("Please Reload the page")
+            })
     }
 
     useEffect(() => {
-
+        getData()
 
     }, [])
 
@@ -137,10 +205,11 @@ function EditReminder(props) {
                                     <h5 className="default mrgb20">Time to send</h5>
                                     <div className="col-md-4">
                                         <div className="input-group">
-                                            <label className="default-lable">Match case</label>
+                                            <label className="default-lable">Start time</label>
                                             <Form.Item
                                                 className="w-100"
                                                 name="start_time"
+                                                id="start_time"
                                                 rules={[
                                                     {
                                                         required: true,
@@ -152,7 +221,7 @@ function EditReminder(props) {
                                                     // value={this.state.date}
                                                     // setTodayOnBlur={false}
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)
@@ -160,16 +229,16 @@ function EditReminder(props) {
                                                         }
 
                                                     }}
-                                                    name="start_time"
-                                                    id="start_time"
-                                                    min={moment().startOf('moment')}
+                                                    // name="start_time"
+                                                    
+                                                    // min={moment().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
                                     </div>
                                     <div className="col-md-4">
                                         <div className="input-group">
-                                            <label className="default-lable">Stop reminding</label>
+                                            <label className="default-lable">End time</label>
                                             <Form.Item
                                                 className="w-100"
                                                 name="end_time"
@@ -185,7 +254,7 @@ function EditReminder(props) {
                                                     // setTodayOnBlur={false}
 
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)
@@ -195,7 +264,7 @@ function EditReminder(props) {
                                                     }}
                                                     name="end_time"
                                                     id="end_time"
-                                                    min={moment().startOf('moment')}
+                                                    // min={moment().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
