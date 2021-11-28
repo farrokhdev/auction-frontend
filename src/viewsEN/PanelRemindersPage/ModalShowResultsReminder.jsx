@@ -28,7 +28,6 @@ function ModalEditReminder({reminder}) {
         })
     }
 
-
     return (
         <React.Fragment>
 

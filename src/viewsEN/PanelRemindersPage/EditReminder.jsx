@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import HeaderPanel from '../../componentsEN/HeaderPanel';
-import PanelSidebar from '../../componentsEN/PanelSideBar';
+import HeaderPanel from '../../components/HeaderPanel';
+import PanelSidebar from '../../components/PanelSidebar';
 import { Form, Input, Spin, message, Checkbox } from "antd";
 import { Link } from 'react-router-dom';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
 import DatePicker from 'react-datepicker2';
-import moment from 'moment-jalaali'
+import moment from "moment";
 import "antd/dist/antd.css";
 
 
@@ -15,14 +17,87 @@ function EditReminder(props) {
 
 
 
-  
+    const getData = () => {
+        setLoading(true)
+
+        axios.get(`${BASE_URL}/notification/auction-reminders/${props.match.params.id}/`)
+            .then(resp => {
+
+                setLoading(false)
+                // console.log("resp====>>", moment(resp.data.data.result.reminder_days[0]));
+
+                if (resp.data.code === 200) {
+
+                    let data = resp.data.data.result;
+                    setReminder(data)
+                    // console.log("GetDate===>>", data);
+console.log( "data.reminder_days[0] : " , moment(data.reminder_days[0]  , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD')) 
+console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD')) 
+                    form.setFieldsValue({
+                        ...data,
+                        start_time: moment(data.reminder_days[0]  , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD') ,
+                        end_time: moment(data.reminder_days[1]  , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD'),
+
+
+                    })
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("صفحه را دوباره لود کنید")
+            })
+    }
 
     const onFinish = (values) => {
 
+        // console.log('values--->', values);
+
+        setLoading(true)
+        let reminderDays = [];
+
+        reminderDays = [
+            values.start_time.format("YYYY-MM-DD"),
+            values.end_time.format("YYYY-MM-DD")
+        ]
+
+        let payload = {
+            "name": values?.name,
+            "keyword": values?.keyword,
+            "exact_match": Reminder?.exact_match,
+            "min_price": values?.min_price,
+            "max_price": values?.max_price,
+            "reminder_days": reminderDays,
+            "status": Reminder?.status
+        }
+
+        axios.put(`${BASE_URL}/notification/auction-reminders/${props.match.params.id}/`, payload)
+            .then(resp => {
+                setLoading(false)
+
+                if (resp.data.code === 200) {
+                    message.success({
+                        content: "پروفایل شما با موفقیت ویرایش شد",
+                        className: 'text-muted',
+                        style: {
+                            marginTop: '10vh',
+                        },
+                    })
+
+                    setTimeout(() => {
+                        window.location.href = "#/panel-reminders"
+                    }, 900);
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("صفحه را دوباره لود کنید")
+            })
     }
 
     useEffect(() => {
-
+        getData()
 
     }, [])
 

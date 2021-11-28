@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import HeaderPanel from '../../componentsEN/HeaderPanel';
-import PanelSidebar from '../../componentsEN/PanelSideBar';
+import HeaderPanel from '../../components/HeaderPanel';
+import PanelSidebar from '../../components/PanelSidebar';
 import { Form, Input, Spin, message, Checkbox } from "antd";
 import { Link } from 'react-router-dom';
 import "antd/dist/antd.css";
@@ -21,8 +21,52 @@ function CreateReminder(props) {
 
         let reminderDays = [];
 
-      
+        reminderDays = [
+            values?.start_time.format("YYYY-MM-DD"),
+            values?.end_time.format("YYYY-MM-DD")
+        ]
+
+        let payload = {
+            "name": values?.name,
+            "keyword": values?.keyword,
+            "exact_match": Reminder?.exact_match,
+            "status": Reminder?.status ? Reminder?.status : false, 
+            "min_price": values?.min_price,
+            "max_price": values?.max_price,
+            "reminder_days": reminderDays,
+        }
+
+
+        axios.post(`${BASE_URL}/notification/auction-reminders/`, payload)
+            .then(res => {
+                setLoading(true)
+                if (res.data.code === 201) {
+
+                    let data = res.data.data.result;
+                    setReminder(data)
+
+                    message.success({
+                        content: "Your information was successfully registered",
+                        className: 'text-muted',
+                        style: {
+                            marginTop: '10vh',
+                        },
+                    })
+
+                    setTimeout(() => {
+                        window.location.href = "#/panel-reminders"
+                    }, 900);
+
+
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+                message.error("Please try again")
+            })
     }
+
 
 
     return (

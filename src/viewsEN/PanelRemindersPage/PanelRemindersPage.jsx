@@ -15,14 +15,58 @@ const { confirm } = Modal;
 
 function RemindersPage() {
 
-    const [reminders, setReminders] = useState([1,2,3])
+    const [reminders, setReminders] = useState({})
     const [user_id, setUser_id] = useState()
     const dispatch = useDispatch();
     const { role, id } = useSelector((state) => state.profileReducer)
 
 
     useEffect(() => {
+        // setSelectProduct([])
+        if (id)
+            getReminders();
+        if (!id)
+            dispatch(getReminders())
     }, [])
+
+
+    const getReminders = () => {
+        axios.get(`${BASE_URL}${LIST_REMINDERS}?page=1`).then(res => {
+            setReminders(res.data.data.result);
+        }).catch(err => {
+            console.error(err)
+        })
+
+    }
+
+    const handleDeleteReminder = (e, id) => {
+        e.preventDefault();
+
+        axios.delete(`${BASE_URL}${DELETE_REMINDER(id)}`).then(res => {
+            window.location.reload();
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+
+
+    function showConfirm(e, id) {
+        confirm({
+            title: 'از حذف یادآوری اطمینان دارید؟',
+            icon: <ExclamationCircleOutlined />,
+            content: 'پس از حذف دسترسی به یادآوری نخواهید داشت!',
+            okText: "حذف یادآوری",
+            cancelText: "انصراف",
+            onOk() {
+                handleDeleteReminder(e, id)
+
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
 
 
 
