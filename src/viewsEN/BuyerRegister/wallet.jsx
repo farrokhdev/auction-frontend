@@ -145,22 +145,16 @@ console.log("thresholdList==>>" , thresholdList)
 
 
                             <div className="amount-list">
-{/* let baseThreshold = 0
-for(let i;i<length(result), i++){
-    // "baseThreshold - result[i].threshold"
-    // baseThreshold = result[i].threshold 
 
-} */}
-
-                                {thresholdList?.length ? thresholdList?.map((item, key) => (
+                                {thresholdList?.length ? thresholdList?.map((item, key, index) => (
                                     <React.Fragment key={key}>
                                         <div className="amount-block">
                                             <div className="amount-range">
-                                                {item.threshold} - {item?.threshold}<span className="unit">تومان</span>
+                                                0 - {item?.threshold}<span className="unit">{item.currency}</span>
                                             </div>
-                                            <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                            <span className="d-none d-md-inline-block">need to</span>
                                             <div className="amount-range">
-                                                {item?.sufficient_inventory}<span className="unit">تومان</span>
+                                                {item?.sufficient_inventory}<span className="unit">{item.currency}</span>
                                             </div>
                                         </div>
                                     </React.Fragment>

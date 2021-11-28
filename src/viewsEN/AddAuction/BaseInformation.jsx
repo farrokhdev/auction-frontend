@@ -41,6 +41,7 @@ function BaseInformation(props) {
         setHas_gallery_state(finalData?.has_gallery || false)
         form.setFieldsValue({
             ...listDate,
+            title_en: finalData?.title,
             title: finalData?.title,
             type: finalData?.type,
             description: finalData?.description,
