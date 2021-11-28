@@ -1,16 +1,39 @@
 import React, {useEffect, useState} from "react";
 import {Card, Checkbox, message, Spin} from "antd";
-import img8 from '../../imgEN/img-8.jpg'
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
 
 function Chooseartwork(props) {
   const {selectProduct, setSelectProduct,auction}=props
   const [loading, setLoading] = useState(false)
-  const [allProducts, setAllProducts] = useState([1,2,3])
+  const [allProducts, setAllProducts] = useState([])
   const [dataCount, setDataCount] = useState(0)
   const { Meta } = Card;
 
+  
+  const getData = (e="") => {
+    setLoading(true)
+    axios.get(`${BASE_URL}/sale/product/?auctions__id=${props.id}`)
+        .then(resp => {
+          setLoading(false)
+          if ((resp.data.code === 200) && resp.data?.data?.result) {
+            const res = resp.data?.data?.result;
+            setAllProducts(res)
+            setDataCount(resp.data?.data?.count)
+
+          }
+        })
+        .catch(err => {
+          setLoading(false)
+          console.error(err);
+          message.error("Reload the page")
+        })
+  }
+
   useEffect(()=>{
     setSelectProduct([])
+    if(props.id)
+    getData()
   },[auction])
 
 
@@ -26,7 +49,7 @@ function Chooseartwork(props) {
                     type="text"
                     className="default-input"
                     placeholder="Search more than 100 auctions..."
-                    // onChange={(e)=>getData(e.target.value)}
+                    onChange={(e)=>getData(e.target.value)}
                 />
                 <button type="button" className="btn-search"></button>
               </div>
@@ -46,7 +69,7 @@ function Chooseartwork(props) {
                 <Card
                     style={{ width: "100%" }}
                     cover={
-                      <div className="image-custom-back" style={{ backgroundImage: `url(${img8})`, height: "250px" }} />
+                      <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                     }
                 >
                   <Meta
@@ -59,10 +82,8 @@ function Chooseartwork(props) {
                         }
 
                       }}/>}
-                      // title={item.artwork_title}
-                      // description={item?.technique}
-                      title={'From the Saqakhaneh series'}
-                      description={'Sohrab Sepehri'}
+                      title={item.artwork_title_en}
+                      description={item?.technique_en}
                   />
                 </Card>
               </div>

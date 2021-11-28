@@ -1,14 +1,39 @@
 import React, { useState } from 'react'
 import { Button, Form, Input, message, Spin } from 'antd';
+import axios from "../../utils/request";
+import {BASE_URL} from "../../utils";
+import {CHANGE_PASSWORD} from "../../utils/constant";
 
 function ChangePasswordPanelProfile() {
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false)
+
+    const onFinish = (values) => {
+        console.log(values)
+        sendData(values)
+    }
+    const sendData = (values) => {
+        setLoading(true)
+        axios.post(`${BASE_URL}${CHANGE_PASSWORD}`, values)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    message.success("Your password has been successfully edited")
+                    form.resetFields();
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("Try again")
+            })
+    }
 
     return (
         <>
-            {/* <Spin spinning={loading}> */}
+            <Spin spinning={loading}>
             <Form
-                // onFinish={onFinish}
+                onFinish={onFinish}
                 form={form}
                 wrapperCol={{ span: 24 }}>
                 <div className="">
@@ -16,6 +41,7 @@ function ChangePasswordPanelProfile() {
                         <div className="col-md-6">
                             <div className="input-group ">
                                 <label className="default-lable">Current password</label>
+
                                 <Form.Item
                                     className="w-100"
                                     name="old_password"
@@ -98,7 +124,7 @@ function ChangePasswordPanelProfile() {
                     </div>
                 </div>
             </Form>
-            {/* </Spin>    */}
+            </Spin>   
         </>
     )
 }

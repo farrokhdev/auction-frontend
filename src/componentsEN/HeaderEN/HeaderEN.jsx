@@ -21,7 +21,7 @@ function HeaderEN(props) {
 
     const handleRedirect = () => {
         if(is_logged_in){
-            window.location.href = "#/en/panel-profile"
+            window.location.href = "#/en/panel-profile/check"
         }else{
             window.location.href = "#/en/login"
         }

@@ -5999,7 +5999,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 }
 
-@media (min-width: 1200px) and (max-width: 1400px) {
+@media (min-width: 1200px) and (max-width: 2400px) {
     .newsletter {
         overflow: hidden;
     }
@@ -6053,7 +6053,7 @@ input[type=number]::-webkit-outer-spin-button {
         display: block;
         height: 100%;
         max-height: 500px;
-        width: auto;
+        // width: auto;
     }
 
     .pull-top100 {

@@ -1,7 +1,7 @@
 import React , {useState , useEffect} from 'react';
-import axios from '../../utils/request';
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
+import axios from '../../utils/request';
 import { BASE_URL } from '../../utils';
 import { ACCOUNT_BANK_INFO } from '../../utils/constant';
 import Spinners from '../../components/Spinners';

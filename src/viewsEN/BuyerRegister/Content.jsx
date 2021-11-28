@@ -19,6 +19,7 @@ function Content(props) {
   const [RecommenderData, setRecommender] = useState("");
 
 
+
   return (
     <>
       <main className="innercontent" id="buyer-registration">
@@ -57,6 +58,7 @@ function Content(props) {
               setSelectComponent={setSelectComponent}
               selectComponent={selectComponent}
               selectProducts={selectProducts}
+              id={props.id}
           />}
            {selectComponent===3 && <Recommender
               setSelectComponent={setSelectComponent}

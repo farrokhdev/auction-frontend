@@ -3,20 +3,64 @@ import { Link } from "react-router-dom";
 import { message, Modal, Spin } from "antd";
 import ModalWallet from './ModalWallet';
 import { Redirect } from "react-router-dom";
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import { ACCOUNT_WALLET } from "../../utils/constant";
 
 function Wallet(props) {
-    const { setSelectComponent, selectComponent, selectProducts } = props
+    const { setSelectComponent, selectComponent, selectProducts , id} = props
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [msg, setMsg] = useState(false)
     const [thresholdList, setThresholdList] = useState([])
 
+    const getData = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}${ACCOUNT_WALLET}`)
+            .then(resp => {
+                setLoading(false)
+                if ((resp.data.code === 200)) {
+                    const res = resp.data?.data?.result;
+                    setData(res)
+                    axios.post(`${BASE_URL}/accounting/wallet/check-inventory/products/`, {
+                        "product_ids": selectProducts
+                    })
+                        .then(resp => {
+                            if (resp.data.code === 200) {
+                                setMsg(resp.data.data.result)
+                            }
+                        })
+                        .catch(err => {
+                            message.error(err?.response?.data?.data?.error_message);
+                        })
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+                message.error("صفحه را دوباره لود کنید")
+            })
+    }
+
+    const getTresholdsData = () => {
+        axios.get(`${BASE_URL}/sale/auctions/${id}/thresholds/`)
+            .then(resp => {
+                if (resp.data.code === 200) {
+                    setThresholdList(resp.data.data.result)
+                }
+            })
+            .catch(err => {
+                message.error(err?.response?.data?.data?.error_message);
+            })
+    }
+
     useEffect(() => {
+        getData()
 
     }, [])
 
-
+console.log("thresholdList==>>" , thresholdList)
     return (
         <div>
             <div className="container container-form">
@@ -33,7 +77,7 @@ function Wallet(props) {
                         <div className="price-block">{msg}</div>
                     </div>
                     <Link
-                        // onClick={() => getTresholdsData(props.id)} 
+                        onClick={() => getTresholdsData(props?.id)}
                         data-bs-toggle="modal" data-bs-target="#charge-modal">
                         How much should I charge?
                     </Link>
@@ -72,11 +116,9 @@ function Wallet(props) {
                 className="text-end" width={1000} visible={isModalVisible}
                 onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)} footer={[]}>
                 <ModalWallet setSelectComponent={setSelectComponent} selectComponent={selectComponent}
-                    setIsModalVisible={setIsModalVisible}
-                    // refreshTable={getData}
+                    setIsModalVisible={setIsModalVisible} refreshTable={getData}
                     title={"Add a new bank account"} />
             </Modal>
-
 
             <div className="modal fade" id="charge-modal" tabIndex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -103,13 +145,18 @@ function Wallet(props) {
 
 
                             <div className="amount-list">
+{/* let baseThreshold = 0
+for(let i;i<length(result), i++){
+    // "baseThreshold - result[i].threshold"
+    // baseThreshold = result[i].threshold 
 
+} */}
 
                                 {thresholdList?.length ? thresholdList?.map((item, key) => (
                                     <React.Fragment key={key}>
                                         <div className="amount-block">
                                             <div className="amount-range">
-                                                0 - {item?.threshold}<span className="unit">تومان</span>
+                                                {item.threshold} - {item?.threshold}<span className="unit">تومان</span>
                                             </div>
                                             <span className="d-none d-md-inline-block">نیاز دارد به</span>
                                             <div className="amount-range">
