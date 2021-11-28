@@ -40,7 +40,11 @@ function DetailAboutArtworkInfo({artwork}) {
                         </tr> */}
                         <tr>
                             <td>دسته‌بندی</td>
-                            <td>{ artwork?.category ?  artwork?.category[0]?.title : ''}</td>
+                            <td>
+                                { artwork?.category ?  artwork?.category?.map(item => (
+                                    <span className="mx-1">{item?.title}</span>
+                                )) : ''}
+                            </td>
                         </tr>
                         <tr>
                             <td>ابعاد (cm)</td>

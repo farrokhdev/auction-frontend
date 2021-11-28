@@ -7,7 +7,6 @@ import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../
 import moment from 'jalali-moment';
 import PaginationComponent from '../../componentsEN/PaginationComponent';
 import { Link } from 'react-router-dom';
-import pic2 from '../../imgEN/pic2.jpg';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import queryString from 'query-string';
@@ -271,16 +270,6 @@ function Artworks() {
                                                     <h4 className="default">{item?.artwork_title_en}</h4>
 
 
-                                                    {/* <div className="auction-calender">
-                                                        <div className="auction-date">
-                                                            <span className="start-date">19 June</span>
-                                                            <span className="end-date">22 June</span>
-                                                        </div>
-                                                        <div className="auction-time">
-                                                            <span className="start-time">10 AM</span>
-                                                        </div>
-                                                    </div> */}
-
                                                     {item?.latest_auction?.status === "CLOSED" ?
                                                         <div className="auction-calender">
                                                             حراجی به پایان رسید
@@ -383,7 +372,7 @@ function Artworks() {
 
                                                                 </div> :
                                                                 item?.latest_auction?.type ? <div className="price-block">
-                                                                    <span>Current price :</span>
+                                                                    <span>Current bid :</span>
                                                                         <span className="price mx-2">
                                                                             { numberWithCommas(item?.bidding_details?.max_bid)}
                                                                         <span

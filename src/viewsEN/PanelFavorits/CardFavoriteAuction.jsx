@@ -1,77 +1,163 @@
-import React from 'react'
+import React from 'react';
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import { AuctionStatusTextBtn, AuctionType, convertTypeToEn } from '../../utils/convertTypeEnglish';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import Timer from 'react-compound-timer';
+import {Link} from 'react-router-dom';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
-function CardFavoriteAuction() {
+function CardFavoriteAuction({item , getData}) {
+
+
+
+  function timeExpire(time) {
+    let expire = new Date(time)
+    let now = new Date()
+    if (expire > now) {
+        return expire - now
+    } else {
+        return 0
+
+    }
+}
+
+
+
+const Follow = (data, action) => {
+    if (action) {
+        axios.delete(`${BASE_URL}/following/${data}`)
+            .then(resp => {
+                getData()
+            })
+    } else {
+        axios.post(`${BASE_URL}/following/`, {
+            "content_type": "auction",
+            "object_id": data,
+            "activity_type": "follow"
+        })
+            .then(resp => {
+                if (resp.data.code === 201) {
+                    getData()
+                }
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
+    }
+}
+
     return (
-        <div class="row-blocks ">
-        <div class="row ">
-          <div class="col-xxl-2 col-md-3">
-            <div class="bg-shadow tl-shadow10">
-              <img
-                src="https://picsum.photos/seed/picsum/500/500"
-                width="500"
-                height="500"
-                alt=""
-              />
-            </div>
+
+      <div className="row-blocks">
+      <div className="row">
+          <div className="col">
+              <Link to={`/en/auctions/${item.id}`} className="bg-shadow tl-shadow10">
+                  <img className="image-auction" src={item?.media?.exact_url ? item?.media?.exact_url : DEFAULT_URL_IMAGE}  alt="" />
+              </Link>
           </div>
-          <div class="col-xxl-10 col-md-9">
-            <div class="block-head row">
-              <div class="col-xl-3 col-sm-4 col-3">
-                <span class="category-icon live-icon">
-                  Live<span class="d-none d-md-inline-block">Auction</span>
-                </span>
-              </div>
-              <div class="col-xl-9 col-sm-8 col-9 textalign-right">
-                <span class="reminder-icon">Reminde me</span>
-                <button type="button" class="link-source">
-                  <span>
-                    <span class="d-none d-sm-inline-block">View </span>artworks
-                    (<span>25</span>)
-                  </span>
-                </button>
-              </div>
-            </div>
-            <div class="block-main">
-              <h5 class="default">
-                Live online only Mid Century Modern, Decorative Arts and
-                Pictures Antiques, Books{" "}
-              </h5>
-              <div class="block-detail">
-                <h6 class="default">Contemprory art</h6>
-                <h6 class="default gray50">Arthibition gallery</h6>
-              </div>
-            </div>
-            <div class="block-footer row">
-              <div class="col-sm-5">
-                <div
-                  class="jumbotron countdown show end date-show"
-                  data-Date="2021/5/13 16:09:00"
-                >
-                  <div class="running">
-                    <timer>
-                      <span class="days"></span>:<span class="hours"></span>:
-                      <span class="minutes"></span>
-                      <span class="show-text"></span>
-                    </timer>
-                    <div class="break"></div>
+          <div className="col-md-8">
+              <div className="block-head row">
+                  <div className="col-xl-3 col-sm-4 col-3">
+                      <span className="">{convertTypeToEn(item?.type)}</span>
                   </div>
-                  <div class="ended">
-                    <div class="text">Offer is ended</div>
+                  <div className="col-xl-9 col-sm-8 col-9 textalign-right">
+                          <button
+                              onClick={() =>
+                                  Follow(
+                                      item?.following?.follow?.is_active ?
+                                          item?.following?.follow?.id :
+                                          item?.id, item?.following?.follow?.is_active)
+                              }
+                              type="button" className={" reminder-icon " + (item?.following?.follow?.is_active ? "active" : "")}>
+                              Reminde me
+                          </button>
+
+                      <button type="button" className="link-source">
+                          { !!item?.products_count ?
+                              <span>
+                                  <span className="d-none d-sm-inline-block">View </span>artworks (<span>{item?.products_count}</span>)
+                              </span>
+                          : null }
+                      </button>
                   </div>
-                </div>
               </div>
-              <div class="col-sm-7 textalign-right">
-                <button type="button" class="btn btn-gray view">
-                  View live
-                </button>
-                <button type="button" class="btn btn-main join">
-                  Join this auction
-                </button>
+              <div className="block-main">
+                  <Link to="/">
+                      <h5 className="default">{item?.title_en}</h5>
+                  </Link>
+                  <div className="block-detail">
+                      <h6 className="default">{item?.house_type}</h6>
+                      <Link to="/" className="default">
+                          <h6 className="default gray50">{item?.house_en}</h6>
+                      </Link>
+                  </div>
               </div>
-            </div>
+              <div className="block-footer row">
+                  <div className="col-sm-5">
+
+
+                  {item?.status === "CLOSED" ?
+
+                      <div className="ended">
+                          <div className="text">Offer is ended</div>
+                      </div>
+                      : <div>
+                          {item?.status === "ACTIVE" &&
+                              <Timer
+                                  initialTime={timeExpire(item?.end_time)}
+                                  direction="backward"
+                              >
+                                  {({ start, resume, pause, stop, reset, timerState }) => (
+                                      <div style={{
+                                          direction: 'ltr',
+                                          textAlign: "right"
+                                      }}>
+
+                                          {/* <span className="d-inline-block ">ساعت</span> */}
+                                          <span className="d-inline-block"><Timer.Hours /> </span>
+                                          <span className="d-inline-block">:</span>
+                                          <span className="d-inline-block"><Timer.Minutes /></span>
+                                          <span className="d-inline-block">:</span>
+                                          <span className="d-inline-block "><Timer.Seconds /></span>
+
+                                          <span className="d-inline-block mx-2">  And </span>
+                                          <span className="d-inline-block ">  Day  </span>
+                                          <span className="d-inline-block "><Timer.Days /></span>
+                                      </div>
+                                  )}
+                              </Timer>
+                          }
+                          {
+                              item?.status === "PREPARING" && <span>Offer in preparation</span>
+                          }
+
+                      </div>
+                      }
+                  </div>
+                  <div className="col-sm-7 textalign-right">
+
+
+                  {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item?.id}`}>
+                              <button type="button" className="btn btn-gray mx-2">
+                                  <FontAwesomeIcon className="mx-1" icon={faEye} />
+                                  {AuctionType(item?.type)}
+                              </button>
+                  </Link> : null}
+
+                          {AuctionStatusTextBtn(item?.status, item?.user_is_enrolled, item.id)}
+
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
+  </div>
+
+
+      
     )
 }
 

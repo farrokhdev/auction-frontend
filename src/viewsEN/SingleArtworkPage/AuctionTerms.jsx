@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AuctionTerms() {
+function AuctionTerms({artwork}) {
     return (
         <div className="tab-pane fade " id="detail-artwork3" role="tabpanel"
         aria-labelledby="contact-tab">
@@ -59,15 +59,7 @@ function AuctionTerms() {
                        parfois avoir connaissance du Prix de Réserve du Lot.</p>
                    <h5 className="default">Payment terms</h5>
                    <p>
-                       Additionally, the collection includes several works by Christo and Jeanne-Claude
-                       spanning
-                       their multi-decade practice, featuring many of their most well-known public
-                       projects,
-                       such
-                       as The Pont Neuf Wrapped, Project for Paris, and The Umbrellas, Joint Project for
-                       Japan
-                       and
-                       USA, as well as their famed Package and Store Front series from the 1960s.
+                       {artwork?.payment_method}
                    </p>
                </div>
                <div className="tab-pane fade" id="v2" role="tabpanel" aria-labelledby="vtab2">
@@ -86,15 +78,7 @@ function AuctionTerms() {
                        parfois avoir connaissance du Prix de Réserve du Lot.</p>
                    <h5 className="default">Shipping</h5>
                    <p>
-                       Additionally, the collection includes several works by Christo and Jeanne-Claude
-                       spanning
-                       their multi-decade practice, featuring many of their most well-known public
-                       projects,
-                       such
-                       as The Pont Neuf Wrapped, Project for Paris, and The Umbrellas, Joint Project for
-                       Japan
-                       and
-                       USA, as well as their famed Package and Store Front series from the 1960s.
+                       {artwork?.transportation_en}
                    </p>
                </div>
                <div className="tab-pane fade" id="v3" role="tabpanel" aria-labelledby="vtab3">
@@ -113,15 +97,7 @@ function AuctionTerms() {
                        parfois avoir connaissance du Prix de Réserve du Lot.</p>
                    <h5 className="default">Terms of use</h5>
                    <p>
-                       Additionally, the collection includes several works by Christo and Jeanne-Claude
-                       spanning
-                       their multi-decade practice, featuring many of their most well-known public
-                       projects,
-                       such
-                       as The Pont Neuf Wrapped, Project for Paris, and The Umbrellas, Joint Project for
-                       Japan
-                       and
-                       USA, as well as their famed Package and Store Front series from the 1960s.
+                    {artwork?.latest_auction?.payment_method_conditions_en}
                    </p>
                </div>
                <div className="tab-pane fade" id="v4" role="tabpanel" aria-labelledby="vtab3">

@@ -676,7 +676,7 @@ section {
     padding: 5px 10px;
     border-bottom-left-radius: 5px;
     position: absolute;
-    right: 0;
+    right: 30px;
     top: 0;
     display: flex;
     flex-direction: row-reverse;
@@ -6116,4 +6116,12 @@ input[type=number]::-webkit-outer-spin-button {
     max-width: 159px !important;
     max-height: 159px !important;
     min-height: 159px !important;
+}
+
+.modal-list-product-result .ant-modal-footer{
+    border-top: 0px !important;
+}
+
+.modal-list-product-result .modal-footer{
+    padding: 0px !important;
 }

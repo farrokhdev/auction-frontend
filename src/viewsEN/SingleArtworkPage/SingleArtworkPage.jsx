@@ -17,20 +17,10 @@ import LatestArtworksSection from './latestArtworksSection';
 
 function SingleArtworkPage(props) {
 
-    const [loading, setLoading] = useState(false);
-
-
-    const [params, setParams] = useState({
-        home_auction : props.match.params.id ,
-        page : 1 , 
-        page_size : 10 
-    })
-
-
-
-
     const [artwork, setArtwork] = useState()
+    const [params, setParams] = useState({})
     const [Rate, setRate] = useState({})
+    const [loading, setLoading] = useState(false)
     // const [params, setParams] = useState({
     //     search: props.match.params.id,
     // })
@@ -40,7 +30,6 @@ function SingleArtworkPage(props) {
         getRate();
     }, [params , props.match.params.id])
 
-    console.log("artwork==>>" , artwork)
     const getProduct = ()=>{
         setLoading(true)
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}`).then(res => {
@@ -97,30 +86,7 @@ function SingleArtworkPage(props) {
         }
     }
 
-    const Follow = (data, action) => {
-        if (action) {
-            axios.delete(`${BASE_URL}/following/${data}`)
-                .then(resp => {
-                    getProduct()
-                })
-        } else {
-            axios.post(`${BASE_URL}/following/`, {
-                "content_type": "auction_house",
-                "object_id": data,
-                "activity_type": "follow"
-            })
-                .then(resp => {
-                    if (resp.data.code === 201) {
-                        getProduct()
-                    }
 
-                })
-                .catch(err => {
-                    console.error(err);
-                })
-
-        }
-    }
 
 
     const handleSetOrderingOld = () => {
@@ -141,28 +107,21 @@ function SingleArtworkPage(props) {
 
     
 
-    const handeSelectPage = (e) => {
-        setParams({
-            ...params, page: e
-        })
-    }
-
-
     return (
         <>
         <Spin spinning={loading}>
             <HeaderEN />
             <main className="innercontent" id="all-auctions">
                 <div className="container innercontainer">
-                    <MainTitle title={'Collection7'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
+                    <MainTitle title={artwork?.artwork_title_en} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
 
                     <div className="row">
-                        <SliderMediaImage/>
-                        <CardDetailInfoArtwork/>
+                        <SliderMediaImage artwork={artwork}/>
+                        <CardDetailInfoArtwork artwork={artwork} addBookmark={addBookmark} getProduct={getProduct} rate={Rate} updateRate={updateRate}/>
                     </div>
 
-                    <ArtworkDetailSection/>
-                    <LatestArtworksSection/>
+                    <ArtworkDetailSection artwork={artwork}/>
+                    <LatestArtworksSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} getProduct={getProduct}/>
 
                 </div>
 

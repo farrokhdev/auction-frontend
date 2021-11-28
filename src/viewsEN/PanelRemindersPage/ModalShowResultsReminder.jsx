@@ -1,4 +1,4 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState} from 'react'
 import {Modal} from 'antd';
 import {Link} from 'react-router-dom';
 import axios from '../../utils/request';
@@ -12,22 +12,19 @@ function ModalEditReminder({reminder}) {
     
 
     const handleShowResultsModal = (id) => {
-
         setVisibleShowResults(true);
         setTimeout(() => {
-            getResultProducts();
+            getResultProducts(id);
         }, 500);
     }
 
-    const getResultProducts = () => {
-        axios.get(`${BASE_URL}${LIST_PRODUCTS_MATCHED(reminder?.id)}`).then(res => {
-            console.log(res.data.data.result);
+    const getResultProducts = (id) => {
+        axios.get(`${BASE_URL}${LIST_PRODUCTS_MATCHED(id)}`).then(res => {
             setResultProducts(res.data.data.result);
         }).catch(err => {
             console.error(err)
         })
     }
-
 
     return (
         <React.Fragment>
@@ -37,20 +34,26 @@ function ModalEditReminder({reminder}) {
             <Modal
                 title="products List"
                 centered
-                className="modal-list-product-result "
+                className="modal-list-product-result"
                 visible={visibleShowResults}
                 onOk={() => setVisibleShowResults(false)}
                 onCancel={() => setVisibleShowResults(false)}
-                width={1000}>
+                width={1000}
+                footer={[]}
+                >
 
-                            {/* <div className="main-title">
-                                <span className="default titr">ddddd</span>
-                            </div> */}
-                <div collapse className="table-responsive ">
+
+
+                <div class="modal-content border-0">
+                    <div class="modal-header">
+                        <div class="container g-0 d-flex justify-content-between">
+                            <button onClick={() => setVisibleShowResults(false)} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="modal-body textalign-center">
+                    <div collapse className="table-responsive ">
                     <table className="panel-table reminder mrgt50">
                         <tbody>
-
-                            
 
                             {resultProducts?.length ? resultProducts?.map(product => (
                                 <React.Fragment key={product?.id}> 
@@ -88,9 +91,13 @@ function ModalEditReminder({reminder}) {
 
                     </table>
                 </div>
-                    
+                    </div>
+                    <div class="modal-footer">
+                        <button onClick={() => setVisibleShowResults(false)} type="button" class="btn btn-default">Close</button>
+                    </div>
+                </div>
 
-
+    
             </Modal>
         </React.Fragment>
     )
