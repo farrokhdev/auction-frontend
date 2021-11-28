@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import HeaderPanel from '../../components/HeaderPanel';
-import PanelSidebar from '../../components/PanelSidebar';
+import HeaderPanel from '../../componentsEN/HeaderPanel';
+import PanelSidebar from '../../componentsEN/PanelSideBar';
 import { Form, Input, Spin, message, Checkbox } from "antd";
 import { Link } from 'react-router-dom';
 import "antd/dist/antd.css";
@@ -12,7 +12,6 @@ import moment from 'moment-jalaali'
 
 function CreateReminder(props) {
 
-    const [reminders, setReminders] = useState({});
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
     const [Reminder, setReminder] = useState({})
@@ -54,7 +53,7 @@ function CreateReminder(props) {
                     })
 
                     setTimeout(() => {
-                        window.location.href = "#/panel-reminders"
+                        window.location.href = "#/en/panel-reminders"
                     }, 900);
 
 
@@ -196,7 +195,7 @@ function CreateReminder(props) {
                                                     // value={this.state.date}
                                                     // setTodayOnBlur={false}
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)
@@ -229,7 +228,7 @@ function CreateReminder(props) {
                                                     // setTodayOnBlur={false}
 
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import HeaderPanel from '../../components/HeaderPanel';
-import PanelSidebar from '../../components/PanelSidebar';
+import HeaderPanel from '../../componentsEN/HeaderPanel';
+import PanelSidebar from '../../componentsEN/PanelSideBar';
 import { Form, Input, Spin, message, Checkbox } from "antd";
 import { Link } from 'react-router-dom';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import DatePicker from 'react-datepicker2';
-import moment from "moment";
+import moment from "jalali-moment";
 import "antd/dist/antd.css";
 
 
@@ -24,34 +24,27 @@ function EditReminder(props) {
             .then(resp => {
 
                 setLoading(false)
-                // console.log("resp====>>", moment(resp.data.data.result.reminder_days[0]));
 
                 if (resp.data.code === 200) {
 
                     let data = resp.data.data.result;
                     setReminder(data)
-                    // console.log("GetDate===>>", data);
-console.log( "data.reminder_days[0] : " , moment(data.reminder_days[0]  , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD')) 
-console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD')) 
                     form.setFieldsValue({
                         ...data,
-                        start_time: moment(data.reminder_days[0]  , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD') ,
-                        end_time: moment(data.reminder_days[1]  , 'YYYY/MM/DD' ).locale('en').format('YYYY-MM-DD'),
-
-
+                        start_time: moment(data.reminder_days[0]) ,
+                        end_time : moment(data.reminder_days[data.reminder_days.length - 1]) ,
                     })
                 }
             })
             .catch(err => {
                 setLoading(false)
                 console.error(err);
-                message.error("صفحه را دوباره لود کنید")
+                message.error("Please Reload the page")
             })
     }
 
     const onFinish = (values) => {
 
-        // console.log('values--->', values);
 
         setLoading(true)
         let reminderDays = [];
@@ -77,7 +70,7 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
 
                 if (resp.data.code === 200) {
                     message.success({
-                        content: "پروفایل شما با موفقیت ویرایش شد",
+                        content: "Your profile has been successfully edited",
                         className: 'text-muted',
                         style: {
                             marginTop: '10vh',
@@ -85,14 +78,14 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
                     })
 
                     setTimeout(() => {
-                        window.location.href = "#/panel-reminders"
+                        window.location.href = "#/en/panel-reminders"
                     }, 900);
                 }
             })
             .catch(err => {
                 setLoading(false)
                 console.error(err);
-                message.error("صفحه را دوباره لود کنید")
+                message.error("Please Reload the page")
             })
     }
 
@@ -212,10 +205,11 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
                                     <h5 className="default mrgb20">Time to send</h5>
                                     <div className="col-md-4">
                                         <div className="input-group">
-                                            <label className="default-lable">Match case</label>
+                                            <label className="default-lable">Start time</label>
                                             <Form.Item
                                                 className="w-100"
                                                 name="start_time"
+                                                id="start_time"
                                                 rules={[
                                                     {
                                                         required: true,
@@ -227,7 +221,7 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
                                                     // value={this.state.date}
                                                     // setTodayOnBlur={false}
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)
@@ -235,16 +229,16 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
                                                         }
 
                                                     }}
-                                                    name="start_time"
-                                                    id="start_time"
-                                                    min={moment().startOf('moment')}
+                                                    // name="start_time"
+                                                    
+                                                    // min={moment().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
                                     </div>
                                     <div className="col-md-4">
                                         <div className="input-group">
-                                            <label className="default-lable">Stop reminding</label>
+                                            <label className="default-lable">End time</label>
                                             <Form.Item
                                                 className="w-100"
                                                 name="end_time"
@@ -260,7 +254,7 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
                                                     // setTodayOnBlur={false}
 
                                                     timePicker={false}
-                                                    isGregorian={false}
+                                                    // isGregorian={false}
                                                     onChange={(value) => {
                                                         if (value) {
                                                             // setToday(value)
@@ -270,7 +264,7 @@ console.log( "data.reminder_days[1] : " , moment(data.reminder_days[1] , 'YYYY/M
                                                     }}
                                                     name="end_time"
                                                     id="end_time"
-                                                    min={moment().startOf('moment')}
+                                                    // min={moment().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>

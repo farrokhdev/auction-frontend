@@ -52,11 +52,12 @@ function RemindersPage() {
 
     function showConfirm(e, id) {
         confirm({
-            title: 'از حذف یادآوری اطمینان دارید؟',
+            // className='confirm-remove-reminder',
+            title: 'Are you sure you want to delete the reminder?',
             icon: <ExclamationCircleOutlined />,
-            content: 'پس از حذف دسترسی به یادآوری نخواهید داشت!',
-            okText: "حذف یادآوری",
-            cancelText: "انصراف",
+            content: 'You will not have access to the reminder after deleting!',
+            okText: "Remove reminder",
+            cancelText: "Cancel",
             onOk() {
                 handleDeleteReminder(e, id)
 
@@ -104,7 +105,7 @@ function RemindersPage() {
                                                                 <div className="col">
                                                                     <div className="d-flex justify-content-end">
                                                                         <button 
-                                                                        // onClick={(e) => showConfirm(e, reminder?.id)}
+                                                                        onClick={(e) => showConfirm(e, reminder?.id)}
                                                                          type="button" className="operations">
                                                                             <i class="fal fa-times"></i>
                                                                         </button>
