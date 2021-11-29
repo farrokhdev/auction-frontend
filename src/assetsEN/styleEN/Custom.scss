@@ -3487,6 +3487,7 @@ main {
     border-radius: 20px;
     font-size: 13px;
     display: inline-block;
+    min-width: 120px !important;
 }
 
 .textalign-center {
@@ -4244,7 +4245,7 @@ input:disabled {
 
 .panel-table.selladvice .btn-default {
     padding: 5px 20px;
-    min-width: auto;
+    min-width: 180px !important;
 }
 
 
@@ -4357,7 +4358,7 @@ input:disabled {
 
 .wallet-block {
     border: 1px solid var(--gray90);
-    padding: 50px;
+    padding: 50px 20px 50px 20px;
 }
 
 .wallet-block {
@@ -6104,6 +6105,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .modal-pyment-mypurchase .ant-modal-footer , .modal-new-ticket .ant-modal-footer, .modal-reply-ticket .ant-modal-footer , .modal-more-details-message .ant-modal-footer{
     display: none !important;
+}
+
+.ant-modal-footer{
+    border-top: none !important;
 }
 
 .image-auction{
