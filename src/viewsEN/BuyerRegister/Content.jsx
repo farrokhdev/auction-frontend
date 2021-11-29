@@ -70,7 +70,7 @@ function Content(props) {
               selectComponent={selectComponent}
               selectProducts={selectProducts}
               RecommenderData={RecommenderData}
-              // id={props.id}
+              id={props.id}
           />} 
         </div>
       </main>
