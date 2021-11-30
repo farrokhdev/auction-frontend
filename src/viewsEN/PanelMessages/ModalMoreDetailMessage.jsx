@@ -1,9 +1,34 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import {Modal} from 'antd'
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
+import moment from 'jalali-moment'
 
 function ModalMoreDetailMessage(props) {
 
-    const {visibleModalMoreDetailsMessage , setVisibleModalMoreDetailsMessage} = props
+    const {visibleModalMoreDetailsMessage , setVisibleModalMoreDetailsMessage , MESSAGE_ID} = props
+    const [MessageDetail, setMessageDetail] = useState("");
+
+    useEffect(() => {
+        if(!!MESSAGE_ID){
+            getMessage()
+        }
+    }, [MESSAGE_ID])
+
+    const getMessage = () => {
+        axios.get(`${BASE_URL}/messaging/inbox/${MESSAGE_ID}/`)
+            .then(resp => {
+                if (resp.data.code === 200) {
+                    setMessageDetail(resp.data.data.result)
+                }
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+
     return (
         <React.Fragment>
 
@@ -21,18 +46,15 @@ function ModalMoreDetailMessage(props) {
                     <div class="modal-header">
                         <div class="container g-0 d-flex justify-content-between">
                             <div class="main-title">
-                                {/* <h2 class="default titr">Up to 30% offer</h2> */}
-                                <h2 class="default ">Up to 30% offer</h2>
+                                <h2 class="default ">{MessageDetail?.message?.title}</h2>
                             </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button onClick={() => setVisibleModalMoreDetailsMessage(false)} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     </div>
                     <div class="modal-body">
-                        <span class="msg-date">24 Sep 2020</span>
+                        <span class="msg-date">{MessageDetail?.message?.creation_date ? moment(MessageDetail?.message?.creation_date, 'YYYY/MM/DD').locale('en').format('DD MMMM YYYY') : ''}</span>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                            laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                            ullamcorper suscipitm, quis nostrud exerci tation ullamcorper suscipit
+                            {MessageDetail?.message?.body}
                         </p>
                     </div>
                 </div>

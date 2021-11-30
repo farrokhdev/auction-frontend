@@ -1,9 +1,42 @@
-import React from 'react';
-import {Modal} from 'antd'
+import React , {useState} from 'react';
+import {Modal , message , Alert} from 'antd'
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
 
 function ModalNewTicket(props) {
 
-    const {visibleModalNewTicket , setVisibleModalNewTicket} = props
+    const {visibleModalNewTicket , setVisibleModalNewTicket} = props;
+
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [TicketTitle, setTicketTitle] = useState("");
+    const [TicketBody, setTicketBody] = useState("");
+
+    const handleSendTicket = () => {
+        setError(false)
+        setSuccess(false)
+        let payload = {
+            "title": TicketTitle,
+            "body": TicketBody,
+            "category": 1
+        }
+
+        axios.post(`${BASE_URL}/ticketing/`, payload)
+            .then(resp => {
+                if (resp.data.code === 201) {
+                    setSuccess(true)
+                    message.success("Your ticket was sent successfully")
+
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 700);
+                }
+            })
+            .catch(err => {
+                setError(true)
+                console.log("Error Message", err);
+            })
+    }
 
     return (
         <React.Fragment>
@@ -31,15 +64,33 @@ function ModalNewTicket(props) {
                         <div class="modal-body">
                             <div class="input-group">
                                 <label class="default-lable">Title</label>
-                                <input type="text" class="default-input" placeholder="Write title"/>
+                                <input 
+                                    onChange={(e) => {
+                                        setTicketTitle(e.target.value)
+                                    }} 
+                                    type="text" 
+                                    class="default-input" 
+                                    placeholder="Write title"
+                                />
                             </div>
                             <div class="input-group">
                                 <label class="default-lable">Description</label>
-                                <textarea rows="4" class="default-input" placeholder="Write your answer here"></textarea>
+                                <textarea 
+                                    onChange={(e) => {
+                                        setTicketBody(e.target.value)
+                                    }}
+                                    rows="4" 
+                                    class="default-input" 
+                                    placeholder="Write your answer here"
+                                />
                             </div>
+
+                            {success ? <Alert message="Your ticket was sent successfully." type="success" showIcon /> : ""}
+                            {error ? <Alert message="The title or text of the ticket has not been entered" type="error" showIcon /> : ""}
+                            
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default">Send</button>
+                            <button onClick={handleSendTicket} type="button" class="btn btn-default">Send</button>
                         </div>
                     </div>
             </Modal>
