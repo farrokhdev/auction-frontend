@@ -6255,3 +6255,12 @@ input[type="radio"]:checked{
 .modal-edit-artwork-en .ant-modal-body .ant-btn:first-child:hover {
     background-color: rgba(128, 128, 128, 0) !important; 
 }
+
+
+.state-pending{
+    color: var(--orange) !important;
+}
+
+.state-success{
+    color:  var(--lightgreen) !important;
+}

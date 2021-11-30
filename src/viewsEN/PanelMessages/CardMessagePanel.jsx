@@ -1,16 +1,26 @@
-import React from 'react'
+import React  from 'react';
+
 
 function CardMessagePanel(props) {
 
-    const {setVisibleModalMoreDetailsMessage} = props
+    const {setVisibleModalMoreDetailsMessage , message , setMESSAGE_ID} = props;
+
+    const handleShowDetailMessage = (e , id) => {
+        e.preventDefault()
+        setMESSAGE_ID(id)
+
+        setTimeout(() => {
+            setVisibleModalMoreDetailsMessage(true)
+        }, 300);
+    }
 
     return (
         <div class="col">
-            <div class="msg-block unread " data-bs-toggle="modal"
+            <div className={"msg-block " + (message?.is_read ? "" : "unread")}  data-bs-toggle="modal"
                 data-bs-target="#readmsg">
-                <h5 class="default">Up to 30% offer</h5>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam</p>
-                <button onClick={()=> setVisibleModalMoreDetailsMessage(true)} type="button" class="btn btn-view">More</button>
+                <h5 className="default">{message?.message?.title}</h5>
+                <p>{message?.message.body}</p>
+                <button onClick={(e)=>handleShowDetailMessage(e , message?.id)} type="button" class="btn btn-view">More</button>
             </div>
         </div>
     )
