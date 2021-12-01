@@ -1,8 +1,10 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import { handleShowImage } from "../../utils/showImageProduct";
 
-function ArtworksTab() {
-    return (
-        <div className="tab-content main-tab-content " id="cat-serach-content">
+function ArtworksTab({ items }) {
+  return (
+    <div className="tab-content main-tab-content " id="cat-serach-content">
       <div
         className="tab-pane fade show active"
         id="catsearch3"
@@ -10,58 +12,45 @@ function ArtworksTab() {
         aria-labelledby="home-tab"
       >
         <div className="owl-carousel">
+          <div className="row row-cols-xxxxl-6 row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-2">
+            {items?.products?.length ? items?.products?.map((artwork, key) => (
 
-        <div className="row row-cols-xxxxl-6 row-cols-xxl-5 row-cols-xl-4 row-cols-md-3 row-cols-2">    
+                  <React.Fragment key={key}>
 
-                {[1, 2, 3, 4, 5, 6, 7].map((artwork , key) => (
-                    <React.Fragment key={key}>
-                        <div className="col-12 col-md-6 col-lg-4">
-                            <a href="#" className="artwork-block">
-                            <div className="artwork-img">
-                                <img
-                                src="https://picsum.photos/seed/picsum/998/880"
-                                width="998"
-                                height="880"
-                                alt=""
-                                className="img-fluid w-100"
-                                />
-                                <div className="artwork-category">
-                                <span className="category-save artwork-bookmark active"></span>
-                                <span className="category-icon live-icon">Live</span>
-                                </div>
-                            </div>
-                            <div className="block-body text-center">
-                                <h6 className="default gray50 ">Sohrab Sepehri</h6>
-                                <h4 className="default">From the Saqakhaneh series</h4>
-                                <div className="auction-calender">
-                                <div className="auction-date">
-                                    <span className="start-date">19 June</span>
-                                    <span className="end-date">22 June</span>
-                                </div>
-                                <div className="auction-time">
-                                    <span className="start-time">10 AM</span>
-                                </div>
-                                </div>
-                                <div className="price-block">
-                                <span>Start bid:</span>
-                                <span className="price">
-                                    100<span className="price-unit">$</span>
-                                </span>
-                                </div>
-                            </div>
-                            </a>
+                    <div className="col-12 col-md-6 col-lg-4">
+                      <Link
+                        to={`/en/artworks/${artwork?.id}`}
+                        className="artwork-block w-25"
+                      >
+                        <div className="artwork-img">
+                          <div className="bg-shadow tl-shadow10">
+                            <img
+                              src={handleShowImage(artwork)}
+                              style={{ width: "276px", height: "226px" }}
+                              width="276"
+                              height="226"
+                              alt=""
+                              className="img-fluid"
+                            />
+                          </div>
                         </div>
-
-                    </React.Fragment>
-                ))}
-
-            </div>
-
+                        <div className="block-body">
+                          <h4 className="default">
+                            {artwork?.artwork_title_en}
+                          </h4>
+                          <h6 className="default">{artwork?.artist_name_en}</h6>
+                        </div>
+                      </Link>
+                    </div>
+                    
+                  </React.Fragment>
+                ))
+              : ""}
+          </div>
         </div>
       </div>
     </div>
-
-    )
+  );
 }
 
 export default ArtworksTab;
