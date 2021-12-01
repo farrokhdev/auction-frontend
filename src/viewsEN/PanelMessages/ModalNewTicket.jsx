@@ -1,16 +1,39 @@
-import React , {useState} from 'react';
+import React , {useState , useEffect} from 'react';
 import {Modal , message , Alert} from 'antd'
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 
 function ModalNewTicket(props) {
 
-    const {visibleModalNewTicket , setVisibleModalNewTicket} = props;
+    const {visibleModalNewTicket , setVisibleModalNewTicket , getTickets} = props;
 
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [TicketTitle, setTicketTitle] = useState("");
     const [TicketBody, setTicketBody] = useState("");
+    const [categoriesTicket, setCategoriesTicket] = useState([])
+    const [category, setCategory] = useState()
+    const getCategoresTicket = () => {
+        
+        axios.get(`${BASE_URL}/ticketing/category/`)
+            .then(resp => {
+                setCategoriesTicket(resp.data.data.result)
+            })
+            .catch(err => {
+            })
+    }
+
+
+    console.log("categoriesTicket : " , categoriesTicket);
+
+
+    useEffect(() => {
+        getCategoresTicket()
+    }, [])
+
+    const handleSetCategory = (id) => {
+        setCategory(id)
+    }
 
     const handleSendTicket = () => {
         setError(false)
@@ -18,7 +41,7 @@ function ModalNewTicket(props) {
         let payload = {
             "title": TicketTitle,
             "body": TicketBody,
-            "category": 1
+            "category": category
         }
 
         axios.post(`${BASE_URL}/ticketing/`, payload)
@@ -26,9 +49,9 @@ function ModalNewTicket(props) {
                 if (resp.data.code === 201) {
                     setSuccess(true)
                     message.success("Your ticket was sent successfully")
-
+                    setVisibleModalNewTicket(false)
                     setTimeout(() => {
-                        window.location.reload()
+                        getTickets()
                     }, 700);
                 }
             })
@@ -73,6 +96,24 @@ function ModalNewTicket(props) {
                                     placeholder="Write title"
                                 />
                             </div>
+
+                            <div class="input-group">
+                                <label class="default-lable">Category</label>
+                                <select 
+                                    onChange={(e)=>handleSetCategory(e.target.value)}
+                                     class="default-input" 
+                                     name="categories-ticket" 
+                                     id="categories-ticket">
+                                    <option value=""></option>
+                                    {categoriesTicket?.length ? categoriesTicket?.map(item => (
+
+                                        <option value={item?.id}>{item?.title_en}</option>
+
+                                    )) : ''}
+                    
+                                </select>
+                            </div>
+
                             <div class="input-group">
                                 <label class="default-lable">Description</label>
                                 <textarea 

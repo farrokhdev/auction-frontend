@@ -6264,3 +6264,8 @@ input[type="radio"]:checked{
 .state-success{
     color:  var(--lightgreen) !important;
 }
+
+select#categories-ticket {
+    width: 100%;
+    height: 40px;
+}

@@ -82,6 +82,7 @@ function TicketsTab() {
                     <ModalNewTicket
                         visibleModalNewTicket = {visibleModalNewTicket}
                         setVisibleModalNewTicket = {setVisibleModalNewTicket}
+                        getTickets={getTickets}
                     />
             </div>
 
