@@ -6,7 +6,6 @@ import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
 import {Spin} from "antd";
 import Timer from "react-compound-timer";
-import img from "../../images/logo-1.jpg";
 
 function Search() {
 
