@@ -8,6 +8,7 @@ const initial_state = {
     error: null,
     "currency": "toman",
     products: {},
+    lot_num : null,
     productsArrayDate: [],
     productsDate: {},
     steps: [],

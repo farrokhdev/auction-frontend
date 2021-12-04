@@ -183,13 +183,16 @@ function AddAuction() {
                 auction_product = await productsArrayDate.map(t => ({
                     base_price: (t?.base_price || 0),
                     reserve_price: (Number(t?.reserve_price) || 0),
-                    product_id: t?.id
+                    product_id: t?.id,
+                    lot_num:(t?.lot_num || 0)
+    
                 }))
             } else {
                  Object.keys(products).map(t => (auction_product.push({
                     base_price: (products[t]?.base_price || 0),
                     reserve_price: (Number(products[t]?.reserve_price) || 0),
-                    product_id: products[t]?.id
+                    product_id: products[t]?.id,
+                    lot_num:( products[t]?.lot_num || 0)
                 })))
                 // delete allDataMain["dates_auction"]
             }
