@@ -35,7 +35,8 @@ function EditPanelProfile(props) {
         setLoading(true)
         axios.put(`${BASE_URL}${EDIT_PROFILE}`, {
             ...values, "home_auction_location": {
-                "address_en": values?.address_en || ""
+                "address" : values?.address_en,
+                "address_en": values?.address_en 
             }
         })
         .then(resp => {

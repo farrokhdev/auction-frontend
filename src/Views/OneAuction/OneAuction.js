@@ -39,9 +39,11 @@ function OneAuction(props) {
         page_size: 10,
         auctions__id: id,
         search: "",
-        ordering: "id",
+        ordering: "product_auction__lot_num",
     })
     const queries = queryString.stringify(params);
+
+    console.log("Product===>>>", Product)
 
     const getProducts = () => {
         axios.get(`${BASE_URL}/sale/product/?${queries}`)
@@ -348,7 +350,24 @@ function OneAuction(props) {
                                                 <span className="btn-sort">مرتب‌سازی با<span
                                                     className="d-none d-md-inline-block">:</span></span>
                                                 <ul className="sort-list">
+                                                <li
+                                                        onClick={() => {
+                                                            setParams({
+                                                                ...params, ordering: "product_auction__lot_num"
+                                                            })
+                                                        }}
+                                                        className={params.ordering === "product_auction__lot_num" ? "active" : ""}>صعودی
+                                                    </li>
                                                     <li
+                                                        onClick={() => {
+                                                            setParams({
+                                                                ...params, ordering: "-product_auction__lot_num"
+                                                            })
+                                                        }}
+                                                        className={params.ordering === "-product_auction__lot_num" ? "active" : ""}>نزولی
+                                                    </li>
+
+                                                    {/* <li
                                                         onClick={() => {
                                                             setParams({
                                                                 ...params, ordering: "id"
@@ -363,7 +382,7 @@ function OneAuction(props) {
                                                             })
                                                         }}
                                                         className={params.ordering === "-id" ? "active" : ""}>نزولی
-                                                    </li>
+                                                    </li> */}
                                                 </ul>
                                             </div>
                                         </div>
@@ -376,7 +395,7 @@ function OneAuction(props) {
                                                     <div className="artwork-img">
                                                         <Link to={`/artworks/${item.id}`}>
                                                             <div className="image-custom-back" style={{
-                                                                backgroundImage: `url(${item.media.exact_url})`,
+                                                                backgroundImage: `url(${item?.media[0]?.exact_url})`,
                                                                 height: "250px"
                                                             }} />
                                                         </Link>

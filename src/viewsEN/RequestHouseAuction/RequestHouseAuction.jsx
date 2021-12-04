@@ -1,8 +1,8 @@
 import React , {useState , useEffect} from 'react'
 import axios from '../../utils/request';
 import UploadAxios from "../../utils/uploadRequest";
-import HeaderPanel from '../../components/HeaderPanel';
-import PanelSidebar from '../../components/PanelSidebar';
+import HeaderPanel from '../../componentsEN/HeaderPanel';
+import PanelSidebar from '../../componentsEN/PanelSideBar';
 import Spinners from '../../components/Spinners';
 import {BASE_URL} from '../../utils';
 import {CATEGORIE_ACTIVITY , PRE_UPLOAD, SEND_REQUEST_HOUMEAUCTION, UPLOAD} from '../../utils/constant';
@@ -12,7 +12,7 @@ import MapSelector from '../../components/MapSelector';
 import classnames from 'classnames';
 import { UploadOutlined } from '@ant-design/icons';
 
-const { Option, getMentions } = Mentions;
+
 const { Panel } = Collapse;
 
 function RequestHouseAuction() {
@@ -67,15 +67,6 @@ function RequestHouseAuction() {
         })
     }
     
-    const handleSetHomeType = (value) => {
-        setRequest({
-            ...request , 
-            home_auction_type : value
-        })
-    }    
-    
-
-
     const onFinish = (values) => {
         console.log(values)
          
@@ -135,11 +126,11 @@ function RequestHouseAuction() {
             axios.put(`${BASE_URL}${SEND_REQUEST_HOUMEAUCTION}` , payload).then(res => {
 
                 if(res.data.data.statusCode !== 400){
-                    successNotification("ثبت درخواست خانه حراجی"  , 'درخواست  با موفقیت ارسال شد')
+                    successNotification('Submit your auction house request'  , 'The request was sent successfully')
                 }
                
             }).catch(err => {
-                failNotification("خطا در ارسال درخواست",err.response.data.data.error_message[0])
+                failNotification('Error sending request',err.response.data.data.error_message[0])
                 
             })
         }
@@ -150,10 +141,6 @@ function RequestHouseAuction() {
     }
 
 
-    const handleSetNameFile = (upload) => {
-        setRequest({...request , media_name_file : upload?.file?.name });
-    }
-
     form.setFieldsValue({
         longitude : point?.longitude ,
         latitude : point?.latitude  ,
@@ -163,7 +150,7 @@ return (
     <React.Fragment>
 
         <Spinners loading={loading}/>
-        <HeaderPanel titlePage = {"درخواست خانه حراج"} />
+        <HeaderPanel titlePage = {"Request an auction house"} />
         <main>
         <Form 
                 onFinish={onFinish}
@@ -184,14 +171,14 @@ return (
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="default-lable">نام خانه حراج</label>
+                                                <label class="default-lable">House auction name</label>
                                                 <Form.Item
                                                         className="w-100"
                                                         name="home_auction_name"
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "نام خانه حراجی را وارد نشده است!",
+                                                                message: "The name of the auction house is not entered!",
                                                             },
                                                         ]}>
                                                 <Input 
@@ -210,7 +197,7 @@ return (
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="default-lable">نوع کاربری</label>
+                                                <label class="default-lable">Account Type</label>
 
                                                     <Form.Item
                                                         className="w-100"
@@ -218,23 +205,23 @@ return (
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "نوع کاربری انتخاب نشده است!",
+                                                                message: "User type not selected!",
                                                             },
                                                         ]}>
                                                     <Select
                                                         className="search-input w-100 fs-6"
                                                         size="large"
                                                         dropdownClassName="text-right"
-                                                        placeholder="نوع  حراجی را انتخاب کنید"
+                                                        placeholder="Select the type of auction"
                                                         onChange={(e)=> 
                                                             setRequest(
                                                             {...request , home_auction_type : e}
                                                         )}
                                                     >
                                                         <Select.Option value="none" selected disabled hidden ></Select.Option>
-                                                        <Select.Option value="collector">مجموعه دار</Select.Option>
-                                                        <Select.Option value="gallery">گالری دار</Select.Option>
-                                                        <Select.Option value="home_auction">خانه حراجی</Select.Option>
+                                                        <Select.Option value="collector">Collector</Select.Option>
+                                                        <Select.Option value="gallery">galleried</Select.Option>
+                                                        <Select.Option value="home_auction">house aucton</Select.Option>
                                                     </Select>
                                                 </Form.Item>
 
@@ -243,14 +230,14 @@ return (
                                         
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="default-lable">حوزه فعالیت خانه حراج</label>
+                                                <label class="default-lable">Scope of the house auction </label>
                                                 <Form.Item
                                                         className="w-100"
                                                         name="activity_type"
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "حوزه فعالیت انتخاب نشده است!",
+                                                                message: "Scope of the house auction not selected !",
                                                             },
                                                         ]}>
 
@@ -267,7 +254,7 @@ return (
                                                 {activites?.length >= 1 ? activites?.map(activity => (
 
                                                     <React.Fragment key={activity?.id}>
-                                                        <Select.Option   value={`${parseInt(activity?.id)}`}>{activity?.title}</Select.Option>
+                                                        <Select.Option   value={`${parseInt(activity?.id)}`}>{activity?.title_en}</Select.Option>
                                                     </React.Fragment>
                                                 )) : <Select.Option value=""></Select.Option>}
 
@@ -280,7 +267,7 @@ return (
 
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="default-lable">تلفن</label>
+                                                <label class="default-lable">phone</label>
 
                                                 <Form.Item
                                                         className="w-100"
@@ -288,11 +275,11 @@ return (
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "تلفن وارد نشده است!",
+                                                                message: "Phone not Entered!",
                                                             },
                                                             {
                                                                 pattern: /^[\d]{0,14}$/,
-                                                                message: "تنها کاراکتر عدد معتبر می‌باشد!",
+                                                                message: "Only the number character is valid!",
                                                             },
                                                         ]}>
 
@@ -314,7 +301,7 @@ return (
 
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <label class="default-lable">آدرس</label>
+                                                <label class="default-lable">address</label>
 
                                                 <Form.Item
                                                     className="w-100"
@@ -322,7 +309,7 @@ return (
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "آدرس وارد نشده است!",
+                                                            message: "address not Entered!",
                                                         },
                                                     ]}>
 
@@ -354,7 +341,7 @@ return (
                                                     className="col-md-5 ml-md-4"
                                                     >
                                                     <div class="input-group mb-0">
-                                                        <label class="default-lable">عرض جغرافیایی</label>
+                                                        <label class="default-lable">latitude</label>
 
                                                         <Form.Item
                                                             className="w-100"
@@ -362,7 +349,7 @@ return (
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: "عرض جغرافیایی انتخاب نشده!",
+                                                                    message: "Latitude not selected!",
                                                                 },
                                                             ]}>
                                                         <Input  
@@ -380,14 +367,14 @@ return (
                                                 <div 
                                                     className="col-md-5">
                                                     <div class="input-group mb-0">
-                                                        <label class="default-lable">طول جغرافیایی</label>
+                                                        <label class="default-lable">Longitude</label>
                                                             <Form.Item
                                                                 className="w-100"
                                                                 name="longitude"
                                                                 rules={[
                                                                     {
                                                                         required: true,
-                                                                        message: "طول جغرافیایی وارد نشده است!",
+                                                                        message: "Longitude not selected!",
                                                                     },
                                                                 ]}>
                                                             <Input
@@ -411,22 +398,22 @@ return (
                                     <div className="d-block my-4">
 
                                         <div className="d-flex my-4 pb-3 border-bottom">
-                                            <p className="mb-0">لطفا عکس گالری خود را بارگذاری کنید</p>
+                                            <p className="mb-0">Please upload your gallery photo</p>
 
                                         </div>
 
 
                                         <Alert className={classnames("", {
                                             "d-none": url_image ,
-                                        })}  message="شما باید یک عکس بارگذاری کنید!" type="error" showIcon />                                        
+                                        })}  message="You must upload a photo!" type="error" showIcon />                                        
                                         <div className="d-flex mt-4">
-                                        <label className="default-lable mx-3 "> بارگذاری عکس </label>
+                                        <label className="default-lable mx-3 ">upload photo </label>
                                         <Form.Item
                                             name="upload-image"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: "عکس بارگذاری نشده است!",
+                                                    message: "Photo not uploaded!",
                                                 },
                                            
                                             ]}
@@ -480,11 +467,11 @@ return (
                                     <div className="d-block my-4">
 
                                     <div className="d-flex my-4 pb-3 border-bottom">
-                                            <p className="mb-0">لطفا فایل مدارک مربوطه خود را بارگذاری کنید</p>
+                                            <p className="mb-0">Please upload your relevant documentation file</p>
                                         </div>
 
                                        <div className="d-flex">
-                                        <label className="default-lable mx-3"> بارگذاری فایل </label>
+                                        <label className="default-lable mx-3"> Upload file</label>
                                        <Form.Item
                                             name="upload-file"
                                             rules={[
@@ -535,10 +522,10 @@ return (
 
 
                                         <Collapse className="mt-5"  onChange={callback}>
-                                            <Panel className="mr-3" header="لینک شبکه‌های اجتماعی (اختیاری) " key="1">
+                                            <Panel className="mr-3" header="Social network links (optional)" key="1">
                                                 <div className="col-md-6">
                                                     <div className="input-group">
-                                                        <label className="default-lable">لینک تلگرام</label>
+                                                        <label className="default-lable">Telegram link</label>
                                                         <Form.Item
                                                             className="w-100"
                                                             name="link_telegram"
@@ -565,7 +552,7 @@ return (
 
                                                 <div className="col-md-6">
                                                     <div className="input-group">
-                                                        <label className="default-lable">لینک اینستاگرام</label>
+                                                        <label className="default-lable">Instagram link</label>
                                                         <Form.Item
                                                             className="w-100"
                                                             name="link_instagram"
@@ -594,7 +581,7 @@ return (
 
                                                 <div className="col-md-6">
                                                     <div className="input-group">
-                                                        <label className="default-lable">لینک فیسبوک</label>
+                                                        <label className="default-lable">Faceboock link</label>
                                                         <Form.Item
                                                             className="w-100"
                                                             name="link_facebook"
@@ -633,7 +620,7 @@ return (
                                                     !point?.longitude ||
                                                     !point?.latitude
                                                 } 
-                                                class="btn-default">ثبت</button>
+                                                class="btn-default">Submit</button>
                                         </div>
                                     </div>
                                 </div>

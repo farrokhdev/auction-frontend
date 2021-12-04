@@ -41,6 +41,7 @@ import '../assetsEN/styleEN/Custom.scss';
 import '../assetsEN/styleEN/fontawesome-all.min.css';
 import '../assetsEN/styleEN/antd.scss'
 import '../assetsEN/styleEN/Main.scss'
+import RequestHouseAuction from '../viewsEN/RequestHouseAuction';
 const RouterConfigEN = (props) => {
 
 
@@ -91,7 +92,7 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/panel-sell-advice" component={UserPanelSellAdvice} />
                         <Route exact path="/en/add-artworks" component={AddArtWorks} />
                         <Route exact path="/en/panel-auctions" component={UserPanelMyAuctions} />
-
+                        <Route exact path="/en/panel-request-houseAuction" component={RequestHouseAuction} />
                         <Route exact path="/en/auctions-list" component={AuctionsList} />
                         <Route exact path="/en/auctions-list/bids/:id" component={AuctionsListBids} />
                         <Route exact path="/en/auctions-list/requests/:id" component={AuctionsListRequests} />

@@ -1,11 +1,11 @@
 const dev = {
-  BASE_URL: "http://192.168.0.182:9002/api",
-  // BASE_URL: "http://192.168.0.145:9002/api",
+  // BASE_URL: "http://192.168.0.182:9002/api",
+  BASE_URL: "http://192.168.0.145:9002/api",
 
   // PARAMS:
   COOKIE_EXPIRES: 1,
-  WEB_SOCKET_BASE_URL: "ws://192.168.0.182:9002",
-  // WEB_SOCKET_BASE_URL: "ws://192.168.0.145:9002",
+  // WEB_SOCKET_BASE_URL: "ws://192.168.0.182:9002",
+  WEB_SOCKET_BASE_URL: "ws://192.168.0.145:9002",
   
 };
 

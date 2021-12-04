@@ -10,6 +10,7 @@ const initial_state = {
     "last_name": null,
     "username": "",
     "address": null,
+    "address_en": null,
     "postal_code": null,
     "email": null,
     "mobile": "",

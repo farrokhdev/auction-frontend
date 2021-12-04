@@ -61,7 +61,7 @@ function PanelSideBar(props) {
                         </NavLinkRouter>
                     </li> : ''}
                     {role !== "home_auction" ? <li>
-                        <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
+                        <NavLinkRouter activeClassName="active-style-menu" to="/en/panel-request-houseAuction">
                             <i class="fal fa-plus-circle"></i>
                             Request an auction house
                         </NavLinkRouter>
