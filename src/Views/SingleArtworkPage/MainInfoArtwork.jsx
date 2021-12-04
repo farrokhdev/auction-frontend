@@ -17,32 +17,33 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
     console.log("artwork===>>" , artwork?.latest_auction?.lot_num)
 
-    // const handleSearchArtworkByLat = (lot_num) => {
+    const handleSearchArtworkByLat = (lot_num) => {
 
-    //     setLoading(true)
-    //     axios.get(`${BASE_URL}$/sale/product/?lot=lot_num)}`).then(res => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/product/?product_auction__lot_num=${lot_num}`).then(res => {
 
-    //         if (lot_num > 0) {
-    //             window.location.href = `#/artworks/${res.data.data.result.id}`
-    //         } else {
-    //             return null
-    //         }
-    //         // setLoading(false)
-    //         // setArtwork(res.data.data.result)
-    //     }).catch(err => {
-    //         // setLoading(false)
-    //         console.error(err)
-    //     })
-    // }
-
-    const handleSearchArtworkByLat = (value) => {
-
-        if (value > 0) {
-            window.location.href = `#/artworks/${value}`
-        } else {
-            return null
-        }
+            console.log("products filter==>>" , res.data.data.result[0].id)
+            if (lot_num > 0) {
+                window.location.href = `#/artworks/${res.data.data.result[0].id}`
+            } else {
+                return null
+            }
+            // setLoading(false)
+            // setArtwork(res.data.data.result)
+        }).catch(err => {
+            // setLoading(false)
+            console.error(err)
+        })
     }
+
+    // const handleSearchArtworkByLat = (value) => {
+
+    //     if (value > 0) {
+    //         window.location.href = `#/artworks/${value}`
+    //     } else {
+    //         return null
+    //     }
+    // }
 
     const handleShowImage = (item) => {
         return (
