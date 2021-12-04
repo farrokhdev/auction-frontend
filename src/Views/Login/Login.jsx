@@ -163,7 +163,7 @@ function Login(props) {
               </div>
               <GoogleLogin
                 className="btn-google-login btn-google mt-5"
-                clientId="204714783619-coki1sldsv5iev552dcmtcpfj1sn77sg.apps.googleusercontent.com"
+                clientId="503975669516-jknru5bhfklk6kgd0j4fsuakg5cq00pv.apps.googleusercontent.com"
                 buttonText=" ثبت نام با گوگل"
                 onSuccess={responseGoogle}
                 // onFailure={responseGoogle}
