@@ -4,25 +4,31 @@ import PanelSidebar from '../../components/PanelSidebar';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPen, faTimes, faImages } from "@fortawesome/free-solid-svg-icons";
-import moment from "jalali-moment";
-import { message, Pagination, Spin } from "antd";
+import { faPlus} from "@fortawesome/free-solid-svg-icons";
+import { message, Pagination, Spin , Modal} from "antd";
+import { ExclamationCircleOutlined  , LoadingOutlined} from '@ant-design/icons';
 import queryString from "query-string";
-import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import ModalAddNewArtwork from './ModalAddNewArtwork';
-import 'antd/dist/antd.css';
+import ModalEditArtwork from './ModalEditArtwork';
 import { isApproved } from '../../utils/converTypePersion';
 import PaginationComponent from '../../components/PaginationComponent';
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
+import { ONE_PRODUCT } from '../../utils/constant';
+import 'antd/dist/antd.css';
+
+const { confirm } = Modal;
 
 function UserPanelSellAdvice() {
+
     const [Products, setProducts] = useState("");
     const [loading, setLoading] = useState(false)
     const [Suggestions, setSuggestions] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [visibleAddNewArtwork, setVisibleAddNewArtwork] = useState(false)
+    const [visibleEditArtwork, setVisibleEditArtwork] = useState(false)
+    const [ARTWORK_ID, setARTWORK_ID] = useState(null)
     const dispatch = useDispatch();
     const [params, setParams] = useState({
         page: 1,
@@ -120,12 +126,48 @@ function UserPanelSellAdvice() {
         )
     }
 
+
+    const handleDeleteProduct = (e, id) => {
+        e.preventDefault();
+
+        axios.delete(`${BASE_URL}${ONE_PRODUCT(id)}`).then(res => {
+            getProducts()
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+
+
+    function showConfirm(e, id) {
+        confirm({
+            // className='confirm-remove-reminder',
+            title: 'از حذف محصول اطمینان دارید؟',
+            icon: <ExclamationCircleOutlined />,
+            content: 'بعد از حذف، به محصول دسترسی نخواهید داشت!',
+            okText: "حذف محصول",
+            cancelText: "انصراف",
+            onOk() {
+                handleDeleteProduct(e, id)
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
+    const handleEditProduct = (id) => {
+        setARTWORK_ID(id)
+        setTimeout(() => {
+            setVisibleEditArtwork(true)
+        }, 500);
+    }
+
     const ProducList = () => {
         return (
             Products && Products.length >= 1 ? Products.map((item, key) => {
                 return (
                     <tr>
-                        <td className="artwork-img">
+                        <td style={{minWidth : '10rem'}} className="artwork-img">
 
                         <div className="image-custom-back" style={{
                             backgroundImage: `url(${item && handleShowImage(item)})`,
@@ -134,21 +176,21 @@ function UserPanelSellAdvice() {
                         }}>
                         </div>
                         </td>
-                        <td className="textalign-left">
+                        <td style={{minWidth : '15rem'}} className="textalign-right">
                             <span>{item.persian_artist_name}</span>
                             <h5 className="default">{item.artwork_title}</h5>
                         </td>
-                        <td>
+                        <td style={{minWidth : '17rem'}}>
                             <p className="">پیشنهاد شما: <span
                                 className="bid-style">{numeral(item.price).format('0,0')} <span
                                     className="price-unit">تومان</span></span></p>
                         </td>
-                        <td>
+                        <td style={{minWidth : '10rem'}}>
                             <button type="button" className={"sell-state " + (isApproved(item.is_approve).css)}>
                                 {isApproved(item.is_approve).title}
                             </button>
                         </td>
-                        <td>
+                        <td style={{minWidth : '12rem'}}>
                             {item.is_approve ?
                                 <button type="button" className="btn-default" data-bs-toggle="modal"
                                     data-bs-target="#viewoffers" onClick={() => { getSuggestion(item.id) }}><span
@@ -156,22 +198,20 @@ function UserPanelSellAdvice() {
                                 </button>
                                 : ""}
                         </td>
-                        <td>
-                            
-                            <button type="button" className="operations">
-                                <i class="fal fa-times"></i>
-                            </button>
-                            <button type="button" className="operations">
-                                <i class="fal fa-pen"></i>
-                            </button>
 
+                        <td style={{minWidth : '6rem'}}>
 
-                            {/* <button type="button" className="operations" style={{ margin: 8 }}>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </button>
-                            <button type="button" className="operations" style={{ margin: 8 }}>
-                                <FontAwesomeIcon className={'fal'} icon={faPen} />
-                            </button> */}
+                            {item?.is_approve !== "accept" ?  
+                                <>
+                                    <button onClick={(e) => showConfirm(e, item?.id)} type="button" className="operations">
+                                        <i class="fal fa-times"></i>
+                                    </button>
+                                    <button onClick={()=>handleEditProduct(item?.id)} type="button" className="operations">
+                                        <i class="fal fa-pen"></i>
+                                    </button> 
+                                </>
+                            : ''}
+
                         </td>
                     </tr>
                 )
@@ -201,6 +241,7 @@ function UserPanelSellAdvice() {
                             <ModalAddNewArtwork
                                 setVisibleAddNewArtwork={setVisibleAddNewArtwork}
                                 visibleAddNewArtwork={visibleAddNewArtwork}
+                                
                             />
 
                             <ul className="nav nav-tabs justify-content-star main-tab mrgt30" id="profile-tab"
@@ -242,7 +283,7 @@ function UserPanelSellAdvice() {
                                 <div className="tab-content" id="profile-tab-content">
                                     <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
                                         aria-labelledby="profiletab1-tab">
-                                        <div className="table-responsive">
+                                        <div style={{overflow : 'auto'}} className="table-responsive">
                                             <table className="panel-table selladvice">
                                                 <tbody>
 
@@ -333,7 +374,7 @@ function UserPanelSellAdvice() {
                             </div>
                         </div>
                         <div className="modal-body">
-                            {Suggestions ? Suggestions.map((item, key) => {
+                            {Suggestions?.length ? Suggestions?.map((item, key) => {
                                 return (
                                     <div className="ticket-detail" key={key}>
                                         <div className="ticket-detail-header">
@@ -352,7 +393,7 @@ function UserPanelSellAdvice() {
                                                         type="button"
                                                         data-bs-dismiss="modal"
                                                         className={Posting ? "btn-default" : "btn-gray"}
-                                                        onClick={() => approvedSuggest(item.id, false)}
+                                                        onClick={() => approvedSuggest(item?.id, false)}
                                                     >
                                                         {Posting ? <LoadingOutlined style={{ marginLeft: 5 }} /> : ""}رد کردن
                                                     </button>
@@ -361,7 +402,7 @@ function UserPanelSellAdvice() {
                                                         type="button"
                                                         data-bs-dismiss="modal"
                                                         className={Posting ? "btn-gray" : "btn-default"}
-                                                        onClick={() => approvedSuggest(item.id, true)}
+                                                        onClick={() => approvedSuggest(item?.id, true)}
                                                     >{Posting ? <LoadingOutlined style={{ marginLeft: 5 }} /> : ""}تایید
                                                     </button>
                                                 </div>}
@@ -373,6 +414,15 @@ function UserPanelSellAdvice() {
 
                                 )
                             }) : ""}
+
+
+                                <ModalEditArtwork 
+                                    setVisibleEditArtwork={setVisibleEditArtwork}
+                                    visibleEditArtwork={visibleEditArtwork}
+                                    setARTWORK_ID={setARTWORK_ID}
+                                    ARTWORK_ID={ARTWORK_ID}
+                                />
+
                         </div>
                     </div>
                 </div>

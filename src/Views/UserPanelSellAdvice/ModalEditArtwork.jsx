@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input,InputNumber ,Upload, Select, message } from "antd";
+import { Modal, Form, Input,InputNumber ,Upload, Select } from "antd";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { failNotification, successNotification } from "../../utils/notification";
-import MultipleUpload from "./MultipleUpload";
+import MultiUploadEditAndCreate from "./MultiUploadEditAndCreate";
 
 const formItemLayout = {
   labelCol: {
@@ -15,66 +15,100 @@ const formItemLayout = {
 };
 
 const { Dragger } = Upload;
-// const [form] = Form.useForm();
 
-function ModalAddNewArtwork({ setVisibleAddNewArtwork, visibleAddNewArtwork , setARTWORK_ID}) {
+function ModalAddNewArtwork({ setVisibleEditArtwork, visibleEditArtwork  , ARTWORK_ID}) {
 
   const [form] = Form.useForm();
   const [uploadList, setUploadList] = useState([])
   const [categories, setCategories] = useState()
   const [newArtwork, setNewArtwork] = useState({ category_id : []})
+  const [artwork, setArtwork] = useState()
+  const [artworkCategories, setArtworkCategories] = useState([])
 
 useEffect(() => {
     getListCategory()
-}, [])
+    if(!!ARTWORK_ID){
+      getArtwork()
+    }
+}, [ARTWORK_ID])
 
 
 // get list of sub category for show to user and select by users in dropdown to create artwork
 const getListCategory = () => {
     axios.get(`${BASE_URL}/sale/category/?title=آثار` ).then(res => {
       setCategories([ ...(res.data.data.result[0].children).map( item => 
-        ({label : item.title_en , value : item?.id })) ])
-
+        ({label : item.title , value : item?.id })) ])
     }).catch(err => {
         console.error(err);
     })
 }
 
 
+const getArtwork = () => {
+    axios.get(`${BASE_URL}/sale/product/${ARTWORK_ID}/`).then(res => {
+      setArtwork(res.data.data.result)
+      setArtworkCategories(
+        res.data.data.result.category.map((item) => ({
+          value: item?.id,
+          label: item?.title,
+        }))
+    );
+    }).catch(err => {
+      console.error(err);
+  })
+}
+
+
+useEffect(() => {
+  if(ARTWORK_ID){
+
+
+      form.setFieldsValue({
+
+          artwork_title: artwork?.artwork_title,
+          persian_artist_name: artwork?.persian_artist_name,
+          persian_description: artwork?.persian_description,
+          price: artwork?.price,
+          media : artwork?.media,
+          category_id: artworkCategories?.map(item => item.value),
+          offer_home_auction : "required"
+      })
+    }
+}, [artwork , artworkCategories]);
+
+
+
   const onFinish = (values) => {
     console.log(values);
 
+
     let payload = {
-        "artwork_title": values.artwork_title_en,
-        "artwork_title_en": values.artwork_title_en,
-        "english_artist_name": values.english_artist_name,
-        "english_description": values.english_description,
+        "artwork_title": values.artwork_title,
+        "artwork_title_en": values.artwork_title,
+        "persian_artist_name": values.persian_artist_name,
+        "persian_description": values.persian_description,
         "price": values.price,
-        "media" : uploadList,
-        "category_id": newArtwork.category_id,
+        "media" : artwork?.media,
+        "category_id": newArtwork?.category_id?.length ? newArtwork?.category_id : values.category_id  ,
         "offer_home_auction" : "required"
       }
 
-            
-            axios.post(`${BASE_URL}/sale/product/` , payload).then(res => {
-                console.log(res);
-                if(res.data.data.statusCode !== 400){
-                    successNotification("Create artwork" , "The artwork was created successfully")
-                    setTimeout(() => {
-                      setVisibleAddNewArtwork(false)
-                    }, 1200);
-                }else{
-                    failNotification("خطا" , res.data.data.error_message[0])
-                }
-            }).catch(err => {
-                console.error(err);
-            })
-
-    
-    
+      axios.put(`${BASE_URL}/sale/product/${ARTWORK_ID}/` , payload).then(res => {
+          console.log(res);
+          if(res.data.data.statusCode !== 400){
+              successNotification("ویرایش محصول" , "ویرایش محصول با موفقیت انجام شد")
+              getArtwork()
+              setTimeout(() => {
+                setVisibleEditArtwork(false)
+              }, 1000);
+          }else{
+              failNotification("خطا" , res.data.data.error_message[0])
+          }
+      }).catch(err => {
+          console.error(err);
+      })
   };
 
-  
 
   // function for set categories id
   const handleSetCategory = (value) =>{
@@ -84,36 +118,40 @@ const getListCategory = () => {
     })
 }
 
+
+const handleClose = () => {
+  setVisibleEditArtwork(false)
+}
   
   return (
     <React.Fragment>
       <Modal
-        title="Create new artwork"
+        title="Edit image"
         centered
-        className="modal-add-new-artwork-en"
-        visible={visibleAddNewArtwork}
-        onOk={() => setVisibleAddNewArtwork(false)}
-        onCancel={() => setVisibleAddNewArtwork(false)}
+        className="modal-edit-artwork-en"
+        visible={visibleEditArtwork}
+        onOk={handleClose}
+        onCancel={handleClose}
         width={800}
         footer={[]}
       >
 
-    <div class=" border-0 p-4">
+<div class=" border-0 p-4">
         <Form
-          name="add-new-artwork "
+          name="add-new-artwork"
           form={form}
           {...formItemLayout}
           onFinish={onFinish}
-        > 
-          <div className="row ">
-            <div className="col w-100">
+        >
+          <div className="row">
+            <div className="col">
               <div className="d-block">
 
-
-              <MultipleUpload  
-                uploadList={uploadList} 
-                setUploadList={setUploadList} 
-              />
+              
+              <MultiUploadEditAndCreate 
+                  formDataArtwork={artwork}
+                  setFormDataArtwork={setArtwork} 
+              /> 
 
 
               </div>
@@ -123,20 +161,20 @@ const getListCategory = () => {
               <div className="d-block d-xl-flex">
                 <div className="col mx-xl-3">
 
-                  <label className="d-flex default-lable my-2 mx-4">Artwork title</label>
+                  <label className="d-flex default-lable my-2 mx-4">عنوان اثر</label>
                   <Form.Item
                     {...formItemLayout}
-                    name="artwork_title_en"
+                    name="artwork_title"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your artwork title!",
+                        message: "عنوان اثر را وارد نکرده‌اید!",
                       },
                     ]}
                   >
                     <Input
                       className="default-input"
-                      placeholder="Enter artwork title"
+                      placeholder="عنوان اثر را وارد نمایید"
                     />
                   </Form.Item>
 
@@ -144,21 +182,15 @@ const getListCategory = () => {
 
                 <div className="col mx-xl-3">
 
-                  <label className="d-flex default-lable my-2 mx-4">Artist</label>
+                  <label className="d-flex default-lable my-2 mx-4">هنرمند</label>
                   <Form.Item
                     {...formItemLayout}
-                    name="english_artist_name"
+                    name="persian_artist_name"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your artist name!",
+                        message: "نام هنرمند را وارد نکرده‌اید!",
                       },
-                      {
-                        pattern:
-                          /^[a-zA-Z0-9/)/(\\÷×'":;|}{=`~,<>/\-$@$!%*?&#^_. +]+$/,
-                        message: "Only English characters are allowed!",
-                      }
-                      
                     ]}>
                     <Input
                       className="default-input"
@@ -172,14 +204,14 @@ const getListCategory = () => {
               <div className="d-flex">
                 <div className="col">
 
-                  <label className="d-flex default-lable my-2 mx-4">Category artwork</label>
+                  <label className="d-flex default-lable my-2 mx-4">دسته‌بندی محصول</label>
                   <Form.Item
                     {...formItemLayout}
                     name="category_id"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your category!",
+                        message: "دسته‌بندی محصول را وارد نکرده‌اید!",
                          },
                     ]}>
                         <Select    
@@ -187,14 +219,14 @@ const getListCategory = () => {
                             allowClear
                             style={{ width: '100%' , }}
                             placeholder="Select category artwork"
-                            optionFilterProp='value'
-                            options={categories}
                             className="multiple-select"
                             onChange={handleSetCategory}
-                            // onSearch={(e)=>getMembers({search : e})}
-                            maxTagCount = 'responsive'
+                            optionFilterProp="label"
+                            defaultValue={artworkCategories}
+                            maxTagCount="responsive"
+                            options={categories}
                         >
-                                                                                
+                                                             
                     </Select>
                   </Form.Item>
                 </div>
@@ -205,24 +237,24 @@ const getListCategory = () => {
               <div className="d-flex">
                 <div className="col">
 
-                  <label className="d-flex default-lable my-2 mx-4">Estimate price</label>
+                  <label className="d-flex default-lable my-2 mx-4">تخمین قیمت</label>
                   <Form.Item
                     {...formItemLayout}
                     name="price"
                     rules={[
                       {
                         required: true,
-                        message: "input your price is empty or invalid!",
+                        message: "تخمین قیمت را وارد نکرده‌اید!",
                       },
                       {
                         pattern: /^[\d]{0,15}$/,
-                        message: "Only the number character is valid!",
+                        message: "تنها کاراکتر عددی مجاز است!",
                     },
                     ]}
                   >
                     <InputNumber
                         type="text"
-                        placeholder="Enter Estimate price"
+                        placeholder="Please input your estimate price!"
                         formatter={value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         className="default-input w-100 text-right"
                         defaultValue=""
@@ -237,25 +269,25 @@ const getListCategory = () => {
               <div className="d-flex">
                 <div className="col">
 
-                  <label className="d-flex default-lable my-2 mx-4">Description</label>
+                  <label className="d-flex default-lable my-2 mx-4">توضیحات</label>
                   <Form.Item
                     {...formItemLayout}
-                    name="english_description"
+                    name="persian_description"
                     rules={[
                       {
                         required: false,
-                        message: "Please input your description!",
+                        message: "توضیحات را وارد نکرده‌اید!",
                       },
                       {
-                        pattern: /^[a-zA-Z0-9/)/(\\÷×'":;|}{=`~,<>/\-$@$!%*?&#^_. +]+$/,
-                        message: "Only English characters are allowed!",
+                        pattern: /^[^a-zA-Z][^a-zA-Z]*$/g,
+                        message: "کاراکتر انگلیسی مجاز نیست!",
                     }
                     ]}
                   >
                     <Input.TextArea
                       className="default-input pt-2"
                       rows={4}
-                      placeholder="Enter description"
+                      placeholder="توضیحات را وارد نمایید"
                     />
                   </Form.Item>
                 </div>
@@ -263,7 +295,7 @@ const getListCategory = () => {
 
               <div class="row">
                 <div class="button-group">
-                  <button htmlType="submit" class="btn-default">Create artwork</button>
+                  <button htmlType="submit" class="btn-default">ویرایش اثر</button>
                 </div>
               </div>
             </div>

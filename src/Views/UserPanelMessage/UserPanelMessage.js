@@ -8,8 +8,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import moment from "jalali-moment";
 import { message, Pagination } from "antd";
 import { connect } from 'react-redux';
-import 'antd/dist/antd.css';
 import { Alert } from 'antd';
+import 'antd/dist/antd.css';
 
 function UserPanelMessage(props) {
     const [Tickets, setTickets] = useState("");
@@ -24,7 +24,6 @@ function UserPanelMessage(props) {
     const [countTickets, setCountTickets] = useState(0)
     const [countMessages, setCountMessages] = useState(0)
 
-    console.log("MessageDetail====>>>>>", MessageDetail.message)
     const getTickets = (page = 1) => {
         axios.get(`${BASE_URL}/ticketing/?page=${page}`)
             .then(resp => {
@@ -165,8 +164,9 @@ function UserPanelMessage(props) {
                 }
             case 'unread':
                 return {
-                    "title": "پاسخ داده شده",
-                    "type": "replied",
+                    "title": "پاسخ داده نشده",
+                    // "type": "replied",
+                    "type": "unread",
                     "block": "unread"
                 }
             case 'close':
@@ -179,6 +179,7 @@ function UserPanelMessage(props) {
                 return {
                     "title": "خوانده شده",
                     "type": "closed",
+                    "type": "read",
                     "block": ""
                 }
             default:
@@ -254,7 +255,7 @@ function UserPanelMessage(props) {
                                         data-bs-target="#new-ticket"><FontAwesomeIcon icon={faPlus} />تیکت جدید
                                     </button>
                                     <div className="row row-cols-1">
-                                        {Tickets ? Tickets.map((item, key) => {
+                                        {Tickets?.length ? Tickets?.map((item, key) => {
                                             return (
                                                 <div className="col" key={key}>
                                                     <div className={"msg-block " + (stateToFa(item?.state).block)}
@@ -305,7 +306,7 @@ function UserPanelMessage(props) {
                         <div className="modal-header">
                             <div className="container g-0 d-flex justify-content-between">
                                 <div className="main-title">
-                                    <h2 className="default titr">{MessageDetail ? MessageDetail?.message.title : ""}</h2>
+                                    <h2 className="default titr">{MessageDetail ? MessageDetail?.message?.title : ""}</h2>
                                 </div>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close" />
@@ -313,7 +314,7 @@ function UserPanelMessage(props) {
                         </div>
                         <div className="modal-body">
                             {/*<span className="msg-date">24 آذر 99</span>*/}
-                            <p>{MessageDetail ? MessageDetail?.message.body : ""}</p>
+                            <p>{MessageDetail ? MessageDetail?.message?.body : ""}</p>
                         </div>
                     </div>
                 </div>

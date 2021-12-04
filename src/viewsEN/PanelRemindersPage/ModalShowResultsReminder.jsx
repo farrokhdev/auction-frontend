@@ -42,8 +42,6 @@ function ModalEditReminder({reminder}) {
                 footer={[]}
                 >
 
-
-
                 <div class="modal-content border-0">
                     <div class="modal-header">
                         <div class="container g-0 d-flex justify-content-between">

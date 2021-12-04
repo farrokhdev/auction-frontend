@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input,InputNumber ,Upload, Select, message } from "antd";
-import {PictureOutlined} from "@ant-design/icons";
-import UploadAxios from "../../utils/uploadRequest";
-import {PRE_UPLOAD} from '../../utils/constant';
+import { Modal, Form, Input,InputNumber ,Upload, Select } from "antd";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { failNotification, successNotification } from "../../utils/notification";
@@ -23,12 +20,6 @@ function ModalAddNewArtwork({ setVisibleAddNewArtwork, visibleAddNewArtwork }) {
 
   const [form] = Form.useForm();
   const [uploadList, setUploadList] = useState([])
-  // const [image, setImage] = useState({
-  //     url : '',
-  //     name : '',
-  //     key : '',
-  //     type : '',
-  // })
   const [categories, setCategories] = useState()
   const [newArtwork, setNewArtwork] = useState({ category_id : []})
 
@@ -40,7 +31,8 @@ useEffect(() => {
 // get list of sub category for show to user and select by users in dropdown to create artwork
 const getListCategory = () => {
     axios.get(`${BASE_URL}/sale/category/?title=آثار` ).then(res => {
-        setCategories(res.data.data.result[0].children)
+      setCategories([ ...(res.data.data.result[0].children).map( item => 
+        ({label : item.title , value : item?.id })) ])
     }).catch(err => {
         console.error(err);
     })
@@ -56,13 +48,6 @@ const getListCategory = () => {
         "persian_description": values.persian_description,
         "price": values.price,
         "media" : uploadList,
-        // "media":[ {
-        //   "media_path": image.url,
-        //   "bucket_name":image.name,
-        //   "file_key": image.key,
-        //   "type": "image",
-        //   "file_name": image.name,
-        // }],
         "category_id": newArtwork.category_id,
         "offer_home_auction" : "required"
       }
@@ -72,6 +57,10 @@ const getListCategory = () => {
                 console.log(res);
                 if(res.data.data.statusCode !== 400){
                     successNotification("ایجاد اثر" , "اثر با موفقیت ایجاد شد")
+                    setTimeout(() => {
+                      setVisibleAddNewArtwork(false)
+                      setNewArtwork({ category_id : []})
+                    }, 1200);
                 }else{
                     failNotification("خطا" , res.data.data.error_message[0])
                 }
@@ -82,26 +71,6 @@ const getListCategory = () => {
     
     
   };
-
-  // const props = {
-  //   listType: "picture",
-
-  //   onChange(info) {
-  //     const { status } = info.file;
-  //     if (status !== "uploading") {
-
-  //     }
-  //     if (status === "done" && !!image.url) {
-  //       // setUploadList([...uploadList , url_image])
-  //       message.success(`${info.file.name} با موفقیت آپلود شد.`);
-  //     } else if (status === "error") {
-  //       message.error(`آپلود ${info.file.name} با خطا مواجه شد.`);
-  //     }
-
-  //   },
-    
-
-  // };
 
 
   // function for set categories id
@@ -139,67 +108,6 @@ const getListCategory = () => {
                 uploadList={uploadList} 
                 setUploadList={setUploadList} 
               />
-
-                {/* <Dragger
-                  {...props}
-                  maxCount={1}
-                //   onRemove={()=>setUploadList([...uploadList])}
-                  customRequest={async (e) => {
-                    const { file, onSuccess, onError } = e;
-
-                    await axios
-                      .post(`${BASE_URL}${PRE_UPLOAD}`, {
-                        content_type: "image",
-                      }).then((res) => {
-                        onSuccess({ status: "success" });
-                        // setUrl_image_Key(res.data.data.result.file_key);
-
-                        setImage({
-                            ...image , 
-                            key : res.data.data.result.file_key
-                        })
-
-                        setNewArtwork({
-                          ...newArtwork,
-                          
-                        });
-
-                        if (
-                          res.data.data.result.upload_url &&
-                          file?.type.split("/")[0] === "image"
-                        ) {
-                          UploadAxios.put(res.data.data.result.upload_url, file)
-                          .then((res) => {
-
-                            setImage({
-                                ...image , 
-                                url : res.config.url , 
-                                name : file.name , 
-                                type : file.type
-                            })
-
-                            }).catch((err) => {
-                              console.error(err);
-                            });
-                        } else {
-                            setImage({});
-                        }
-                      })
-                      .catch((err) => {
-                        console.error(err);
-                        onError({ status: "error" });
-                      });
-                  }}
-                >
-                  <p className="ant-upload-drag-icon">
-                    <PictureOutlined className="img-icon-upload-add-new-artwork" />
-                  </p>
-                  <p className="ant-upload-text">
-                    تصاویر خود را در اینجا رها کنید
-                  </p>
-                </Dragger> */}
-
-
 
               </div>
                 
@@ -266,19 +174,12 @@ const getListCategory = () => {
                             allowClear
                             style={{ width: '100%' , }}
                             placeholder="دسته‌بندی را انتخاب کنید"
-                            defaultValue={[]}
+                            optionFilterProp='label'
+                            options={categories}
                             className="multiple-select"
                             onChange={handleSetCategory}
                         >
-                                                
-                        {categories?.length >= 1 ? categories?.map(category => (
-
-                            <React.Fragment key={category?.id}>
-                                <Select.Option   value={`${category?.id}`}>{category?.title}</Select.Option>
-                            </React.Fragment>
-                        )) : <Select.Option value=""></Select.Option>}
-
-                                                    
+                    
                                             
                     </Select>
                   </Form.Item>
@@ -332,7 +233,6 @@ const getListCategory = () => {
                         message: "توضیحات وارد نشده است",
                       },
                       {
-                        // pattern: /~[a-zA-Z0-9]/g,
                         pattern: /^[^a-zA-Z][^a-zA-Z]*$/g,
                         message: "کاراکتر انگلیسی مجاز نیست!",
                     }

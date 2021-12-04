@@ -269,7 +269,7 @@ function Auctions(props) {
                                             <div className="col-md-8">
                                                 <div className="block-head row">
                                                     <div className="col-xl-3 col-sm-4 col-3">
-                                                        <span className="">{convertTypeToEn(item?.type)}<span className="d-none d-md-inline-block category-title-auction ">Auction</span></span>
+                                                        <span className="">{convertTypeToEn(item?.type)}</span>
                                                     </div>
                                                     <div className="col-xl-9 col-sm-8 col-9 textalign-right">
                                                             <button
