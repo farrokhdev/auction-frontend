@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { convertTypeAuctionToPersian, convertToEn } from '../../utils/converTypePersion';
 import classnames from 'classnames';
 import { useSelector } from "react-redux";
 import Bid from "./bid";
 import Secret from "./secret";
-import { Rate } from 'antd';
+import { message, Rate } from 'antd';
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
@@ -15,18 +15,20 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
     const { is_logged_in } = useSelector((state) => state.authReducer)
     const [loading, setLoading] = useState(false)
 
-    console.log("artwork===>>" , artwork?.latest_auction?.lot_num)
+    // console.log("artwork===>>" , artwork?.latest_auction?.lot_num)
 
     const handleSearchArtworkByLat = (lot_num) => {
 
         setLoading(true)
         axios.get(`${BASE_URL}/sale/product/?product_auction__lot_num=${lot_num}`).then(res => {
 
-            console.log("products filter==>>" , res.data.data.result[0].id)
-            if (lot_num > 0) {
-                window.location.href = `#/artworks/${res.data.data.result[0].id}`
+            console.log("products filter lenght==>>", res.data.data.result.length)
+            if (lot_num > 0 && res.data.data.result.length) {
+                // if (res.data.data.result.length) {
+                    window.location.href = `#/artworks/${res.data.data.result[0].id}`
+                // }
             } else {
-                return null
+                message.error("محصولی با این مشخصات موجود نیست")
             }
             // setLoading(false)
             // setArtwork(res.data.data.result)
@@ -47,13 +49,13 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
     const handleShowImage = (item) => {
         return (
-            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
-            DEFAULT_URL_IMAGE
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
         )
     }
 
-    
+
     return (
         <div className="row">
             <div className="col-lg-6">
@@ -62,12 +64,12 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                         <button type="button" data-bs-target="#inner-artwork" data-bs-slide-to="0" className="active"
                             aria-current="true" aria-label="Slide 1">
                             {/* <img src={ artwork?.media?.exact_url} width="547" height="547" className="img-fluid d-xl-block" alt="..." /> */}
-                            <img src={ artwork?.media && handleShowImage(artwork)} width="547" height="547" className="img-fluid d-xl-block" alt="..." />
+                            <img src={artwork?.media && handleShowImage(artwork)} width="547" height="547" className="img-fluid d-xl-block" alt="..." />
                         </button>
                     </div>
                     <div className="carousel-inner">
 
-                        {artwork?.media?.length ? artwork?.media?.map((item , key) => (
+                        {artwork?.media?.length ? artwork?.media?.map((item, key) => (
                             <React.Fragment key={key}>
                                 <div className="carousel-item active">
                                     <img src={item?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
@@ -147,11 +149,11 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                         </p>
                                     </div>
                                     <div className="d-artwork-right">
-                                        <h5 className="default lot-num">{artwork?.id}</h5>
+                                        <h5 className="default lot-num">{artwork?.latest_auction?.lot_num}</h5>
                                     </div>
                                 </div>
 
-                                
+
                                 {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC')) ?
                                     <Bid artwork={artwork} /> : ''}
                                 {((artwork?.latest_auction?.type === 'HIDDEN') || (artwork?.latest_auction?.type === 'SECOND_HIDDEN')) ?
@@ -170,8 +172,8 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                                 onClick={() =>
                                                     Follow(
                                                         artwork?.latest_auction?.house?.following?.follow?.is_active ?
-                                                        artwork?.latest_auction?.house?.following?.follow?.id :
-                                                        artwork?.latest_auction?.house?.id, artwork?.latest_auction?.house?.following?.follow?.is_active)
+                                                            artwork?.latest_auction?.house?.following?.follow?.id :
+                                                            artwork?.latest_auction?.house?.id, artwork?.latest_auction?.house?.following?.follow?.is_active)
                                                 }
                                                 type="button" className={" btn-follow " + (artwork?.latest_auction?.house?.following?.follow?.is_active ? "following" : "")}>
                                                 {artwork?.following?.follow?.is_active ? "عدم دنبال کردن " : "دنبال کردن"}
