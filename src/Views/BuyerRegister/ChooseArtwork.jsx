@@ -5,6 +5,7 @@ import {LIST_PRODUCTS} from "../../utils/constant";
 import {Avatar, Card, Checkbox, message, Spin} from "antd";
 import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons";
 import Meta from "antd/es/card/Meta";
+import { handleShowImage } from "../../utils/showImageProduct";
 
 function Chooseartwork(props) {
   const {selectProduct, setSelectProduct,auction}=props
@@ -71,7 +72,7 @@ function Chooseartwork(props) {
                 <Card
                     style={{ width: "100%" }}
                     cover={
-                      <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
+                      <div className="image-custom-back" style={{  backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" }} />
                     }
                     // actions={[
                     //   <SettingOutlined key="setting" />,

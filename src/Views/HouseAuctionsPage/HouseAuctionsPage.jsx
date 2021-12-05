@@ -11,6 +11,7 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer";
 import {useDispatch,useSelector} from "react-redux";
 import {openDashboard} from "../../redux/reducers/all/all.actions"
+import { homeAuctionType } from '../../utils/converTypePersion';
 
 function HouseAuctionsPage() {
     const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
@@ -210,7 +211,7 @@ function HouseAuctionsPage() {
                                                             <div className="h-block-header">
                                                                 <div className="h-block-title">
                                                                     <h3 className="default">{house?.home_auction_name ? house?.home_auction_name : '---'}</h3>
-                                                                    <h6 className="default">{house?.home_auction_type ? house?.home_auction_type : '---'}</h6>
+                                                                    <h6 className="default">{homeAuctionType(house?.home_auction_type) ? homeAuctionType(house?.home_auction_type) : '---'}</h6>
                                                                 </div>
                                                                 <button
                                                                     onClick={() =>

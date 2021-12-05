@@ -22,8 +22,8 @@ function SiderHouseAucitons({ params,
             <div className="left-side">
                 <div className="result-box">
                     <div className="result-title">
-                        <h6 className="default">Results :</h6>
-                        <button type="button" onClick={handleRemoveFilters} className="btn-removeall">Remove all</button>
+                        <h6 className="default">نتایج :</h6>
+                        <button type="button" onClick={handleRemoveFilters} className="btn-removeall">پاک کردن همه</button>
                     </div>
                     <div className="tags-box">
                         {
@@ -46,7 +46,7 @@ function SiderHouseAucitons({ params,
                         <input
                             id="search-house-auction"
                             type="text" className="default-input"
-                            placeholder="search..."
+                            placeholder="جستجو در بیش از 100 اثر"
                             onChange={(e) => handleSetSearchFilter(document.querySelector('#search-house-auction').value)}
                         />
                         <button
@@ -131,7 +131,7 @@ function SiderHouseAucitons({ params,
                             <button className="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseThree" aria-expanded="True"
                                 aria-controls="collapseThree">
-                                Activity 
+                                فعالیت 
                             </button>
                         </h2>
                         <div id="collapseThree" className="accordion-collapse collapse show"

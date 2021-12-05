@@ -40,7 +40,7 @@ function Auctions(props) {
     const getAuctions = () => {
         setLoading(true)
         const queries = queryString.stringify(params);
-        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}` , {headers : { "Accept-Language" : 'en-US'  }})
             .then(resp => {
                 setLoading(false)
                 setCountAuctions(resp.data.data.count)
@@ -284,23 +284,22 @@ function Auctions(props) {
                                                             </button>
 
                                                         <button type="button" className="link-source">
+                                                            <Link to={`/en/auctions/${item.id}`}>
+
                                                             { !!item?.products_count ?
                                                                 <span>
                                                                     <span className="d-none d-sm-inline-block">View </span>artworks (<span>{item?.products_count}</span>)
                                                                 </span>
                                                             : null }
+                                                            </Link>
                                                         </button>
                                                     </div>
                                                 </div>
                                                 <div className="block-main">
-                                                    <Link to="/">
                                                         <h5 className="default">{item?.title_en}</h5>
-                                                    </Link>
                                                     <div className="block-detail">
                                                         <h6 className="default">{item?.house_type}</h6>
-                                                        <Link to="/" className="default">
                                                             <h6 className="default gray50">{item?.house_en}</h6>
-                                                        </Link>
                                                     </div>
                                                 </div>
                                                 <div className="block-footer row">

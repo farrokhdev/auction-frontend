@@ -1,6 +1,6 @@
 import React from "react";
 
-function NavbarTabsInfoAuction() {
+function NavbarTabsInfoAuction({auction}) {
   return (
     <ul
       className="nav nav-tabs justify-content-star main-tab"
@@ -17,7 +17,7 @@ function NavbarTabsInfoAuction() {
           aria-controls="catsearch1"
           aria-selected="true"
         >
-          Artworks (100)
+          Artworks ({auction?.products_count})
         </button>
       </li>
       <li className="nav-item" role="presentation">

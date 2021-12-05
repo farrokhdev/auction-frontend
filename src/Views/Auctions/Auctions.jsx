@@ -39,7 +39,7 @@ function Auctions() {
 
     const getProducts = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}` ,  {headers : { "Accept-Language" : 'fa-IR'  }})
             .then(resp => {
                 setLoading(false)
                 setCountAuctions(resp.data.data.count)

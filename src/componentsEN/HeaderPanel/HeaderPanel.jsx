@@ -4,12 +4,14 @@ import logowhite from "../../images/logo-white.png";
 import loginactive from "../../images/login-active.png";
 import { removeToken } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { clearStorageAll } from "../../redux/reducers/all/all.actions";
+import { clearStorageAll ,changeLanguage } from "../../redux/reducers/all/all.actions";
 import auctionWhite from "../../images/auction-white.svg"
 import { openDashboard } from "../../redux/reducers/all/all.actions"
+
 function HeaderPanel(props) {
     const dispatch = useDispatch();
     const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+
     return (
 
         <header>
@@ -35,7 +37,12 @@ function HeaderPanel(props) {
                     <div className="panel-info col-lg-4 col-2">
                         <ul className="navbar-nav flex-row-reverse">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">
+                                <Link className="nav-link" to="/" onClick={() => {
+                                    setTimeout(() => {
+                                        dispatch(changeLanguage('fa'))
+                                        window.location.reload()
+                                    }, 300);
+                                }}>
                                     FA
                                 </Link>
                             </li>

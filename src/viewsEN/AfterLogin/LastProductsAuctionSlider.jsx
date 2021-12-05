@@ -5,6 +5,8 @@ import { BASE_URL } from "../../utils";
 import { Link } from 'react-router-dom';
 import moment from "jalali-moment";
 import { AuctionStatusTextEN, AuctionTypeEN } from '../../utils/converTypePersion';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
+
 
 function LastProductsAuctionSlider({ setLoading }) {
     const sliderRef = useRef()
@@ -31,6 +33,15 @@ function LastProductsAuctionSlider({ setLoading }) {
         getLastAuctionOnStandBy()
 
     }, [])
+
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
+        )
+    }
+
 
 
 
@@ -119,10 +130,10 @@ function LastProductsAuctionSlider({ setLoading }) {
                                         <div className="auction-time">
                                             <span className="start-time">
                                                 {LastAuctionOnStandBy?.start_time ?
-                                                    moment(LastAuctionOnStandBy?.start_time, 'YYYY/MM/DD HH:mm').locale('en').format('HH:mm:ss')
-                                                    : ""}</span>
+                                                    moment(LastAuctionOnStandBy?.start_time, 'YYYY/MM/DD HH:mm ').locale('en').format(' HH:mm ')
+                                                    : ""} </span>
                                             <span className="end-time">{LastAuctionOnStandBy?.end_time ?
-                                                moment(LastAuctionOnStandBy?.end_time, 'YYYY/MM/DD HH:mm').locale('en').format('HH:mm:ss')
+                                                moment(LastAuctionOnStandBy?.end_time, 'YYYY/MM/DD HH:mm ').locale('en').format(' HH:mm ')
                                                 : ""}</span>
                                         </div>
                                     </div>

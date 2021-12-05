@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card } from "antd";
 import img6 from '../../imgEN/img-6.jpg'
 import Chooseartwork from './ChooseArtwork';
+import { handleShowImage } from '../../utils/showImageProduct';
 
 const Favourite = (props) => {
     const { setSelectComponent, selectComponent, setSelectProducts } = props
@@ -37,7 +38,7 @@ const Favourite = (props) => {
                                 <Card
                                     style={{ width: "100%" }}
                                     cover={
-                                        <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
+                                        <div className="image-custom-back" style={{  backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" }} />
                                     }
                                 >
                                     <Meta

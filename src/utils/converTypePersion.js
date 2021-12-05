@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { DEFAULT_URL_IMAGE } from './defaultImage'
 
 export function convertTypePersian(value) {
 
@@ -409,5 +410,23 @@ export function AuctionStatusTextEN(type, enrolled, id) {
 
 
 
+export function homeAuctionType(value){
 
+    switch (value) {
 
+        case "gallery":
+            return "گالری"
+        case "collector":
+            return "مجموعه دار"
+        case "home_auction":
+            return "خانه حراجی"
+    }
+}
+
+const handleShowImage = (item) => {
+    return (
+        (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+        item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+        DEFAULT_URL_IMAGE 
+    )
+}

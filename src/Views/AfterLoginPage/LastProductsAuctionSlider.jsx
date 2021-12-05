@@ -58,8 +58,7 @@ function LastProductsAuctionSlider({setLoading}) {
                 <div className="container innercontainer top130 position-relative">
                     <div className="row">
                         <div className="col-sm-6 col-lg-5 order-sm-2">
-                            <div id="main-carousel" className="carousel slide carousel-fade"
-                                data-bs-ride="carousel"
+                            <div id="main-carousel" className="carousel slide carousel-fade" data-bs-ride="carousel"
                                 data-bs-interval="0">
                                 <div className="carousel-inner">
                                     <Carousel autoplay arrows
@@ -68,16 +67,13 @@ function LastProductsAuctionSlider({setLoading}) {
                                     >
                                         {auctionProduct?.length ? auctionProduct?.map((item, index) => {
                                             return (
-                                                <div className="carousel-item active w-75">
+                                                <div className="carousel-item active ">
                                                     <div className="bg-shadow tr-shadow20 max-width-500">
-                                                        <Link to={`/artworks/${item?.product?.id}`} >
-                                                            <img
-                                                                src={item?.product?.media?.exact_url}
+                                                        <Link to={`/en/artworks/${item?.product?.id}`} >
+                                                            <img src={item?.product?.media?.exact_url}
                                                                 onClick={() => setcurentIndex(index)}
-                                                                className="img-fluid"
-                                                            />
+                                                                width="500" height="500" className="img-fluid" />
                                                         </Link>
-                                                        {/* <div className="image-custom-back" style={{ backgroundImage: `url(${item?.product?.media?.exact_url})`, height: "25rem" , backgroundSize:"contain" , backgroundPosition:"center" }} /> */}
                                                     </div>
                                                 </div>
                                             )
@@ -87,8 +83,7 @@ function LastProductsAuctionSlider({setLoading}) {
                                 <div className="carousel-controls">
                                     <button className="carousel-control-prev" type="button"
                                         data-bs-target="#main-carousel" data-bs-slide="prev">
-                                        <span className="carousel-control-prev-icon" aria-hidden="true"
-                                            onClick={() => sliderRef.current.prev()}></span>
+                                        <span className="carousel-control-prev-icon" aria-hidden="true" onClick={() => sliderRef.current.prev()}></span>
                                         <span className="visually-hidden">قبلی</span>
                                     </button>
                                     <div className="carousel-number-indicator">
@@ -98,7 +93,8 @@ function LastProductsAuctionSlider({setLoading}) {
                                     <button className="carousel-control-next" type="button"
                                         data-bs-target="#main-carousel" data-bs-slide="next">
                                         <span className="carousel-control-next-icon" aria-hidden="true"
-                                            onClick={() => sliderRef.current.next()}></span>
+                                            onClick={() => sliderRef.current.next()}
+                                        ></span>
                                         <span className="visually-hidden">بعدی</span>
                                     </button>
                                 </div>
@@ -138,10 +134,13 @@ function LastProductsAuctionSlider({setLoading}) {
                                             </span>
                                         </div>
                                         <div className="auction-time">
-                                            <span className="start-time">{LastAuctionOnStandBy?.start_time ?
-                                                moment(LastAuctionOnStandBy?.start_time, 'YYYY/MM/DD').locale('fa').format('HH')
-                                                : ""}
-                                            </span>
+                                            <span className="start-time">
+                                                {LastAuctionOnStandBy?.start_time ?
+                                                    moment( LastAuctionOnStandBy?.start_time , 'YYYY/MM/DD HH:mm').locale('en').format(' HH:mm  ')
+                                                    : ""} </span>
+                                            <span className="end-time">{LastAuctionOnStandBy?.end_time ?
+                                                moment( LastAuctionOnStandBy?.end_time , 'YYYY/MM/DD HH:mm').locale('en').format(' HH:mm ')
+                                                : ""}</span>
                                         </div>
                                     </div>
                                 </div>

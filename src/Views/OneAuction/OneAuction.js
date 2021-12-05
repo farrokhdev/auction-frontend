@@ -389,6 +389,8 @@ function OneAuction(props) {
                                     </div>
                                     <div className="row mrgt30 all-artwork row-cols-2  row-cols-lg-4">
 
+
+
                                         {Product ? Product.map((item, key) => {
                                             return (
                                                 <div className="artwork-block" key={key}>
@@ -399,9 +401,6 @@ function OneAuction(props) {
                                                                 height: "250px"
                                                             }} />
                                                         </Link>
-                                                        {/*<img src={item?.media?.exact_url} width="317" height="280"*/}
-                                                        {/*     alt=""*/}
-                                                        {/*     className="img-fluid"/>*/}
                                                         <div className="artwork-category"
                                                             onClick={() => setBookmark(!bookmark)}>
                                                             <span onClick={() =>
@@ -420,7 +419,7 @@ function OneAuction(props) {
                                                                 <h4 className="default">از {Auction?.title}</h4>
                                                             </div>
                                                             <div className="ra-col">
-                                                                <h5 className="default lot-num">{key + 1}</h5>
+                                                                {/* <h5 className="default lot-num">{key + 1}</h5> */}
                                                             </div>
                                                         </div>
                                                         <div className="detail-bid">

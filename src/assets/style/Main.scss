@@ -336,10 +336,10 @@ h6.default {
   /* background-image: url("../img/right-arrow.svg"); */
 }
 
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-  width: 22px;
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    width: 22px;
 }
+
 
 .carousel-control-next,
 .carousel-control-prev {
@@ -6373,59 +6373,53 @@ address.all-info:before {
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1400px) {
-  .newsletter {
-    overflow: hidden;
-  }
+@media (min-width: 1200px) and (max-width: 2400px) {
+   .newsletter {
+        overflow: hidden;
+    }
 
-  .max-width-180 {
-    max-width: 120px;
-  }
+    .max-width-180 {
+        max-width: 120px;
+    }
 
-  .carousel-item .bg-shadow,
-  #latest-articles .carousel-item .bg-shadow,
-  #latest-articles .carousel-controls {
-    max-width: 350px;
-  }
+    .carousel-item .bg-shadow {
+        max-width: 350px;
+    }
 
-  #latest-articles .carousel-controls {
-    margin: 30px 10px 0 0;
-  }
+    .carousel-item .carousel-caption {
+        max-width: calc(100% - 400px);
+    }
 
-  .carousel-item .carousel-caption {
-    max-width: calc(100% - 400px);
-  }
+    h1.default {
+        font-size: 40px;
+    }
 
-  h1.default {
-    font-size: 40px;
-  }
+    .pull-top100 {
+        margin-top: -50px;
+    }
 
-  .pull-top100 {
-    margin-top: -50px;
-  }
+    .slider .leftslider > p {
+        height: 40px;
+        overflow-y: hidden;
+    }
 
-  .slider .leftslider > p {
-    height: 40px;
-    overflow-y: hidden;
-  }
+    .mrgtop150slider {
+        margin-top: -50px;
+        padding-bottom: 140px;
+    }
 
-  .mrgtop150slider {
-    margin-top: -50px;
-    padding-bottom: 140px;
-  }
+    .top130 {
+        top: 50px;
+    }
 
-  .top130 {
-    top: 50px;
-  }
+    .slider {
+        padding-bottom: 30px;
+        margin-bottom: 100px;
+    }
 
-  .slider {
-    padding-bottom: 30px;
-    margin-bottom: 100px;
-  }
-
-  .latest-articles .carousel-indicators {
-    margin-top: -50px;
-  }
+    .latest-articles .carousel-indicators {
+        margin-top: -50px;
+    }
 }
 
 @media (min-width: 1400px) {
@@ -6433,13 +6427,13 @@ address.all-info:before {
     display: block;
     height: 100%;
     max-height: 500px;
-    width: auto;
-  }
+    // width: auto;
+}
 
-  .pull-top100 {
+.pull-top100 {
     position: relative;
     margin-top: -100px;
-  }
+}
 }
 
 @media (min-width: 768px) and (max-width: 920px) {
