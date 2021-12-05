@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Card, Checkbox, message, Spin} from "antd";
 import axios from "../../utils/request";
 import {BASE_URL} from "../../utils";
+import { handleShowImage } from "../../utils/showImageProduct";
 
 function Chooseartwork(props) {
   const {selectProduct, setSelectProduct,auction}=props
@@ -69,7 +70,7 @@ function Chooseartwork(props) {
                 <Card
                     style={{ width: "100%" }}
                     cover={
-                      <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
+                      <div className="image-custom-back" style={{  backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" }} />
                     }
                 >
                   <Meta

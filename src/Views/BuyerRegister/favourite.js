@@ -6,6 +6,7 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { JOIN_AUCTION } from "../../utils/constant";
 import ChooseAuction from "./ChooseAuction";
+import { handleShowImage } from '../../utils/showImageProduct';
 
 const Favourite = (props) => {
     const { setSelectComponent, selectComponent, setSelectProducts } = props
@@ -55,7 +56,7 @@ const Favourite = (props) => {
                                 <Card
                                     style={{ width: "100%" }}
                                     cover={
-                                        <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
+                                        <div className="image-custom-back" style={{ backgroundImage: `url(${item && handleShowImage(item)})` , height: "250px" }} />
                                     }
                                 >
                                     <Meta

@@ -141,7 +141,7 @@ function UserPanelArtworkList() {
                                                 <td>تصویر</td>
                                                 <td>نام</td>
                                                 <td>هنرمند</td>
-                                                <td>شماره لت</td>
+                                                {/* <td>شماره لت</td> */}
                                                 <td>تخمین قیمت</td>
                                                 <td>تعداد بیدها</td>
                                                 <td>قیمت فروخته شده</td>
@@ -166,7 +166,7 @@ function UserPanelArtworkList() {
                                                     </td>
                                                     <td>{item?.artwork_title}</td>
                                                     <td> {item?.persian_artist_name}</td>
-                                                    <td>{item?.id}</td>
+                                                    {/* <td>{item?.latest_auction?.lot_num}</td> */}
                                                     <td>
                                                         <span>{numeral(item?.min_price).format('0,0')} </span>
                                                         <span> - </span>

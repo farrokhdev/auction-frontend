@@ -135,7 +135,7 @@ function UserPanelArtworkList() {
                                                 <td>Image</td>
                                                 <td>Name</td>
                                                 <td>Artist</td>
-                                                <td>Lat number</td>
+                                                {/* <td>Lat number</td> */}
                                                 <td>Price estimate</td>
                                                 <td>Number of bids</td>
                                                 <td>Sold price</td>
@@ -159,7 +159,7 @@ function UserPanelArtworkList() {
                                                     </td>
                                                     <td>{item?.artwork_title_en}</td>
                                                     <td> {item?.english_artist_name}</td>
-                                                    <td>{item?.id}</td>
+                                                    {/* <td>{item?.latest_auction?.lot_num}</td> */}
                                                     <td>
                                                         <span>{numeral(item?.min_price).format('0,0')} </span>
                                                         <span> - </span>

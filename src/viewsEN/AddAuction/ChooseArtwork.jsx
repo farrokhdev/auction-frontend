@@ -8,6 +8,8 @@ import Meta from "antd/es/card/Meta";
 import {UrlQuery} from "../../utils/utils";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
+import { DEFAULT_URL_IMAGE } from "../../utils/defaultImage";
+import { handleShowImage } from "../../utils/showImageProduct";
 
 function Chooseartwork(props) {
     const {selectProduct, setSelectProduct,auction,listCheck}=props
@@ -42,6 +44,7 @@ function Chooseartwork(props) {
         })
   }
   const { Meta } = Card;
+
   return (
     <>
       <Spin spinning={loading}>
@@ -74,7 +77,7 @@ function Chooseartwork(props) {
               <div className="my-3">
                 <Card
                     style={{ width: "100%" }}
-                    cover={<div className="image-custom-back" style={{backgroundImage:`url(${item.media.exact_url})` ,height:"250px"}}/>}
+                    cover={<div className="image-custom-back" style={{ backgroundImage: `url(${item && handleShowImage(item)})` ,height:"250px" }}/>}
                 >
                   <Meta
                       avatar={<Checkbox

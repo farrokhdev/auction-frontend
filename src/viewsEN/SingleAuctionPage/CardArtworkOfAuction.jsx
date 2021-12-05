@@ -70,7 +70,7 @@ function CardArtworkOfAuction({product , key , setBookmark , bookmark , getProdu
             <h4 className="default">{product?.artwork_title_en}</h4>
           </div>
           <div className="ra-col">
-            <h5 className="default lot-num">1</h5>
+            {/* <h5 className="default lot-num">1</h5> */}
           </div>
         </div>
         <div className="detail-bid">
@@ -89,14 +89,14 @@ function CardArtworkOfAuction({product , key , setBookmark , bookmark , getProdu
                         {
                             product?.sale_status ?
                                 <div className="db-right text-success">
-                                    <span className="db-title"> پیشنهاد نهایی</span>
+                                    <span className="db-title"> Final offer</span>
                                     <div className="price-block">
                                         <span
                                             className="price text-success">{numberWithCommas(product?.bidding_details?.max_bid) || 0}</span>
                                         <span
-                                            className="unit text-success"> تومان</span>
+                                            className="unit text-success"> {product?.latest_auction?.currency}</span>
                                         <span className="text-success"
-                                            style={{ fontSize: '.7rem' }}> ({product?.bidding_details?.total_bids}) پیشنهاد</span>
+                                            style={{ fontSize: '.7rem' }}> ({product?.bidding_details?.total_bids}) offer</span>
 
                                     </div>
                                 </div>

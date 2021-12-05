@@ -219,9 +219,9 @@ return (
                                                         )}
                                                     >
                                                         <Select.Option value="none" selected disabled hidden ></Select.Option>
-                                                        <Select.Option value="collector">Collector</Select.Option>
-                                                        <Select.Option value="gallery">galleried</Select.Option>
-                                                        <Select.Option value="home_auction">house aucton</Select.Option>
+                                                        <Select.Option value="collector">collector</Select.Option>
+                                                        <Select.Option value="gallery">gallery</Select.Option>
+                                                        <Select.Option value="home_auction">home auction</Select.Option>
                                                     </Select>
                                                 </Form.Item>
 

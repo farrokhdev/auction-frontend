@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import HeaderEN from '../../componentsEN/HeaderEN';
 import Footer from '../../componentsEN/Footer';
 import MainTitle from '../../componentsEN/MainTitle/MainTitle';
@@ -6,15 +6,22 @@ import queryString from 'query-string';
 import axios from '../../utils/request';
 import { BASE_URL } from '../../utils';
 import { LIST_AUCTIONS } from '../../utils/constant';
-import {  Spin } from "antd";
+import { Spin } from "antd";
 import CardArtworkOfAuction from './CardArtworkOfAuction';
 import PaginationComponent from '../../componentsEN/PaginationComponent';
 import AuctionDetailInfo from './AuctionDetailInfo';
 import NavbarTabsInfoAuction from './NavbarTabsInfoAuction';
 import SerchAndFiltersPanel from './SerchAndFiltersPanel';
 import AuctionCardDetailInfo from './AuctionCardDetailInfo';
+import Breadcrumbs from '../../components/Breadcrumbs';
+
 
 function SingleAuctionPage(props) {
+
+    const myRef = useRef("")
+    const scrollToRef = (ref) => myRef.current.scrollIntoView(0, ref.current.offsetTop)
+
+    const executeScroll = () => scrollToRef(myRef)
 
     const [countArtworksOfAuction, setCountArtworksOfAuction] = useState(0)
     const [loading, setLoading] = useState(false);
@@ -24,10 +31,17 @@ function SingleAuctionPage(props) {
     const [countProducts, setCountProducts] = useState(0)
     const [reminder, setReminder] = useState(false)
     const [bookmark, setBookmark] = useState(false)
+
+    const id = props.match.params.id;
+
+
     const [params, setParams] = useState({
-        home_auction : props.match.params.id ,
-        page : 1 , 
-        page_size : 10 
+        home_auction: id,
+        page: 1,
+        page_size: 10,
+        auctions__id: id,
+        search: "",
+        ordering: "product_auction__lot_num",
     })
 
     const getProducts = () => {
@@ -89,7 +103,7 @@ function SingleAuctionPage(props) {
         })
     }
 
-    
+
 
     const handeSelectPage = (e) => {
         setParams({
@@ -100,74 +114,77 @@ function SingleAuctionPage(props) {
 
     return (
         <>
-        <Spin spinning={loading}>
-            <HeaderEN />
-            <main className="innercontent" id="all-auctions">
-                <div className="container innercontainer">
-                    <MainTitle title={auction?.title_en} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
+            <Spin spinning={loading}>
+                <HeaderEN />
+                <main className="innercontent" id="all-auctions">
+                    <div className="container innercontainer">
+                        <MainTitle title={auction?.title_en} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
 
-            <div className="w-100 lg-mrgb50 d-lg-none d-block"></div>
-            <div className="col-lg-6 ">
-                <p className="auction-link">More information about this auction, <a href="#">Click here.</a></p>
-            </div>
-       
-        <div className="inner-cover"></div>
-        <div className="flex-row-reverse d-flex over-cover ">
-            <div className="col-xl-4 col-lg-5 col-md-6 col-12">
-                <div className="bg-shadow br-shadow10">
-
-                    <AuctionCardDetailInfo auction={auction} reminder={reminder} setReminder={setReminder} getAuction={getAuction}/>
-
-                </div>
-            </div>
-        </div>
-
-        <div className="" >
-
-            <NavbarTabsInfoAuction/>
-
-            <div className="tab-content main-tab-content " id="auction-content">
+                        <div className="w-100 lg-mrgb50 d-lg-none d-block"></div>
+                        <div className="col-lg-6 ">
+                            <span className="auction-link" 
+                            // onClick={executeScroll}
+                            > More information about this auction,Click here. </span>
+                        </div>
 
 
-                <div 
-                    className="tab-pane fade show active" 
-                    id="auction1" 
-                    role="tabpanel"
-                    aria-labelledby="home-tab">
+                        <div className="inner-cover"></div>
+                        <div className="flex-row-reverse d-flex over-cover ">
+                            <div className="col-xl-4 col-lg-5 col-md-6 col-12">
+                                <div className="bg-shadow br-shadow10">
 
-                    
-                    <SerchAndFiltersPanel setParams={setParams} params={params}/>
+                                    <AuctionCardDetailInfo auction={auction} reminder={reminder} setReminder={setReminder} getAuction={getAuction} />
 
-                    <div className="row mrgt30 all-artwork "  >
+                                </div>
+                            </div>
+                        </div>
 
-                        {products?.length ? products?.map((product , key) => (
-                            <React.Fragment key={key}>
-                                <div className="col-12 col-md-6 col-lg-4">
-                                    <CardArtworkOfAuction getProducts={getProducts} product={product} key={key} setBookmark={setBookmark} bookmark={bookmark} auction={auction}/>
-                                </div> 
-                            </React.Fragment>
-                        )) : ''}
+                        <div className="" >
 
+                            <NavbarTabsInfoAuction auction={auction} />
+
+                            <div className="tab-content main-tab-content " id="auction-content">
+
+
+                                <div
+                                    className="tab-pane fade show active"
+                                    id="auction1"
+                                    role="tabpanel"
+                                    aria-labelledby="home-tab">
+
+
+                                    <SerchAndFiltersPanel setParams={setParams} params={params} />
+
+                                    <div className="row mrgt30 all-artwork "  >
+
+                                        {products?.length ? products?.map((product, key) => (
+                                            <React.Fragment key={key}>
+                                                <div className="col-12 col-md-6 col-lg-4">
+                                                    <CardArtworkOfAuction getProducts={getProducts} product={product} key={key} setBookmark={setBookmark} bookmark={bookmark} auction={auction} />
+                                                </div>
+                                            </React.Fragment>
+                                        )) : ''}
+
+                                    </div>
+
+                                    <PaginationComponent count={countArtworksOfAuction} handeSelectPage={handeSelectPage} />
+
+                                </div>
+
+
+                                <div
+                                    className="tab-pane fade "
+                                    id="auction2"
+                                    role="tabpanel"
+                                    aria-labelledby="profile-tab">
+                                    <AuctionDetailInfo HouseDetail={HouseDetail} getAuction={getAuction} auction={auction} />
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-
-                    <PaginationComponent count={countArtworksOfAuction} handeSelectPage={handeSelectPage} />
-
-                </div>
-
-
-                <div 
-                    className="tab-pane fade " 
-                    id="auction2" 
-                    role="tabpanel"
-                    aria-labelledby="profile-tab">
-                    <AuctionDetailInfo HouseDetail={HouseDetail} getAuction={getAuction} auction={auction}/>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</main>
-            <Footer />
+                </main>
+                <Footer />
             </Spin>
         </>
     )
