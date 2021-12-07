@@ -74,7 +74,7 @@ function UserPanelMyAuctions() {
                     <div class="row-blocks">
                         <div class="row">
                             <div class="col-xxl-2 col-md-3">
-                                <div class="bg-shadow tl-shadow10">
+                                <div class="bg-shadow tr-shadow10">
                                     <img src={item?.sale?.media?.exact_url} width="500" height="500" alt="" />
                                 </div>
                             </div>
@@ -153,15 +153,6 @@ function UserPanelMyAuctions() {
 
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-7 textalign-left">
-                                        {item?.sale?.status !== "CLOSED" ? <Link to={`/one-auction/${item.sale_id}`}>
-                                            <button type="button" className="btn btn-gray ms-2 view">
-                                                {convertToEn(item?.sale?.type)}
-                                            </button>
-                                        </Link> : null}
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

@@ -3725,6 +3725,7 @@ main {
     display: flex;
     margin-left: 280px;
     min-height: calc(100vh - 70px);
+    overflow-x: auto;
 }
 
 .panel-container {

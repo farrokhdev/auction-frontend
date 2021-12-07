@@ -4,9 +4,9 @@ import PanelSidebar from '../../components/PanelSidebar';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus} from "@fortawesome/free-solid-svg-icons";
-import { message, Pagination, Spin , Modal} from "antd";
-import { ExclamationCircleOutlined  , LoadingOutlined} from '@ant-design/icons';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { message, Pagination, Spin, Modal } from "antd";
+import { ExclamationCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import queryString from "query-string";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
@@ -17,6 +17,7 @@ import PaginationComponent from '../../components/PaginationComponent';
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 import { ONE_PRODUCT } from '../../utils/constant';
 import 'antd/dist/antd.css';
+
 
 const { confirm } = Modal;
 
@@ -30,12 +31,14 @@ function UserPanelSellAdvice() {
     const [visibleEditArtwork, setVisibleEditArtwork] = useState(false)
     const [ARTWORK_ID, setARTWORK_ID] = useState(null)
     const dispatch = useDispatch();
+    const { role, id } = useSelector((state) => state.profileReducer)
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
+        // owner__id: role !== 'user' ? id : '',
         is_approve: ""
+
     })
-    const { id } = useSelector((state) => state.profileReducer)
     const [Posting, setPosting] = useState(false);
     let numeral = require('numeral');
 
@@ -120,9 +123,9 @@ function UserPanelSellAdvice() {
 
     const handleShowImage = (item) => {
         return (
-            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
-            DEFAULT_URL_IMAGE
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
         )
     }
 
@@ -167,30 +170,30 @@ function UserPanelSellAdvice() {
             Products && Products.length >= 1 ? Products.map((item, key) => {
                 return (
                     <tr>
-                        <td style={{minWidth : '10rem'}} className="artwork-img">
+                        <td style={{ minWidth: '10rem' }} className="artwork-img">
 
-                        <div className="image-custom-back" style={{
-                            backgroundImage: `url(${item && handleShowImage(item)})`,
-                            height: "7rem",
-                            width: "7rem"
-                        }}>
-                        </div>
+                            <div className="image-custom-back" style={{
+                                backgroundImage: `url(${item && handleShowImage(item)})`,
+                                height: "7rem",
+                                width: "7rem"
+                            }}>
+                            </div>
                         </td>
-                        <td style={{minWidth : '15rem'}} className="textalign-right">
+                        <td style={{ minWidth: '15rem' }} className="textalign-right">
                             <span>{item.persian_artist_name}</span>
                             <h5 className="default">{item.artwork_title}</h5>
                         </td>
-                        <td style={{minWidth : '17rem'}}>
+                        <td style={{ minWidth: '17rem' }}>
                             <p className="">پیشنهاد شما: <span
                                 className="bid-style">{numeral(item.price).format('0,0')} <span
                                     className="price-unit">تومان</span></span></p>
                         </td>
-                        <td style={{minWidth : '10rem'}}>
+                        <td style={{ minWidth: '10rem' }}>
                             <button type="button" className={"sell-state " + (isApproved(item.is_approve).css)}>
                                 {isApproved(item.is_approve).title}
                             </button>
                         </td>
-                        <td style={{minWidth : '12rem'}}>
+                        <td style={{ minWidth: '12rem' }}>
                             {item.is_approve ?
                                 <button type="button" className="btn-default" data-bs-toggle="modal"
                                     data-bs-target="#viewoffers" onClick={() => { getSuggestion(item.id) }}><span
@@ -199,9 +202,23 @@ function UserPanelSellAdvice() {
                                 : ""}
                         </td>
 
-                        <td style={{minWidth : '6rem'}}>
+                        <td style={{ minWidth: '6rem' }}>
 
-                            {item?.is_approve !== "accept" ?  
+                            {item?.owner?.id === id ?
+                                <button onClick={(e) => showConfirm(e, item?.id)} type="button" className="operations">
+                                    <i class="fal fa-times"></i>
+                                </button> : ''}
+
+
+                            {item?.owner?.id === id && item?.is_approve === "waiting" ?
+
+                                <button onClick={() => handleEditProduct(item?.id)} type="button" className="operations">
+                                    <i class="fal fa-pen"></i>
+                                </button>
+                                : ''}
+
+
+                            {/* {item?.is_approve !== "accept" ?  
                                 <>
                                     <button onClick={(e) => showConfirm(e, item?.id)} type="button" className="operations">
                                         <i class="fal fa-times"></i>
@@ -210,7 +227,7 @@ function UserPanelSellAdvice() {
                                         <i class="fal fa-pen"></i>
                                     </button> 
                                 </>
-                            : ''}
+                            : ''} */}
 
                         </td>
                     </tr>
@@ -241,7 +258,7 @@ function UserPanelSellAdvice() {
                             <ModalAddNewArtwork
                                 setVisibleAddNewArtwork={setVisibleAddNewArtwork}
                                 visibleAddNewArtwork={visibleAddNewArtwork}
-                                
+
                             />
 
                             <ul className="nav nav-tabs justify-content-star main-tab mrgt30" id="profile-tab"
@@ -283,7 +300,7 @@ function UserPanelSellAdvice() {
                                 <div className="tab-content" id="profile-tab-content">
                                     <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
                                         aria-labelledby="profiletab1-tab">
-                                        <div style={{overflow : 'auto'}} className="table-responsive">
+                                        <div style={{ overflow: 'auto' }} className="table-responsive">
                                             <table className="panel-table selladvice">
                                                 <tbody>
 
@@ -416,12 +433,12 @@ function UserPanelSellAdvice() {
                             }) : ""}
 
 
-                                <ModalEditArtwork 
-                                    setVisibleEditArtwork={setVisibleEditArtwork}
-                                    visibleEditArtwork={visibleEditArtwork}
-                                    setARTWORK_ID={setARTWORK_ID}
-                                    ARTWORK_ID={ARTWORK_ID}
-                                />
+                            <ModalEditArtwork
+                                setVisibleEditArtwork={setVisibleEditArtwork}
+                                visibleEditArtwork={visibleEditArtwork}
+                                setARTWORK_ID={setARTWORK_ID}
+                                ARTWORK_ID={ARTWORK_ID}
+                            />
 
                         </div>
                     </div>

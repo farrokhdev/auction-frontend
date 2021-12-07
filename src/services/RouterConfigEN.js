@@ -42,6 +42,7 @@ import '../assetsEN/styleEN/fontawesome-all.min.css';
 import '../assetsEN/styleEN/antd.scss'
 import '../assetsEN/styleEN/Main.scss'
 import RequestHouseAuction from '../viewsEN/RequestHouseAuction';
+import EditArtworks from '../viewsEN/EditArtworks';
 const RouterConfigEN = (props) => {
 
 
@@ -69,37 +70,52 @@ const RouterConfigEN = (props) => {
                         <Route exact path="/en/password-recovery" component={Passwordrecovery} />
                         <Route exact path="/en/confirm-mobile-number" component={ConfirmMobileNumber} />
                         <Route exact path="/en/register-set-password" component={RegistersetPassword} />
-
-
                         <Route exact path="/en/auctions" component={Auctions} />
                         <Route exact path="/en/auctions/:id" component={SingleAuctionPage} />
                         <Route exact path="/en/artworks" component={Artworks} />
                         <Route exact path="/en/artworks/:id" component={SingleArtworkPage} />
                         <Route exact path="/en/house-auctions" component={HouseAuctions} />
-                        <Route exact path="/en/panel-profile/:id" component={PanelProfile} />
-                        <Route exact path="/en/panel-favorites" component={PanelFavorits} />
-                        <Route exact path="/en/panel-myPurchases" component={PanelPurchases} />
-                        <Route exact path="/en/panel-wallet" component={PanelWallet} />
-                        <Route exact path="/en/panel-messages" component={PanelMessages} />
                         <Route exact path="/en/house-auctions/:id" component={SingleHouseAuctionPage} />
-                        <Route exact path="/en/panel-financial/:id" component={PanelFinancial} />
-                        <Route exact path="/en/buyer-register/:id" component={BuyerRegister} />
-                        <Route exact path="/en/panel-artwork-list" component={UserPanelArtworkList} />
-                        <Route exact path="/en/panel-reminders" component={PanelRemindersPage} />
-                        <Route exact path="/en/create-reminder" component={CreateReminder} />
-                        <Route exact path="/en/edit-reminder/:id" component={EditReminder} />
-                        <Route exact path="/en/panel-sell-recommendation" component={UserPanelSellRecommendation} />
-                        <Route exact path="/en/panel-sell-advice" component={UserPanelSellAdvice} />
-                        <Route exact path="/en/add-artworks" component={AddArtWorks} />
-                        <Route exact path="/en/panel-auctions" component={UserPanelMyAuctions} />
-                        <Route exact path="/en/panel-request-houseAuction" component={RequestHouseAuction} />
-                        <Route exact path="/en/auctions-list" component={AuctionsList} />
-                        <Route exact path="/en/auctions-list/bids/:id" component={AuctionsListBids} />
-                        <Route exact path="/en/auctions-list/requests/:id" component={AuctionsListRequests} />
-                        <Route exact path="/en/panel-add-auction/:auctionId" component={AddAuction} />
-                        <Route exact path="/en/terms-of-use/:name" component={TermsOfUse} />
-
                         <Route exact path="/" component={AfterLogin} />
+
+
+                        {props.auth.is_logged_in ?
+                            <>
+
+                                <Route exact path="/en/panel-profile/:id" component={PanelProfile} />
+                                <Route exact path="/en/panel-favorites" component={PanelFavorits} />
+                                <Route exact path="/en/panel-myPurchases" component={PanelPurchases} />
+                                <Route exact path="/en/panel-wallet" component={PanelWallet} />
+                                <Route exact path="/en/panel-messages" component={PanelMessages} />
+                                <Route exact path="/en/panel-financial/:id" component={PanelFinancial} />
+                                <Route exact path="/en/buyer-register/:id" component={BuyerRegister} />
+                                <Route exact path="/en/panel-artwork-list" component={UserPanelArtworkList} />
+                                <Route exact path="/en/panel-reminders" component={PanelRemindersPage} />
+                                <Route exact path="/en/create-reminder" component={CreateReminder} />
+                                <Route exact path="/en/edit-reminder/:id" component={EditReminder} />
+                                {role === "home_auction" || role === "admin" ?
+                                <Route exact path="/en/panel-sell-recommendation" component={UserPanelSellRecommendation} /> : '' }
+                                <Route exact path="/en/panel-sell-advice" component={UserPanelSellAdvice} />
+                                <Route exact path="/en/add-artworks" component={AddArtWorks} />
+
+                                <Route exact path="/en/edit-artworks/:id" component={EditArtworks} />
+
+                                <Route exact path="/en/panel-auctions" component={UserPanelMyAuctions} />
+                                {role !== "home_auction" ? 
+                                <Route exact path="/en/panel-request-houseAuction" component={RequestHouseAuction} /> : '' }
+                                  {role === "home_auction" || role === "admin" ?
+                                <Route exact path="/en/auctions-list" component={AuctionsList} /> : '' }
+                                <Route exact path="/en/auctions-list/bids/:id" component={AuctionsListBids} />
+                                <Route exact path="/en/auctions-list/requests/:id" component={AuctionsListRequests} />
+                                {role === "home_auction" || role === "admin" ?
+                                <Route exact path="/en/panel-add-auction/:auctionId" component={AddAuction} /> : ''}
+                                <Route exact path="/en/terms-of-use/:name" component={TermsOfUse} />
+                                <Route exact path="/" component={AfterLogin} />
+
+                            </> :
+
+                            <Redirect to={{ pathname: "/en/login" }} />}
+
                     </Switch>
                 </Router>
             </HashRouter>

@@ -4,6 +4,7 @@ import { DeleteFilled } from "@ant-design/icons";
 import { setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import Meta from "antd/es/card/Meta";
 import { useDispatch, useSelector } from "react-redux";
+import { handleShowImage } from '../../utils/showImageProduct';
 
 function Productinput(props) {
     const { type, products ,lot_num } = useSelector((state) => state.auctionReducer);
@@ -22,7 +23,8 @@ function Productinput(props) {
                     cover={
                         <img
                             alt="No Photo"
-                            src={products[item]?.media?.exact_url}
+                            src={products[item] && handleShowImage(products[item])}
+
                         />
                     }
                     actions={[
