@@ -81,7 +81,6 @@ const RouterConfig = (props) => {
                         {/*{!props.auth.is_logged_in && <Route exact path="/" component={AfterLoginPage}/>}*/}
                         <Route exact path="/" component={AfterLoginPage} />
                         <Route exact path="/login" component={Login} />
-
                         <Route exact path="/verification-code" component={VerificationCode} />
                         <Route exact path="/reset-password" component={Resetpassword} />
                         <Route exact path="/register-set-password" component={RegistersetPassword} />

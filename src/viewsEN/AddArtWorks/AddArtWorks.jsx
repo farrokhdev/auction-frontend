@@ -208,7 +208,7 @@ function
                                 </div>
                                 <div className="col-md-6">
                                     <div className="input-group">
-                                        <label className="default-lable">artwork number</label>
+                                        <label className="default-lable">artwork lot number</label>
                                         <input
                                             onChange={(e) => setNumber(e.target.value)}
                                             type="number" className="default-input" placeholder="Enter the artwork number."
@@ -283,10 +283,10 @@ function
                                     </div>
                                 </div>
                                 <div className="col-12">
-                                    <p className="mrgt30">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    {/* <p className="mrgt30">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         Consequuntur illum molestiae quod eaque culpa minima, totam,
                                         enim vero modi sequi magni facere libero blanditiis temporibus quos incidunt minus deserunt commodi.
-                                    </p>
+                                    </p> */}
                                 </div>
                                 <div className="col-xl-3">
                                     <div className="input-group">

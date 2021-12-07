@@ -93,7 +93,7 @@ export default function Footer() {
               <span>تمامی حقوق این سایت برای آکشن محفوظ است</span>
             </div>
             <div className="col text-start">
-              <span className="footer-call">+98 21 88 85 90 30</span>
+              <span className="footer-call" dir="ltr">  +98 21 88 85 90 30</span>
             </div>
           </div>
         </div>

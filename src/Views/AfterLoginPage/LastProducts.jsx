@@ -123,10 +123,9 @@ function LastProducts() {
                 {lastProducts ? lastProducts.map((item, key) => {
                     return (
                         <div className=" w-75" key={key}>
-                            <div className="artwork-img">
-                                <Link to={`/artworks/${item.id}`} className="artwork-block ">
-                                    <div className="image-custom-back" style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" }}>
-                                    </div>
+                               <div className="artwork-img">
+                                <Link to={`/en/artworks/${item?.id}`} className="artwork-block ">
+                                    <img style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" ,backgroundRepeat : "round" }} width="998" height="880" alt="" className="img-fluid" />
 
                                 </Link>
                                 <div className="artwork-category">
@@ -150,7 +149,7 @@ function LastProducts() {
                                         <span className="end-date">{item?.latest_auction?.end_time ? moment(item?.latest_auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM') : ""}</span>
                                     </div>
                                     <div className="auction-time">
-                                        <span className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD').locale('fa').format('HH') : ""}</span>
+                                        <span className="start-time">{item?.latest_auction?.start_time ? moment(item?.latest_auction?.start_time, 'YYYY/MM/DD HH:mm').locale('fa').format('HH:mm') : ""}</span>
                                     </div>
                                 </div>
                                 <div className="price-block">

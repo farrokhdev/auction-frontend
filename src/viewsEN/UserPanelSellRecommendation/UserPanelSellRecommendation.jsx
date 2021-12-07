@@ -3,13 +3,14 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import moment from "jalali-moment";
 import { message, Pagination, Spin } from "antd";
-import 'antd/dist/antd.css';
 import queryString from "query-string";
 import { Link } from "react-router-dom";
-import { isApproved } from '../../utils/converTypePersion';
+import { isApprovedEN } from '../../utils/converTypePersion';
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 import HeaderPanel from '../../componentsEN/HeaderPanel';
 import PanelSidebar from '../../componentsEN/PanelSideBar';
+// import { handleShowImageProduct } from '../../utils/showImageProduct';
+import 'antd/dist/antd.css';
 
 
 function UserPanelSellAdvice() {
@@ -30,83 +31,83 @@ function UserPanelSellAdvice() {
 
     const queries = queryString.stringify(params);
 
-    // const getSuggestsList = () => {
-    //     setLoading(true)
-    //     axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
-    //         .then(resp => {
-    //             setLoading(false)
-    //             if (resp.data.code === 200) {
-    //                 setSuggestsList(resp.data.data.result)
-    //             }
+    const getSuggestsList = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    setSuggestsList(resp.data.data.result)
+                }
 
-    //         })
-    //         .catch(err => {
-    //             setLoading(false)
-    //             console.error(err);
-    //         })
-    // }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
 
-    // const getSuggestions = () => {
-    //     setLoading(true)
-    //     axios.get(`${BASE_URL}/auction-house/suggest/?${queries}`)
-    //         .then(resp => {
-    //             setLoading(false)
-    //             if (resp.data.code === 200) {
-    //                 setSuggestions(resp.data.data.result)
-    //                 setSuggestionsCount(resp.data.data.count)
-    //             }
+    const getSuggestions = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/auction-house/suggest/?${queries}`)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    setSuggestions(resp.data.data.result)
+                    setSuggestionsCount(resp.data.data.count)
+                }
 
-    //         })
-    //         .catch(err => {
-    //             setLoading(false)
-    //             console.error(err);
-    //         })
-    // }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
 
-    // const getSuggest = (id) => {
-    //     setLoading(true)
-    //     axios.get(`${BASE_URL}/auction-house/suggest/${id}/`)
-    //         .then(resp => {
-    //             setLoading(false)
-    //             if (resp.data.code === 200) {
-    //                 setSuggestDetail(resp.data.data.result)
-    //             }
+    const getSuggest = (id) => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/auction-house/suggest/${id}/`)
+            .then(resp => {
+                setLoading(false)
+                if (resp.data.code === 200) {
+                    setSuggestDetail(resp.data.data.result)
+                }
 
-    //         })
-    //         .catch(err => {
-    //             setLoading(false)
-    //             console.error(err);
-    //         })
-    // }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
 
-    // let approvedSuggest = (id, type) => {
-    //     let payload = {
-    //         "homeauction_sugesstion_status": type ? "accept" : "reject",
-    //         "suggestion": SuggestDescription
-    //     }
-    //     setPosting(true)
-    //     if (SuggestDescription) {
-    //         axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
-    //             .then(resp => {
-    //                 console.log(resp)
-    //                 if ((resp.data.code === 200) || (resp.data.code === 201)) {
-    //                     message.success('درخواست شما با موفقیت ثبت شد.');
-    //                     setPosting(false)
-    //                     getSuggestions()
-    //                 }
-    //             })
-    //             .catch(err => {
-    //                 message.error(err?.response?.data?.data);
-    //                 setPosting(false)
-    //             })
-    //     } else {
-    //         message.error("توضیحی وارد کنید");
-    //         setPosting(false)
-    //     }
-    // }
+    let approvedSuggest = (id, type) => {
+        let payload = {
+            "homeauction_sugesstion_status": type ? "accept" : "reject",
+            "suggestion": SuggestDescription
+        }
+        setPosting(true)
+        if (SuggestDescription) {
+            axios.patch(`${BASE_URL}/auction-house/suggest/${id}/`, payload)
+                .then(resp => {
+                    console.log(resp)
+                    if ((resp.data.code === 200) || (resp.data.code === 201)) {
+                        message.success('Your request has been successfully submitted.');
+                        setPosting(false)
+                        getSuggestions()
+                    }
+                })
+                .catch(err => {
+                    message.error(err?.response?.data?.data);
+                    setPosting(false)
+                })
+        } else {
+            message.error("Enter a description");
+            setPosting(false)
+        }
+    }
 
     useEffect(() => {
-        // getSuggestions()
+        getSuggestions()
     }, [params])
 
     const handeSelectPage = (e) => {
@@ -142,29 +143,29 @@ function UserPanelSellAdvice() {
                             }}>
                             </div>
                         </td>
-                        <td>{item.product.artwork_title}</td>
-                        <td>{item.product.persian_artist_name}</td>
+                        <td>{item?.product?.artwork_title_en}</td>
+                        <td>{item?.product?.english_artist_name}</td>
                         <td>
-                            <button type="button" className={"sell-state " + (isApproved(item.product.is_approve).css)}>
-                                {isApproved(item.product.is_approve).title}
+                            <button type="button" className={"sell-state " + (isApprovedEN(item?.product?.is_approve).css)}>
+                                {isApprovedEN(item?.product?.is_approve).title}
                             </button>
                         </td>
                         <td>
-                            <span>{numeral(item.product.price).format('0,0')}</span>
-                            <span className="price-unit">USD</span>
+                            <span>{numeral(item?.product?.price).format('0,0')}</span>
+                            <span className="price-unit mx-1">{item?.product?.latest_auction?.currency}</span>
                         </td>
                         <td>
                             <button type="button" className="btn-outline-gray"
                                 data-bs-toggle="modal"
-                                // onClick={() => getSuggest(item?.id)}
+                                onClick={() => getSuggest(item?.id)}
                                 data-bs-target="#recommend-detail">Details
                             </button>
                         </td>
                         <td>
-                            {item.product.is_approve === "accept" ?
+                            {item?.product?.is_approve === "accept" ?
                                 <button
                                     type="button"
-                                    // onClick={() => getSuggestsList()}
+                                    onClick={() => getSuggestsList()}
                                     className="btn-outline-pink"
                                     data-bs-toggle="modal"
                                     data-bs-target="#uploadinauction">Upload <span
@@ -368,24 +369,27 @@ function UserPanelSellAdvice() {
                         <div className="modal-body">
                             <div className="d-flex flex-row row">
                                 <div className="artwork-img col-3">
-                                    <img src={SuggestDetail?.product?.media?.exact_url} width="317" height="280" alt=""
+                                    {/* <img src={SuggestDetail?.product?.media?.exact_url} width="317" height="280" alt="" */}
+                                    <img src={handleShowImage(SuggestDetail)} width="317" height="280" alt=""
+                                    // <img src={SuggestDetail?.product?.media[0]?.exact_url} width="317" height="280" alt=""
                                         className="img-fluid" />
                                 </div>
                                 <div className="artwork-info-left col-lg-6 col-9">
                                     <div>
-                                        <span>{SuggestDetail?.product?.persian_artist_name}</span>
-                                        <h5 className="default">{SuggestDetail?.product?.latest_auction?.title}</h5>
+                                        <span>{SuggestDetail?.product?.english_artist_name}</span>
+                                        <h5 className="default">{SuggestDetail?.product?.latest_auction?.title_en}</h5>
                                     </div>
-                                    <div className="mrgt10 estimate">Estimate Price:
-                                        <span>{numeral(SuggestDetail?.product?.price).format('0,0')}</span>
-                                        <span className="price-unit">USD</span>
+                                    <div className="mrgt10 estimate">Estimate Price :
+                                        <span className="mx-1">{numeral(SuggestDetail?.product?.price).format('0,0')}</span>
+                                        <span className="price-unit mx-1">{SuggestDetail?.product?.latest_auction?.currency}</span>
                                     </div>
                                 </div>
                                 <div className="seller-phone col-12 col-lg-3">
                                     Seller phone
-                                    <Link to={SuggestDetail?.product?.owner?.username} type="tel">
+                                    {/* <Link to={SuggestDetail?.product?.owner?.username} type="tel"> */}
+                                    <Link to='#' type="tel">
                                         <span
-                                            className="seller-phone-name">{SuggestDetail?.product?.owner?.first_name} {SuggestDetail?.product?.owner?.last_name}</span>
+                                            className="seller-phone-name">{SuggestDetail?.product?.owner?.first_name_en} {SuggestDetail?.product?.owner?.last_name_en}</span>
                                         <span
                                             className="seller-phone-number">{SuggestDetail?.product?.owner?.username}</span>
                                     </Link>
@@ -411,13 +415,13 @@ function UserPanelSellAdvice() {
                                     disabled={Posting}
                                     type="button" className="btn btn-gray "
                                     data-bs-dismiss="modal"
-                                    // onClick={() => approvedSuggest(SuggestDetail?.id, false)}
+                                    onClick={() => approvedSuggest(SuggestDetail?.id, false)}
                                 >Ignore
                                 </button>
                                 <button
                                     disabled={Posting}
                                     data-bs-dismiss="modal"
-                                    // onClick={() => approvedSuggest(SuggestDetail?.id, true)}
+                                    onClick={() => approvedSuggest(SuggestDetail?.id, true)}
                                     type="button" className="btn btn-default">Accept request
                                 </button>
 
@@ -461,15 +465,15 @@ function UserPanelSellAdvice() {
                             }>
                                 <button type="button" className="btn btn-default">Create auction</button>
                             </Link>
-                            <span>  or Select an auction::</span>
+                            <span className="mx-2">  or Select an auction :</span>
                             <div className="table-responsive mrgt30">
                                 <table className="panel-table">
                                     <tbody>
-                                        {SuggestsList ? SuggestsList.map((item, key) => {
+                                        {SuggestsList?.length ? SuggestsList?.map((item, key) => {
                                             return (
-                                                <tr key={key}>
-                                                    <td><Link to="/" className="default-link">{item.title}</Link></td>
-                                                    <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
+                                                <tr key={item?.id}>
+                                                    <td><Link to="/" className="default-link">{item?.title_en}</Link></td>
+                                                    <td>{moment(item?.start_time, 'YYYY/MM/DD').locale('en').format('DD MMMM YYYY')}</td>
                                                     <td>
                                                         <button type="button" className="btn-outline-pink">Join</button>
                                                     </td>

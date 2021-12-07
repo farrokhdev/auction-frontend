@@ -5,6 +5,8 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import moment from "jalali-moment";
 import { Link } from 'react-router-dom';
+import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
+
 
 function LastProductsAuctionSlider({setLoading}) {
 
@@ -35,6 +37,14 @@ function LastProductsAuctionSlider({setLoading}) {
         getLastAuctionOnStandBy()
 
     }, [])
+
+    const handleShowImage = (item) => {
+        return (
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
+            DEFAULT_URL_IMAGE
+        )
+    }
 
     // const nextSlide = () => {
 
@@ -70,7 +80,9 @@ function LastProductsAuctionSlider({setLoading}) {
                                                 <div className="carousel-item active ">
                                                     <div className="bg-shadow tr-shadow20 max-width-500">
                                                         <Link to={`/en/artworks/${item?.product?.id}`} >
-                                                            <img src={item?.product?.media?.exact_url}
+                                                            <img 
+                                                            // src={handleShowImage(item)}
+                                                            src={item?.product?.media?.exact_url}
                                                                 onClick={() => setcurentIndex(index)}
                                                                 width="500" height="500" className="img-fluid" />
                                                         </Link>

@@ -367,7 +367,7 @@ function UserPanelSellAdvice() {
                         <div className="modal-body">
                             <div className="d-flex flex-row row">
                                 <div className="artwork-img col-3">
-                                    <img src={SuggestDetail?.product?.media?.exact_url} width="317" height="280" alt=""
+                                    <img src={handleShowImage(SuggestDetail)} width="317" height="280" alt=""
                                          className="img-fluid"/>
                                 </div>
                                 <div className="artwork-info-left col-lg-6 col-9">

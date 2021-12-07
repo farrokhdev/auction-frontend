@@ -207,7 +207,8 @@ const BaseInformation = (props) => {
                                                     }}
                                                     name="start_time"
                                                     id="start_time"
-                                                    min={momentJalaali().startOf('moment')}
+                                                    min={momentJalaali().add(-1,'days')}
+                                                    // min={momentJalaali().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
@@ -262,7 +263,8 @@ const BaseInformation = (props) => {
                                                     // onChange={handleDateChange}
                                                     name="end_time"
                                                     id="end_time"
-                                                    min={momentJalaali().startOf('moment')}
+                                                    min={momentJalaali().add(-1,'days')}
+                                                    // min={momentJalaali().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>

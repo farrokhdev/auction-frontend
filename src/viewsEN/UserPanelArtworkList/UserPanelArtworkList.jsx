@@ -24,7 +24,7 @@ function UserPanelArtworkList() {
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
-        owner__id: role === 'user' ? id : '',
+        owner__id: role !== 'user' ? id : '',
         auction_houses__id: role !== 'user' ? id : '',
 
     })
@@ -160,13 +160,15 @@ function UserPanelArtworkList() {
                                                     <td>{item?.artwork_title_en}</td>
                                                     <td> {item?.english_artist_name}</td>
                                                     {/* <td>{item?.latest_auction?.lot_num}</td> */}
+
                                                     <td>
                                                         <span>{numeral(item?.min_price).format('0,0')} </span>
                                                         <span> - </span>
                                                         <span>{numeral(item?.max_price).format('0,0')}</span>
                                                         <span className="price-unit"> {item?.latest_auction?.currency}</span>
                                                     </td>
-                                                    <td>3</td>
+                                                    
+                                                    <td>{item?.bidding_details?.total_bids}</td>
                                                     <td>{numeral(item?.price).format('0,0')}<span className="price-unit"> {item?.latest_auction?.currency}</span></td>
                                                     <td>
                                                         {item?.owner?.id === id ?
@@ -178,7 +180,7 @@ function UserPanelArtworkList() {
 
 
                                                         {item?.owner?.id === id && item?.is_approve === "waiting" ?
-                                                            <Link to={`/edit-artworks/${item?.id}`} className="operations">
+                                                            <Link to={`/en/edit-artworks/${item?.id}`} className="operations">
                                                                 <button type="button" className="operations">
                                                                     <i class="fal fa-pen"></i>
                                                                 </button>

@@ -13,13 +13,7 @@ import pic1 from '../../imgEN/slider1.jpg'
 
 function UserPanelMyAuctions() {
     const [loading, setLoading] = useState(false)
-    const [Auctions, setAuctions] = useState([{
-        type :'ONLINE',
-        exact_url : pic1,
-        is_approve : true ,
-        sale_id : 2,
-        status: 'CLOSED'
-    }])
+    const [Auctions, setAuctions] = useState([])
     const [countProducts, setCountProducts] = useState(0)
     const [params, setParams] = useState({
         page: 1,
@@ -29,26 +23,26 @@ function UserPanelMyAuctions() {
 
     const queries = queryString.stringify(params);
 
-    // const getSuggestion = () => {
-    //     setLoading(true)
-    //     axios.get(`${BASE_URL}/sale/join-auction/me/?${queries}`)
-    //         .then(resp => {
-    //             setLoading(false)
-    //             console.log(resp)
-    //             if (resp.data.code === 200) {
-    //                 setAuctions(resp.data.data.result)
-    //                 setCountProducts(resp.data.data.count)
-    //             }
+    const getSuggestion = () => {
+        setLoading(true)
+        axios.get(`${BASE_URL}/sale/join-auction/me/?${queries}`)
+            .then(resp => {
+                setLoading(false)
+                console.log(resp)
+                if (resp.data.code === 200) {
+                    setAuctions(resp.data.data.result)
+                    setCountProducts(resp.data.data.count)
+                }
 
-    //         })
-    //         .catch(err => {
-    //             setLoading(false)
-    //             console.error(err);
-    //         })
-    // }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.error(err);
+            })
+    }
 
     useEffect(() => {
-        // getSuggestion()
+        getSuggestion()
     }, [params])
 
     function timeExpire(time) {
@@ -82,7 +76,7 @@ function UserPanelMyAuctions() {
                         <div class="row">
                             <div class="col-xxl-2 col-md-3">
                                 <div class="bg-shadow tl-shadow10">
-                                    <img src={item?.exact_url} width="500" height="500" alt="" />
+                                    <img src={item?.sale?.media?.exact_url} width="500" height="500" alt="" />
                                 </div>
                             </div>
                             <div class="col-xxl-10 col-md-9">
@@ -90,17 +84,18 @@ function UserPanelMyAuctions() {
                                     <div class="col-xl-3 col-sm-4 col-3">
                                         <span class="category-icon">
                                             <span class="d-none d-md-inline-block" > </span>
-                                            {convertToEnForEnglish(item?.type)}
+                                            {convertToEnForEnglish(item?.sale?.type)}
+
                                         </span>
                                     </div>
                                     <div class="col-xl-9 col-sm-8 col-9 textalign-right">
 
-                                        <button type="button" className={"sell-state " + (isAwaitingApprovalEN(item.is_approve).css)}>
-                                            {isAwaitingApprovalEN(item.is_approve).title}
+                                        <button type="button" className={"sell-state " + (isAwaitingApprovalEN(item?.is_approve).css)}>
+                                            {isAwaitingApprovalEN(item?.is_approve).title}
 
                                         </button>
                                         <button type="button" class="link-source">
-                                            <Link to={`/one-auction/${item.sale_id}`}>
+                                            <Link to={`/en/auctions/${item?.sale_id}`}>
                                                 <span className="d-none d-sm-inline-block">View artworks</span>
 
                                                 (<span>{item?.sale?.products_count ? item?.sale?.products_count : 0}</span>)
@@ -109,10 +104,10 @@ function UserPanelMyAuctions() {
                                     </div>
                                 </div>
                                 <div class="block-main">
-                                    <h5 class="default">  {item?.sale?.description}</h5>
+                                    <h5 class="default">  {item?.sale?.description_en}</h5>
                                     <div class="block-detail">
-                                        <h6 class="default">{item?.sale?.title}</h6>
-                                        <h6 class="default gray50">{item?.sale?.house?.home_auction_name}</h6>
+                                        <h6 class="default">{item?.sale?.title_en}</h6>
+                                        <h6 class="default gray50">{item?.sale?.house?.home_auction_name_en}</h6>
                                     </div>
                                 </div>
                                 <div class="block-footer row">
@@ -160,13 +155,13 @@ function UserPanelMyAuctions() {
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-7 textalign-right">
+                                    {/* <div class="col-sm-7 textalign-right">
                                         {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item.sale_id}`}>
                                             <button type="button" className="btn btn-gray ms-2 view">
                                                 {AuctionTypeEN(item?.type)}
                                             </button>
                                         </Link> : null}
-                                    </div>
+                                    </div> */}
 
                                 </div>
                             </div>

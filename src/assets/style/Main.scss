@@ -4274,7 +4274,7 @@ ul.vertical-menu {
   background-size: contain;
   top: 4px;
   position: relative;
-  right: -5px;
+  left: -5px;
   transform: rotate(270deg);
 }
 
@@ -4372,6 +4372,17 @@ ul.vertical-menu {
 .modal-header .main-title .titr:before,
 .modal-header .main-title .titr:after {
   bottom: -10px;
+}
+
+.main-title .titr:before {
+  content: "";
+  width: 1000%;
+  height: 1px;
+  display: block;
+  background-color: var(--gray70);
+  position: absolute;
+  bottom: -20px;
+  left: 65%;
 }
 
 .file-info {
