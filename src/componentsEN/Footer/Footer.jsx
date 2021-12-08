@@ -53,6 +53,9 @@ function Footer() {
                                         </Link>
                                     </li>
                                 ))}
+                                <li>
+                                    <Link to="/en/faq">FAQ</Link>
+                                </li>
                                 {/* <li><Link to="/">Term of us</Link></li>
                                 <li><Link to="/">Privacy</Link></li>
                                 <li><Link to="/">Work with us</Link></li>

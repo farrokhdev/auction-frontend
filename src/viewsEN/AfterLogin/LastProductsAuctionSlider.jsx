@@ -63,7 +63,7 @@ function LastProductsAuctionSlider({ setLoading }) {
                                                 <div className="carousel-item active ">
                                                     <div className="bg-shadow tr-shadow20 max-width-500">
                                                         <Link to={`/en/artworks/${item?.product?.id}`} >
-                                                            <img src={item?.product?.media?.exact_url}
+                                                            <img src={item?.product?.media[0]?.exact_url}
                                                                 onClick={() => setcurentIndex(index)}
                                                                 width="500" height="500" className="img-fluid" />
                                                         </Link>

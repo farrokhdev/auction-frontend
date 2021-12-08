@@ -70,7 +70,7 @@ function LastProductsAuctionSlider({setLoading}) {
                         <div className="col-sm-6 col-lg-5 order-sm-2">
                             <div id="main-carousel" className="carousel slide carousel-fade" data-bs-ride="carousel"
                                 data-bs-interval="0">
-                                <div className="carousel-inner">
+                                 <div className="carousel-inner">
                                     <Carousel autoplay arrows
                                         afterChange={(e) => setcurentIndex(e + 1)}
                                         ref={sliderRef}
@@ -80,9 +80,7 @@ function LastProductsAuctionSlider({setLoading}) {
                                                 <div className="carousel-item active ">
                                                     <div className="bg-shadow tr-shadow20 max-width-500">
                                                         <Link to={`/en/artworks/${item?.product?.id}`} >
-                                                            <img 
-                                                            // src={handleShowImage(item)}
-                                                            src={item?.product?.media?.exact_url}
+                                                            <img src={item?.product?.media[0]?.exact_url}
                                                                 onClick={() => setcurentIndex(index)}
                                                                 width="500" height="500" className="img-fluid" />
                                                         </Link>
