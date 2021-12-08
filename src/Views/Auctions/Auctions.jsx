@@ -234,7 +234,7 @@ function Auctions() {
                                 handleSetDateEN={handleSetDateEN}
                                 typeCategory="خانه های حراج"
                             />
-
+ 
                             <div className="col-lg-9">
                                 {Auctions && Auctions?.length >= 1 ? Auctions.map((item, key) => {
                                     return (
@@ -243,6 +243,7 @@ function Auctions() {
                                                 <div className="col-md-4">
                                                     <Link to={`/one-auction/${item?.id}`}
                                                         className="bg-shadow tr-shadow10">
+                                                    {/* <img className="image-auction" src={item?.media?.exact_url}  alt="" /> */}
                                                         <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                                                     </Link>
                                                 </div>

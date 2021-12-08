@@ -10,23 +10,38 @@ import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import { DEFAULT_URL_IMAGE } from "../../utils/defaultImage";
 import { handleShowImage } from "../../utils/showImageProduct";
+import queryString from "query-string";
+import PaginationComponent from "../../componentsEN/PaginationComponent";
 
 function Chooseartwork(props) {
     const {selectProduct, setSelectProduct,auction,listCheck}=props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
+  const [currentPage, setcurrentPage] = useState(1);
   const [dataCount, setDataCount] = useState(0)
   // const {products,productsDate} = useSelector((state) => state.auctionReducer)
     // console.log(selectProduct)
   const {id} = useSelector((state) => state.profileReducer)
 
+  const [params, setParams] = useState({
+    page: 1,
+    page_size: 10,
+    auction_houses__id: id,
+    product_assign: false,
+    // owner__id: role !== 'user' ? id : '',
+
+  })
+
+
   useEffect(()=>{
     getData()
-  },[auction])
+  },[auction , params])
   const getData = (e="") => {
     setLoading(true)
 
-    axios.get(UrlQuery(`${BASE_URL}${LIST_PRODUCTS}`,{auction_houses__id:id,product_assign:false,page_size:1000}))
+    const queries = queryString.stringify(params);
+
+    axios.get((`${BASE_URL}${LIST_PRODUCTS}?${queries}`))
   
         .then(resp => {
           setLoading(false)
@@ -43,6 +58,14 @@ function Chooseartwork(props) {
           message.error("Reload the page")
         })
   }
+
+  const handeSelectPage = (e) => {
+    setcurrentPage(e)
+    setParams({
+      ...params, page: e
+    })
+  }
+
   const { Meta } = Card;
 
   return (
@@ -103,6 +126,7 @@ function Chooseartwork(props) {
           }
             </div>
           </div>
+          <PaginationComponent count={dataCount} handeSelectPage={handeSelectPage} />
          
         </div>
       </div>
