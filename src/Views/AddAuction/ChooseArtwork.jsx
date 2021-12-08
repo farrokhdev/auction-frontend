@@ -27,7 +27,7 @@ function Chooseartwork(props) {
     page_size: 10,
     auction_houses__id: id,
     product_assign: false,
-    owner__id: role !== 'user' ? id : ''
+    // owner__id: role !== 'user' ? id : '',
 
   })
 
