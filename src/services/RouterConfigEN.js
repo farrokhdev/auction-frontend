@@ -43,6 +43,7 @@ import '../assetsEN/styleEN/antd.scss'
 import '../assetsEN/styleEN/Main.scss'
 import RequestHouseAuction from '../viewsEN/RequestHouseAuction';
 import EditArtworks from '../viewsEN/EditArtworks';
+import Faq from '../viewsEN/FAQ';
 const RouterConfigEN = (props) => {
 
 
@@ -110,6 +111,7 @@ const RouterConfigEN = (props) => {
                                 {role === "home_auction" || role === "admin" ?
                                 <Route exact path="/en/panel-add-auction/:auctionId" component={AddAuction} /> : ''}
                                 <Route exact path="/en/terms-of-use/:name" component={TermsOfUse} />
+                                <Route exact path="/en/faq" component={Faq} />
                                 <Route exact path="/" component={AfterLogin} />
 
                             </> :
