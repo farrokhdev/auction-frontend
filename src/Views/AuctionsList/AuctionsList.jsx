@@ -24,9 +24,9 @@ function AuctionsList() {
     const [productsCount, setProductsCount] = useState(0);
     const [bids, setBids] = useState("");
     const [params, setParams] = useState({
-        page : 1 , 
-        page_size : 10 , 
-        home_auction : id , 
+        page: 1,
+        page_size: 10,
+        home_auction: id,
     })
     const [loading, setLoading] = useState(false);
     const { confirm } = Modal;
@@ -159,6 +159,7 @@ function AuctionsList() {
                                                 <td>آثار</td>
                                                 <td>پیشنهادات</td>
                                                 <td>درخواست عضویت</td>
+                                                <td>جزئیات پخش زنده</td>
                                                 <td className="text-center">نمایش درسایت </td>
                                                 <td>عملیات</td>
                                             </tr>
@@ -197,6 +198,18 @@ function AuctionsList() {
                                                                     {item.registrations_count} درخواست
                                                                 </button>
                                                             </Link>
+                                                        </td>
+
+                                                        <td>
+                                                            {item?.type === "LIVE" ?
+                                                                <Link to={"/auctions-list/live-auction/" + item.id}>
+                                                                    <button type="button" className="btn-outline-gray">
+                                                                        جزئیات پخش
+                                                                    </button>
+                                                                </Link>
+                                                                : ''
+
+                                                            }
                                                         </td>
                                                         <td className="text-center">
                                                             <ShowCheckbox visible_in_site={item?.visible_in_site} auctionId={item?.id} />
