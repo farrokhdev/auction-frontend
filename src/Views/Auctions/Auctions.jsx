@@ -14,6 +14,7 @@ import Timer from 'react-compound-timer';
 import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../utils/converTypePersion';
 import moment from "jalali-moment";
 import PaginationComponent from '../../components/PaginationComponent';
+import { useSelector } from "react-redux";
 
 function Auctions() {
 
@@ -35,11 +36,13 @@ function Auctions() {
         status: []
     })
 
+    const { type } = useSelector((state) => state.auctionReducer)
+
     const queries = queryString.stringify(params);
 
     const getProducts = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/auctions/?${queries}` ,  {headers : { "Accept-Language" : 'fa-IR'  }})
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`, { headers: { "Accept-Language": 'fa-IR' } })
             .then(resp => {
                 setLoading(false)
                 setCountAuctions(resp.data.data.count)
@@ -234,18 +237,29 @@ function Auctions() {
                                 handleSetDateEN={handleSetDateEN}
                                 typeCategory="خانه های حراج"
                             />
- 
+
                             <div className="col-lg-9">
                                 {Auctions && Auctions?.length >= 1 ? Auctions.map((item, key) => {
                                     return (
                                         <div key={key} className="row-blocks">
                                             <div className="row">
                                                 <div className="col-md-4">
-                                                    <Link to={`/one-auction/${item?.id}`}
-                                                        className="bg-shadow tr-shadow10">
-                                                    {/* <img className="image-auction" src={item?.media?.exact_url}  alt="" /> */}
-                                                        <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
-                                                    </Link>
+                                                    {
+                                                        item?.type === "LIVE" ?
+
+                                                            <Link
+                                                             to={`/live-auction/${item?.id}`}
+                                                            //  to="/live-auction"
+                                                             >
+                                                                <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
+                                                            </Link>
+                                                            :
+                                                            <Link to={`/one-auction/${item?.id}`}
+                                                                className="bg-shadow tr-shadow10">
+                                                                {/* <img className="image-auction" src={item?.media?.exact_url}  alt="" /> */}
+                                                                <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
+                                                            </Link>
+                                                    }
                                                 </div>
                                                 <div className="col-md-8">
                                                     <div className="block-head row">

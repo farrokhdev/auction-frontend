@@ -57,6 +57,7 @@ import "../assets/style/style.scss";
 import "../assets/style/fontawesome-all.min.css";
 import "../i18n";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+import LiveAuction from "../Views/LiveAuction";
 
 
 const RouterConfig = (props) => {
@@ -91,6 +92,8 @@ const RouterConfig = (props) => {
                         <Route exact path="/artworks/:id" component={SingleArtworkPage} />
                         <Route exact path="/auctions" component={Auctions} />
                         <Route exact path="/one-auction/:id" component={OneAuction} />
+                        <Route exact path="/live-auction/:id" component={LiveAuction} />
+                        {/* <Route exact path="/live-auction/:id" component={LiveAuction} /> */}
                         <Route exact path="/house-acutions" component={HouseAuctionsPage} />
                         <Route exact path="/house-acutions/:id" component={SingleHouseAuctionPage} />
                         <Route exact path="/auction-details/:id" component={SingleAuctionDetailsPage} />

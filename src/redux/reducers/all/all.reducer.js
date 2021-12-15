@@ -12,7 +12,7 @@ const allReducer = (state = initial_state, { type, payload }) => {
     switch (type) {
         case types.CLEAR_STORAGE_ALL:
             removeToken()
-            return {}
+            return {check_Language: state.check_Language}
         case types.OPEN_DASHBOARD:
 
             return { ...state , is_Open_Dashboard: payload }
