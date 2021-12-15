@@ -1,36 +1,36 @@
-import React, {useEffect, useReducer, useState} from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
-import {Link, Redirect, useParams} from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import BaseInformation from "./baseInformation";
 import EditPanelProfile from "../BuyerRegister/profile";
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
-import {ADD_AUCTION, DETAIL_AUCTION, EDIT_AUCTION} from "../../utils/constant";
-import {Button, message, Spin} from "antd";
+import { BASE_URL } from "../../utils";
+import { ADD_AUCTION, DETAIL_AUCTION, EDIT_AUCTION } from "../../utils/constant";
+import { Button, message, Spin } from "antd";
 import Conditions from "./conditions";
 import Products from "./products";
-import {useDispatch, useSelector} from "react-redux";
-import {getProfile} from "../../redux/reducers/profile/profile.actions";
-import {removeAUCTION, setAUCTION} from "../../redux/reducers/auction/auction.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../redux/reducers/profile/profile.actions";
+import { removeAUCTION, setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import moment from "moment-jalaali";
 import Suggest from "./suggest";
 import Currency from "./currency";
 import Validate from "./validate";
-import {UrlQuery} from "../../utils/utils";
+import { UrlQuery } from "../../utils/utils";
 
 const listComponent = [
-    {name: "اطلاعات پایه", value: 1, thisComponent: BaseInformation},
-    {name: "انتخاب محصول", value: 2, thisComponent: Products},
+    { name: "اطلاعات پایه", value: 1, thisComponent: BaseInformation },
+    { name: "انتخاب محصول", value: 2, thisComponent: Products },
     //AddProductDate
     //AddProduct
     //ChooseArtWork
-    {name: " واحد پول ", value: 3, thisComponent: Currency},
-    {name: " بازه پیشنهادات", value: 4, thisComponent: Suggest},
+    { name: " واحد پول ", value: 3, thisComponent: Currency },
+    { name: " بازه پیشنهادات", value: 4, thisComponent: Suggest },
     //bidAddSuggest
-    {name: "اعتبارسنجی خریداران", value: 5, thisComponent: Validate},
+    { name: "اعتبارسنجی خریداران", value: 5, thisComponent: Validate },
     //priceAddValidate
-    {name: "شرایط", value: 6, thisComponent: Conditions},
+    { name: "شرایط", value: 6, thisComponent: Conditions },
 ]
 
 function Index() {
@@ -40,8 +40,8 @@ function Index() {
     // const [products, setProducts] = useState([])
     // const [selectComponent, setSelectComponent] = useState(1);
     const dispatch = useDispatch();
-    let {auctionId} = useParams();
-    const {id} = useSelector((state) => state.profileReducer)
+    let { auctionId } = useParams();
+    const { id } = useSelector((state) => state.profileReducer)
     const {
         data,
         products,
@@ -81,11 +81,11 @@ function Index() {
                     let gallery_end_date_get = res?.gallery_end_date ? res?.gallery_end_date : ''
                     let start_clock = res?.start_time.slice(11)
                     let end_clock = res?.end_time.slice(11)
-                    let gallery_start_clock =res?.gallery_start_date ? moment(res?.gallery_start_date.slice(11), "HH:mm") : moment("08:00","HH:mm")
-                    let gallery_end_clock =res?.gallery_end_date ? moment(res?.gallery_end_date.slice(11), "HH:mm") : moment("20:00","HH:mm")
+                    let gallery_start_clock = res?.gallery_start_date ? moment(res?.gallery_start_date.slice(11), "HH:mm") : moment("08:00", "HH:mm")
+                    let gallery_end_clock = res?.gallery_end_date ? moment(res?.gallery_end_date.slice(11), "HH:mm") : moment("20:00", "HH:mm")
 
-                    res.auction_product.map(t => productsGet[t?.product_id] = {...t?.product, ...t, id: t?.product_id})
-                    stepsGet = res.steps.map((t, i, array) => ({minimum: (i > 0 ? array[i - 1]?.threshold : 0), ...t}))
+                    res.auction_product.map(t => productsGet[t?.product_id] = { ...t?.product, ...t, id: t?.product_id })
+                    stepsGet = res.steps.map((t, i, array) => ({ minimum: (i > 0 ? array[i - 1]?.threshold : 0), ...t }))
                     if (res?.dates_auction?.length) {
                         res.dates_auction.map(t => {
                             let p = {}
@@ -94,21 +94,21 @@ function Index() {
                             })
                             productsDateGet[t?.date] = p
                         })
-                        productsArrayDateGet = res.auction_product.map(t => ({...t?.product, ...t, id: t?.product_id}))
+                        productsArrayDateGet = res.auction_product.map(t => ({ ...t?.product, ...t, id: t?.product_id }))
                     }
                     dispatch(setAUCTION({
                         ...res,
-                        products:productsGet,
-                        steps:stepsGet,
-                        gallery_start_date:gallery_start_date_get,
-                        gallery_end_date:gallery_end_date_get,
-                        productsDate:productsDateGet,
-                        productsArrayDate:productsArrayDateGet,
-                        choose_product_daily:choose_product_daily_get,
+                        products: productsGet,
+                        steps: stepsGet,
+                        gallery_start_date: gallery_start_date_get,
+                        gallery_end_date: gallery_end_date_get,
+                        productsDate: productsDateGet,
+                        productsArrayDate: productsArrayDateGet,
+                        choose_product_daily: choose_product_daily_get,
                         start_clock: moment(start_clock, "HH:mm"),
                         end_clock: moment(end_clock, "HH:mm"),
-                        gallery_start_clock:gallery_start_clock,
-                        gallery_end_clock:gallery_end_clock,
+                        gallery_start_clock: gallery_start_clock,
+                        gallery_end_clock: gallery_end_clock,
                     }))
                     // setData(res)
                     // setDataCount(resp.data?.data?.count)
@@ -125,7 +125,7 @@ function Index() {
         // console.log(products, productsDate, data, checkData)
 
         // let allData = {...data, ...values}
-        let allData = {...values}
+        let allData = { ...values }
         let allDataMain = {}
         Object.assign(allDataMain, checkData)
         delete allDataMain["data"]
@@ -140,9 +140,9 @@ function Index() {
             //error from server
             delete allDataMain["gallery_start_date"]
             delete allDataMain["gallery_end_date"]
-        }else{
-            allDataMain["gallery_start_date"]=await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_start_clock).format("HH:mm")
-            allDataMain["gallery_end_date"]=await moment(allDataMain.gallery_end_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_end_clock).format("HH:mm")
+        } else {
+            allDataMain["gallery_start_date"] = await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_start_clock).format("HH:mm")
+            allDataMain["gallery_end_date"] = await moment(allDataMain.gallery_end_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_end_clock).format("HH:mm")
         }
         if (!allData?.gallery_start_date) {
             //error from server
@@ -154,7 +154,8 @@ function Index() {
         }
         setLoading(true)
         allData["start_time"] = await moment(allDataMain.start_time).format("YYYY-MM-DD ") + moment(allDataMain.start_clock).format("HH:mm")
-        allData["end_time"] = await (allDataMain?.type !== "LIVE") ? moment(allDataMain.end_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm") : null
+        allData["end_time"] = await (allDataMain?.type !== "LIVE") ? moment(allDataMain.end_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm") :
+         moment(allDataMain.start_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm")
         allDataMain["bidding_interval"] = await (allDataMain?.type === "ONLINE") ? allDataMain.bidding_interval : null
 
         let auction_product = []
@@ -162,25 +163,27 @@ function Index() {
 
         if (choose_product_daily) {
 
-             Object.keys(productsDate).map(t => {
+            Object.keys(productsDate).map(t => {
                 let p = []
                 Object.keys(productsDate[t]).map(c => p.push(productsDate[t][c]?.id))
-                auctions_date.push({date: moment(t,"jYYYY-jMM-jDD").format("YYYY-MM-DD ")
-                    , products_id: p})
+                auctions_date.push({
+                    date: moment(t, "jYYYY-jMM-jDD").format("YYYY-MM-DD ")
+                    , products_id: p
+                })
             })
             auction_product = await productsArrayDate.map(t => ({
                 base_price: (t?.base_price || 0),
                 reserve_price: (Number(t?.reserve_price) || 0),
                 product_id: t?.id,
-                lot_num:(t?.lot_num || 0)
+                lot_num: (Number(t?.lot_num) || 0)
 
             }))
         } else {
-             Object.keys(products).map(t => (auction_product.push({
+            Object.keys(products).map(t => (auction_product.push({
                 base_price: (products[t]?.base_price || 0),
                 reserve_price: (Number(products[t]?.reserve_price) || 0),
                 product_id: products[t]?.id,
-                lot_num:( products[t]?.lot_num || 0)
+                lot_num: (Number(products[t]?.lot_num) || 0)
             })))
             // delete allDataMain["dates_auction"]
         }
@@ -233,7 +236,7 @@ function Index() {
                 .then(resp => {
                     setLoading(false)
                     if (resp.data.code === 201) {
-                        message.success("اطلاعات حساب شما با موفقیت ثبت شد")
+                        message.success("حراج با موفقیت ساخته شد")
                         setNext(true)
                         dispatch(removeAUCTION())
 
@@ -257,36 +260,36 @@ function Index() {
     }
     // console.log(productsDate, productsArrayDate)
     if (next) {
-        return <Redirect to="/auctions-list"/>
+        return <Redirect to="/auctions-list" />
     }
 
     const setData = (data) => {
-        dispatch(setAUCTION({...data}))
+        dispatch(setAUCTION({ ...data }))
     }
     const setProducts = (products) => {
-        dispatch(setAUCTION({products}))
+        dispatch(setAUCTION({ products }))
     }
     const setSelectComponent = (selectComponent) => {
-        dispatch(setAUCTION({selectComponent}))
+        dispatch(setAUCTION({ selectComponent }))
     }
     const setPayment_method = (payment_method) => {
-        dispatch(setAUCTION({payment_method}))
+        dispatch(setAUCTION({ payment_method }))
     }
 
 
     return (
         <div>
-            <HeaderPanel/>
+            <HeaderPanel />
             <div className="panel-main">
 
-                <PanelSidebar/>
+                <PanelSidebar />
                 <div className="panel-body">
                     <div className="panel-container newauction">
                         <div className="wizard leftalign">
                             <ul className="wizard-list">
                                 {
                                     listComponent.map((item, i) => <li key={i}
-                                                                       className={`${selectComponent === item?.value && "current"} ${selectComponent > item?.value && "done"}`}>
+                                        className={`${selectComponent === item?.value && "current"} ${selectComponent > item?.value && "done"}`}>
                                         <span className="d-none d-md-inline-block"> {item?.name}</span>
                                         <span className="wizard-mobile d-md-none">{i + 1}</span>
                                     </li>)
@@ -299,14 +302,14 @@ function Index() {
                                     let MyComponent = item.thisComponent;
                                     return (selectComponent === item.value) &&
                                         <MyComponent setSelectComponent={setSelectComponent}
-                                                     selectComponent={selectComponent}
-                                                     finalData={checkData} setFinalData={setData} products={products}
-                                                     id={id}
-                                                     setProducts={setProducts}
-                                                     steps={steps}
-                                                     payment_method={payment_method}
-                                                     setPayment_method={setPayment_method}
-                                                     sendData={sendData}
+                                            selectComponent={selectComponent}
+                                            finalData={checkData} setFinalData={setData} products={products}
+                                            id={id}
+                                            setProducts={setProducts}
+                                            steps={steps}
+                                            payment_method={payment_method}
+                                            setPayment_method={setPayment_method}
+                                            sendData={sendData}
                                         />
                                 })
                             }
@@ -314,9 +317,9 @@ function Index() {
                         <div className="text-start">
                             {selectComponent !== 1 ?
                                 <Button type="button" className="btn-warn-custom mt-4" loading={loading}
-                                        onClick={() => {
-                                            dispatch(removeAUCTION())
-                                        }}>انصراف و حذف اطلاعات
+                                    onClick={() => {
+                                        dispatch(removeAUCTION())
+                                    }}>انصراف و حذف اطلاعات
                                 </Button> : ''}
                             {/*{selectComponent === 6 ?*/}
                             {/*    <Button className="btn-default me-2" loading={loading} onClick={sendData}>ثبت*/}

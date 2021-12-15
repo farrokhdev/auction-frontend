@@ -30,7 +30,7 @@ const Bid = ({ artwork }) => {
 
                 if (message?.data?.length >= 1) {
                     // let messageArray = message.data.slice(2, message.data.length - 2).split(',');
-                    let artworkData = JSON.parse(message.data).filter(obj => {
+                    let artworkData = JSON.parse(message.data).products.filter(obj => {
                         return obj.product_id === artwork?.id
                     })[0]
                     let priceFinal = Math.floor(artworkData.last_price);
