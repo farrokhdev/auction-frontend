@@ -248,9 +248,9 @@ function Auctions() {
                                                         item?.type === "LIVE" ?
 
                                                             <Link
-                                                             to={`/live-auction/${item?.id}`}
+                                                                to={`/live-auction/${item?.id}`}
                                                             //  to="/live-auction"
-                                                             >
+                                                            >
                                                                 <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                                                             </Link>
                                                             :
@@ -346,15 +346,39 @@ function Auctions() {
                                                                 }
                                                             </div>
                                                         </div>
-                                                        <div className="col-sm-7 textalign-left">
+                                                        {/* <div className="col-sm-7 textalign-left">
 
                                                             {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item.id}`}>
                                                                 <button type="button" className="btn btn-gray ms-2">
                                                                     <FontAwesomeIcon className="mx-1" icon={faEye} />
-                                                                    {/* مشاهده  */}
+                                                                   
                                                                     {AuctionType(item.type)}
                                                                 </button>
                                                             </Link> : null}
+
+                                                            {AuctionStatusTextBtn(item?.status, item?.user_is_enrolled, item.id)}
+
+                                                        </div> */}
+
+                                                        <div className="col-sm-7 textalign-left">
+                                                            {item?.type === "LIVE" ?
+                                                                <Link to={`/live-auction/${item?.id}`} >
+                                                                    <button type="button" className="btn btn-gray ms-2">
+                                                                        <FontAwesomeIcon className="mx-1" icon={faEye} />
+                                                                        {AuctionType(item.type)}
+                                                                    </button>
+                                                                </Link>
+                                                                :
+                                                                item?.status !== "CLOSED" ?
+                                                                    <Link to={`/one-auction/${item.id}`}>
+                                                                        <button type="button" className="btn btn-gray ms-2">
+                                                                            <FontAwesomeIcon className="mx-1" icon={faEye} />
+                                                                            {AuctionType(item.type)}
+                                                                        </button>
+                                                                    </Link> : null
+
+
+                                                            }
 
                                                             {AuctionStatusTextBtn(item?.status, item?.user_is_enrolled, item.id)}
 
