@@ -10,6 +10,8 @@ import { ADD_AUCTION, BID, HOME_AUCITONS, WEB_SOCKET_BID } from "../../utils/con
 import { BASE_URL, WEB_SOCKET_BASE_URL } from "../../utils";
 import { Link } from 'react-router-dom';
 import { AuctionStatusTextBtn } from '../../utils/converTypePersion';
+import Bid from '../SingleArtworkPage/bid';
+import Secret from '../SingleArtworkPage/secret';
 
 
 
@@ -19,6 +21,7 @@ function LiveAuction(props) {
     const [Auction, setAuction] = useState([]);
     const [Product, setProduct] = useState("");
     const [countProducts, setCountProducts] = useState(0)
+    const [currentPrice, setCurrentVPrice] = useState(0)
     const [loading, setLoading] = useState(false)
     const [slug, setslug] = useState("")
 
@@ -110,7 +113,7 @@ function LiveAuction(props) {
                             return obj.product_id === Auction?.id
                         })[0]
                         let priceFinal = Math.floor(artworkData.last_price);
-                        // setCurrentVPrice(priceFinal);
+                        setCurrentVPrice(priceFinal);
                         // setCurrentValue(priceFinal)
                         // setCurrentSuggest(Math.floor(artworkData.bid_count))
                         form.setFieldsValue({ price: 0 })
@@ -125,6 +128,21 @@ function LiveAuction(props) {
         }
 
     }, [Auction])
+
+    // useEffect(() => {
+
+    //     if (artwork?.bidding_details?.max_bid) {
+    //         setCurrentVPrice(artwork?.bidding_details?.max_bid)
+    //         setCurrentValue(artwork?.bidding_details?.max_bid)
+    //     }
+    //     if (artwork?.bidding_details?.total_bids) {
+    //         setCurrentSuggest(artwork?.bidding_details?.total_bids)
+    //     }
+
+
+    //     if (artwork?.latest_auction?.id)
+    //         getAuction(artwork?.latest_auction?.id)
+    // }, [Product])
 
     useEffect(() => {
         getAuction()
@@ -179,7 +197,7 @@ function LiveAuction(props) {
                                                             </tr>
                                                             <tr>
                                                                 <td>پیشنهاد فعلی</td>
-                                                                <td className="bold">1800 <span className="unit">{item?.latest_auction?.currency}</span></td>
+                                                                <td className="bold">{currentPrice} <span className="unit">{item?.latest_auction?.currency}</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>پیشنهاد بعدی</td>
@@ -190,6 +208,15 @@ function LiveAuction(props) {
                                                     <div className="hauction-placebid">
                                                         {AuctionStatusTextBtn(Auction?.status, Auction?.user_is_enrolled, Auction.id)}
 
+                                                        {Auction?.user_is_enrolled ?
+
+
+                                                            ((item?.latest_auction?.type === 'LIVE') || (item?.latest_auction?.type === 'PERIODIC')) ?
+                                                                <Bid artwork={item} /> : 'mmmmm'
+
+                                                            : ""}
+                                                        {((item?.latest_auction?.type === 'HIDDEN') || (item?.latest_auction?.type === 'SECOND_HIDDEN')) ?
+                                                            <Secret artwork={item} /> : ''}
                                                     </div>
                                                 </>
                                                 : ""}
