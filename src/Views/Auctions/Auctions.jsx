@@ -282,11 +282,28 @@ function Auctions() {
                                                                 یادآوری
                                                             </button>
                                                             <button type="button" className="link-source">
-                                                                <Link to={`/one-auction/${item.id}`}>
+                                                                {item?.type === "LIVE" ?
+                                                                    <Link to={`/live-auction/${item?.id}`} >
+                                                                         <span className="d-none d-sm-inline-block">مشاهده</span>
+                                                                            آثار
+                                                                            (<span>{item?.products_count ? item.products_count : 0}</span>)
+                                                                    </Link>
+                                                                    :
+                                                                 
+                                                                        <Link to={`/one-auction/${item.id}`}>
+                                                                            <span className="d-none d-sm-inline-block">مشاهده</span>
+                                                                            آثار
+                                                                            (<span>{item?.products_count ? item.products_count : 0}</span>)
+                                                                        </Link> 
+
+                                                                }
+
+
+                                                                {/* <Link to={`/one-auction/${item.id}`}>
                                                                     <span className="d-none d-sm-inline-block">مشاهده</span>
                                                                     آثار
                                                                     (<span>{item?.products_count ? item.products_count : 0}</span>)
-                                                                </Link>
+                                                                </Link> */}
                                                             </button>
                                                         </div>
                                                     </div>

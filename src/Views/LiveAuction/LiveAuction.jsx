@@ -10,8 +10,8 @@ import { ADD_AUCTION, BID, HOME_AUCITONS, WEB_SOCKET_BID } from "../../utils/con
 import { BASE_URL, WEB_SOCKET_BASE_URL } from "../../utils";
 import { Link } from 'react-router-dom';
 import { AuctionStatusTextBtn } from '../../utils/converTypePersion';
-import Bid from '../SingleArtworkPage/bid';
-import Secret from '../SingleArtworkPage/secret';
+import Bid from './bid';
+import Footer from "../../components/footer";
 
 
 
@@ -24,6 +24,7 @@ function LiveAuction(props) {
     const [currentPrice, setCurrentVPrice] = useState(0)
     const [loading, setLoading] = useState(false)
     const [slug, setslug] = useState("")
+    const [isReady, setIsReady] = useState(false)
 
     const id = props.match.params.id;
     const [params, setParams] = useState({
@@ -36,7 +37,7 @@ function LiveAuction(props) {
     const queries = queryString.stringify(params);
     const [form] = Form.useForm();
 
-    console.log("Product===>", Product)
+    console.log("Auction===>", Auction)
     const getProducts = () => {
         setLoading(true)
         axios.get(`${BASE_URL}/sale/product/?${queries}`)
@@ -61,6 +62,7 @@ function LiveAuction(props) {
                 setLoading(false)
                 if (resp.data.code === 200) {
                     setAuction(resp.data.data.result)
+                    // console.log("testttttttttt",resp.data.data.result.stream_info.player_url.split("=")[0])
                     setslug(`https://player.arvancloud.com/index.html?config=https://smartauctionhouse.arvanlive.com/${resp.data.data.result.stream_info.slug}/origin_config.json`)
                 }
             })
@@ -100,7 +102,6 @@ function LiveAuction(props) {
                                             setLoading(false)
                                         })
                                 }
-                                // getProducts()
 
                             })
                             .catch(err => {
@@ -108,16 +109,7 @@ function LiveAuction(props) {
                                 setLoading(false)
                             })
                     }
-                    else {
-                        let artworkData = data.products.filter(obj => {
-                            return obj.product_id === Auction?.id
-                        })[0]
-                        let priceFinal = Math.floor(artworkData.last_price);
-                        setCurrentVPrice(priceFinal);
-                        // setCurrentValue(priceFinal)
-                        // setCurrentSuggest(Math.floor(artworkData.bid_count))
-                        form.setFieldsValue({ price: 0 })
-                    }
+
 
                 }
             };
@@ -128,21 +120,6 @@ function LiveAuction(props) {
         }
 
     }, [Auction])
-
-    // useEffect(() => {
-
-    //     if (artwork?.bidding_details?.max_bid) {
-    //         setCurrentVPrice(artwork?.bidding_details?.max_bid)
-    //         setCurrentValue(artwork?.bidding_details?.max_bid)
-    //     }
-    //     if (artwork?.bidding_details?.total_bids) {
-    //         setCurrentSuggest(artwork?.bidding_details?.total_bids)
-    //     }
-
-
-    //     if (artwork?.latest_auction?.id)
-    //         getAuction(artwork?.latest_auction?.id)
-    // }, [Product])
 
     useEffect(() => {
         getAuction()
@@ -176,12 +153,9 @@ function LiveAuction(props) {
                                         <div className="hauction-info">
                                             {item?.product_status === 'on_stage' ?
                                                 <>
-
                                                     <div className="hauction-gallery">
                                                         <img src={item?.media[0]?.exact_url} width="470" height="587" alt="" />
                                                     </div>
-
-
                                                     <div className="d-flex">
                                                         <h5 className="default lot-num"><span>Lot </span><span>{item?.latest_auction?.lot_num}</span></h5>
                                                         <div className="hauction-detail">
@@ -189,50 +163,53 @@ function LiveAuction(props) {
                                                             <h4 className="default">از {item?.latest_auction?.description}</h4>
                                                         </div>
                                                     </div>
-                                                    <table className="table-main hauction-bids">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>تخمین</td>
-                                                                <td className="bold">{item?.min_price} - {item?.max_price} <span className="unit">{item?.latest_auction?.currency}</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>پیشنهاد فعلی</td>
-                                                                <td className="bold">{currentPrice} <span className="unit">{item?.latest_auction?.currency}</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>پیشنهاد بعدی</td>
-                                                                <td className="bold">1900 <span className="unit">{item?.latest_auction?.currency}</span></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                  
                                                     <div className="hauction-placebid">
-                                                        {AuctionStatusTextBtn(Auction?.status, Auction?.user_is_enrolled, Auction.id)}
 
                                                         {Auction?.user_is_enrolled ?
-
-
-                                                            ((item?.latest_auction?.type === 'LIVE') || (item?.latest_auction?.type === 'PERIODIC')) ?
-                                                                <Bid artwork={item} /> : 'mmmmm'
-
-                                                            : ""}
-                                                        {((item?.latest_auction?.type === 'HIDDEN') || (item?.latest_auction?.type === 'SECOND_HIDDEN')) ?
-                                                            <Secret artwork={item} /> : ''}
+                                                            <Bid artwork={item} setProduct={setProduct} Product={Product} id={id} queries={queries} setCountProducts={setCountProducts} Auction={Auction} />
+                                                            :
+                                                            AuctionStatusTextBtn(Auction?.status, Auction?.user_is_enrolled, Auction.id)
+                                                        }
                                                     </div>
                                                 </>
-                                                : ""}
+                                                :
+
+                                                ""
+
+                                            }
                                         </div>
                                     )
                                 })}
+                                {Auction?.status === "CLOSED" || Auction?.status === "PREPARING" ?
+
+                                    <div className="hauction-gallery">
+                                        <img src={Auction?.media?.exact_url} width="470" height="587" alt="" />
+                                    </div> : ''
+                                }
+
 
                             </div>
+
+
                             <div className="col">
                                 <div className="hauction-video">
+                                    {Auction?.status === "ACTIVE" ?
+                                        <div class="r1_iframe_embed">
+                                            <iframe src={slug} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true">
+                                            </iframe>
+                                        </div >
 
-                                    <div class="r1_iframe_embed">
-                                        <iframe src={slug} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                            allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true">
-                                        </iframe>
-                                    </div >
+                                        :
+                                        <>
+                                            <video width="100%" height="280" controls>
+                                                <source src="" type="video/mp4" />
+                                                مرورگر شما تگ ویدئو را پشتیبانی نمیکند.
+                                            </video>
+                                        </>
+                                    }
+
 
                                     <div className="hauction-list mt-4">
                                         <ul className="nav nav-tabs justify-content-star main-tab" id="artwork-list"
@@ -364,6 +341,7 @@ function LiveAuction(props) {
 
                 </Spin>
             </main>
+            <Footer />
         </>
     )
 }
