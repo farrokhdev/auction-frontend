@@ -27,6 +27,7 @@ function AuctionsList() {
         page: 1,
         page_size: 10,
         home_auction: id,
+        ordering: '-creation_time',
     })
     const [loading, setLoading] = useState(false);
     const { confirm } = Modal;

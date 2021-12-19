@@ -25,8 +25,12 @@ function UserPanelArtworkList() {
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
-        owner__id:  role !== 'user' ? id : '',
         auction_houses__id: role !== 'user' ? id : '',
+        ordering: '-creation_date',
+        
+        // owner__id:  role !== 'user' ? id : '',
+        // offer_home_auction:'unrequired'
+
 
     })
     let numeral = require('numeral');

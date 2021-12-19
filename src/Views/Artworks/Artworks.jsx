@@ -28,7 +28,7 @@ function Artworks() {
         category: [],
         date_after: '',
         date_before: '',
-        ordering: '',
+        ordering: '-creation_date',
         home_auction_name: [],
         auctions__type: [],
         auctions__status: [],

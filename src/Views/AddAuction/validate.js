@@ -63,7 +63,7 @@ const Validate = (props) => {
                                    }))}
                                    id="checkbox41"/>
                             <label className="form-check-label" htmlFor="checkbox41">
-                                اعتبارسنجی توسط گالری آرتیبیشن
+                                اعتبارسنجی توسط اسمارت آکشن
                                 <span className="form-check-txt">اگر می خواهید سایت مسئول مراحل احراز هویت باشد ، این گزینه را فعال کنید</span>
                             </label>
                         </div>
