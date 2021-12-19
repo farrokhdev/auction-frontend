@@ -4,15 +4,23 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import moment from "jalali-moment";
 import { convertToEn } from '../../utils/converTypePersion';
+import queryString from "query-string";
 import { Spin } from "antd";
 
 function LastAuctions({ setLoading }) {
     const [lastAuctions, setLastAuctions] = useState(0)
+    const [params, setParams] = useState({
+     
+        page_size: 8,
+        ordering: '-creation_time',
+    })
 
     const getLastAuctions = () => {
         setLoading(true)
 
-        axios.get(`${BASE_URL}/sale/auctions/?page_size=8`)
+        const queries = queryString.stringify(params);
+
+        axios.get(`${BASE_URL}/sale/auctions/?${queries}`)
             .then(resp => {
                 if (resp.data.code === 200) {
                     setLastAuctions(resp.data.data.result)

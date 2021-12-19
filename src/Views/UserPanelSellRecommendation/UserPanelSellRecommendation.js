@@ -21,7 +21,10 @@ function UserPanelSellAdvice() {
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
-        product__is_approve: ""
+        product__is_approve: "",
+        ordering: '-creation_time'
+
+
     })
     let numeral = require('numeral');
     const [Posting, setPosting] = useState(false);

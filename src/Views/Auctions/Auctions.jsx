@@ -11,7 +11,7 @@ import { BASE_URL } from "../../utils";
 import queryString from "query-string";
 import { Spin } from "antd";
 import Timer from 'react-compound-timer';
-import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN } from '../../utils/converTypePersion';
+import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN , convertToEn } from '../../utils/converTypePersion';
 import moment from "jalali-moment";
 import PaginationComponent from '../../components/PaginationComponent';
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ function Auctions() {
         category: [],
         date_after: '',
         date_before: '',
-        ordering: 'start_time',
+        ordering: '-creation_time',
         home_auction_name: [],
         type: [],
         visible_in_site: true,
@@ -166,7 +166,7 @@ function Auctions() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: 'creation_time'
+            ...params, ordering: '-creation_time'
         })
     }
 
@@ -174,7 +174,7 @@ function Auctions() {
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
-            ...params, ordering: '-creation_time'
+            ...params, ordering: 'creation_time'
         })
     }
 
@@ -264,9 +264,9 @@ function Auctions() {
                                                 <div className="col-md-8">
                                                     <div className="block-head row">
                                                         <div className="col-xl-3 col-sm-4 col-3">
-                                                            <span className="category-icon live-icon">
+                                                            <span className="category-icon">
                                                                 <span
-                                                                    className="d-none d-md-inline-block"> </span> {AuctionType(item?.type)}
+                                                                    className="d-none d-md-inline-block"> </span> {convertToEn(item?.type)}
                                                             </span>
                                                         </div>
                                                         <div className="col-xl-9 col-sm-8 col-9 textalign-left">

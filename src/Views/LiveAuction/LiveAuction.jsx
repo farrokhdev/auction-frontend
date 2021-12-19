@@ -37,7 +37,6 @@ function LiveAuction(props) {
     const queries = queryString.stringify(params);
     const [form] = Form.useForm();
 
-    console.log("Auction===>", Auction)
     const getProducts = () => {
         setLoading(true)
         axios.get(`${BASE_URL}/sale/product/?${queries}`)

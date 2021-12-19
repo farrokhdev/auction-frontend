@@ -129,7 +129,7 @@ AddArtWorks(props) {
         axios.post(`${BASE_URL}/sale/product/`, payload)
             .then(resp=>{
                 if(resp.data.code === 201){
-                    message.success('اثر با موفقیت ثبت شد.');
+                    message.success('اثر آپلود شده در صف انتظار تایید ادمین می باشد');
                     setPosting(false)
                     window.location.href="#/panel-artwork-list"
                 }

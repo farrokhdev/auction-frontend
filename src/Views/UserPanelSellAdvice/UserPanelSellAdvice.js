@@ -36,7 +36,9 @@ function UserPanelSellAdvice() {
         page: 1,
         page_size: 10,
         // owner__id: role !== 'user' ? id : '',
-        is_approve: ""
+        is_approve: "",
+        ordering: '-creation_date',
+        offer_home_auction:'required'
 
     })
     const [Posting, setPosting] = useState(false);

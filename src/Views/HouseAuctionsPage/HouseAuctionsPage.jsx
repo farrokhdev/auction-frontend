@@ -27,7 +27,7 @@ function HouseAuctionsPage() {
         page_size: 10,
         activity_type: [],
         search: '',
-        ordering: '',
+        ordering: '-date_joined',
     })
 
     const queries = queryString.stringify(params);
@@ -85,7 +85,7 @@ function HouseAuctionsPage() {
 
     const handleSetOrdering = () => {
         setParams({
-            ...params, ordering: 'date_joined'
+            ...params, ordering: '-date_joined'
         })
     }
 
