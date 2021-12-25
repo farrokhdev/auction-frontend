@@ -163,15 +163,7 @@ const Bid = ({ artwork }) => {
                 </div>
             </div>
             {is_logged_in ? <div className="detail-placebid general-bid">
-                {/*<div className="general-bid-block">*/}
-                {/*    <div className="search-input">*/}
-                {/*        <input type="text" className="default-input"*/}
-                {/*               placeholder="حداکثر پیشنهاد خود را وارد نمایید."/>*/}
-                {/*        <span className="unit">تومان</span>*/}
-                {/*    </div>*/}
-                {/*    <button type="button" className="btn-lightpink">ثبت</button>*/}
-                {/*</div>*/}
-                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state)) ? <Form onFinish={onFinish} form={form} className="m-0"
+                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state === "approved")) ? <Form onFinish={onFinish} form={form} className="m-0"
                     // initialValues={{ inputValue: 0 }}
                     wrapperCol={{ span: 24 }}>
                     <div className="general-bid-block">
@@ -190,9 +182,7 @@ const Bid = ({ artwork }) => {
                                     readOnly={true}
                                     placeholder="انتخاب پیشنهاد" />
                             </Form.Item>
-                            {/*<button*/}
-                            {/*    type="button"*/}
-                            {/*    onClick={handleDecrease}/>*/}
+                            
                             <button onClick={handleIncrease}
                                 type="button"
                                 className="plus" />
@@ -212,6 +202,19 @@ const Bid = ({ artwork }) => {
                                 {artwork?.join_auction_request_state === "pending" && <p className="text-warning">
                                     درخواست عضویت شما در انتظار تایید حراجی است
                                 </p>}
+                                {artwork?.join_auction_request_state === "not_selected" &&
+                                    <>
+
+                                        <h5 className="text-danger">
+                                            برای این اثر نمی توانید پیشنهاد دهید
+
+                                        </h5>
+                                        <span>برای ثبت پیشنهاد باید   </span>
+                                        <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
+                                            className="d-inline-block"> عضو حراجی </Link>
+                                        <span>   باشید</span>
+                                    </>
+                                }
                                 {artwork?.join_auction_request_state === "rejected" && <p>
                                     درخواست عضویت شما رد شده است
                                 </p>}
@@ -222,7 +225,7 @@ const Bid = ({ artwork }) => {
                                     <span>   باشید</span>
                                 </p>}</p>
                             </div> :
-                               ''
+                                ''
                             }
 
                         </p>}

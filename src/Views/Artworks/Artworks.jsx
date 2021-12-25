@@ -32,7 +32,7 @@ function Artworks() {
         home_auction_name: [],
         auctions__type: [],
         auctions__status: [],
-        joined_auction:true
+        joined_auction: true
     })
 
     const queries = queryString.stringify(params);
@@ -200,9 +200,9 @@ function Artworks() {
 
     const handleShowImage = (item) => {
         return (
-            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
-            DEFAULT_URL_IMAGE
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
         )
     }
 
@@ -212,7 +212,7 @@ function Artworks() {
             <Spin spinning={loading}>
                 <main class="innercontent" id="all-artworks">
                     <div class="container innercontainer">
-                        <Maintitle title={'محصولات'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
+                        <Maintitle title={'آثار'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
                         <div class="row">
                             <Sidebar
                                 handleClose={handleClose}
@@ -236,13 +236,18 @@ function Artworks() {
                                         return (
                                             <div className="col" key={key}>
                                                 <div className="artwork-img">
-                                                    <Link to={`/artworks/${item?.id}`} class="artwork-block">
+
+                                                    <Link to={`/artworks/${item?.id}`} className="artwork-block">
+                                                        <img src={item && handleShowImage(item)} width="998" height="880" alt="" className="img-fluid" style={{height:'15rem'}} />
+                                                    </Link>
+
+                                                    {/* <Link to={`/artworks/${item?.id}`} class="artwork-block">
                                                         <div className="image-custom-back" style={{
                                                             backgroundImage: `url(${item && handleShowImage(item)})`,
-                                                            height: "270px"
+                                                            height: "17rem"
                                                         }}>
                                                         </div>
-                                                    </Link>
+                                                    </Link> */}
                                                     <div className="artwork-category">
                                                         <span onClick={() =>
                                                             addBookmark(

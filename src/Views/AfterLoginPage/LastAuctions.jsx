@@ -49,7 +49,7 @@ function LastAuctions({ setLoading }) {
                             <div className="col-xl-4 col-lg-4 col-sm-5 mt-4">
                                 <div className="bg-shadow tl-shadow20">
                                     <div className="artwork-img">
-                                    <Link to={`/en/auctions/${item?.id}`}>
+                                    <Link to={`/one-auction/${item?.id}`}>
                                             <img style={{ background: `url(${item?.media?.exact_url})`  , height: "280px" ,backgroundSize : 'cover' ,backgroundRepeat : 'no-repeat' , backgroundPosition:'center'}}  alt="" className="img-fluid" />
                                         </Link>
                                         <div className="auction-category">

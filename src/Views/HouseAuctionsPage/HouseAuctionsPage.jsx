@@ -9,13 +9,13 @@ import { Link } from 'react-router-dom';
 import { Spin } from "antd";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer";
-import {useDispatch,useSelector} from "react-redux";
-import {openDashboard} from "../../redux/reducers/all/all.actions"
+import { useDispatch, useSelector } from "react-redux";
+import { openDashboard } from "../../redux/reducers/all/all.actions"
 import { homeAuctionType } from '../../utils/converTypePersion';
 
 function HouseAuctionsPage() {
-    const {is_Open_Dashboard} = useSelector((state) => state.allReducer)
-    const dispatch=useDispatch();
+    const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+    const dispatch = useDispatch();
 
     const [Tags, setTags] = useState([])
     const [houseAuctionList, setHouseAuctionList] = useState([])
@@ -154,7 +154,7 @@ function HouseAuctionsPage() {
                             </div>
                             <div className="w-100 lg-mrgb50 d-lg-none d-block" />
                             <div className="col-3 d-lg-none d-block">
-                                <button type="button" className="btn-filter btn"  onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}>فیلتر</button>
+                                <button type="button" className="btn-filter btn" onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}>فیلتر</button>
                             </div>
                             <div className="col-lg-6 col-9 ">
                                 <div className="sort-block">
@@ -195,7 +195,7 @@ function HouseAuctionsPage() {
 
                                                     <div className="row">
                                                         <div className="col-xl-5 col-3">
-                                                            <div className="h-block-img box-image-house-auction">
+                                                            {/* <div className="h-block-img box-image-house-auction">
                                                                 <Link to={`/house-acutions/${house?.id}`}>
                                                                     <img
                                                                         src={house?.media.filter(pic => pic?.type === "profile_image")[0]?.exact_url}
@@ -205,7 +205,20 @@ function HouseAuctionsPage() {
                                                                         className="image-house-auction"
                                                                     />
                                                                 </Link>
+                                                            </div> */}
+
+                                                            <div className="h-block-img">
+                                                                <Link to={`/house-acutions/${house?.id}`}>
+                                                                    <img
+                                                                        src={house?.media.filter(pic => pic?.type === "profile_image")[0]?.exact_url}
+                                                                        width="159" height="159"
+                                                                        alt="smart auction"
+                                                                        className="img-fluid"
+                                                                        // className="image-house-auction"
+                                                                    />
+                                                                </Link>
                                                             </div>
+
                                                         </div>
                                                         <div className="col-xl-7 col-9">
                                                             <div className="h-block-header">

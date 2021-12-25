@@ -1,24 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
-import {ACCOUNT_WALLET} from "../../utils/constant";
-import {message, Modal, Spin} from "antd";
+import { BASE_URL } from "../../utils";
+import { ACCOUNT_WALLET } from "../../utils/constant";
+import { message, Modal, Spin } from "antd";
 import ModalFinantioal from "./ModalFinantioal";
 import ModalWallet from "./ModalWallet";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const Wallet = (props) => {
-    const {setSelectComponent, selectComponent, selectProducts} = props
+    const { setSelectComponent, selectComponent, selectProducts, id } = props
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [msg, setMsg] = useState(false)
     const [thresholdList, setThresholdList] = useState([])
 
-    useEffect(()=>{
+
+    useEffect(() => {
         getData()
-    },[])
+    }, [])
 
     const getData = () => {
         setLoading(true)
@@ -31,12 +32,12 @@ const Wallet = (props) => {
                     axios.post(`${BASE_URL}/accounting/wallet/check-inventory/products/`, {
                         "product_ids": selectProducts
                     })
-                        .then(resp=>{
-                            if(resp.data.code === 200){
+                        .then(resp => {
+                            if (resp.data.code === 200) {
                                 setMsg(resp.data.data.result)
                             }
                         })
-                        .catch(err=>{
+                        .catch(err => {
                             message.error(err.response.data.data.error_message);
                         })
                 }
@@ -49,84 +50,86 @@ const Wallet = (props) => {
     }
 
 
-
-    const getTresholdsData = (id) => {
-
-        axios.post(`${BASE_URL}​/sale​/auctions​/${id}​/thresholds​/`)
-            .then(resp=>{
-                if(resp.data.code === 200){
-                    setThresholdList(resp.data.data.result)
+    const getTresholdsData = () => {
+        axios.get(`${BASE_URL}/sale/auctions/${id}/thresholds/`)
+            .then(resp => {
+                if (resp.data.code === 200) {
+                    setThresholdList(resp.data.data.result.reduce((p, c, i) => {
+                        p.push({
+                            min: p?.length === 0 ? 0 : p?.[p?.length - 1]?.["threshold"],
+                            "threshold": c?.threshold,
+                            "sufficient_inventory": c?.sufficient_inventory
+                        });
+                        return p
+                    }, []))
                 }
             })
-            .catch(err=>{
-                message.error(err.response.data.data.error_message);
+            .catch(err => {
+                message.error(err?.response?.data?.data?.error_message);
             })
     }
 
-
-
-    // console.log("props -->>>" , props?.match?.params?.id);
 
     return (
         <div>
             <div className="container container-form">
                 <div className="wallet-container">
                     <div className="price-block textalign-center">
-                <span className="price">
-                    {
-                        data?.total_inventory ?? 0
-                    }
-                    <span className="price-unit">تومان</span>
-                </span>
+                        <span className="price">
+                            {
+                                data?.total_inventory ?? 0
+                            }
+                            <span className="price-unit">تومان</span>
+                        </span>
                         <span className="price-lable">مانده حساب شما</span>
 
                         <div className="price-block">{msg}</div>
                     </div>
-                    <Link onClick={()=>getTresholdsData(props.id)} data-bs-toggle="modal" data-bs-target="#charge-modal">
+                    <Link onClick={() => getTresholdsData(props.id)} data-bs-toggle="modal" data-bs-target="#charge-modal">
                         چقدر باید شارژ کنم؟
                     </Link>
-                    <button type="button" className="btn-outline-pink"  onClick={() => setIsModalVisible(true)}>
+                    <button type="button" className="btn-outline-pink" onClick={() => setIsModalVisible(true)}>
                         افزایش اعتبار
                     </button>
                 </div>
                 <div className="button-group">
-                        <button type="button" className="btn-gray" onClick={() => {
-                            setSelectComponent(selectComponent - 1)
-                        }}>
-                            بازگشت
-                        </button>
-                        <button type="button" className="btn-default" onClick={() => {
-                            setSelectComponent(selectComponent + 1)
-                        }}>
-                            ادامه
-                        </button>
+                    <button type="button" className="btn-gray" onClick={() => {
+                        setSelectComponent(selectComponent - 1)
+                    }}>
+                        بازگشت
+                    </button>
+                    <button type="button" className="btn-default" onClick={() => {
+                        setSelectComponent(selectComponent + 1)
+                    }}>
+                        ادامه
+                    </button>
                 </div>
             </div>
             <Modal centered
 
-                   title={
-                       <div className='d-flex align-items-center justify-content-between'>
-                           <span>افزایش موجودی</span>
-                           <button
-                               type="button"
-                               className="btn-close"
-                               data-bs-dismiss="modal"
-                               aria-label="Close"
-                               onClick={() => setIsModalVisible(false)}
-                           />
+                title={
+                    <div className='d-flex align-items-center justify-content-between'>
+                        <span>افزایش موجودی</span>
+                        <button
+                            type="button"
+                            className="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            onClick={() => setIsModalVisible(false)}
+                        />
 
-                       </div>
-                   }
-                   className="text-end" width={1000} visible={isModalVisible}
-                   onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)} footer={[]}>
-                <ModalWallet  setSelectComponent={setSelectComponent} selectComponent={selectComponent}
-                                 setIsModalVisible={setIsModalVisible} refreshTable={getData}
-                                 title={"افزودن حساب بانکی جدید"}/>
+                    </div>
+                }
+                className="text-end" width={1000} visible={isModalVisible}
+                onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)} footer={[]}>
+                <ModalWallet setSelectComponent={setSelectComponent} selectComponent={selectComponent}
+                    setIsModalVisible={setIsModalVisible} refreshTable={getData}
+                    title={"افزودن حساب بانکی جدید"} />
             </Modal>
 
 
             <div className="modal fade" id="charge-modal" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+                aria-hidden="true">
                 <div className="modal-dialog w-600">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -137,26 +140,25 @@ const Wallet = (props) => {
                                     </h2>
                                 </div>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                    aria-label="Close"></button>
                             </div>
                         </div>
                         <div className="modal-body textalign-center">
                             <div className="recharge-txt">
-                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم<strong> 1000 تومان</strong> از صنعت چاپ
-                                    و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و
-                                    سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف
-                                    بهبود ابزارهای کاربردی می باشد</p>
+                                <p>
+                                    چقدر باید شارژ کنم؟
+                                </p>
                             </div>
 
 
                             <div className="amount-list">
 
 
-                                {thresholdList?.length ? thresholdList?.map((item , key) => (
+                                {thresholdList?.length ? thresholdList?.map((item, key, index) => (
                                     <React.Fragment key={key}>
                                         <div className="amount-block">
                                             <div className="amount-range">
-                                                0 - {item?.threshold}<span className="unit">تومان</span>
+                                                {item?.min} - {item?.threshold}<span className="unit">تومان</span>
                                             </div>
                                             <span className="d-none d-md-inline-block">نیاز دارد به</span>
                                             <div className="amount-range">
@@ -164,21 +166,21 @@ const Wallet = (props) => {
                                             </div>
                                         </div>
                                     </React.Fragment>
-                                )) : '' }
+                                )) : ''}
 
 
-{/*                                 
-<div className="amount-block">
-                                            <div className="amount-range">
-                                                0 - 100<span className="unit">تومان</span>
-                                            </div>
-                                            <span className="d-none d-md-inline-block">نیاز دارد به</span>
-                                            <div className="amount-range">
-                                                1,000,000<span className="unit">تومان</span>
-                                            </div>
-                                        </div> */}
 
-{/* 
+                                {/* <div className="amount-block">
+                                    <div className="amount-range">
+                                        0 - 100<span className="unit">تومان</span>
+                                    </div>
+                                    <span className="d-none d-md-inline-block">نیاز دارد به</span>
+                                    <div className="amount-range">
+                                        1,000,000<span className="unit">تومان</span>
+                                    </div>
+                                </div>
+
+
                                 <div className="amount-block">
                                     <div className="amount-range">
                                         101 - 200<span className="unit">تومان</span>
