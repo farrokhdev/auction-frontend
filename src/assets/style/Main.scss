@@ -119,8 +119,8 @@ button {
 }
 
 .navbar {
-  padding-top: 30px !important;
-  padding-bottom: 0 !important;
+  padding-top: 30px ;
+  padding-bottom: 0 ;
 }
 
 .mainnav {
@@ -416,7 +416,7 @@ section {
 }
 
 .artwork-img {
-  position: relative !important;
+  position: relative;
 }
 
 .image-artwork{
@@ -5257,7 +5257,7 @@ address.all-info:before {
 
   #all-artworks .artwork-category {
     padding: 5px 10px;
-    z-index: 100;
+    z-index: 1;
   }
 
   #all-artworks .countdown.show timer,

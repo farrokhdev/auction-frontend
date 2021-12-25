@@ -9,7 +9,7 @@ import UploadAxios from "../../utils/uploadRequest";
 const { Dragger } = Upload;
 
 function MultipleUpload({uploadList , setUploadList }) {
-
+  console.log("uploadList===>>" , uploadList)
   const propsUpload = {
     listType: "picture",
 
@@ -100,9 +100,11 @@ function MultipleUpload({uploadList , setUploadList }) {
                 media_path: res.data.data.result.upload_url,
                 type: "image",
                 bucket_name: "image",
-                is_default: false,
+                is_default: uploadList?.length === 0 ? true : false,
                 uid: file.uid,
               };
+
+              
 
               if (
                 res.data.data.result.upload_url && (file?.type.split("/")[0] === "image")
