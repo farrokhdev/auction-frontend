@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import {Button, message, Modal, Pagination, Spin} from 'antd';
+import { Button, message, Modal, Pagination, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
@@ -14,8 +14,9 @@ import { useSelector } from "react-redux";
 import { AuctionStatusTextBtn } from "../../utils/converTypePersion";
 import numberWithCommas from "../../components/threeNumber";
 import { convertToEn } from "../../utils/converTypePersion";
-import {setAUCTION} from "../../redux/reducers/auction/auction.actions";
-import {HomeOutlined} from '@ant-design/icons';
+import { setAUCTION } from "../../redux/reducers/auction/auction.actions";
+import { HomeOutlined } from '@ant-design/icons';
+import HouseDetails from "./HouseDetails";
 
 function OneAuction(props) {
     const myRef = useRef(null)
@@ -60,8 +61,6 @@ function OneAuction(props) {
             })
     }
 
-    // console.log("Auction===>>>>",Auction)
-    // console.log("Product===>>" , Product)
     const getAuction = () => {
         setLoading(true)
         axios.get(`${BASE_URL}/sale/auctions/${id}/`)
@@ -95,23 +94,6 @@ function OneAuction(props) {
         setParams({
             ...params, page: e
         })
-    }
-
-    const parseWebSite = (data, type) => {
-        for (let i in data)
-            if (data[i].type === type) {
-                if (data[i].url.startsWith("http"))
-                    return data[i].url
-                else
-                    return "http://" + data[i].url
-            }
-    }
-
-    const parser = (data, type) => {
-        for (let i in data)
-            if (data[i].type === type) {
-                return data[i].exact_url
-            }
     }
 
     const handleSearchProducts = (value) => {
@@ -213,9 +195,9 @@ function OneAuction(props) {
                                                     onClick={() =>
                                                         Follow(
                                                             Auction?.following?.follow?.is_active ?
-                                                            Auction?.following?.follow?.id :
-                                                            Auction?.id, Auction?.following?.follow?.is_active)
-                                                        }
+                                                                Auction?.following?.follow?.id :
+                                                                Auction?.id, Auction?.following?.follow?.is_active)
+                                                    }
                                                     type="button" className={" reminder-icon " + (Auction?.following?.follow?.is_active ? "active" : "")}>
                                                     {Auction?.following?.follow?.is_active ? 'در حال یادآوری' : 'یادآوری'}
                                                 </button>
@@ -253,14 +235,14 @@ function OneAuction(props) {
                                                 setIsModalVisible(true)
                                             }}>اطلاعات نمایشگاه فیزیکی </Button>
 
-                                        </div> :''}
+                                        </div> : ''}
                                         <div className="auction-moreinfo">
                                             <a href="#" className="d-info category"><h6
                                                 className="default">{Auction.category ? Auction.category[0]?.title : ""}</h6>
                                             </a>
-                                            <a href="#" className="d-info gallery"><h6
+                                            <Link to={`/house-acutions/${HouseDetail?.id}`} className="d-info gallery"><h6
                                                 className="default">{Auction?.house?.home_auction_name}</h6>
-                                            </a>
+                                            </Link>
                                         </div>
                                         <div className="auction-btns">
                                             {Auction?.status !== "CLOSED" ?
@@ -350,7 +332,7 @@ function OneAuction(props) {
                                                 <span className="btn-sort">مرتب‌سازی با<span
                                                     className="d-none d-md-inline-block">:</span></span>
                                                 <ul className="sort-list">
-                                                <li
+                                                    <li
                                                         onClick={() => {
                                                             setParams({
                                                                 ...params, ordering: "product_auction__lot_num"
@@ -584,49 +566,7 @@ function OneAuction(props) {
                                             </div>
                                         </div>
                                         <div className="col-lg-4">
-
-
-                                            <div className="auction-gallery-info">
-                                                <div className="ah-left">
-                                                    <div className="h-block-img">
-                                                        <img src={parser(HouseDetail?.media, 'profile')} width="159"
-                                                            height="159"
-                                                            alt={HouseDetail?.home_auction_name} />
-                                                    </div>
-                                                    <div className="detail-ahm">
-                                                        <a href="#" className="ah-link"><h3
-                                                            className="default">{HouseDetail?.home_auction_name}</h3></a>
-                                                        <button type="button" className="btn-follow">دنبال کردن</button>
-                                                    </div>
-                                                </div>
-                                                <div className="ah-block-all-info">
-                                                    <a href={parseWebSite(HouseDetail?.info_link, 'website')}
-                                                        className="link-info all-info">{parseWebSite(HouseDetail?.info_link, 'website')}</a>
-                                                    <a href={`mailto: ${HouseDetail?.email}`}
-                                                        className="all-info mail-info">{HouseDetail.email}</a>
-                                                    <a href={HouseDetail?.phone ? HouseDetail?.phone : HouseDetail?.mobile}
-                                                        className="info-tel all-info">{HouseDetail?.phone ? HouseDetail?.phone : HouseDetail?.mobile}</a>
-                                                    <address className="all-info">
-                                                        {HouseDetail?.home_auction_location?.address}
-                                                    </address>
-                                                </div>
-                                                <ul className="social">
-                                                    <li>
-                                                        <a href={parseWebSite(HouseDetail?.info_link, 'facebook')}
-                                                            id="facebook" />
-                                                    </li>
-                                                    <li>
-                                                        <a href={parseWebSite(HouseDetail?.info_link, 'instagram')}
-                                                            id="instagram" />
-                                                    </li>
-                                                    <li>
-                                                        <a href={parseWebSite(HouseDetail?.info_link, 'telegram')}
-                                                            id="telegram" />
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-
+                                            <HouseDetails HouseDetail={HouseDetail} getAuction={getAuction} />
                                         </div>
                                     </div>
                                 </div>
@@ -634,9 +574,6 @@ function OneAuction(props) {
                         </div>
 
                     </div>
-                    {/* <div ref={myRef} className="bg-danger">
-                        <span>Hello Ref</span>
-                    </div> */}
                 </main>
 
 
@@ -655,14 +592,14 @@ function OneAuction(props) {
 
                     </div>
                 } className="text-end" width={1000} visible={isModalVisible}
-                       onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}
-                       footer={[<div className="text-center">
-                           <Button key={2} type="" onClick={() => {
-                               setIsModalVisible(false)
-                           }}
-                                   className="btn-default">
-                               تایید
-                           </Button></div>]}>
+                    onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}
+                    footer={[<div className="text-center">
+                        <Button key={2} type="" onClick={() => {
+                            setIsModalVisible(false)
+                        }}
+                            className="btn-default">
+                            تایید
+                        </Button></div>]}>
                     <div>
                         <address>
                             <span>آدرس : </span>
@@ -673,13 +610,13 @@ function OneAuction(props) {
                             <span>تاریخ و ساعت شروع  :</span>
                             <span>
 
-                                {(Auction && !!Auction?.gallery_start_date  &&  Auction?.gallery_start_date !== 'None' ) ? moment(Auction?.gallery_start_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
-                         </span>
+                                {(Auction && !!Auction?.gallery_start_date && Auction?.gallery_start_date !== 'None') ? moment(Auction?.gallery_start_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
+                            </span>
 
                         </address>
                         <address >
                             <span>تاریخ و ساعت پایان  :</span>
-                            {(Auction && !!Auction?.gallery_start_date  && Auction?.gallery_end_date !== 'None') ? moment(Auction?.gallery_end_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
+                            {(Auction && !!Auction?.gallery_start_date && Auction?.gallery_end_date !== 'None') ? moment(Auction?.gallery_end_date, 'YYYY-MM-DD').locale('fa').format("jDD jMMMM jYYYY HH:mm") : ""}
                         </address>
                     </div>
                 </Modal>

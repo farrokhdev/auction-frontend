@@ -36,7 +36,7 @@ return (
                     <h4 className="default">{house_auction}</h4>
                 </div>
                 <div className="ra-col">
-                    {/* <h5 className="default lot-num">{lot_num}</h5> */}
+                    <h5 className="default lot-num">{lot_num}</h5>
                 </div>
             </div>
             <div className="detail-bid">

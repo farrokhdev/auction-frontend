@@ -107,10 +107,35 @@ const Bid = ({ artwork }) => {
             })
         }
     }
+
+    const handleIncreaseminus = () => {
+        if (steps.length) {
+            steps.some((item, i, array) => {
+                if (i > array.length) {
+                    if ((currentValue < item.threshold) && (currentValue >= steps[i - 1].threshold)) {
+                        minusBid(item.step)
+                        return true;
+                    } else if (i === 0) {
+                        console.log("It is an error")
+                        minusBid(item.step)
+                        return true;
+                    }
+                } else {
+                    minusBid(item.step)
+                }
+            })
+        }
+    }
     const setBid = (value) => {
         form.setFieldsValue({ price: currentValue + value })
         setCurrentValue(currentValue + value)
     }
+
+    const minusBid = (value) => {
+        form.setFieldsValue({ price: currentValue - value })
+        setCurrentValue(currentValue - value)
+    }
+
     const handleDecrease = () => {
     }
     const onFinish = (values) => {
@@ -182,7 +207,10 @@ const Bid = ({ artwork }) => {
                                     readOnly={true}
                                     placeholder="انتخاب پیشنهاد" />
                             </Form.Item>
-                            
+
+                            <button onClick={handleIncreaseminus}
+                                type="button"
+                                className="minus" />
                             <button onClick={handleIncrease}
                                 type="button"
                                 className="plus" />
