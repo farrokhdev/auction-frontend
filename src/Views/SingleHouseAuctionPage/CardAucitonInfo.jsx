@@ -74,9 +74,10 @@ function CardAucitonInfo({ auction , Follow}) {
                                 <div className={classnames("auction-date", {
                                     "d-none": auction?.status === 'CLOSED',
                                 })} >
-                                    <span className="start-date">{auction?.start_time ? convertMouthToPersian(moment(auction?.start_time).format('MM')) : ''}</span>
-                                    <span className="end-date">{auction?.end_time ? convertMouthToPersian(moment(auction?.end_time).format('MM')) : ''}</span>
+                                    <span className="start-date">{auction?.start_time ? (moment(auction?.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM')) : ''}</span>
+                                    <span className="end-date">{auction?.end_time ? (moment(auction?.end_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM')) : ''}</span>
                                 </div>
+
 
 
                                 <div className={classnames("auction-time", {

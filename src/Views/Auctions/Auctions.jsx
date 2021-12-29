@@ -11,7 +11,7 @@ import { BASE_URL } from "../../utils";
 import queryString from "query-string";
 import { Spin } from "antd";
 import Timer from 'react-compound-timer';
-import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN , convertToEn } from '../../utils/converTypePersion';
+import { AuctionStatusTextBtn, AuctionType, status, convertTypeEN, convertToEn } from '../../utils/converTypePersion';
 import moment from "jalali-moment";
 import PaginationComponent from '../../components/PaginationComponent';
 import { useSelector } from "react-redux";
@@ -211,7 +211,6 @@ function Auctions() {
         }
     }
 
-
     return (
         <div dir="rtl">
             <Header />
@@ -284,17 +283,17 @@ function Auctions() {
                                                             <button type="button" className="link-source">
                                                                 {item?.type === "LIVE" ?
                                                                     <Link to={`/live-auction/${item?.id}`} >
-                                                                         <span className="d-none d-sm-inline-block">مشاهده</span>
-                                                                            آثار
-                                                                            (<span>{item?.products_count ? item.products_count : 0}</span>)
+                                                                        <span className="d-none d-sm-inline-block">مشاهده</span>
+                                                                        آثار
+                                                                        (<span>{item?.products_count ? item.products_count : 0}</span>)
                                                                     </Link>
                                                                     :
-                                                                 
-                                                                        <Link to={`/one-auction/${item.id}`}>
-                                                                            <span className="d-none d-sm-inline-block">مشاهده</span>
-                                                                            آثار
-                                                                            (<span>{item?.products_count ? item.products_count : 0}</span>)
-                                                                        </Link> 
+
+                                                                    <Link to={`/one-auction/${item.id}`}>
+                                                                        <span className="d-none d-sm-inline-block">مشاهده</span>
+                                                                        آثار
+                                                                        (<span>{item?.products_count ? item.products_count : 0}</span>)
+                                                                    </Link>
 
                                                                 }
 
@@ -331,32 +330,62 @@ function Auctions() {
                                                                     </div>
                                                                     : <div>
                                                                         {item?.status === "ACTIVE" &&
-                                                                            <Timer
-                                                                                initialTime={timeExpire(item.end_time)}
-                                                                                direction="backward"
-                                                                            >
-                                                                                {({ start, resume, pause, stop, reset, timerState }) => (
-                                                                                    <div style={{
-                                                                                        direction: 'ltr',
-                                                                                        textAlign: "right"
-                                                                                    }}>
+                                                                            <>
+                                                                                <p className=" my-0 text-danger"> تا پایان حراج :</p>
+                                                                                <Timer
+                                                                                    initialTime={timeExpire(item.end_time)}
+                                                                                    direction="backward"
+                                                                                >
+                                                                                    {({ start, resume, pause, stop, reset, timerState }) => (
+                                                                                        <div style={{
+                                                                                            direction: 'ltr',
+                                                                                            textAlign: "right"
+                                                                                        }}>
 
-                                                                                        <span className="d-inline-block ">ساعت</span>
-                                                                                        <span className="d-inline-block"><Timer.Hours /> </span>
-                                                                                        <span className="d-inline-block">:</span>
-                                                                                        <span className="d-inline-block"><Timer.Minutes /></span>
-                                                                                        <span className="d-inline-block">:</span>
-                                                                                        <span className="d-inline-block "><Timer.Seconds /></span>
+                                                                                            <span className="d-inline-block ">  ساعت </span>
+                                                                                            <span className="d-inline-block"><Timer.Hours /> </span>
+                                                                                            <span className="d-inline-block">:</span>
+                                                                                            <span className="d-inline-block"><Timer.Minutes /></span>
+                                                                                            <span className="d-inline-block">:</span>
+                                                                                            <span className="d-inline-block "><Timer.Seconds /></span>
 
-                                                                                        <span className="d-inline-block mx-2">  و  </span>
-                                                                                        <span className="d-inline-block ">  روز  </span>
-                                                                                        <span className="d-inline-block "><Timer.Days /></span>
-                                                                                    </div>
-                                                                                )}
-                                                                            </Timer>
+                                                                                            <span className="d-inline-block mx-2">  و  </span>
+                                                                                            <span className="d-inline-block ">  روز  </span>
+                                                                                            <span className="d-inline-block "><Timer.Days /></span>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </Timer>
+                                                                            </>
                                                                         }
                                                                         {
-                                                                            item?.status === "PREPARING" && <span>درحال آماده سازی</span>
+                                                                            item?.status === "PREPARING" &&
+                                                                            // <span>درحال آماده سازی</span>
+                                                                            <>
+                                                                                <p className="text-success my-0"> تا شروع حراج :</p>
+                                                                                <Timer
+                                                                                    initialTime={timeExpire(item.start_time)}
+                                                                                    direction="backward"
+                                                                                >
+                                                                                    {({ start, resume, pause, stop, reset, timerState }) => (
+                                                                                        <div style={{
+                                                                                            direction: 'ltr',
+                                                                                            textAlign: "right"
+                                                                                        }}>
+
+                                                                                            <span className="d-inline-block ">ساعت</span>
+                                                                                            <span className="d-inline-block"><Timer.Hours /> </span>
+                                                                                            <span className="d-inline-block">:</span>
+                                                                                            <span className="d-inline-block"><Timer.Minutes /></span>
+                                                                                            <span className="d-inline-block">:</span>
+                                                                                            <span className="d-inline-block "><Timer.Seconds /></span>
+
+                                                                                            <span className="d-inline-block mx-2">  و  </span>
+                                                                                            <span className="d-inline-block ">  روز  </span>
+                                                                                            <span className="d-inline-block "><Timer.Days /></span>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </Timer>
+                                                                            </>
                                                                         }
 
                                                                     </div>

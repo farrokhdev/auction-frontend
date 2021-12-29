@@ -18,7 +18,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import logoWhite from "../../images/logo-white.png";
-import { clearStorageAll } from "../../redux/reducers/all/all.actions";
+import { clearStorageAll ,openDashboard } from "../../redux/reducers/all/all.actions";
+// import { openDashboard } from "../../redux/reducers/all/all.actions"
+
 
 function PanelSidebar(props) {
   const dispatch = useDispatch();
@@ -43,25 +45,25 @@ function PanelSidebar(props) {
         </NavLinkRouter>
         <ul className="panel-list">
           <li  >
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-profile/check">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-profile/check" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-pen"></i>
               پروفایل
             </NavLinkRouter>
           </li>
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-auctions">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-auctions" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-gavel"></i>
               حراج‌های من
             </NavLinkRouter>
           </li>
           {role === "home_auction" || role === "admin" ? <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list">
+            <NavLinkRouter activeClassName="active-style-menu" to="/auctions-list" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-plus-circle"></i>
               حراج‌های ساخته‌شده
             </NavLinkRouter>
           </li> : ''}
           {role !== "home_auction" ? <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-request-houseAuction" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-plus-circle"></i>
               درخواست خانه حراج
             </NavLinkRouter>
@@ -77,7 +79,7 @@ function PanelSidebar(props) {
           {/*  </NavLinkRouter>*/}
           {/*</li>*/}
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/favorite">
+            <NavLinkRouter activeClassName="active-style-menu" to="/favorite" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-heart"></i>
               علاقه‌مندی‌ها
             </NavLinkRouter>
@@ -88,51 +90,51 @@ function PanelSidebar(props) {
           {/*  </NavLinkRouter>*/}
           {/*</li>*/}
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases">
+            <NavLinkRouter activeClassName="active-style-menu" to="/my-purchases" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-shopping-cart"></i>
               خریدهای من
             </NavLinkRouter>
           </li>
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-wallet" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-wallet"></i>
               کیف پول
             </NavLinkRouter>
           </li>
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-advice">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-advice" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-wallet"></i>
               مشاوره فروش
             </NavLinkRouter>
           </li>
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" >
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-artwork-list" onClick={() => dispatch(openDashboard(false))} >
               <i class="fal fa-wallet"></i>
               لیست آثار
             </NavLinkRouter>
           </li>
 
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-reminders" >
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-reminders" onClick={() => dispatch(openDashboard(false))} >
               <i class="fal fa-bell"></i>
               یادآوری‌ها
             </NavLinkRouter>
           </li>
           {role === "home_auction" || role === "admin" ? <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-sell-recommendation" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-comment-alt-smile"></i>
               پیشنهاد فروش
             </NavLinkRouter>
           </li> : ''}
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-message">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-message" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-envelope"></i>
               پیام‌ها
             </NavLinkRouter>
           </li>
 
           <li>
-            <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial/check">
+            <NavLinkRouter activeClassName="active-style-menu" to="/panel-financial/check" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-credit-card"></i>
               اطلاعات مالی
             </NavLinkRouter>
