@@ -272,19 +272,19 @@ function OneAuction(props) {
                                             }
                                         </div>
                                         <div className="detail-bid">
-                                            <div className="db-left">
-                                                <span className="db-title">آثار</span>
+                                            <div className="d-flex align-items-center">
+                                                <span className="db-title "> تعداد آثار : </span>
                                                 <div className="price-block">
-                                                    <span className="price">{Auction?.products_count}</span>
+                                                    <span className="price px-3 "> {Auction?.products_count} </span>
                                                 </div>
                                             </div>
-                                            <span className="seprator brdrbefor" />
-                                            <div className="db-right ">
+                                            {/* <span className="seprator brdrbefor" /> */}
+                                            {/* <div className="db-right ">
                                                 <span className="db-title ">هنرمندان</span>
                                                 <div className="price-block ">
                                                     <span className="price">{Auction?.artists_count}</span>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>

@@ -188,7 +188,8 @@ const Bid = ({ artwork }) => {
                 </div>
             </div>
             {is_logged_in ? <div className="detail-placebid general-bid">
-                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state === "approved")) ? <Form onFinish={onFinish} form={form} className="m-0"
+                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state === "approved")) ?
+                 <Form onFinish={onFinish} form={form} className="m-0"
                     // initialValues={{ inputValue: 0 }}
                     wrapperCol={{ span: 24 }}>
                     <div className="general-bid-block">

@@ -21,6 +21,7 @@ function HeaderPanel(props) {
         </div>
         <div className="panel-head ">
           <div className="d-block d-lg-none col-2 pt-3 " onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}>
+            
             <img
               src={auctionWhite}
               width="16"
