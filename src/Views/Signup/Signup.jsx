@@ -36,7 +36,7 @@ function Signup(props) {
       "confirmed_password": confirmedPassword
     }
     console.log(payload)
-    axios.post(`${BASE_URL}/account/register/`, payload)
+    axios.post(`${BASE_URL}/account/register/`, payload , { headers: { "Accept-Language": 'fa-IR' } })
       .then(resp => {
         console.log("Sign Up", resp);
         if (resp.data.code === 201) {

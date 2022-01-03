@@ -154,7 +154,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                 </div>
 
 
-                                {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC')) ?
+                                {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC' ) || (artwork?.latest_auction?.type === 'LIVE')) ?
                                     <Bid artwork={artwork} /> : ''}
                                 {((artwork?.latest_auction?.type === 'HIDDEN') || (artwork?.latest_auction?.type === 'SECOND_HIDDEN')) ?
                                     <Secret artwork={artwork} /> : ''}

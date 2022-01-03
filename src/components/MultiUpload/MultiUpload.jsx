@@ -28,6 +28,7 @@ function MultipleUpload({uploadList , setUploadList }) {
 
       return info;
     },
+    
     progress: {
       strokeColor: {
         "0%": "#e6007e",

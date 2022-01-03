@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { AuctionStatusTextBtn } from '../../utils/converTypePersion';
 import Bid from './bid';
 import Footer from "../../components/footer";
+import { handleShowImage } from '../../utils/showImageProduct';
 
 
 
@@ -153,8 +154,14 @@ function LiveAuction(props) {
                                             {item?.product_status === 'on_stage' ?
                                                 <>
                                                     <div className="hauction-gallery">
-                                                        <img src={item?.media[0]?.exact_url} width="470" height="587" alt="" />
+                                                        <img 
+                                                        // style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" ,backgroundRepeat : "round" }}
+                                                        // src={item?.media[0]?.exact_url} width="470"
+                                                        src={item && handleShowImage(item)} width="470"
+                                                        
+                                                        height="587" alt="" />
                                                     </div>
+
                                                     <div className="d-flex">
                                                         <h5 className="default lot-num"><span>Lot </span><span>{item?.latest_auction?.lot_num}</span></h5>
                                                         <div className="hauction-detail">
@@ -248,23 +255,23 @@ function LiveAuction(props) {
                                                                                     <Link
                                                                                         // to={`/artworks/${item?.id}`} 
                                                                                         type="button"
-                                                                                        className="text-center btn-lightgreenbg mx-3">
+                                                                                        className="text-center btn-sold mx-3 ">
                                                                                         فروخته شد
-                                                                                        <span class="fontnormal">{item?.bidding_details?.max_bid} </span>
+                                                                                        <span class="fontnormal rows-bid">{item?.bidding_details?.max_bid} </span>
                                                                                     </Link> :
                                                                                     <div>
                                                                                         {
-                                                                                            Auction?.status === "CLOSED" ?
+                                                                                            item?.product_status === "after_stage" ?
                                                                                                 <Link
                                                                                                     // to={`/artworks/${item?.id}`} 
                                                                                                     type="button"
-                                                                                                    className="text-center btn-default mx-3">
+                                                                                                    className="text-center btn-passed mx-3">
                                                                                                     فروخته نشد
                                                                                                 </Link>
                                                                                                 :
                                                                                                 <>
                                                                                                     {item?.product_status === "on_stage" ?
-                                                                                                        <button className="text-center btn-default mx-3"> زنده </button>
+                                                                                                        <button className="text-center btn-defaults mx-3"> زنده </button>
                                                                                                         : ''}
 
                                                                                                 </>

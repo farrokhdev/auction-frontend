@@ -122,7 +122,7 @@ const Secret = ({ artwork }) => {
                     </div>
                 </div>
                 <span className="seprator brdrbefor"></span>
-                <div className="db-right ">
+                {/* <div className="db-right ">
                     <span className="db-title bluecolor">قیمت فعلی</span>
                     <div className="price-block bluecolor">
                         <span className="price">{numeral(artwork?.price).format('0,0')}</span>
@@ -130,7 +130,7 @@ const Secret = ({ artwork }) => {
                         <span className="bids-num">(<span
                             className="mx-1">{artwork?.bidding_details ? artwork?.bidding_details?.total_bids : ''}</span>پیشنهاد)</span>
                     </div>
-                </div>
+                </div> */}
             </div>
             {is_logged_in ? <div className="detail-placebid general-bid">
                 {/*<div className="general-bid-block">*/}

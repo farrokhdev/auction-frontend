@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { convertCurrencyType } from '../../utils/converTypePersion';
 import TransferToPay from "./TransferToPay"
+import { handleShowImage } from "../../utils/showImageProduct";
+
 
 function CardItem(props) {
 
@@ -12,10 +14,13 @@ function CardItem(props) {
                     <div className="artwork-img">
                         {/* <img src={props?.exactUrl} width="317" height="280" alt="auction_img" className="img-fluid" /> */}
 
-                        <div className="image-custom-back" style={{
+                        <div className="image-custom-back" 
+                        style={{
                             backgroundImage: `url(${props?.exactUrl})`,
                             height: "8rem"
-                        }}>
+                        }}
+                        // style={{  backgroundImage: `url(${props?.exactUrl && handleShowImage(props?.exactUrl)})`}}
+                        >
                         </div>
                     </div>
                     <div className="artwork-info">
@@ -27,7 +32,7 @@ function CardItem(props) {
                             <p className="mrgt10">از<Link to="/">{props.Link}</Link></p>
                         </div>
                         <div className="artwork-info-right col-md-6">
-                            <p className={props.paymentMethod === "OFFLINE" && "d-none"} >پس از پرداخت
+                            <p className={props.paymentMethod === "OFFLINE" && "d-none"} > پس از پرداخت ،
                                 <Link to="/">{props.Link} </Link>
                                 جهت ارسال اثر با شما تماس خواهند گرفت..
                             </p>
