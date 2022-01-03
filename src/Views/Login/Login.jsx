@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../images/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 // import {withRouter} from "react-router-dom"
 import { setPhoneNumber, loginSuccess } from '../../redux/reducers/auth/auth.actions'
@@ -16,6 +16,7 @@ function Login(props) {
   const [userName, setuserName] = useState("");
   const [Password, setPassword] = useState("");
   const [form] = Form.useForm();
+  const history = useHistory()
 
   function err_msg_resolver(res_body) {
     if (res_body.code == 201 || res_body.code == 200)
@@ -33,7 +34,7 @@ function Login(props) {
       "id": userName,
       "password": Password,
     }
-    axios.post(`${BASE_URL}/account/login/`, payload)
+    axios.post(`${BASE_URL}/account/login/`, payload, { headers: { "Accept-Language": 'fa-IR' } })
       .then(resp => {
         console.log("token =>", resp.data.data.result);
         if (resp.data.code === 200) {
@@ -48,7 +49,8 @@ function Login(props) {
               marginTop: '10vh',
             },
           })
-          window.location.href = "#/"
+          // window.location.href="#/"
+          history.goBack()
         }
       })
       .catch(err => {

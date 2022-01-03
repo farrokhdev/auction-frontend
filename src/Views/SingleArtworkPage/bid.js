@@ -176,89 +176,94 @@ const Bid = ({ artwork }) => {
                         <span className="unit"> تومان</span>
                     </div>
                 </div>
-                <span className="seprator brdrbefor"></span>
-                <div className="db-right ">
-                    <span className="db-title bluecolor">قیمت فعلی</span>
-                    <div className="price-block bluecolor">
-                        <span className="price">{numeral(currentPrice).format('0,0')}</span>
-                        <span className="unit"> تومان</span>
-                        <span className="bids-num">(<span
-                            className="mx-1">{currentSuggest}</span>پیشنهاد)</span>
-                    </div>
-                </div>
+                {artwork?.latest_auction?.type !== "LIVE" ?
+                    <>
+                        <span className="seprator brdrbefor"></span>
+                        <div className="db-right ">
+                            <span className="db-title bluecolor">قیمت فعلی</span>
+                            <div className="price-block bluecolor">
+                                <span className="price">{numeral(currentPrice).format('0,0')}</span>
+                                <span className="unit"> تومان</span>
+                                <span className="bids-num">(<span
+                                    className="mx-1">{currentSuggest}</span>پیشنهاد)</span>
+                            </div>
+                        </div>
+                    </>
+                    : ""
+                }
             </div>
             {is_logged_in ? <div className="detail-placebid general-bid">
-                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state === "approved")) ?
-                 <Form onFinish={onFinish} form={form} className="m-0"
-                    // initialValues={{ inputValue: 0 }}
-                    wrapperCol={{ span: 24 }}>
-                    <div className="general-bid-block">
-                        <div className="number-input">
+                {((artwork?.product_status === "on_stage") && (artwork?.join_auction_request_state === "approved") && (artwork?.latest_auction?.type !== "LIVE")) ?
+                    <Form onFinish={onFinish} form={form} className="m-0"
+                        // initialValues={{ inputValue: 0 }}
+                        wrapperCol={{ span: 24 }}>
+                        <div className="general-bid-block">
+                            <div className="number-input">
 
-                            <Form.Item
-                                className="w-100"
-                                name="price"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "تکمیل این فیلد ضروری است",
-                                    },
-                                ]}>
-                                <input className="default-inputquantity" min="0" name="quantity" type="number"
-                                    readOnly={true}
-                                    placeholder="انتخاب پیشنهاد" />
-                            </Form.Item>
+                                <Form.Item
+                                    className="w-100"
+                                    name="price"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "تکمیل این فیلد ضروری است",
+                                        },
+                                    ]}>
+                                    <input className="default-inputquantity" min="0" name="quantity" type="number"
+                                        readOnly={true}
+                                        placeholder="انتخاب پیشنهاد" />
+                                </Form.Item>
 
-                            <button onClick={handleIncreaseminus}
-                                type="button"
-                                className="minus" />
-                            <button onClick={handleIncrease}
-                                type="button"
-                                className="plus" />
-                            <span className="unit">تومان</span>
+                                <button onClick={handleIncreaseminus}
+                                    type="button"
+                                    className="minus" />
+                                <button onClick={handleIncrease}
+                                    type="button"
+                                    className="plus" />
+                                <span className="unit">تومان</span>
+                            </div>
+                            <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
                         </div>
-                        <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
-                    </div>
-                </Form> : <p className="text-center category-icon">
-                    {artwork?.sale_status ? 'محصول فروخته شد' :
-                        <p>
-                            <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
-                                {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
-                            {(artwork?.product_status !== "after_stage") ? <div>
-                                {artwork?.join_auction_request_state === "approved" && <p className="text-success">
-                                    درخواست عضویت شما تایید شده است
-                                </p>}
-                                {artwork?.join_auction_request_state === "pending" && <p className="text-warning">
-                                    درخواست عضویت شما در انتظار تایید حراجی است
-                                </p>}
-                                {artwork?.join_auction_request_state === "not_selected" &&
-                                    <>
+                    </Form> : <p className="text-center category-icon">
+                        {artwork?.sale_status ? 'محصول فروخته شد' :
+                            <p>
+                                <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
+                                    {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
+                                {(artwork?.product_status !== "after_stage") ? <div>
+                                    {artwork?.join_auction_request_state === "approved" && <p className="text-success">
+                                        درخواست عضویت شما تایید شده است
+                                    </p>}
+                                    {artwork?.join_auction_request_state === "pending" && <p className="text-warning">
+                                        درخواست عضویت شما در انتظار تایید حراجی است
+                                    </p>}
+                                    {artwork?.join_auction_request_state === "not_selected" &&
+                                        <>
 
-                                        <h5 className="text-danger">
-                                            برای این اثر نمی توانید پیشنهاد دهید
+                                            <h5 className="text-danger">
+                                                برای این اثر نمی توانید پیشنهاد دهید
 
-                                        </h5>
+                                            </h5>
+                                            <span>برای ثبت پیشنهاد باید   </span>
+                                            <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
+                                                className="d-inline-block"> عضو حراجی </Link>
+                                            <span>   باشید</span>
+                                        </>
+                                    }
+                                    {artwork?.join_auction_request_state === "rejected" && <p>
+                                        درخواست عضویت شما رد شده است
+                                    </p>}
+                                    <p>{artwork?.join_auction_request_state === null && <p>
                                         <span>برای ثبت پیشنهاد باید   </span>
                                         <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
                                             className="d-inline-block"> عضو حراجی </Link>
                                         <span>   باشید</span>
-                                    </>
+                                    </p>}</p>
+                                </div> :
+                                    ''
                                 }
-                                {artwork?.join_auction_request_state === "rejected" && <p>
-                                    درخواست عضویت شما رد شده است
-                                </p>}
-                                <p>{artwork?.join_auction_request_state === null && <p>
-                                    <span>برای ثبت پیشنهاد باید   </span>
-                                    <Link to={`/buyer-register/${artwork?.latest_auction?.id}`}
-                                        className="d-inline-block"> عضو حراجی </Link>
-                                    <span>   باشید</span>
-                                </p>}</p>
-                            </div> :
-                                ''
-                            }
 
-                        </p>}
-                </p>}
+                            </p>}
+                    </p>}
             </div> :
                 <p className="text-center mt-4 ">
                     برای ثبت پیشنهاد

@@ -232,16 +232,16 @@ const Bid = ({ artwork, Product, setProduct, id, queries, setCountProducts, Auct
                         <td>تخمین</td>
                         <td className="bold">
                             {numeral(artwork?.max_price).format('0,0') ? numeral(artwork?.max_price).format('0,0') : 0} - {numeral(artwork?.min_price).format('0,0') ? numeral(artwork?.min_price).format('0,0') : 0}
-                            <span className="unit">{artwork?.latest_auction?.currency}</span> 
+                            <span className="unit">{artwork?.latest_auction?.currency.replace("toman" , "تومان")}</span> 
                             </td>
                     </tr>
                     <tr>
                         <td>پیشنهاد فعلی</td>
-                        <td className="bold">{numeral(currentPrice).format('0,0')}<span className="unit">{artwork?.latest_auction?.currency}</span></td>
+                        <td className="bold">{numeral(currentPrice).format('0,0')}<span className="unit">{artwork?.latest_auction?.currency.replace("toman" , "تومان")}</span></td>
                     </tr>
                     <tr>
                         <td>پیشنهاد بعدی</td>
-                        <td className="bold">{handleIncrease}<span className="unit">{artwork?.latest_auction?.currency}</span></td>
+                        <td className="bold">{handleIncrease}<span className="unit">{artwork?.latest_auction?.currency.replace("toman" , "تومان")}</span></td>
                     </tr>
                 </tbody>
             </table>

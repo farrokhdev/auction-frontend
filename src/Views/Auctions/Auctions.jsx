@@ -307,7 +307,9 @@ function Auctions() {
                                                         </div>
                                                     </div>
                                                     <div className="block-main">
-                                                        <h5 className="default">{item.title}</h5>
+                                                        <Link to={`/one-auction/${item?.id}`}>
+                                                            <h5 className="default">{item.title}</h5>
+                                                        </Link>
 
                                                         <div className="block-detail">
 

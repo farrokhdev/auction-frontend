@@ -71,6 +71,7 @@ function Chooseartwork(props) {
               <div className="my-3">
                 <Card
                     style={{ width: "100%" }}
+                    
                     cover={
                       <div className="image-custom-back" style={{  backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" }} />
                     }

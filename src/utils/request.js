@@ -16,6 +16,9 @@ instance.interceptors.request.use((config) => {
             if (token) {
                 config.headers.Authorization = `Bearer ${token.Authorization}`;
             }
+            config.headers["Accept-Language"] = store.getState().allReducer.check_Language
+            // { headers: { "Accept-Language": 'fa-IR' } }
+            // console.log("store.getState()==>>" , store.getState())
         }
 
         // refreshToken()

@@ -89,9 +89,6 @@ function AuctionsBids(props) {
                                     </div>
                                 )
                             }) : ""} */}
-
-                                {/* <div className="tab-pane" id="profiletab2" role="tabpanel"
-                                    aria-labelledby="profiletab2-tab"> */}
                                     <div className="table-responsive">
                                         <table className="panel-table bids-table">
                                             <thead>

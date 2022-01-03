@@ -9,6 +9,7 @@ import { Pagination, Spin } from "antd";
 import momentJalaali from 'moment-jalaali'
 import { convertMouthToPersian } from "../../utils/converTypePersion";
 import PaginationComponent from "../../components/PaginationComponent";
+import queryString from "query-string";
 
 function MyPurchases() {
 
@@ -17,21 +18,21 @@ function MyPurchases() {
     const [countPurchase, setCountPurchase] = useState(0)
     const [params, setParams] = useState({
         page: 1,
-        page_size: 9,
+        page_size: 10,
+        ordering : '-creation_date'
     })
-
-    useEffect(() => {
-        getMyWonPurchase()
-    }, [])
 
     // Get list of Won purchase user
     const getMyWonPurchase = () => {
-        axios.get(`${BASE_URL}${LIST_MY_WON_PERCHACE}`)
+        setLoading(true)
+        const queries = queryString.stringify(params);
+        axios.get(`${BASE_URL}${LIST_MY_WON_PERCHACE}?${queries}`)
             .then(resp => {
                 setLoading(false)
                 if (resp.data.code === 200) {
                     setListWonPurchasse(resp.data.data.result)
-                    setCountPurchase(resp.data.total)
+                    setCountPurchase(resp.data.data.count)
+                    console.log("resp.data.count==>>", resp.data.data.count)
                 }
 
             })
@@ -40,9 +41,16 @@ function MyPurchases() {
                 console.error(err);
             })
     }
+
+
+    useEffect(() => {
+        getMyWonPurchase()
+    }, [params])
+
     // Handle select page when user click in pages on pagination
     const handeSelectPage = (e) => {
         setParams({
+
             ...params, page: e
         })
     }
@@ -64,7 +72,7 @@ function MyPurchases() {
                                             artworkTitle={item?.artwork_title}
                                             Link={item?.latest_auction?.house?.home_auction_name}
                                             ArtworkLink=" گالری آرتیبیشن"
-                                            exactUrl={item?.media?.exact_url}
+                                            exactUrl={item?.media[0]?.exact_url}
                                             date={item?.bidding_details?.max_bid_date ?
                                                 `${momentJalaali(item?.bidding_details?.max_bid_date).format(`jDD`)}  
                                         ${convertMouthToPersian(momentJalaali(item?.bidding_details?.max_bid_date).format(`jMM`))}   

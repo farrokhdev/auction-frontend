@@ -101,7 +101,8 @@ function MultipleUpload({uploadList , setUploadList }) {
                 media_path: res.data.data.result.upload_url,
                 type: "image",
                 bucket_name: "image",
-                is_default: false,
+                // is_default: false,
+                is_default: uploadList?.length === 0 ? true : false,
                 uid: file.uid,
               };
 
