@@ -10,14 +10,14 @@ const RouterConfigEN = React.lazy(() => import('./services/RouterConfigEN'));
 
 function App(props) {
     const { check_Language } = useSelector((state) => state.allReducer)
-    console.log('check_Language===>>>11', check_Language)
+
     return (
 
         <>
-            {check_Language === 'fa' ?
-                <RouterConfig />
-                :
+            {check_Language === 'en' ?
                 <RouterConfigEN />
+                :
+                <RouterConfig />
             }
 
         </>
