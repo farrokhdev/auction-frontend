@@ -121,7 +121,7 @@ const Secret = ({ artwork }) => {
                         <span className="unit"> تومان</span>
                     </div>
                 </div>
-                <span className="seprator brdrbefor"></span>
+                {/* <span className="seprator brdrbefor"></span> */}
                 {/* <div className="db-right ">
                     <span className="db-title bluecolor">قیمت فعلی</span>
                     <div className="price-block bluecolor">

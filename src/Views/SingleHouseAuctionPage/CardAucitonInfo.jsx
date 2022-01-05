@@ -6,7 +6,7 @@ import { convertMouthToPersian, AuctionStatusTextBtn, AuctionType, convertStatus
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function CardAucitonInfo({ auction , Follow}) {
+function CardAucitonInfo({ auction, Follow }) {
 
     return (
         <div className="row-blocks">
@@ -14,7 +14,10 @@ function CardAucitonInfo({ auction , Follow}) {
                 <div className="col-md-4">
                     <div className="bg-shadow tr-shadow10">
                         <Link to={`/one-auction/${auction?.id}`}>
-                            <img src={auction.media.exact_url} width="500" height="500" alt="" />
+                            <div
+                                style={{ backgroundImage: `url(${auction.media.exact_url})`, height: "250px" }}
+                                // src={auction.media.exact_url} 
+                                className="image-custom-back" alt="" />
                         </Link>
                     </div>
                 </div>
@@ -39,8 +42,8 @@ function CardAucitonInfo({ auction , Follow}) {
                                 onClick={() =>
                                     Follow(
                                         auction?.following?.follow?.is_active ?
-                                        auction?.following?.follow?.id :
-                                        auction?.id, auction?.following?.follow?.is_active)
+                                            auction?.following?.follow?.id :
+                                            auction?.id, auction?.following?.follow?.is_active)
                                 }
                                 type="button" className={" reminder-icon " + (auction?.following?.follow?.is_active ? "active" : "")}>
                                 یادآوری

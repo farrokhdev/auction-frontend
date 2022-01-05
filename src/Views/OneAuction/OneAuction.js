@@ -17,13 +17,14 @@ import { convertToEn } from "../../utils/converTypePersion";
 import { setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import { HomeOutlined } from '@ant-design/icons';
 import HouseDetails from "./HouseDetails";
+import ModalAuctionList from "./ModalAuctionList";
 
 function OneAuction(props) {
     const myRef = useRef(null)
     const scrollToRef = (ref) => myRef.current.scrollIntoView(0, ref.current.offsetTop)
     const [isModalVisible, setIsModalVisible] = useState(false)
 
-    const executeScroll = () => scrollToRef(myRef)
+    // const executeScroll = () => scrollToRef(myRef)
 
     const { is_logged_in } = useSelector((state) => state.authReducer)
     const [Auction, setAuction] = useState("");
@@ -172,7 +173,9 @@ function OneAuction(props) {
                             >
                                 <div className="w-100 lg-mrgb50 d-lg-none d-block" />
                                 <div className="col-lg-6 ">
-                                    <span className="auction-link" onClick={executeScroll}> برای کسب اطلاعات بیشتر در مورد این حراج، اینجا کلیک کنید. </span>
+                                    <span className="auction-link" 
+                                    // onClick={executeScroll} 
+                                    data-bs-target="#auction-links" data-bs-toggle="modal"> برای کسب اطلاعات بیشتر در مورد این حراج، اینجا کلیک کنید. </span>
                                 </div>
                             </Breadcrumbs>
 
@@ -578,6 +581,8 @@ function OneAuction(props) {
 
 
                 <Footer />
+
+                <ModalAuctionList id="auction-links" Product={Product} />
                 <Modal centered title={
                     <div className='d-flex align-items-center justify-content-between'>
                         <span className="default titr">اطلاعات نمایشگاه فیزیکی</span>

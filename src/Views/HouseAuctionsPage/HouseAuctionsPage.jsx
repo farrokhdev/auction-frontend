@@ -12,6 +12,7 @@ import Footer from "../../components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { openDashboard } from "../../redux/reducers/all/all.actions"
 import { homeAuctionType } from '../../utils/converTypePersion';
+import classnames from "classnames";
 
 function HouseAuctionsPage() {
     const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
@@ -21,6 +22,7 @@ function HouseAuctionsPage() {
     const [houseAuctionList, setHouseAuctionList] = useState([])
     const [categoryActivities, setCategoryActivities] = useState([])
     const [countHousAuction, setCountHousAuction] = useState(0)
+    const [clickDropdown, setClickDropdown] = useState(false)
     const [loading, setLoading] = useState(false)
     const [params, setParams] = useState({
         page: 1,
@@ -84,6 +86,7 @@ function HouseAuctionsPage() {
     }
 
     const handleSetOrdering = () => {
+        setClickDropdown(false)
         setParams({
             ...params, ordering: '-date_joined'
         })
@@ -158,15 +161,25 @@ function HouseAuctionsPage() {
                             </div>
                             <div className="col-lg-6 col-9 ">
                                 <div className="sort-block">
-                                    <span className="btn-sort">مرتب‌سازی با
+                                    <span className="btn-sort d-md-none" onClick={()=> setClickDropdown(prevState=>!prevState)}>مرتب‌سازی با
+                                      
+                                    </span>
+                                    
+                                    <span className="btn-sort d-none d-md-block">مرتب‌سازی با
                                         <span className="d-none d-md-inline-block"> : </span>
                                     </span>
-                                    <ul className="sort-list">
+                                    <ul className={classnames("sort-list" , {
+                                    "d-block": clickDropdown ,
+                                })} 
+                                >
                                         <li onClick={(e) => handleSetOrdering()}>جدیدترین</li>
-                                        {/* <li className="active">نزدیک‌ترین</li> */}
+                                        {/* <li onClick={(e) => handleSetOrdering()}>قدیمی ترین</li> */}
+                                       
                                     </ul>
                                 </div>
                             </div>
+                            
+
                         </div>
                         <div className="row">
 
@@ -214,7 +227,7 @@ function HouseAuctionsPage() {
                                                                         width="159" height="159"
                                                                         alt="smart auction"
                                                                         className="img-fluid"
-                                                                        // className="image-house-auction"
+                                                                    // className="image-house-auction"
                                                                     />
                                                                 </Link>
                                                             </div>
