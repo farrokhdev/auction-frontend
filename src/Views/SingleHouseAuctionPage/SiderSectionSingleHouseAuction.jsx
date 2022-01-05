@@ -75,7 +75,7 @@ function SiderSectionSingleHouseAuction(props) {
         <div className="ah-block">
             <div className="ah-block-info logo">
                 <div className="bg-shadow tr-shadow10">
-                    <img src={parser(HouseDetail.media, 'profile')} width="159" height="159" alt={HouseDetail.home_auction_name} />
+                    <img src={parser(HouseDetail.media, 'profile_image')} width="159" height="159" alt={HouseDetail.home_auction_name} />
                 </div>
             </div>
             <div className="ah-block-info ">

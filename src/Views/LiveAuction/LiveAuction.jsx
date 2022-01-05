@@ -135,7 +135,7 @@ function LiveAuction(props) {
     return (
         <>
 
-            <Header />
+            <Header Auction={Auction} />
             <main className="holding-auction">
                 <Spin spinning={loading}>
                     <div className="container">
@@ -154,12 +154,12 @@ function LiveAuction(props) {
                                             {item?.product_status === 'on_stage' ?
                                                 <>
                                                     <div className="hauction-gallery">
-                                                        <img 
-                                                        // style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" ,backgroundRepeat : "round" }}
-                                                        // src={item?.media[0]?.exact_url} width="470"
-                                                        src={item && handleShowImage(item)} width="470"
-                                                        
-                                                        height="587" alt="" />
+                                                        <img
+                                                            // style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px" ,backgroundRepeat : "round" }}
+                                                            // src={item?.media[0]?.exact_url} width="470"
+                                                            src={item && handleShowImage(item)} width="470"
+
+                                                            height="587" alt="" />
                                                     </div>
 
                                                     <div className="d-flex">
@@ -169,7 +169,7 @@ function LiveAuction(props) {
                                                             <h4 className="default">از {item?.latest_auction?.description}</h4>
                                                         </div>
                                                     </div>
-                                                  
+
                                                     <div className="hauction-placebid">
 
                                                         {Auction?.user_is_enrolled ?
@@ -269,9 +269,13 @@ function LiveAuction(props) {
                                                                                                     فروخته نشد
                                                                                                 </Link>
                                                                                                 :
+                                                                                                
                                                                                                 <>
                                                                                                     {item?.product_status === "on_stage" ?
+                                                                                                        item?.type === "LIVE"?
                                                                                                         <button className="text-center btn-defaults mx-3"> زنده </button>
+                                                                                                        :
+                                                                                                        <button className="text-center btn-defaults mx-3"> آنلاین </button>
                                                                                                         : ''}
 
                                                                                                 </>
@@ -347,7 +351,7 @@ function LiveAuction(props) {
 
                 </Spin>
             </main>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

@@ -21,6 +21,7 @@ function Artworks() {
     const [Products, setProducts] = useState("");
     const [countProducts, setCountProducts] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [clickDropdown, setClickDropdown] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 9,
@@ -160,6 +161,7 @@ function Artworks() {
     }
 
     const handleSetOrdering = () => {
+        setClickDropdown(false)
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
@@ -168,6 +170,7 @@ function Artworks() {
     }
 
     const handleSetOrderingOld = () => {
+        setClickDropdown(false)
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
@@ -212,7 +215,12 @@ function Artworks() {
             <Spin spinning={loading}>
                 <main class="innercontent" id="all-artworks">
                     <div class="container innercontainer">
-                        <Maintitle title={'آثار'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
+                        <Maintitle
+                            title={'آثار'}
+                            handleSetOrdering={handleSetOrdering}
+                            handleSetOrderingOld={handleSetOrderingOld}
+                            clickDropdown={clickDropdown}
+                            setClickDropdown={setClickDropdown} />
                         <div class="row">
                             <Sidebar
                                 handleClose={handleClose}
@@ -238,7 +246,7 @@ function Artworks() {
                                                 <div className="artwork-img">
 
                                                     <Link to={`/artworks/${item?.id}`} className="artwork-block">
-                                                        <img src={item && handleShowImage(item)} width="998" height="880" alt="" className="img-fluid" style={{height:'15rem'}} />
+                                                        <img src={item && handleShowImage(item)} width="998" height="880" alt="" className="img-fluid" style={{ height: '15rem' }} />
                                                     </Link>
 
                                                     {/* <Link to={`/artworks/${item?.id}`} class="artwork-block">

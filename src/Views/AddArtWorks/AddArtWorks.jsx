@@ -311,13 +311,13 @@ AddArtWorks(props) {
                                     طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم
                                     است</p>
                             </div>
-                            <div className="col-xl-3">
+                            {/* <div className="col-xl-3">
                                 <div className="input-group">
                                     <label className="default-lable">عنوان لینک</label>
                                     <input type="text" className="default-input"
                                            placeholder="عنوان لینک را وارد نمایید."/>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-xl-9">
                                 <div className="input-group">
                                     <label className="default-lable">لینک</label>

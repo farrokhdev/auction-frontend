@@ -22,6 +22,7 @@ function Auctions() {
     const [Auctions, setAuctions] = useState("");
     const [countAuctions, setCountAuctions] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [clickDropdown, setClickDropdown] = useState(false)
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
@@ -163,6 +164,7 @@ function Auctions() {
     }
 
     const handleSetOrdering = () => {
+        setClickDropdown(false)
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
@@ -171,6 +173,7 @@ function Auctions() {
     }
 
     const handleSetOrderingOld = () => {
+        setClickDropdown(false)
         setParams({
             // since the ordering field on the product is different from auctions we have to
             // set this explicitly
@@ -217,7 +220,13 @@ function Auctions() {
             <Spin spinning={loading}>
                 <main className="innercontent" id="all-auctions">
                     <div className="container innercontainer">
-                        <Maintitle title={'حراج‌ها'} handleSetOrdering={handleSetOrdering} handleSetOrderingOld={handleSetOrderingOld} />
+                        <Maintitle
+                            title={'حراج‌ها'}
+                            handleSetOrdering={handleSetOrdering}
+                            handleSetOrderingOld={handleSetOrderingOld}
+                            clickDropdown={clickDropdown}
+                            setClickDropdown={setClickDropdown}
+                        />
                         <div className="row">
                             <Sidebar
                                 params={params}
@@ -244,11 +253,10 @@ function Auctions() {
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     {
-                                                        item?.type === "LIVE" ?
+                                                        item?.type === "LIVE" || item?.type === "ONLINE" ?
 
                                                             <Link
                                                                 to={`/live-auction/${item?.id}`}
-                                                            //  to="/live-auction"
                                                             >
                                                                 <div className="image-custom-back" style={{ backgroundImage: `url(${item?.media?.exact_url})`, height: "250px" }} />
                                                             </Link>
@@ -308,14 +316,15 @@ function Auctions() {
                                                     </div>
                                                     <div className="block-main">
                                                         <Link to={`/one-auction/${item?.id}`}>
-                                                            <h5 className="default">{item.title}</h5>
+                                                            <h5 className="default">{item?.title}</h5>
                                                         </Link>
 
                                                         <div className="block-detail">
+                                                            <h6 className="default">{item?.house_type}</h6>
 
-                                                            <h6 className="default">{item.house_type}</h6>
-
-                                                            <h6 className="default gray50">{item.house}</h6>
+                                                            <Link to={`/house-acutions/${item?.house_id}`}>
+                                                                <h6 className="default gray50">{item?.house}</h6>
+                                                            </Link>
 
                                                         </div>
                                                     </div>

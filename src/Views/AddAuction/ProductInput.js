@@ -18,12 +18,13 @@ const ProductInput = (props) => {
 
                 <Card
                     style={{ width: "100%" }}
-                    cover={
-                        <img
-                            alt="بدون تصویر"
-                            src={products[item] && handleShowImage(products[item])}
-                        />
-                    }
+                    // cover={
+                    //     <img
+                    //         alt="بدون تصویر"
+                    //         src={products[item] && handleShowImage(products[item])}
+                    //     />
+                    // }
+                    cover={<div className="image-custom-back" style={{ backgroundImage: `url(${products[item] && handleShowImage(products[item])})`, height: "250px" }} />}
                     actions={[
                         <DeleteFilled key="ellipsis" onClick={() => {
                             setCheck(state => false)
