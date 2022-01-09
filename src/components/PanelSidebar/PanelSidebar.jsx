@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink as NavLinkRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,16 +18,33 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/reducers/profile/profile.actions";
 import logoWhite from "../../images/logo-white.png";
-import { clearStorageAll ,openDashboard } from "../../redux/reducers/all/all.actions";
+import { clearStorageAll, openDashboard } from "../../redux/reducers/all/all.actions";
+import { Badge } from 'antd';
+
+import axios from "../../utils/request";
+import { BASE_URL } from "../../utils";
 // import { openDashboard } from "../../redux/reducers/all/all.actions"
 
 
 function PanelSidebar(props) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.profileReducer)
-
   const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+  const [show, setShow] = useState(true);
+  const [readCount, setReadCount] = useState("")
 
+  
+  const unReadCount = ()=>{
+    axios.get(`${BASE_URL}/messaging/inbox/unread_count/`)
+    .then(resp=>{
+      setReadCount(resp.data.data.result.count)
+      console.log("resp==>" , resp.data.data.result.count)
+    })
+  }
+
+  useEffect(()=>{
+    unReadCount()
+  },[])
   useEffect(() => {
     if (!role)
       dispatch(getProfile())
@@ -67,7 +84,7 @@ function PanelSidebar(props) {
               <i class="fal fa-plus-circle"></i>
               درخواست خانه حراج
             </NavLinkRouter>
-          </li>: ""}
+          </li> : ""}
           {/*<li>*/}
           {/*  <NavLinkRouter activeClassName="active-style-menu" to="/buyer-register">*/}
           {/*    <FontAwesomeIcon icon={faPlusCircle} /> عضویت در حراج*/}
@@ -130,6 +147,11 @@ function PanelSidebar(props) {
             <NavLinkRouter activeClassName="active-style-menu" to="/panel-message" onClick={() => dispatch(openDashboard(false))}>
               <i class="fal fa-envelope"></i>
               پیام‌ها
+              <Badge
+                className="site-badge-count-109"
+                count={show ? readCount : 0}
+                style={{ backgroundColor: '#e6007e' , marginRight: '9rem'}}
+              />
             </NavLinkRouter>
           </li>
 

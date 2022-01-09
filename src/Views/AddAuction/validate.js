@@ -12,7 +12,8 @@ import {UploadOutlined,DownloadOutlined} from "@ant-design/icons";
 import UploadAxios from "../../utils/uploadRequest";
 import {BASE_URL} from "../../utils";
 import {UPLOAD_EXEL_AUCTION} from "../../utils/constant";
-import ExampleExel from "../../assets/exel/sample-exel-auction.xlsx"
+import ExampleExel from "../../assets/exel/Sample-Exel-Auction.xls"
+
 
 const Validate = (props) => {
 
@@ -102,6 +103,7 @@ const Validate = (props) => {
                                                     onSuccess({"status": "uploading"})
                                                     await formData.append('file', e?.file)
                                                     if (finalData?.title)
+                                                    console.log("formData==>" , finalData)
                                                         await UploadAxios.put(`${BASE_URL}${UPLOAD_EXEL_AUCTION(finalData?.title + getDate)}`, formData)
                                                             .then(r => {
                                                                 if (r?.data.code === 201)

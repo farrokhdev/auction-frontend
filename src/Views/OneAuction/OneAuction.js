@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { Button, message, Modal, Pagination, Spin } from 'antd';
+import { Button, message, Modal, Pagination, Spin, Image } from 'antd';
 import 'antd/dist/antd.css';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
@@ -18,6 +18,8 @@ import { setAUCTION } from "../../redux/reducers/auction/auction.actions";
 import { HomeOutlined } from '@ant-design/icons';
 import HouseDetails from "./HouseDetails";
 import ModalAuctionList from "./ModalAuctionList";
+import { DEFAULT_URL_IMAGE } from "../../utils/defaultImage";
+// import { DEFAULT_URL_IMAGE } from "../../utils/defaultImage";
 
 function OneAuction(props) {
     const myRef = useRef(null)
@@ -160,6 +162,19 @@ function OneAuction(props) {
     }
 
 
+    const handleShowImage = (item) => {
+
+        console.log("test=>", item?.length)
+        // return (
+        //     // (item? item?.exact_url : DEFAULT_URL_IMAGE)
+
+        //     (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+        //         item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+        //         DEFAULT_URL_IMAGE
+        // )
+    }
+
+
     return (
         <>
             <Header />
@@ -173,16 +188,18 @@ function OneAuction(props) {
                             >
                                 <div className="w-100 lg-mrgb50 d-lg-none d-block" />
                                 <div className="col-lg-6 ">
-                                    <span className="auction-link" 
-                                    // onClick={executeScroll} 
-                                    data-bs-target="#auction-links" data-bs-toggle="modal"> برای کسب اطلاعات بیشتر در مورد این حراج، اینجا کلیک کنید. </span>
+                                    <span className="auction-link"
+                                        // onClick={executeScroll} 
+                                        data-bs-target="#auction-links" data-bs-toggle="modal"> برای کسب اطلاعات بیشتر در مورد این حراج، اینجا کلیک کنید. </span>
                                 </div>
                             </Breadcrumbs>
 
                         </div>
+                        {/* <div className="inner-cover" ></div> */}
 
-                        <div className="inner-cover" />
-
+                        <img src={Product[0]?.media[0] ? Product[0]?.media[0]?.exact_url : DEFAULT_URL_IMAGE}
+                            style={{ width: "100%", height: "500px" }}
+                        />
 
                         <div className="flex-row-reverse d-flex over-cover">
                             <div className="col-xl-4 col-lg-5 col-md-6 col-12">
