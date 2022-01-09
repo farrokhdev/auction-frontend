@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../images/logo.svg";
+import logo from "../../images/logo1.png";
 import search from "../../images/search.svg";
 import auction from "../../images/auction.svg";
 import house from "../../images/location-icon.svg";
