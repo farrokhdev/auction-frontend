@@ -55,7 +55,8 @@ function PanelProfile(props) {
             .catch(err => {
                 console.error(err);
                 message.error({
-                    content: err_msg_resolver(err.response.data),
+                    // content: err_msg_resolver(err?.response?.data),
+                    content:"اطلاعات برای اعتبارسنجی ارسال نشده است" ,
                     className: 'text-danger',
                     style: {
                         marginTop: '10vh',

@@ -189,7 +189,8 @@ function Index() {
         }
         let getDate = new Date();
         getDate = await moment(getDate).format("YYYY-MM-DDThh:mm")
-        let file_name = await is_send_invitation ? allData?.title + getDate : "";
+        console.log("allData==>" , allDataMain)
+        let file_name = await is_send_invitation ? allDataMain?.title + getDate : "";
 
         if (auctionId !== "new") {
             await axios.put(`${BASE_URL}${EDIT_AUCTION(auctionId)}`, {
