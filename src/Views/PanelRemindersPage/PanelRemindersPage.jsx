@@ -117,7 +117,7 @@ function RemindersPage() {
                                                                                 <i class="fal fa-pen"></i>
                                                                             </button>
                                                                         </Link>
-
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>

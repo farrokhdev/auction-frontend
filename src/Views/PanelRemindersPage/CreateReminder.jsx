@@ -182,7 +182,7 @@ function CreateReminder(props) {
                                                 <Checkbox
                                                     checked={!!Reminder?.status}
                                                     onChange={(e) => setReminder({ ...Reminder, status: e.target.checked })}
-                                                >غیرفعال کردن یادآوری</Checkbox>
+                                                >فعال کردن یادآوری</Checkbox>
                                             </Form.Item>
 
 
