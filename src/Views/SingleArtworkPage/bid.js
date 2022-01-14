@@ -223,6 +223,9 @@ const Bid = ({ artwork }) => {
                                 <span className="unit">تومان</span>
                             </div>
                             <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
+
+                            {/* <span>{currentValue}</span> */}
+                            
                         </div>
                     </Form> : <p className="text-center category-icon">
                         {artwork?.sale_status ? 'محصول فروخته شد' :

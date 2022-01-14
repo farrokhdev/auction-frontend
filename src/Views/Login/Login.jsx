@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 // import {withRouter} from "react-router-dom"
@@ -101,8 +102,8 @@ function Login(props) {
         id="login-page"
       >
         <Form className="login-container" form={form}>
-          <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
+          <Link to="/" className="logo" className="mb-1">
+            <img src={Logo} width="110" height="90" alt="اسمارت آکشن" />
           </Link>
           <div className="login-block" >
             <div className="main-title">
