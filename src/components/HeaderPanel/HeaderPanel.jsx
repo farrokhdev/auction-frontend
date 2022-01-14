@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import logowhite from "../../images/logo-white.png";
+// import logowhite from "../../images/logo-white.png";
+import logowhite from "../../images/smartauction-168.png";
 import loginactive from "../../images/login-active.png";
 import { removeToken } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,8 +16,8 @@ function HeaderPanel(props) {
     <header>
       <div className="panel-header">
         <div className="panel-brand">
-          <Link to="/">
-            <img src={logowhite} width="139" height="30" alt="اسمارت آکشن" />
+          <Link to="/" className="p-2 pt-0">
+            <img src={logowhite} width="110" height="70" alt="اسمارت آکشن" />
           </Link>
         </div>
         <div className="panel-head ">

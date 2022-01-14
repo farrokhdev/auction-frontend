@@ -418,7 +418,8 @@ function OneAuction(props) {
                                                         <div className="ra-row">
                                                             <div className="ra-col">
                                                                 <h6 className="default gray50 ">{item?.artwork_title}</h6>
-                                                                <h4 className="default">از {Auction?.title}</h4>
+                                                                <h4 className="default">از {item?.persian_artist_name}</h4>
+                                                                {/* <h4 className="default">از {Auction?.title}</h4> */}
                                                             </div>
                                                             <div className="ra-col">
                                                                 {/* <h5 className="default lot-num">{key + 1}</h5> */}

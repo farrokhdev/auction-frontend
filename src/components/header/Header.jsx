@@ -1,5 +1,6 @@
 import React from "react";
-import logo from "../../images/logo1.png";
+// import logo from "../../images/logo1.png";
+import logo from "../../images/smartauction-192.png";
 import search from "../../images/search.svg";
 import auction from "../../images/auction.svg";
 import house from "../../images/location-icon.svg";
@@ -39,7 +40,7 @@ function Header(props) {
 
             {props?.Auction?.type !== "LIVE" ?
               <Link className="navbar-brand" to="/">
-                <img src={logo} width="156" height="34" alt="auction logo" />
+                <img src={logo}  width="110" height="80"  alt="auction logo" />
               </Link>
 
               :

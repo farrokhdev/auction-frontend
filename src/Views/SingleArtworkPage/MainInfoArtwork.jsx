@@ -72,7 +72,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                         {artwork?.media?.length ? artwork?.media?.map((item, key) => (
                             <React.Fragment key={key}>
                                 <div className="carousel-item active">
-                                    <img src={item?.exact_url} width="547" height="547" className="d-block img-fluid" alt="..." />
+                                    <img src={item?.exact_url} className="d-block img-fluid" alt="..." />
                                 </div>
                             </React.Fragment>
                         )) : ''}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
-import logobw from "../../images/logo-bw.svg";
+// import logobw from "../../images/logo-bw.svg";
+import logobw from "../../images/smartauction-192.png";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 
@@ -42,8 +43,9 @@ export default function Footer() {
               <Link to="/">
                 <img
                   src={logobw}
-                  width="468"
-                  height="234"
+                  // width="468"
+                  // height="234"
+                  width="100" height="80"
                   alt=""
                   className="img-fluid"
                 />

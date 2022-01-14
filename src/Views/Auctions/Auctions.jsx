@@ -253,8 +253,8 @@ function Auctions() {
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     {
-                                                        item?.type === "LIVE" || item?.type === "ONLINE" ?
-
+                                                       item?.status === "ACTIVE" && item?.type === "LIVE" || item?.type === "ONLINE"  ?
+                                                        
                                                             <Link
                                                                 to={`/live-auction/${item?.id}`}
                                                             >
