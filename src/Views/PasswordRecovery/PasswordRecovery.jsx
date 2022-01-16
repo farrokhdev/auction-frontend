@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // import {withRouter} from "react-router-dom"
@@ -62,7 +63,7 @@ function Passwordrecovery(props) {
       >
         <div className="login-container">
           <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
+            <img src={Logo}  width="110" height="90" alt="اسمارت آکشن" />
           </Link>
           <Form className="login-block" form={form}>
             <div className="main-title">

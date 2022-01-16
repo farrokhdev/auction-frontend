@@ -423,6 +423,7 @@ function OneAuction(props) {
                                                             </div>
                                                             <div className="ra-col">
                                                                 {/* <h5 className="default lot-num">{key + 1}</h5> */}
+                                                                <h5 className="default lot-num">{item?.latest_auction?.lot_num}</h5>
                                                             </div>
                                                         </div>
                                                         <div className="detail-bid">

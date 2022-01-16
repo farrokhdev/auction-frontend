@@ -3893,8 +3893,10 @@ input[type="number"]::-webkit-outer-spin-button {
   content: "/";
   font-size: 40px;
   font-family: "IRANSans_light", sans-serif;
-  position: absolute;
-  right: 2.2rem;
+  // position: absolute;
+  // right: 2.2rem;
+  position: relative;
+  right: 1.8rem;
   color: var(--darkgray);
 }
 

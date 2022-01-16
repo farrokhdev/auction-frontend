@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import Logo from "../../images/logo.svg";
 import Logo from "../../images/smartauction-192.png";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 // import {withRouter} from "react-router-dom"
 import { setPhoneNumber, loginSuccess } from '../../redux/reducers/auth/auth.actions'
@@ -17,7 +17,8 @@ function Login(props) {
   const [userName, setuserName] = useState("");
   const [Password, setPassword] = useState("");
   const [form] = Form.useForm();
-  const history = useHistory()
+  const history = useHistory();
+  const location = useLocation();
 
   function err_msg_resolver(res_body) {
     if (res_body.code == 201 || res_body.code == 200)
@@ -51,7 +52,11 @@ function Login(props) {
             },
           })
           // window.location.href="#/"
-          history.goBack()
+          if (location.search.includes("next")) {
+            history.push("/#/")
+          } else {
+            history.goBack()
+          }
         }
       })
       .catch(err => {
@@ -81,7 +86,7 @@ function Login(props) {
       if (res.data.data.statusCode !== 400) {
         setToken(res.data.data.result)
         console.log("res.data.data.result  Login===>>", res.data.data.result)
-        props.loginSuccess({ })
+        props.loginSuccess({})
         message.success("به اسمارت آکشن خوش آمدید")
         setTimeout(() => {
           window.location.href = "#/"

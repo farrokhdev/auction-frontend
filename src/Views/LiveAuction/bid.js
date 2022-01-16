@@ -16,6 +16,7 @@ const Bid = ({ artwork, Product, setProduct, id, queries, setCountProducts, Auct
     const [currentValue, setCurrentValue] = useState(0)
     const [currentPrice, setCurrentVPrice] = useState(0)
     const [currentSuggest, setCurrentSuggest] = useState(0)
+    const [maxUserBid, setMaxUserBid] = useState(0)
     const [productSelected, setProductSelected] = useState({});
     const [prevProductSelected, setPrevProductSelected] = useState({});
     const [nextProductSelected, setNextProductSelected] = useState({});
@@ -108,6 +109,10 @@ const Bid = ({ artwork, Product, setProduct, id, queries, setCountProducts, Auct
         }
         if (artwork?.bidding_details?.total_bids) {
             setCurrentSuggest(artwork?.bidding_details?.total_bids)
+        }
+
+        if(artwork?.bidding_details?.max_user_bid){
+            setMaxUserBid(artwork?.bidding_details?.max_user_bid)
         }
 
 
@@ -299,6 +304,7 @@ const Bid = ({ artwork, Product, setProduct, id, queries, setCountProducts, Auct
 
                         </p>}
                 </p>}
+                <span className="alert-success text-center">آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد</span>
             </div> :
                 <p className="text-center mt-4 ">
                     برای ثبت پیشنهاد

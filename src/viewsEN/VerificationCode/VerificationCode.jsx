@@ -1,5 +1,6 @@
 import React from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/index";
@@ -44,7 +45,7 @@ function VerificationCode(props) {
             className="login-container" 
             form={form}>
           <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
+            <img src={Logo}  width="110" height="90" alt="اسمارت آکشن" />
           </Link>
           <h5 className="default titr text-center">
           Please enter the verification code sent to your email or mobile number in the box below.

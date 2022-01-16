@@ -1,5 +1,6 @@
 import React from 'react'
-import logo from "../../imgEN/logo.svg";
+// import logo from "../../imgEN/logo.svg";
+import logo from "../../images/smartauction-192.png";
 import search from "../../imgEN/search.svg";
 import auction from "../../imgEN/auction.svg";
 import help from "../../imgEN/help.svg";
@@ -34,7 +35,7 @@ function HeaderEN(props) {
                 <div className=" container containercs">
                     <nav className="navbar navbar-expand-lg">
                         <Link to="/" className="navbar-brand">
-                            <img src={logo} width="156" height="34" alt="auction logo" />
+                            <img src={logo} width="110" height="80"  alt="auction logo" />
                         </Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

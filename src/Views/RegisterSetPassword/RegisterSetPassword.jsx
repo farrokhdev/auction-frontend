@@ -1,6 +1,6 @@
 import React,{useState} from "react";
-// import React,{useState,useContext} from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link } from "react-router-dom";
 
 
@@ -35,10 +35,11 @@ function RegistersetPassword(props) {
     .then(res=>{
       console.log("Confrim-Mobile" , res);
 
+
       if(res.data.code === 200){
         setToken(res.data.data.result);
         setTimeout(() => {
-          window.location.href = "#/login"
+          window.location.href = "#/login?next=/#/"
           message.success("رمز عبور با موفقیت تغییر یافت")
         }, 1000);
         // history.push("/login")
@@ -59,7 +60,7 @@ function RegistersetPassword(props) {
       >
         <Form className="login-container">
           <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
+            <img src={Logo}  width="110" height="90" alt="اسمارت آکشن" />
           </Link>
           <div className="login-block">
             <div className="main-title">

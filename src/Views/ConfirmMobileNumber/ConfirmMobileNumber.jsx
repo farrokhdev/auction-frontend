@@ -1,5 +1,6 @@
 import React , {useState} from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
@@ -78,7 +79,7 @@ function ConfirmMobileNumber(props) {
       >
         <Form className="login-container" form={form}>
           <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
+            <img src={Logo}  width="110" height="90" alt="اسمارت آکشن" />
           </Link>
           <div className="login-block">
             <div className="main-title">

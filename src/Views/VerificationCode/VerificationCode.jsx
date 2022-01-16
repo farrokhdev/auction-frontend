@@ -1,6 +1,7 @@
 // import React,{useState,useContext} from "react";
 import React,{useState} from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/index";
@@ -48,7 +49,7 @@ function VerificationCode(props) {
       >
         <Form className="login-container" form={form}>
           <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="اسمارت آکشن" />
+            <img src={Logo}  width="110" height="90" alt="اسمارت آکشن" />
           </Link>
           <h5 className="default titr text-center">
             لطفا کد تایید ارسال شده به ایمیل یا شماره همراه خود را در کادر زیر
