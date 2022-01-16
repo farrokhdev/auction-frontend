@@ -9,24 +9,21 @@ import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { ONE_PRODUCT } from "../../utils/constant";
+import { Link } from 'react-router-dom';
 
 function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
     const { is_logged_in } = useSelector((state) => state.authReducer)
     const [loading, setLoading] = useState(false)
 
-    // console.log("artwork===>>" , artwork?.latest_auction?.lot_num)
 
     const handleSearchArtworkByLat = (lot_num) => {
 
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/product/?product_auction__lot_num=${lot_num}`).then(res => {
 
-            console.log("products filter lenght==>>", res.data.data.result.length)
-            if (lot_num > 0 && res.data.data.result.length) {
-                // if (res.data.data.result.length) {
-                    window.location.href = `#/artworks/${res.data.data.result[0].id}`
-                // }
+        axios.get(`${BASE_URL}/sale/product/?auctions__id=${artwork?.latest_auction?.id}&product_auction__lot_num=${lot_num}`).then(res => {
+            if (lot_num >= 0 && res.data.data.result.length) {
+                window.location.href = `#/artworks/${res.data.data.result[0].id}`
             } else {
                 message.error("محصولی با این مشخصات موجود نیست")
             }
@@ -102,7 +99,20 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
             <div className="col-lg-6">
                 <div className="detail-block">
-                    <div className="search-input my-3 w-50 mx-auto">
+                    <div class="detail-block-header">
+                        <Link to={`/artworks/${artwork?.id - 1}`} class="btn-lot prev"><span class="d-none d-md-block">لت قبلی</span></Link>
+                        <div class="search-input my-3 w-50 mx-auto">
+                            <input
+                                id="product-searchh"
+                                type="number"
+                                className="default-input"
+                                onChange={(e) => handleSearchArtworkByLat(e?.target?.value)}
+                                placeholder="شماره لت مورد نظر را وارد نمایید." />
+                            <button type="button" class="btn-search"></button>
+                        </div>
+                        <Link to={`/artworks/${artwork?.id + 1}`} class="btn-lot next"><span class="d-none d-md-block">لت بعدی</span></Link>
+                    </div>
+                    {/* <div className="search-input my-3 w-50 mx-auto">
                         <input
                             id="product-searchh"
                             type="number"
@@ -110,7 +120,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                             onChange={(e) => handleSearchArtworkByLat(e?.target?.value)}
                             placeholder="شماره لت مورد نظر را وارد نمایید." />
                         <button type="button" className="btn-search"></button>
-                    </div>
+                    </div> */}
                     <div className="detail-block-body" style={{ marginTop: 0 }}>
                         <div className="bg-shadow bl-shadow20">
                             <div className="detail-info">
@@ -154,7 +164,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                 </div>
 
 
-                                {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC' ) || (artwork?.latest_auction?.type === 'LIVE')) ?
+                                {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC') || (artwork?.latest_auction?.type === 'LIVE')) ?
                                     <Bid artwork={artwork} /> : ''}
                                 {((artwork?.latest_auction?.type === 'HIDDEN') || (artwork?.latest_auction?.type === 'SECOND_HIDDEN')) ?
                                     <Secret artwork={artwork} /> : ''}

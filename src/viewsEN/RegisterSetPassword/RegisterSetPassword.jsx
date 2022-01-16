@@ -1,5 +1,6 @@
 import React from "react";
-import Logo from "../../images/logo.svg";
+// import Logo from "../../images/logo.svg";
+import Logo from "../../images/smartauction-192.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/index";
@@ -51,7 +52,7 @@ function RegistersetPassword(props) {
           onFinish={onFinish}
           >
           <Link to="/" className="logo">
-            <img src={Logo} width="156" height="34" alt="logo" />
+            <img src={Logo}  width="110" height="90"  alt="logo" />
           </Link>
           <div className="login-block">
             <div className="main-title">

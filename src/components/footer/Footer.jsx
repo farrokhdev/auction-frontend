@@ -43,9 +43,8 @@ export default function Footer() {
               <Link to="/">
                 <img
                   src={logobw}
-                  // width="468"
-                  // height="234"
-                  width="100" height="80"
+                  width="100" 
+                  height="80"
                   alt=""
                   className="img-fluid"
                 />

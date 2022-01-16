@@ -16,6 +16,7 @@ const Bid = ({ artwork }) => {
     const [currentValue, setCurrentValue] = useState(0)
     const [currentPrice, setCurrentVPrice] = useState(0)
     const [currentSuggest, setCurrentSuggest] = useState(0)
+    const [maxUserBid, setMaxUserBid] = useState(0)
     const [currentSuggestValue, setCurrentSuggestValue] = useState(0)
     const { is_logged_in } = useSelector((state) => state.authReducer)
     const [form] = Form.useForm();
@@ -30,7 +31,8 @@ const Bid = ({ artwork }) => {
 
                 if (message?.data?.length >= 1) {
                     // let messageArray = message.data.slice(2, message.data.length - 2).split(',');
-                    let artworkData = JSON.parse(message.data).products.filter(obj => {
+                    let webSocketData = JSON.parse(message.data)
+                    let artworkData = webSocketData.products.filter(obj => {
                         return obj.product_id === artwork?.id
                     })[0]
                     let priceFinal = Math.floor(artworkData.last_price);
@@ -57,6 +59,9 @@ const Bid = ({ artwork }) => {
         if (artwork?.bidding_details?.total_bids) {
             setCurrentSuggest(artwork?.bidding_details?.total_bids)
         }
+        if(artwork?.bidding_details?.max_user_bid){
+            setMaxUserBid(artwork?.bidding_details?.max_user_bid)
+        }
 
 
         if (artwork?.latest_auction?.id)
@@ -81,26 +86,21 @@ const Bid = ({ artwork }) => {
                 setLoading(false)
             })
     }
+
+
     const handleIncrease = () => {
-        // console.log("[[26, 100.0, 300.0]]".splice(']' || '[' , ''));
         if (steps.length) {
             steps.some((item, i, array) => {
-                if (i !== (array.length - 1)) {
-                    // if (i > 0) {
+                if (i < array.length - 1) {
                     if ((currentValue >= item.threshold) && (currentValue < steps[i + 1].threshold)) {
                         setBid(item.step)
                         return true;
-                    } else if (i === 0) {
-                        console.log("It is an error")
+                    } else if ((currentValue < item.threshold) && (i === 0)) {
                         setBid(item.step)
                         return true;
+                    } else {
+                        return false;
                     }
-                    // } else {
-                    //     if ((currentValue < item.threshold)) {
-                    //         setBid(item.step)
-                    //         return true;
-                    //     }
-                    // }
                 } else {
                     setBid(item.step)
                 }
@@ -111,14 +111,16 @@ const Bid = ({ artwork }) => {
     const handleIncreaseminus = () => {
         if (steps.length) {
             steps.some((item, i, array) => {
-                if (i > array.length) {
-                    if ((currentValue < item.threshold) && (currentValue >= steps[i - 1].threshold)) {
+
+                if (i < array.length - 1) {
+                    if ((currentValue > item.threshold) && (currentValue <= steps[i + 1].threshold)) {
                         minusBid(item.step)
                         return true;
-                    } else if (i === 0) {
-                        console.log("It is an error")
+                    } else if ((currentValue < item.threshold) && (i === 0)) {
                         minusBid(item.step)
                         return true;
+                    } else {
+                        return false;
                     }
                 } else {
                     minusBid(item.step)
@@ -152,6 +154,7 @@ const Bid = ({ artwork }) => {
         axios.post(`${BASE_URL}${BID}`, payload)
             .then(resp => {
                 if (resp.status === 201) {
+                    setMaxUserBid(values.price)
                     message.success("درخواست شما با موفقیت ارسال شد")
                 }
                 setLoading(false)
@@ -224,8 +227,6 @@ const Bid = ({ artwork }) => {
                             </div>
                             <Button htmlType="submit" className="btn-lightpink">ثبت پیشنهاد</Button>
 
-                            {/* <span>{currentValue}</span> */}
-                            
                         </div>
                     </Form> : <p className="text-center category-icon">
                         {artwork?.sale_status ? 'محصول فروخته شد' :
@@ -267,6 +268,8 @@ const Bid = ({ artwork }) => {
 
                             </p>}
                     </p>}
+                
+                    <span className="alert-success text-center">آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد</span>
             </div> :
                 <p className="text-center mt-4 ">
                     برای ثبت پیشنهاد
@@ -274,6 +277,8 @@ const Bid = ({ artwork }) => {
                     شوید
                 </p>
             }
+
+
         </Spin>
     </>
 

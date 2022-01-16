@@ -109,8 +109,8 @@ function LastAuctionsSection(props) {
                                             price_range={item?.min_price + " - " + item?.max_price}
                                             house_auction={item?.latest_auction.title}
                                             title={item?.artwork_title}
-                                            lot_num={key + 1}
-                                            
+                                            // lot_num={key + 1}
+                                            lot_num={item?.latest_auction?.lot_num}
                                         />
                                     </Link>
                                 </div>
