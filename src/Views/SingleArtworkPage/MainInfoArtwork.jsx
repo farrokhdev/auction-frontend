@@ -171,7 +171,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                 <div className="detail-ah">
                                     <div className="ah-left">
                                         <div className="h-block-img">
-                                            <img src={artwork?.house?.media?.exact_url} width="159" height="159" alt={artwork?.house?.media?.home_auction_name}
+                                            <img src={artwork?.latest_auction?.house?.media[0]?.exact_url} width="159" height="159" alt={artwork?.house?.media?.home_auction_name}
                                                 className="img-fluid" />
                                         </div>
                                         <div className="detail-ahm">

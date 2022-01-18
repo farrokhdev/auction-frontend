@@ -22,7 +22,7 @@ function AfterLoginPage(props) {
             <main>
                 <Spin spinning={loading}>
                     <div className="container containercs ">
-                        <LastProductsAuctionSlider setLoading={setLoading}/>
+                        <LastProductsAuctionSlider setLoading={setLoading} />
                         <div className="row">
                             <div className="col-md-3 col-sm-12">
                                 <div className="main-title">
@@ -30,7 +30,7 @@ function AfterLoginPage(props) {
                                     <Link to="/artworks/" className="btn-view">مشاهده همه</Link>
                                 </div>
                             </div>
-                                <LastProducts/>
+                            <LastProducts />
                         </div>
                     </div>
                     <div className="container-fluid">
@@ -43,12 +43,12 @@ function AfterLoginPage(props) {
                                     </div>
                                 </div>
                             </div>
-                            <LastAuctions setLoading={setLoading}/>
+                            <LastAuctions setLoading={setLoading} />
                         </section>
                     </div>
 
                     <div className="container containercs ">
-                        <section className="latest-articles">
+                        {/* <section className="latest-articles">
                             <div className="container innercontainer">
                                 <div className="row">
                                     <div className="col">
@@ -156,7 +156,7 @@ function AfterLoginPage(props) {
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </section> */}
                         <section className="about">
                             <div className="container innercontainer">
                                 <div className="row">
@@ -173,11 +173,12 @@ function AfterLoginPage(props) {
                                             <div className="row">
                                                 <div className="col-sm-8 ">
                                                     <h4 className="default">آرتیبیشن از هنر دوستان حمایت می‌کند</h4>
-                                                    <p className="">هنر یک روش عالی برای ابراز وجود است ، خلاق بودن ، از بین
-                                                        بردن فشار روانی و لذت بردن از خودمان است ، بنابراین شرم آور است وقتی
-                                                        می بینید که استعداد زیادی وجود دارد که به دلیل عدم فرصت مناسب
-                                                        استفاده نشده است. آرتیبیشن تصمیم گرفته این فرصت را برای درخشش علاقه
-                                                        مندان به هنر در زمینه های مختلف هنرهای تجسمی ایجاد کند.</p>
+                                                    <p className="">برگزاری مزایده‌ها در دنیا فعالیتی نو محسوب نمی‌شود و برخی از خانه‌های حراج قدمتی چند صدساله در دنیا دارند. با ابن حال برگزاری مزایده در ایران نسبت به دنیا قدمت چندانی ندارد.
+                                                        مزایده معمولا زمانی تعریف می‌شود که در بازار عرضه نسبت به بازار فاصله جدی دارد و با محدود شدن عرضه بین درخواست کنندگان مسابقه‌ای تحت عنوان مزایده شکل می‌گیرد.
+                                                        با افزایش تعداد افرادی که علاقه‌مند به آثار محدود هستند رونق مزایده‌ها افزایش می‌یابد.
+                                                        با توجه به محدودیت‌های رایج در توسعه بازار جهانی در ایران، بر آن شدیم در تسهیل خرید و فروش آثار هنری و کالاهای محدود بستری حرفه‌ای ایجاد نمائیم.
+                                                        حال با ایجاد پلتفورمی اسمارت آکشن برآنیم در توسعه و ورونق بازار هنر با تعریف 5 نوع حراج آنلاین در ابتدا موفق شویم.
+                                                        از سال 1395 در تحقیق و بررسی ایجاد پلتفورم مزایده آنلاین بودیم که از آبان 99 نسخه آزمایشی مزایده آنلاین ایجاد شد و با بررسی رفتار کاربری از زمستان 1400 نسخه اولیه اسمارت آکشن رونمائی گردید.</p>
                                                 </div>
                                                 <div className="col-sm-4 d-none d-sm-block">
                                                     <ul className="vertical-menu">
@@ -192,7 +193,7 @@ function AfterLoginPage(props) {
 
                                         </div>
                                     </div>
-                                    <div className="col-lg-6">
+                                    {/* <div className="col-lg-6">
                                         <div className="content-box newsletter">
                                             <div className="main-title">
                                                 <h2 className="default titr">همین الان مشترک ما شوید!!</h2>
@@ -204,7 +205,7 @@ function AfterLoginPage(props) {
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </section>

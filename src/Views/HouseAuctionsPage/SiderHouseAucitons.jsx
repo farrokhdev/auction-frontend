@@ -126,7 +126,7 @@ function SiderHouseAucitons({ params,
                 </div> */}
 
 
-                    <div className="accordion-item">
+                    {/* <div className="accordion-item">
                         <h2 className="accordion-header" id="headingThree">
                             <button className="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseThree" aria-expanded="True"
@@ -158,7 +158,7 @@ function SiderHouseAucitons({ params,
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

@@ -417,8 +417,17 @@ function OneAuction(props) {
                                                     <div className="block-body">
                                                         <div className="ra-row">
                                                             <div className="ra-col">
-                                                                <h6 className="default gray50 ">{item?.artwork_title}</h6>
-                                                                <h4 className="default">از {item?.persian_artist_name}</h4>
+
+                                                                {item?.artwork_title?.length > 35 ?
+                                                                    <h6 className="default gray50 ">{item?.artwork_title.slice(0, 35)}...</h6>
+
+                                                                    : <h6 className="default gray50 ">{item?.artwork_title}</h6>
+                                                                }
+                                                                {item?.persian_artist_name?.length > 35 ?
+                                                                    <h4 className="default">از {item?.persian_artist_name.slice(0, 35)}...</h4>
+
+                                                                    : <h4 className="default">از {item?.persian_artist_name}</h4>
+                                                                }
                                                                 {/* <h4 className="default">از {Auction?.title}</h4> */}
                                                             </div>
                                                             <div className="ra-col">

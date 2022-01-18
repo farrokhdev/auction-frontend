@@ -59,7 +59,7 @@ const Bid = ({ artwork }) => {
         if (artwork?.bidding_details?.total_bids) {
             setCurrentSuggest(artwork?.bidding_details?.total_bids)
         }
-        if(artwork?.bidding_details?.max_user_bid){
+        if (artwork?.bidding_details?.max_user_bid) {
             setMaxUserBid(artwork?.bidding_details?.max_user_bid)
         }
 
@@ -268,8 +268,10 @@ const Bid = ({ artwork }) => {
 
                             </p>}
                     </p>}
-                
+                {artwork?.product_status === "on_stage" && artwork?.latest_auction?.max_user_bid ?
                     <span className="alert-success text-center">آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد</span>
+                    : ""
+                }
             </div> :
                 <p className="text-center mt-4 ">
                     برای ثبت پیشنهاد

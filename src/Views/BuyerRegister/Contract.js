@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "antd";
 import axios from "../../utils/request";
+import UploadAxios from "../../utils/uploadRequest";
 import { BASE_URL } from "../../utils";
 import { CheckCircleTwoTone, LoadingOutlined } from "@ant-design/icons";
 import { JOIN_AUCTION } from "../../utils/constant";
@@ -23,7 +24,7 @@ const Contract = (props) => {
                 if (resp.data.code === 200) {
                     setCoreUpload(resp.data.data.result)
                     setUploading(true)
-                    axios.put(resp.data.data.result.upload_url, e.target.files[0])
+                    UploadAxios.put(resp.data.data.result.upload_url, e.target.files[0])
                         .then(resp1 => {
 
                             let payload = {

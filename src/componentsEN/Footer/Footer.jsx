@@ -66,9 +66,13 @@ function Footer() {
                         </div>
                         <div className="col-md-2 col-sm-3">
                             <ul className="social">
-                                <li><Link to="/" id="facebook"></Link></li>
-                                <li><Link to="/" id="instagram"></Link></li>
-                                <li><Link to="/" id="telegram"></Link></li>
+                                {/* <li><Link to="/" id="facebook"></Link></li> */}
+                                <li>
+                                    <a href="https://www.instagram.com/artibition_auction/" id="instagram"></a>
+                                </li>
+                                <li>
+                                    <a href="https://t.me/Artibition_auction" id="telegram"></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -77,7 +81,7 @@ function Footer() {
                             <span>@2021, All rights reserved.</span>
                         </div>
                         <div className="col text-end">
-                            <span className="footer-call">+98 21 88 85 90 30</span>
+                            <span className="footer-call">+98 21 22 92 25 38</span>
                         </div>
                     </div>
                 </div>

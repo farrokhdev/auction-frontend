@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import axios from "../../utils/request";
+import UploadAxios from "../../utils/uploadRequest";
 import { BASE_URL } from "../../utils";
 import { Image } from "antd";
 
@@ -25,7 +26,7 @@ const UploadImage = (props) => {
             .then(resp => {
                 if (resp.data.code === 200) {
                     setUploading(true)
-                    axios.put(resp.data.data.result.upload_url, e.target.files[0])
+                    UploadAxios.put(resp.data.data.result.upload_url, e.target.files[0] )
                         .then(resp1 => {
                             let payload = {
                                 "media_path": resp.data.data.result.upload_url,

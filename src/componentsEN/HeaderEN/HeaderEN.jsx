@@ -69,11 +69,11 @@ function HeaderEN(props) {
                                     <li className="nav-item">
                                         <Link to="/en/house-auctions" className="nav-link">
                                             <img src={house} width="16" height="16" alt="auctions" />
-                                            House Auctions
+                                            Auction Houses
                                         </Link>
                                     </li>
 
-                                    <li className="nav-item">
+                                    {/* <li className="nav-item">
                                         <Link to="/" className="nav-link" data-target="nav-help">
                                             <img src={help} width="16" height="16" alt="auctions" />
                                             Help
@@ -133,7 +133,7 @@ function HeaderEN(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                             <div className="col col-lg-4">

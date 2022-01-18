@@ -1,11 +1,11 @@
-import React , {useState} from 'react'
+import React, { useState } from 'react'
 import bookmark_icon from '../../images/bookmark.svg';
 import bookmark_active_icon from '../../images/bookmark-active.svg';
-import {Link} from 'react-router-dom'
-import {useSelector} from "react-redux";
+import { Link } from 'react-router-dom'
+import { useSelector } from "react-redux";
 
 
-function CardArtwork({price_base , price_range , house_auction , title , lot_num , url }) {
+function CardArtwork({ price_base, price_range, house_auction, title, lot_num, url }) {
     // const {is_logged_in} = useSelector((state) => state.authReducer)
     let numeral = require('numeral');
     const [is_saved, setIs_saved] = useState(false)
@@ -14,52 +14,60 @@ function CardArtwork({price_base , price_range , house_auction , title , lot_num
         setIs_saved(!is_saved)
     }
 
-return (
+    return (
 
-    <div dir='rtl' className="artwork-block">
-        
+        <div dir='rtl' className="artwork-block">
+
             <div className="artwork-img">
-                <img src={url}  alt="image-artwork" className="img-fluid image-artwork" />
+                <img src={url} alt="image-artwork" className="img-fluid image-artwork" />
                 <div class="artwork-category">
                     {!is_saved ?
-                    <img onClick={handleToggleBookmark} style={{height :'20px' , width : '15px'}} className="icon-bookmark"
-                        src={bookmark_active_icon} lt="bookmark_icon" /> :
-                    <img onClick={handleToggleBookmark} style={{height :'20px' , width : '15px'}} className=""
-                        src={bookmark_icon} alt="bookmark_icon" />}
+                        <img onClick={handleToggleBookmark} style={{ height: '20px', width: '15px' }} className="icon-bookmark"
+                            src={bookmark_active_icon} lt="bookmark_icon" /> :
+                        <img onClick={handleToggleBookmark} style={{ height: '20px', width: '15px' }} className=""
+                            src={bookmark_icon} alt="bookmark_icon" />}
                 </div>
             </div>
-        
-        <div className="block-body">
-            <div className="ra-row">
-                <div className="ra-col">
-                    <h6 className="default gray50 ">{title}</h6>
-                    <h4 className="default">{house_auction}</h4>
-                </div>
-                <div className="ra-col">
-                    <h5 className="default lot-num">{lot_num}</h5>
-                </div>
-            </div>
-            <div className="detail-bid">
-                <div className="db-left">
-                    <span className="db-title">تخمین</span>
-                    <div className="price-block">
-                        <span className="price">{numeral(price_range).format('0,0')}</span>
-                        <span className="unit"> تومان</span>
+
+            <div className="block-body">
+                <div className="ra-row">
+                    <div className="ra-col">
+                        {title?.length > 35 ?
+                            <h6 className="default gray50 ">{title.slice(0, 35)}...</h6>
+
+                            : <h6 className="default gray50 ">{title}</h6>
+                        }
+                        {house_auction?.length > 35 ?
+                            <h4 className="default">از {house_auction.slice(0, 35)}...</h4>
+
+                            : <h4 className="default">از {house_auction}</h4>
+                        }
+                    </div>
+                    <div className="ra-col">
+                        <h5 className="default lot-num">{lot_num}</h5>
                     </div>
                 </div>
-                <span className="seprator brdrbefor"></span>
-                <div className="db-right ">
-                    <span className="db-title">قیمت پایه</span>
-                    <div className="price-block">
-                        <span className="price">{numeral(price_base).format('0,0')}</span>
-                        <span className="unit"> تومان</span>
+                <div className="detail-bid">
+                    <div className="db-left">
+                        <span className="db-title">تخمین</span>
+                        <div className="price-block">
+                            <span className="price">{numeral(price_range).format('0,0')}</span>
+                            <span className="unit"> تومان</span>
+                        </div>
+                    </div>
+                    <span className="seprator brdrbefor"></span>
+                    <div className="db-right ">
+                        <span className="db-title">قیمت پایه</span>
+                        <div className="price-block">
+                            <span className="price">{numeral(price_base).format('0,0')}</span>
+                            <span className="unit"> تومان</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-)
+    )
 }
 
 export default CardArtwork;
