@@ -107,7 +107,7 @@ function LastAuctionsSection(props) {
                                             url={item && handleShowImage(item)}
                                             price_base={item?.price}
                                             price_range={item?.min_price + " - " + item?.max_price}
-                                            house_auction={item?.latest_auction.title}
+                                            house_auction={item?.persian_artist_name}
                                             title={item?.artwork_title}
                                             // lot_num={key + 1}
                                             lot_num={item?.latest_auction?.lot_num}

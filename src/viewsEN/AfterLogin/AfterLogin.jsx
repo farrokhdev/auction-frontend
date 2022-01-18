@@ -50,7 +50,7 @@ function AfterLogin() {
                     </section>
                 </div>
                 <div className="container containercs ">
-                    <section className="latest-articles">
+                    {/* <section className="latest-articles">
                         <div className="container innercontainer">
                             <div className="row">
                                 <div className="col">
@@ -154,7 +154,7 @@ function AfterLogin() {
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section> */}
                     <section className="about">
                         <div className="container innercontainer">
                             <div className="row">
@@ -195,7 +195,7 @@ function AfterLogin() {
 
                                     </div>
                                 </div>
-                                <div className="col-lg-6">
+                                {/* <div className="col-lg-6">
                                     <div className="content-box newsletter">
                                         <div className="main-title">
                                             <h2 className="default titr">Subscribe Now!!</h2>
@@ -207,7 +207,7 @@ function AfterLogin() {
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </section>

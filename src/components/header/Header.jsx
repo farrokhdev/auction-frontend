@@ -120,11 +120,11 @@ function Header(props) {
                       </Link>
                     </li>
                     <li className="nav-item ps-2">
-                      <Link className="nav-link" to="/" data-target="nav-help">
+                      {/* <Link className="nav-link" to="/" data-target="nav-help">
                         <img src={help} width="16" height="16" alt="auctions" />
                         راهنما
-                      </Link>
-                      <div className="inner-nav" id="nav-help">
+                      </Link> */}
+                      {/* <div className="inner-nav" id="nav-help">
                         <div className="row">
                           <div className="col nav-container-left">
                             <div className="nav-container">
@@ -134,11 +134,11 @@ function Header(props) {
                                   <ul className="nav-secondlevel">
                                     <li>
 
-                                      {/* <div onClick={handleRegisterRedirect}>{props.auth.is_logged_in ? "خروج" : "تبت‌نام"}</div> */}
+                                      <div onClick={handleRegisterRedirect}>{props.auth.is_logged_in ? "خروج" : "تبت‌نام"}</div>
 
                                     </li>
                                     <li>
-                                      {/* <div onClick={handleLoginRedirect}>{props.auth.is_logged_in ? "خروج" : "ورود"}</div> */}
+                                      <div onClick={handleLoginRedirect}>{props.auth.is_logged_in ? "خروج" : "ورود"}</div>
                                     </li>
                                     <li>
                                       <Link to="/">عضویت در حراج</Link>
@@ -217,7 +217,7 @@ function Header(props) {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </li>
                   </ul>
                 </div>

@@ -224,7 +224,7 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
               </div>
             </div>
 
-            <div className="accordion-item">
+            {/* <div className="accordion-item">
               <h2 className="accordion-header" id="headingThree">
                 <button
                   className="accordion-button"
@@ -261,7 +261,7 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
 
 

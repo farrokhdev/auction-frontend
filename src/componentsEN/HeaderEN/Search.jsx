@@ -105,7 +105,7 @@ function Search() {
                                     <TabPane tab="Artworks" key="3" className="nav-item ">
                                         <ArtworksTab items={items}/>
                                     </TabPane>
-                                    <TabPane tab="Auction homes" key="4" className="nav-item ">
+                                    <TabPane tab="Auction Houses" key="4" className="nav-item ">
                                         <AuctionHousesTab items={items}/>
                                     </TabPane>
                                 </Tabs>

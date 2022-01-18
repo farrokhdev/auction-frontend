@@ -77,24 +77,24 @@ export default function Footer() {
             </div>
             <div className="col-md-2 col-sm-3">
               <ul className="social">
-                <li>
+                {/* <li>
                   <Link to="/" id="facebook"></Link>
+                </li> */}
+                <li>
+                  <a href="https://www.instagram.com/artibition_auction/" id="instagram"></a>
                 </li>
                 <li>
-                  <Link to="/" id="instagram"></Link>
-                </li>
-                <li>
-                  <Link to="/" id="telegram"></Link>
+                  <a href="https://t.me/Artibition_auction" id="telegram"></a>
                 </li>
               </ul>
             </div>
           </div>
           <div className="row brdrtop ">
             <div className="col">
-              <span>تمامی حقوق این سایت برای آکشن محفوظ است</span>
+              <span>تمامی حقوق این سایت برای اسمارت آکشن محفوظ است</span>
             </div>
             <div className="col text-start">
-              <span className="footer-call" dir="ltr">  +98 21 88 85 90 30</span>
+              <span className="footer-call" dir="ltr">  +98 21 22 92 25 38</span>
             </div>
           </div>
         </div>

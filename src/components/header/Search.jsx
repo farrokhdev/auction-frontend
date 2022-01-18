@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import pic12 from "../../images/pic12.jpg";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import queryString from "query-string";
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
-import {Spin} from "antd";
+import { BASE_URL } from "../../utils";
+import { Spin } from "antd";
 import Timer from "react-compound-timer";
 
 function Search() {
@@ -92,7 +92,7 @@ function Search() {
                         <div className="artwork-img">
                             <div className="bg-shadow tl-shadow10">
                                 <img
-                                    src={item?.media?.exact_url}
+                                    src={item?.media[0]?.exact_url}
                                     width="276"
                                     height="226"
                                     alt=""
@@ -112,7 +112,7 @@ function Search() {
                         <div className="artwork-img">
                             <div className="bg-shadow tl-shadow10">
                                 <img
-                                    src={pic12}
+                                    src={item.media?.exact_url}
                                     width="493"
                                     height="621"
                                     alt=""
@@ -146,10 +146,10 @@ function Search() {
                                                 direction: 'ltr',
                                                 textAlign: "right"
                                             }}>
-                                                <Timer.Days/> :
-                                                <Timer.Hours/> :
-                                                <Timer.Minutes/> :
-                                                <Timer.Seconds/>
+                                                <Timer.Days /> :
+                                                <Timer.Hours /> :
+                                                <Timer.Minutes /> :
+                                                <Timer.Seconds />
                                             </div>
                                         )}
                                     </Timer>
@@ -160,40 +160,55 @@ function Search() {
                 )
             case 'home_auctions':
                 return (
-                    <div className="row">
-                        <div className="col-xl-5 col-3">
-                            <div className="h-block-img">
-                                <Link to={`/house-acutions/${item?.id}`}>
-                                    <img
-                                        src={item.media}
-                                        width="159" height="159"
-                                        alt="smart auction"
-                                        className="img-fluid"
-                                    />
-                                </Link>
+                    <Link to={`/house-acutions/${item?.id}`} className="artwork-block w-25">
+                        <div className="artwork-img">
+                            <div className="bg-shadow tl-shadow10">
+                                <img
+                                    src={item?.media[0]?.exact_url}
+                                    width="276"
+                                    height="226"
+                                    alt=""
+                                    className="img-fluid"
+                                />
                             </div>
                         </div>
-                        <div className="col-xl-7 col-9">
-                            <div className="h-block-header">
-                                <div className="h-block-title">
-                                    <h3 className="default">{item?.home_auction_name ? item?.home_auction_name : '---'}</h3>
-                                    <h6 className="default">{item?.home_auction_type ? item?.home_auction_type : '---'}</h6>
-                                </div>
-                                <button type="button" className="btn-follow">دنبال کردن
-                                </button>
-                            </div>
-                            <div className="h-block-info">
-                                <a href={item?.phone ? item?.phone : item?.mobile}
-                                   className="info-tel all-info">{item?.phone ? item?.phone : item?.mobile}</a>
-                                {/* <address className="all-info"><span className="province">تهران، </span>میدان
-                                                                هویزه، پلاک 103
-                                                            </address> */}
-                                <address className="all-info">
-                                    {item?.home_auction_location?.address ? item?.home_auction_location?.address : '---'}
-                                </address>
-                            </div>
+                        <div className="block-body">
+                            <h3 className="default">{item?.home_auction_name ? item?.home_auction_name : '---'}</h3>
+                            <h6 className="default">{item?.home_auction_type ? item?.home_auction_type : '---'}</h6>
                         </div>
-                    </div>
+                    </Link>
+                    //     <div className="row">
+
+                    //     <div className="col-xl-5 col-3">
+                    //         <div className="h-block-img">
+                    //             <Link to={`/house-acutions/${item?.id}`}>
+                    //                 <img
+                    //                     src={item.media[0]?.exact_url}
+                    //                     width="159" height="159"
+                    //                     alt="smart auction"
+                    //                     className="img-fluid"
+                    //                 />
+                    //             </Link>
+                    //         </div>
+                    //     </div>
+                    //     <div className="col-xl-7 col-9">
+                    //         <div className="h-block-header">
+                    //             <div className="h-block-title">
+                    //                 <h3 className="default">{item?.home_auction_name ? item?.home_auction_name : '---'}</h3>
+                    //                 <h6 className="default">{item?.home_auction_type ? item?.home_auction_type : '---'}</h6>
+                    //             </div>
+                    //             <button type="button" className="btn-follow">دنبال کردن
+                    //             </button>
+                    //         </div>
+                    //         <div className="h-block-info">
+                    //             <a href={item?.phone ? item?.phone : item?.mobile}
+                    //                className="info-tel all-info">{item?.phone ? item?.phone : item?.mobile}</a>
+                    //             <address className="all-info">
+                    //                 {item?.home_auction_location?.address ? item?.home_auction_location?.address : '---'}
+                    //             </address>
+                    //         </div>
+                    //     </div>
+                    // </div>
                 )
         }
 
@@ -218,7 +233,7 @@ function Search() {
                             return (
                                 SearchType('home_auctions', item)
                             )
-                        }):""}
+                        }) : ""}
                     </div>
                 </>
 
@@ -273,7 +288,7 @@ function Search() {
                             <div className="col-lg-6">
                                 <div className="main-search">
                                     <input type="text" placeholder="جستجوی اثر، حراج‌، خانه حراج"
-                                           onChange={handleSearch}/>
+                                        onChange={handleSearch} />
                                     {/*<button type="button" className="btn-view text-muted">*/}
                                     {/*  جستجو پیشرفته*/}
                                     {/*</button>*/}
@@ -387,7 +402,7 @@ function Search() {
                                         >
 
                                             <div className="owl-carousel row">
-                                                <SearchResults data={items}/>
+                                                <SearchResults data={items} />
 
                                             </div>
 
@@ -401,7 +416,7 @@ function Search() {
                                             aria-labelledby="profile-tab"
                                         >
                                             <div className="owl-carousel row">
-                                                <SearchResults data={items}/>
+                                                <SearchResults data={items} />
                                             </div>
 
                                         </div>
@@ -414,7 +429,7 @@ function Search() {
                                             aria-labelledby="contact-tab"
                                         >
                                             <div className="owl-carousel row">
-                                                <SearchResults data={items}/>
+                                                <SearchResults data={items} />
                                             </div>
 
                                         </div>
@@ -428,7 +443,7 @@ function Search() {
                                         >
 
                                             <div className="owl-carousel row">
-                                                <SearchResults data={items}/>
+                                                <SearchResults data={items} />
                                             </div>
 
                                         </div>

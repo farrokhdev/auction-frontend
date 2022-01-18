@@ -22,7 +22,8 @@ function ModalAuctionList({ id , Product}) {
                             <div className="col">
                                 {Product?.length && Product?.map((productList) => {
                                     return (
-
+                                    productList?.artwork_link ? 
+                                    
                                         <a href={productList?.artwork_link} className="ra-row">
                                             <img src={productList?.media[0]?.exact_url} width="998" height="880" alt="" className="img-fluid" />
                                             <div className="ra-col">
@@ -33,31 +34,9 @@ function ModalAuctionList({ id , Product}) {
                                                 <h5 className="default lot-num">{productList?.latest_auction?.lot_num}</h5>
                                             </div>
                                         </a>
+                                        : ""
                                      )
                                 })} 
-
-
-                                
-                                {/* <Link className="ra-row">
-                                    <img src="img/pic1.jpg" width="998" height="880" alt="" className="img-fluid" />
-                                    <div className="ra-col">
-                                        <h6 className="default gray50 ">سهراب سپهری</h6>
-                                        <h4 className="default">از ژورنال سقاخانه</h4>
-                                    </div>
-                                    <div className="ra-col">
-                                        <h5 className="default lot-num">1</h5>
-                                    </div>
-                                </Link>
-                                <Link className="ra-row">
-                                    <img src="img/pic1.jpg" width="998" height="880" alt="" className="img-fluid" />
-                                    <div className="ra-col">
-                                        <h6 className="default gray50 ">سهراب سپهری</h6>
-                                        <h4 className="default">از ژورنال سقاخانه</h4>
-                                    </div>
-                                    <div className="ra-col">
-                                        <h5 className="default lot-num">1</h5>
-                                    </div>
-                                </Link> */}
                             </div>
                         </div>
                     </div>
