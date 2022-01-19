@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { convertTypeAuctionToPersian, convertToEn } from '../../utils/converTypePersion';
 import classnames from 'classnames';
 import { useSelector } from "react-redux";
@@ -15,8 +15,45 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
     const { is_logged_in } = useSelector((state) => state.authReducer)
     const [loading, setLoading] = useState(false)
+    // const [productList, setProductList] = useState([])
+    const [prev, setPrev] = useState(null)
+    const [next, setNext] = useState(null)
 
 
+console.log(next);
+
+
+    const getListProducts = () => {
+        axios.get(`${BASE_URL}/sale/product/?auctions__id=${artwork?.latest_auction?.id}&ordering=product_auction__lot_num&page=1&page_size=10&search=`).then(res => {
+            setLoading(false)
+            // setProductList(res.data.data.result);
+            res.data.data.result.map((t, i, array) => {
+                if (t.id === artwork.id) {
+
+
+                    if (array.length > 1) {
+                        if (i === 0) {
+                            setNext(state => array[i + 1])
+                        } else if (i === array.length - 1) {
+                            setPrev(state => array[i - 1])
+                        } else {
+                            setNext(state => array[i + 1])
+                            setPrev(state => array[i - 1])
+                        }
+                    }
+
+                }
+            });
+
+        }).catch(err => {
+            console.log(err);
+            setLoading(false)
+        })
+    }
+
+    useEffect(() => {
+        getListProducts()
+    }, [artwork])
     const handleSearchArtworkByLat = (lot_num) => {
 
         setLoading(true)
@@ -35,14 +72,6 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
         })
     }
 
-    // const handleSearchArtworkByLat = (value) => {
-
-    //     if (value > 0) {
-    //         window.location.href = `#/artworks/${value}`
-    //     } else {
-    //         return null
-    //     }
-    // }
 
     const handleShowImage = (item) => {
         return (
@@ -100,7 +129,11 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
             <div className="col-lg-6">
                 <div className="detail-block">
                     <div class="detail-block-header">
-                        <Link to={`/artworks/${artwork?.id - 1}`} class="btn-lot prev"><span class="d-none d-md-block">لت قبلی</span></Link>
+                        {
+                            prev ? <Link to={`/artworks/${prev?.id}`} class="btn-lot prev"><span class="d-none d-md-block">لت قبلی</span></Link> :
+                                <Link to={`/artworks/${prev?.id}`} class="btn-lot prev"><span class="d-none d-md-block">لت قبلی</span></Link>
+                        }
+
                         <div class="search-input my-3 w-50 mx-auto">
                             <input
                                 id="product-searchh"
@@ -110,7 +143,12 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                 placeholder="شماره لت مورد نظر را وارد نمایید." />
                             <button type="button" class="btn-search"></button>
                         </div>
-                        <Link to={`/artworks/${artwork?.id + 1}`} class="btn-lot next"><span class="d-none d-md-block">لت بعدی</span></Link>
+
+                        {
+                            next ? <Link to={`/artworks/${next?.id}`} class="btn-lot next"><span class="d-none d-md-block">لت بعدی</span></Link> :
+                                <Link to={`/artworks/${next?.id}`} class="btn-lot next"><span class="d-none d-md-block">لت بعدی</span></Link>
+                        }
+
                     </div>
                     {/* <div className="search-input my-3 w-50 mx-auto">
                         <input
