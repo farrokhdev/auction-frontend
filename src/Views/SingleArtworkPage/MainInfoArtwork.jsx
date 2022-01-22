@@ -20,7 +20,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
     const [next, setNext] = useState(null)
 
 
-console.log(next);
+    console.log(next);
 
 
     const getListProducts = () => {
@@ -129,10 +129,13 @@ console.log(next);
             <div className="col-lg-6">
                 <div className="detail-block">
                     <div class="detail-block-header">
-                        {
-                            prev ? <Link to={`/artworks/${prev?.id}`} class="btn-lot prev"><span class="d-none d-md-block">لت قبلی</span></Link> :
-                                <Link to={`/artworks/${prev?.id}`} class="btn-lot prev"><span class="d-none d-md-block">لت قبلی</span></Link>
-                        }
+                        {console.log(prev, next, artwork?.id)}
+
+
+                        <Link to={(prev?.id && prev?.id !== artwork?.id) ? `/artworks/${prev?.id}` : '#'} className="btn-lot prev" style={{ cursor: `${(prev?.id && prev?.id !== artwork?.id) ? "pointer" : "not-allowed"}` }}><span class="d-none d-md-block">لت قبلی</span></Link>
+
+
+
 
                         <div class="search-input my-3 w-50 mx-auto">
                             <input
@@ -143,22 +146,8 @@ console.log(next);
                                 placeholder="شماره لت مورد نظر را وارد نمایید." />
                             <button type="button" class="btn-search"></button>
                         </div>
-
-                        {
-                            next ? <Link to={`/artworks/${next?.id}`} class="btn-lot next"><span class="d-none d-md-block">لت بعدی</span></Link> :
-                                <Link to={`/artworks/${next?.id}`} class="btn-lot next"><span class="d-none d-md-block">لت بعدی</span></Link>
-                        }
-
+                        <Link to={(next?.id && next?.id !== artwork?.id) ? `/artworks/${next?.id}` : '#'} className="btn-lot next" style={{ cursor: `${(next?.id && next?.id !== artwork?.id) ?"pointer" : "not-allowed"}` }}><span class="d-none d-md-block">لت بعدی</span></Link>
                     </div>
-                    {/* <div className="search-input my-3 w-50 mx-auto">
-                        <input
-                            id="product-searchh"
-                            type="number"
-                            className="default-input"
-                            onChange={(e) => handleSearchArtworkByLat(e?.target?.value)}
-                            placeholder="شماره لت مورد نظر را وارد نمایید." />
-                        <button type="button" className="btn-search"></button>
-                    </div> */}
                     <div className="detail-block-body" style={{ marginTop: 0 }}>
                         <div className="bg-shadow bl-shadow20">
                             <div className="detail-info">

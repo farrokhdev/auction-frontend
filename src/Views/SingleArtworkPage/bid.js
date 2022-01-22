@@ -273,11 +273,19 @@ const Bid = ({ artwork }) => {
                     : ""
                 }
             </div> :
-                <p className="text-center mt-4 ">
-                    برای ثبت پیشنهاد
-                    <Link to="/login" className="d-inline-block px-1 color-link"> وارد </Link>
-                    شوید
-                </p>
+            <p className="text-center category-icon">
+                        {artwork?.sale_status ? 'محصول فروخته شد' :
+                            <p>
+                                <p>{(artwork?.product_status === "after_stage") && "حراج به پایان رسید"}
+                                    {(artwork?.product_status === "pre_stage") && "حراج آغاز نشده است"}</p>
+                              
+                            </p>}
+                    </p>
+                // <p className="text-center mt-4 ">
+                //     برای ثبت پیشنهاد
+                //     <Link to="/login" className="d-inline-block px-1 color-link"> وارد </Link>
+                //     شوید
+                // </p>
             }
 
 
