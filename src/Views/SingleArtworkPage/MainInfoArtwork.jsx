@@ -146,7 +146,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
                                 placeholder="شماره لت مورد نظر را وارد نمایید." />
                             <button type="button" class="btn-search"></button>
                         </div>
-                        <Link to={(next?.id && next?.id !== artwork?.id) ? `/artworks/${next?.id}` : '#'} className="btn-lot next" style={{ cursor: `${(next?.id && next?.id !== artwork?.id) ?"pointer" : "not-allowed"}` }}><span class="d-none d-md-block">لت بعدی</span></Link>
+                        <Link to={(next?.id && next?.id !== artwork?.id) ? `/artworks/${next?.id}` : '#'} className="btn-lot next" style={{ cursor: `${(next?.id && next?.id !== artwork?.id) ? "pointer" : "not-allowed"}` }}><span class="d-none d-md-block">لت بعدی</span></Link>
                     </div>
                     <div className="detail-block-body" style={{ marginTop: 0 }}>
                         <div className="bg-shadow bl-shadow20">
