@@ -12,6 +12,8 @@ import "antd/dist/antd.css";
 import en_US from "antd/lib/locale/en_US";
 import ItemStatus from "./ItemStatus";
 import { useDispatch, useSelector } from "react-redux";
+
+
 import { openDashboard } from "../../redux/reducers/all/all.actions"
 
 
@@ -26,38 +28,42 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
   handleAuctionStatus,
   handleSetDate,
   handleSetDateEN,
-  typeCategory }) {
+  typeCategory,
+}) {
+  const { is_Open_Dashboard } = useSelector((state) => state.allReducer);
 
-
-  const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
   const dispatch = useDispatch();
   const { RangePicker } = DatePicker;
 
-
-  const [categories, setCategories] = useState([])
-  const [homeAuctions, setHomeAuctions] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [homeAuctions, setHomeAuctions] = useState([]);
 
   useEffect(() => {
-
-    axios.get(`${BASE_URL}${CATEGORIE_ACTIVITY}?${typeCategory}`).then(res => {
-      setCategories(res.data.data.result[setNumbCategory(typeCategory)].children)
-    }).catch(err => {
-      console.error(err);
-    })
+    axios
+      .get(`${BASE_URL}${CATEGORIE_ACTIVITY}?${typeCategory}`)
+      .then((res) => {
+        setCategories(
+          res.data.data.result[setNumbCategory(typeCategory)].children
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     // this function set index of categories result for set categories children
     const setNumbCategory = (typeCategory) => {
       switch (typeCategory) {
-        case 'خانه های حراج':
-          return 0
-        case 'آثار':
-          return 1
-        case 'حراج ها':
-          return 2
+        case "خانه های حراج":
+          return 0;
+        case "آثار":
+          return 1;
+        case "حراج ها":
+          return 2;
 
         default:
           break;
       }
+
     }
 
 
@@ -73,23 +79,36 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
 
   function onChange(dates, dateStrings) {
     // console.log('From: ', dates, ', to: ', dates);
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     // console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
     // handleSetDate(dates ? dates[0] : {}, dates ? dates[1] :{} );
-    handleSetDate(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
+    handleSetDate(
+      dateStrings ? dateStrings[0] : {},
+      dateStrings ? dateStrings[1] : {}
+    );
   }
-
 
   function onChangeEN(dates, dateStrings) {
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-    handleSetDateEN(dateStrings ? dateStrings[0] : {}, dateStrings ? dateStrings[1] : {});
+    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
+    handleSetDateEN(
+      dateStrings ? dateStrings[0] : {},
+      dateStrings ? dateStrings[1] : {}
+    );
   }
-
 
   return (
     <>
-      <div className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`} id="left-side">
-        <button type="button" className="btn-getclose d-block d-lg-none" onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}></button>
+
+      <div
+        className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`}
+        id="left-side"
+      >
+        <button
+          type="button"
+          className="btn-getclose d-block d-lg-none"
+          onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}
+        ></button>
+
         <div className="left-side">
           <div className="result-box">
             <div className="result-title">
@@ -111,8 +130,21 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
             }
             <div className="tags-box" >
             </div>
+            {Tags?.length
+              ? Tags?.map((item) => (
+                  <Tag
+                    closable
+                    onClose={(e) => {
+                      e.preventDefault();
+                      handleClose(item);
+                    }}
+                  >
+                    {item}{" "}
+                  </Tag>
+                ))
+              : ""}
+            <div className="tags-box"></div>
           </div>
-
 
           <div className="search-box">
             <div className="search-input">
@@ -125,6 +157,7 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               />
               <button
                 onClick={(e) => { handleSearchProducts(document.querySelector('#product-search').value); dispatch(openDashboard(!is_Open_Dashboard)) }}
+
                 type="button"
                 className="btn-search"
               />
@@ -151,21 +184,23 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                 aria-labelledby="headingOne"
               >
                 <div className="accordion-body">
-
-
-
                   <ConfigProvider locale={fa_IR} direction="rtl">
                     <div className="">
-                      <DatePickerJalali.RangePicker onChange={onChange} className="rounded" />
+                      <DatePickerJalali.RangePicker
+                        onChange={onChange}
+                        className="rounded"
+                      />
                     </div>
                   </ConfigProvider>
                   <ConfigProvider direction="rtl" locale={en_US}>
-                    <RangePicker className="rounded mt-3" onChange={onChangeEN} />
+                    <RangePicker
+                      className="rounded mt-3"
+                      onChange={onChangeEN}
+                    />
                   </ConfigProvider>
                 </div>
               </div>
             </div>
-
 
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingFive">
@@ -187,7 +222,6 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               >
                 <div className="accordion-body">
                   <div className="list-box">
-
                     <ItemStatus
                       id={"checkbox36"}
                       title={"آینده"}
@@ -242,26 +276,24 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               >
                 <div className="accordion-body">
                   <div className="list-box">
-
-                    {categories?.length >= 1 ? categories?.map((category, index) => (
-                      <React.Fragment key={category?.id}>
-                        <ItemCategory
-                          Tags={Tags}
-                          setTags={setTags}
-                          title={category?.title}
-                          id={`checkbox2${++index}`}
-                          params={params}
-                          handleSetCategory={handleSetCategory} />
-                      </React.Fragment>
-                    )) : ''}
-
-
+                    {categories?.length >= 1
+                      ? categories?.map((category, index) => (
+                          <React.Fragment key={category?.id}>
+                            <ItemCategory
+                              Tags={Tags}
+                              setTags={setTags}
+                              title={category?.title}
+                              id={`checkbox2${++index}`}
+                              params={params}
+                              handleSetCategory={handleSetCategory}
+                            />
+                          </React.Fragment>
+                        ))
+                      : ""}
                   </div>
                 </div>
               </div>
             </div> */}
-
-
 
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingFour">
@@ -283,20 +315,24 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               >
                 <div className="accordion-body">
                   <div className="list-box">
-
-                    {homeAuctions.length >= 1 ? homeAuctions.map((home, index) => (
-                      <React.Fragment key={home?.id}>
-                        <ItemHomeAuction
-                          Tags={Tags}
-                          setTags={setTags}
-                          title={home?.home_auction_name ? home?.home_auction_name : ''}
-                          id={`checkbox2${++index}`}
-                          params={params}
-                          handleSetHomeAuction={handleSetHomeAuction}
-                        />
-                      </React.Fragment>
-                    )) : ''}
-
+                    {homeAuctions.length >= 1
+                      ? homeAuctions.map((home, index) => (
+                          <React.Fragment key={home?.id}>
+                            <ItemHomeAuction
+                              Tags={Tags}
+                              setTags={setTags}
+                              title={
+                                home?.home_auction_name
+                                  ? home?.home_auction_name
+                                  : ""
+                              }
+                              id={`checkbox2${++index}`}
+                              params={params}
+                              handleSetHomeAuction={handleSetHomeAuction}
+                            />
+                          </React.Fragment>
+                        ))
+                      : ""}
                   </div>
                 </div>
               </div>
@@ -321,14 +357,14 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               >
                 <div className="accordion-body">
                   <div className="list-box">
-
                     <ItemType
                       id={"checkbox31"}
                       title={"آنلاین"}
                       params={params}
                       handleSetType={handleSetType}
                       Tags={Tags}
-                      setTags={setTags} />
+                      setTags={setTags}
+                    />
 
                     <ItemType
                       id={"checkbox32"}
@@ -336,7 +372,8 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                       params={params}
                       handleSetType={handleSetType}
                       Tags={Tags}
-                      setTags={setTags} />
+                      setTags={setTags}
+                    />
 
                     <ItemType
                       id={"checkbox33"}
@@ -344,7 +381,8 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                       params={params}
                       handleSetType={handleSetType}
                       Tags={Tags}
-                      setTags={setTags} />
+                      setTags={setTags}
+                    />
 
                     <ItemType
                       id={"checkbox34"}
@@ -352,7 +390,8 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                       params={params}
                       handleSetType={handleSetType}
                       Tags={Tags}
-                      setTags={setTags} />
+                      setTags={setTags}
+                    />
 
                     <ItemType
                       id={"checkbox35"}
@@ -360,7 +399,8 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                       params={params}
                       handleSetType={handleSetType}
                       Tags={Tags}
-                      setTags={setTags} />
+                      setTags={setTags}
+                    />
                   </div>
                 </div>
               </div>
