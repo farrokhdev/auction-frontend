@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 
-function LastProductsAuctionSlider({setLoading}) {
+function LastProductsAuctionSlider({ setLoading }) {
 
     const [LastAuctionOnStandBy, setLastAuctionOnStandBy] = useState({})
     const [auctionProduct, setAuctionProduct] = useState([])
@@ -40,9 +40,9 @@ function LastProductsAuctionSlider({setLoading}) {
 
     const handleShowImage = (item) => {
         return (
-            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
-            DEFAULT_URL_IMAGE
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
         )
     }
 
@@ -70,7 +70,7 @@ function LastProductsAuctionSlider({setLoading}) {
                         <div className="col-sm-6 col-lg-5 order-sm-2">
                             <div id="main-carousel" className="carousel slide carousel-fade" data-bs-ride="carousel"
                                 data-bs-interval="0">
-                                 <div className="carousel-inner">
+                                <div className="carousel-inner">
                                     <Carousel autoplay arrows
                                         afterChange={(e) => setcurentIndex(e + 1)}
                                         ref={sliderRef}
@@ -111,7 +111,9 @@ function LastProductsAuctionSlider({setLoading}) {
                             </div>
                         </div>
                         <div className="col-sm-6 col-lg-7 leftslider order-sm-1">
-                            <h1 className="default">{LastAuctionOnStandBy?.title}</h1>
+                            <Link to={`/one-auction/${LastAuctionOnStandBy?.id}`}>
+                                <h1 className="default">{LastAuctionOnStandBy?.title}</h1>
+                            </Link>
                             <p className="font15">
                                 {LastAuctionOnStandBy?.description}
                             </p>
@@ -146,10 +148,10 @@ function LastProductsAuctionSlider({setLoading}) {
                                         <div className="auction-time">
                                             <span className="start-time">
                                                 {LastAuctionOnStandBy?.start_time ?
-                                                    moment( LastAuctionOnStandBy?.start_time , 'YYYY/MM/DD HH:mm').locale('en').format(' HH:mm  ')
+                                                    moment(LastAuctionOnStandBy?.start_time, 'YYYY/MM/DD HH:mm').locale('en').format(' HH:mm  ')
                                                     : ""} </span>
                                             <span className="end-time">{LastAuctionOnStandBy?.end_time ?
-                                                moment( LastAuctionOnStandBy?.end_time , 'YYYY/MM/DD HH:mm').locale('en').format(' HH:mm ')
+                                                moment(LastAuctionOnStandBy?.end_time, 'YYYY/MM/DD HH:mm').locale('en').format(' HH:mm ')
                                                 : ""}</span>
                                         </div>
                                     </div>

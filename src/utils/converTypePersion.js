@@ -21,30 +21,30 @@ export function convertTypePersian(value) {
     }
 }
 
-export function  convertTypeEN(value){
+export function convertTypeEN(value) {
 
     switch (value) {
 
-      case "آنلاین":
-        return "ONLINE"
+        case "آنلاین":
+            return "ONLINE"
 
-      case "زنده":
-        return "LIVE"
+        case "زنده":
+            return "LIVE"
 
-      case "مدت دار":
-          return "PERIODIC"
+        case "مدت دار":
+            return "PERIODIC"
 
-      case "اولین پیشنهاد":
-          return "HIDDEN"
+        case "اولین پیشنهاد":
+            return "HIDDEN"
 
-      case "دومین پیشنهاد":
-          return "SECOND_HIDDEN"
-  
+        case "دومین پیشنهاد":
+            return "SECOND_HIDDEN"
+
     }
 }
 
 
-export function status(value){
+export function status(value) {
 
     switch (value) {
 
@@ -352,7 +352,7 @@ export function isAwaitingApprovalEN(value) {
 
 // check status auction type and enrolled then generate btn 
 export function AuctionStatusTextBtn(type, enrolled, id) {
-    
+
     // auction ended and user not allow to join auction
     if (type === "CLOSED") {
         return <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>
@@ -375,7 +375,9 @@ export function AuctionStatusTextBtn(type, enrolled, id) {
 export function AuctionStatusText(type, enrolled, id) {
     // auction ended and user not allow to join auction
     if (type === "CLOSED") {
-        return <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>
+        return <Link to={`/one-auction/${id}`}>
+            <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>
+        </Link>
         // user registred to auction then user not allow to join auction
     } else if (enrolled) {
         return <button type="button" className="btn btn-lightgreenbg">در حراجی ثبت‌نام کرده‌اید</button>
@@ -401,7 +403,7 @@ export function AuctionStatusTextEN(type, enrolled, id) {
     } else {
         return <Link to={`/en/buyer-register/${id}`}>
             <button type="button" className="btn btn-basic">
-            Join<span class="">the auction</span>
+                Join<span class="">the auction</span>
             </button>
         </Link>
     }
@@ -410,7 +412,7 @@ export function AuctionStatusTextEN(type, enrolled, id) {
 
 
 
-export function homeAuctionType(value){
+export function homeAuctionType(value) {
 
     switch (value) {
 
@@ -425,8 +427,8 @@ export function homeAuctionType(value){
 
 const handleShowImage = (item) => {
     return (
-        (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-        item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
-        DEFAULT_URL_IMAGE 
+        (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+            DEFAULT_URL_IMAGE
     )
 }

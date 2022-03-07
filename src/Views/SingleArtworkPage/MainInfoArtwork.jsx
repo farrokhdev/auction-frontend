@@ -52,8 +52,10 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
     }
 
     useEffect(() => {
-        getListProducts()
-    }, [artwork])
+        if (artwork?.latest_auction?.id) {
+            getListProducts()
+        }
+    }, [artwork?.latest_auction?.id])
     const handleSearchArtworkByLat = (lot_num) => {
 
         setLoading(true)

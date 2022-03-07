@@ -19,6 +19,8 @@ function SingleHouseAuctionPage(props) {
         page_size: 10,
         home_auction: props.match.params.id,
         ordering: '-creation_time',
+        visible_in_site: true,
+
     })
 
     const [auctionsList, setAuctionsList] = useState([])
