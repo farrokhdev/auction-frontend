@@ -8,47 +8,58 @@ import help from "../../images/help.svg";
 import login from "../../images/login.svg";
 import artwork from "../../images/artist-icon.svg";
 import Search from "./Search";
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { clearStorage } from '../../redux/reducers/auth/auth.actions'
-import { changeLanguage, clearStorageAll } from '../../redux/reducers/all/all.actions'
+import { connect, useDispatch, useSelector } from "react-redux";
+import { clearStorage } from "../../redux/reducers/auth/auth.actions";
+import {
+  changeLanguage,
+  clearStorageAll,
+} from "../../redux/reducers/all/all.actions";
 import { Link } from "react-router-dom";
-import TehranLogo from "../../images/Tehran-Auction-Logo.png"
+import TehranLogo from "../../images/Tehran-Auction-Logo.png";
 import { removeToken } from "../../utils/utils";
 
-
 function Header(props) {
-  const dispatch = useDispatch()
-  const { is_logged_in } = useSelector((state) => state.authReducer)
+
+  const dispatch = useDispatch();
+  const { is_logged_in } = useSelector((state) => state.authReducer);
 
   const handleRedirect = () => {
-
     if (props.auth.is_logged_in) {
       props.clearStorage();
       setTimeout(() => {
-        window.location.href = "#/login"
+        window.location.href = "#/login";
       }, 1000);
     } else {
       window.location.href = "#/sign-up";
     }
-  }
+  };
+
+  console.log(props.Auction);
 
   return (
     <>
       <header className="mainnav boxshadow-cs" style={props.newStyle}>
         <div className=" container containercs">
           <nav className="navbar navbar-expand-lg">
-
-            {props?.Auction?.type !== "LIVE" ?
+            {props?.Auction?.type !== "LIVE" ? (
               <Link className="navbar-brand" to="/">
-                <img src={logo}  width="110" height="80"  alt="auction logo" />
+                <img
+                  src={logo && logo}
+                  width="100"
+                  height="80"
+                  alt="auction logo"
+                />
               </Link>
-
-              :
+            ) : (
               <Link className="navbar-brand" to="/">
-                <img src={TehranLogo} width="54" height="50" alt="auction logo" />
+                <img
+                  src={props.Auction && props.Auction?.house?.media[0]?.exact_url}
+                  width="54"
+                  height="50"
+                  alt="auction logo"
+                />
               </Link>
-
-            }
+            )}
             <button
               className="navbar-toggler"
               type="button"
@@ -64,8 +75,7 @@ function Header(props) {
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
-
-              {props?.Auction?.type !== "LIVE" ?
+              {props?.Auction?.type !== "LIVE" ? (
                 <div className="col col-lg-8">
                   <ul className="navbar-nav mb-2 mb-lg-0" id="mainnav">
                     <li className="nav-item ps-5">
@@ -221,18 +231,22 @@ function Header(props) {
                     </li>
                   </ul>
                 </div>
-                : <div className="col col-lg-8"></div>}
+              ) : (
+                <div className="col col-lg-8"></div>
+              )}
               <div className="col col-lg-4">
                 <ul className="navbar-nav flex-row-reverse rightnav justify-content-center justify-content-lg-start">
                   <li className="nav-item ">
                     {/* window.location.reload();  */}
 
-                    <Link className="nav-link" to="/" onClick={() => {
+
+                    <Link className="nav-link" to={window.location.href.split("#")[1] === '/' ? window.location.href.split("#")[1] : '/en' + window.location.href.split("#")[1]} onClick={() => {
                       setTimeout(() => {
                         dispatch(changeLanguage('en'))
                         window.location.reload()
                       }, 300);
                     }}>
+
                       EN
                     </Link>
                   </li>
@@ -246,13 +260,21 @@ function Header(props) {
                       />
                     </Link>
                   </li>
-                  {is_logged_in ? <li className="nav-item">
-                    <Link className="nav-link" to="/" onClick={() => {
-                      dispatch(clearStorageAll())
-                    }}>
-                      خروج
-                    </Link>
-                  </li> : ''}
+                  {is_logged_in ? (
+                    <li className="nav-item">
+                      <Link
+                        className="nav-link"
+                        to="/"
+                        onClick={() => {
+                          dispatch(clearStorageAll());
+                        }}
+                      >
+                        خروج
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </ul>
               </div>
             </div>
@@ -265,20 +287,18 @@ function Header(props) {
 
 // export default Header;
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
     clearStorage: () => dispatch(clearStorage()),
     // setProfile : (data) => dispatch(setProfile(data)),
     // loginSuccess : (data) => dispatch(loginSuccess(data)),
-  }
-}
+  };
+};
 
 const mapStateToProps = (store) => {
   return {
     auth: store.authReducer,
-  }
-}
+  };
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

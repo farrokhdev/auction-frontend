@@ -115,8 +115,17 @@ function LastProductsAuctionSlider({ setLoading }) {
                                 <h1 className="default">{LastAuctionOnStandBy?.title}</h1>
                             </Link>
                             <p className="font15">
-                                {LastAuctionOnStandBy?.description}
+                                {LastAuctionOnStandBy?.description &&
+                                    LastAuctionOnStandBy?.description.length > 100
+                                    ? LastAuctionOnStandBy?.description.slice(0, 100) + "..."
+                                    : LastAuctionOnStandBy?.description}
                             </p>
+
+                            {AuctionStatusText(
+                                LastAuctionOnStandBy?.status,
+                                LastAuctionOnStandBy?.user_is_enrolled,
+                                LastAuctionOnStandBy.id
+                            )}
 
                             {AuctionStatusText(LastAuctionOnStandBy?.status, LastAuctionOnStandBy?.user_is_enrolled, LastAuctionOnStandBy.id)}
 

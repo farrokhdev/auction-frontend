@@ -139,7 +139,7 @@ function HeaderEN(props) {
                             <div className="col col-lg-4">
                                 <ul className="navbar-nav flex-row-reverse rightnav justify-content-center justify-content-lg-start">
                                     <li className="nav-item ">
-                                        <Link className="nav-link" to="/" onClick={() => {
+                                        <Link className="nav-link" to={window.location.href.split("#")[1].replace('/en','')} onClick={() => {
                                             setTimeout(() => {
                                                 dispatch(changeLanguage('fa'))
                                                 window.location.reload()
