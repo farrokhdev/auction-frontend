@@ -21,33 +21,40 @@ export function convertTypePersian(value) {
 }
 
 export function convertTypeEN(value) {
-  switch (value) {
-    case "آنلاین":
-      return "ONLINE";
 
-    case "زنده":
-      return "LIVE";
+    switch (value) {
 
-    case "مدت دار":
-      return "PERIODIC";
+        case "آنلاین":
+            return "ONLINE"
 
-    case "اولین پیشنهاد":
-      return "HIDDEN";
+        case "زنده":
+            return "LIVE"
 
-    case "دومین پیشنهاد":
-      return "SECOND_HIDDEN";
-  }
+        case "مدت دار":
+            return "PERIODIC"
+
+        case "اولین پیشنهاد":
+            return "HIDDEN"
+
+        case "دومین پیشنهاد":
+            return "SECOND_HIDDEN"
+
+    }
 }
 
+
 export function status(value) {
-  switch (value) {
-    case "آینده":
-      return "PREPARING";
-    case "فعلی":
-      return "ACTIVE";
-    case "گذشته":
-      return "CLOSED";
-  }
+
+    switch (value) {
+
+        case "آینده":
+            return "PREPARING"
+        case "فعلی":
+            return "ACTIVE"
+        case "گذشته":
+            return "CLOSED"
+    }
+
 }
 
 export function convertTypeAuctionToPersian(value) {
@@ -331,101 +338,82 @@ export function isAwaitingApprovalEN(value) {
 
 // check status auction type and enrolled then generate btn
 export function AuctionStatusTextBtn(type, enrolled, id) {
-  // auction ended and user not allow to join auction
-  if (type === "CLOSED") {
-    return (
-      <button type="button" className="btn btn-lightpink">
-        حراج به پایان رسیده است
-      </button>
-    );
-    // user registred to auction then user not allow to join auction
-  } else if (enrolled) {
-    return (
-      <button type="button" className="btn btn-lightgreenbg">
-        در حراجی ثبت‌ نام کرده‌اید
-      </button>
-    );
-    // user not register to auction and auction is preparing or started then user allow to join auction
-  } else {
-    return (
-      <Link to={`/buyer-register/${id}`}>
-        <button type="button" className="btn btn-main join">
-          عضویت <span class="">در حراج</span>
-        </button>
-      </Link>
-    );
-  }
+    // auction ended and user not allow to join auction
+    if (type === "CLOSED") {
+        return <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>
+        // user registred to auction then user not allow to join auction
+    } else if (enrolled) {
+        return <button type="button" className="btn btn-lightgreenbg">در حراجی ثبت‌نام کرده‌اید</button>
+        // user not register to auction and auction is preparing or started then user allow to join auction
+    } else {
+        return <Link to={`/buyer-register/${id}`}>
+            <button type="button" className="btn btn-main join">
+                عضویت <span class="">در حراج</span>
+            </button>
+        </Link>
+    }
+
 }
 
 // check status auction type and enrolled then generate btn
 export function AuctionStatusText(type, enrolled, id) {
-  // auction ended and user not allow to join auction
-  if (type === "CLOSED") {
-    return (
-      <button type="button" className="btn btn-lightpink">
-        حراج به پایان رسیده است
-      </button>
-    );
-    // user registred to auction then user not allow to join auction
-  } else if (enrolled) {
-    return (
-      <button type="button" className="btn btn-lightgreenbg">
-        در حراجی ثبت‌ نام کرده‌اید
-      </button>
-    );
-    // user not register to auction and auction is preparing or started then user allow to join auction
-  } else {
-    return (
-      <Link to={`/buyer-register/${id}`}>
-        <button type="button" className="btn btn-basic">
-          عضویت <span class="">در حراج</span>
-        </button>
-      </Link>
-    );
-  }
+    // auction ended and user not allow to join auction
+    if (type === "CLOSED") {
+        return <Link to={`/one-auction/${id}`}>
+            <button type="button" className="btn btn-lightpink">حراج به پایان رسیده است</button>
+        </Link>
+        // user registred to auction then user not allow to join auction
+    } else if (enrolled) {
+        return <button type="button" className="btn btn-lightgreenbg">در حراجی ثبت‌نام کرده‌اید</button>
+        // user not register to auction and auction is preparing or started then user allow to join auction
+    } else {
+        return <Link to={`/buyer-register/${id}`}>
+            <button type="button" className="btn btn-basic">
+                عضویت <span class="">در حراج</span>
+            </button>
+        </Link>
+    }
+
 }
 
 export function AuctionStatusTextEN(type, enrolled, id) {
-  // auction ended and user not allow to join auction
-  if (type === "CLOSED") {
-    return (
-      <button type="button" className="btn btn-lightpink">
-        The auction is over
-      </button>
-    );
-    // user registred to auction then user not allow to join auction
-  } else if (enrolled) {
-    return (
-      <button type="button" className="btn btn-lightgreenbg">
-        You have registered in the auction
-      </button>
-    );
-    // user not register to auction and auction is preparing or started then user allow to join auction
-  } else {
-    return (
-      <Link to={`/en/buyer-register/${id}`}>
-        <button type="button" className="btn btn-basic">
-          Join<span class="">the auction</span>
-        </button>
-      </Link>
-    );
-  }
+    // auction ended and user not allow to join auction
+    if (type === "CLOSED") {
+        return <button type="button" className="btn btn-lightpink">The auction is over</button>
+        // user registred to auction then user not allow to join auction
+    } else if (enrolled) {
+        return <button type="button" className="btn btn-lightgreenbg">You have registered in the auction</button>
+        // user not register to auction and auction is preparing or started then user allow to join auction
+    } else {
+        return <Link to={`/en/buyer-register/${id}`}>
+            <button type="button" className="btn btn-basic">
+                Join<span class="">the auction</span>
+            </button>
+        </Link>
+    }
+
 }
 
+
+
 export function homeAuctionType(value) {
-  switch (value) {
-    case "gallery":
-      return "گالری";
-    case "collector":
-      return "مجموعه دار";
-    case "home_auction":
-      return "خانه حراجی";
-  }
+
+    switch (value) {
+
+        case "gallery":
+            return "گالری"
+        case "collector":
+            return "مجموعه دار"
+        case "home_auction":
+            return "خانه حراجی"
+    }
 }
 
 const handleShowImage = (item) => {
-  return item?.media?.length &&
-    item?.media?.filter((item) => item?.is_default === true)[0]?.exact_url
-    ? item?.media?.filter((item) => item?.is_default === true)[0]?.exact_url
-    : DEFAULT_URL_IMAGE;
-};
+    return (
+        (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+            DEFAULT_URL_IMAGE
+    )
+}
+

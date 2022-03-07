@@ -1,18 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
 import img from '../../images/img-1.jpg';
 import bookmark_icon from '../../images/bookmark.svg';
 import bookmark_active_icon from '../../images/bookmark-active.svg';
 import CardArtwork from './CardArtwork';
 import axios from "../../utils/request";
-import {BASE_URL} from '../../utils';
-import {Link} from "react-router-dom";
+import { BASE_URL } from '../../utils';
+import { Link } from "react-router-dom";
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
 function LastAuctionsSection(props) {
-    
-    const {id , artwork_id} =props;
 
+    const { id, artwork_id } = props;
+
+    console.log("idddddd===>>>>", id)
     const [is_saved, setIs_saved] = useState(false)
     const [products, setProducts] = useState([])
 
@@ -26,7 +27,7 @@ function LastAuctionsSection(props) {
                 console.log(resp)
                 if (resp.data.code === 200) {
                     const res = resp.data?.data?.result;
-                    setProducts(res.filter(item => item?.id  !== artwork_id ))
+                    setProducts(res.filter(item => item?.id !== artwork_id))
                 }
             })
             .catch(err => {
@@ -35,9 +36,9 @@ function LastAuctionsSection(props) {
     }
 
     useEffect(() => {
-        if(id)
-        getOtherProducts()
-    }, [id , artwork_id])
+        if (id)
+            getOtherProducts()
+    }, [id, artwork_id])
 
     const settings = {
         dots: true,
@@ -76,55 +77,57 @@ function LastAuctionsSection(props) {
 
     const handleShowImage = (item) => {
         return (
-            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-            item?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
-            DEFAULT_URL_IMAGE
+            (item?.media?.length && item?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
         )
     }
 
     return (<>
         {id &&
-    <div className="row">
-        <section className="Categorized-artworks related-artworks">
-            <div className="container innercontainer">
-                <div className="row">
-                    <div className="col-md-3 col-sm-12">
-                        <div className="main-title">
-                            <h2 className="default titr">آخرین آثار حراج</h2>
-                            <Link to={`/one-auction/${props.id}/`} className="btn-view">مشاهده همه</Link>
+            <div className="row">
+                <section className="Categorized-artworks related-artworks">
+                    <div className="container innercontainer">
+                        <div className="row">
+                            <div className="col-md-3 col-sm-12">
+                                <div className="main-title">
+                                    <h2 className="default titr">آخرین آثار حراج</h2>
+                                    <Link to={`/one-auction/${props.id}/`} className="btn-view">مشاهده همه</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="owl-carousel" id="relatedArtworks">
+
+                            <Slider className="mt-5" {...settings}>
+                                {products?.length ? products?.map((item, key) => {
+                                    return (
+                                        <div className="px-3" key={item?.id}>
+                                            {/* <Link to={`/artworks/${item?.id}`}> */}
+                                                <CardArtwork
+                                                    product={item}
+                                                    url={item && handleShowImage(item)}
+                                                    price_base={item?.price}
+                                                    price_range={item?.min_price + " - " + item?.max_price}
+                                                    house_auction={item?.persian_artist_name}
+                                                    title={item?.artwork_title}
+                                                    // lot_num={key + 1}
+                                                    lot_num={item?.latest_auction?.lot_num}
+                                                    getOtherProducts={getOtherProducts}
+                                                />
+                                            {/* </Link> */}
+                                        </div>
+                                    )
+                                }) : ""}
+
+                            </Slider>
+
                         </div>
                     </div>
-                </div>
-
-                <div className="owl-carousel" id="relatedArtworks">
-
-                    <Slider className="mt-5" {...settings}>
-                        {products?.length ? products?.map((item, key) => {
-                            return (
-                                <div className="px-3" key={item?.id}>
-                                    <Link to={`/artworks/${item?.id}`}>
-                                        <CardArtwork
-                                            url={item && handleShowImage(item)}
-                                            price_base={item?.price}
-                                            price_range={item?.min_price + " - " + item?.max_price}
-                                            house_auction={item?.persian_artist_name}
-                                            title={item?.artwork_title}
-                                            // lot_num={key + 1}
-                                            lot_num={item?.latest_auction?.lot_num}
-                                        />
-                                    </Link>
-                                </div>
-                            )
-                        }) : ""}
-
-                    </Slider>
-
-                </div>
+                </section>
             </div>
-        </section>
-    </div>
-}
-        </>
+        }
+    </>
     )
 }
 
