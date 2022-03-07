@@ -42,8 +42,6 @@ function Auctions() {
     status: [],
   });
 
-  console.log(Auctions);
-
   const { type } = useSelector((state) => state.auctionReducer);
 
   const queries = queryString.stringify(params);
@@ -143,6 +141,7 @@ function Auctions() {
       ...params,
       page: 1,
       search: value,
+      ordering: "creation_time",
     });
   };
 

@@ -611,9 +611,17 @@ function OneAuction(props) {
                                             <span className="price">
                                               {numberWithCommas(
                                                 item?.bidding_details?.max_bid
-                                              ) || 0}
+                                              ) || ""}
                                             </span>
-                                            <span className="unit"> تومان</span>
+                                            {item?.bidding_details?.max_bid ===
+                                            null ? (
+                                              ""
+                                            ) : (
+                                              <span className="unit">
+                                                {" "}
+                                                تومان
+                                              </span>
+                                            )}
                                             <span
                                               className="unit"
                                               style={{ fontSize: ".7rem" }}

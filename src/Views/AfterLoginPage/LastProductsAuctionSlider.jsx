@@ -21,7 +21,7 @@ function LastProductsAuctionSlider({ setLoading }) {
       .get(`${BASE_URL}/sale/auctions/on_standby/`)
       .then((resp) => {
         setLastAuctionOnStandBy(resp.data.data.result);
-        setAuctionProduct(resp.data.data.result);
+        setAuctionProduct(resp.data.data.result.auction_product);
         setLoading(false);
       })
       .catch((err) => {
@@ -57,8 +57,6 @@ function LastProductsAuctionSlider({ setLoading }) {
   //     setcurentIndex(curentIndex)
   // }
 
-  console.log(auctionProduct);
-
   return (
     <>
       <section className="slider">
@@ -78,8 +76,8 @@ function LastProductsAuctionSlider({ setLoading }) {
                     afterChange={(e) => setcurentIndex(e + 1)}
                     ref={sliderRef}
                   >
-                    {auctionProduct.auction_product?.length
-                      ? auctionProduct.auction_product?.map((item, index) => {
+                    {auctionProduct?.length
+                      ? auctionProduct?.map((item, index) => {
                           return (
                             <div className="carousel-item active ">
                               <div className="bg-shadow tr-shadow20 max-width-500">
@@ -135,6 +133,7 @@ function LastProductsAuctionSlider({ setLoading }) {
             </div>
             <div className="col-sm-6 col-lg-7 leftslider order-sm-1">
               <h1 className="default">{LastAuctionOnStandBy?.title}</h1>
+
               <p className="font15">
                 {LastAuctionOnStandBy?.description &&
                 LastAuctionOnStandBy?.description.length > 100

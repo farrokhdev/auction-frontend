@@ -19,6 +19,7 @@ import TehranLogo from "../../images/Tehran-Auction-Logo.png";
 import { removeToken } from "../../utils/utils";
 
 function Header(props) {
+
   const dispatch = useDispatch();
   const { is_logged_in } = useSelector((state) => state.authReducer);
 
@@ -44,15 +45,15 @@ function Header(props) {
               <Link className="navbar-brand" to="/">
                 <img
                   src={logo && logo}
-                  width="54"
-                  height="50"
+                  width="100"
+                  height="80"
                   alt="auction logo"
                 />
               </Link>
             ) : (
               <Link className="navbar-brand" to="/">
                 <img
-                  src={props.Auction && props.Auction?.media?.exact_url}
+                  src={props.Auction && props.Auction?.house?.media[0]?.exact_url}
                   width="54"
                   height="50"
                   alt="auction logo"
@@ -238,16 +239,14 @@ function Header(props) {
                   <li className="nav-item ">
                     {/* window.location.reload();  */}
 
-                    <Link
-                      className="nav-link"
-                      to="/"
-                      onClick={() => {
-                        setTimeout(() => {
-                          dispatch(changeLanguage("en"));
-                          window.location.reload();
-                        }, 300);
-                      }}
-                    >
+
+                    <Link className="nav-link" to={window.location.href.split("#")[1] === '/' ? window.location.href.split("#")[1] : '/en' + window.location.href.split("#")[1]} onClick={() => {
+                      setTimeout(() => {
+                        dispatch(changeLanguage('en'))
+                        window.location.reload()
+                      }, 300);
+                    }}>
+
                       EN
                     </Link>
                   </li>

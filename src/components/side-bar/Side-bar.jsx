@@ -12,11 +12,12 @@ import "antd/dist/antd.css";
 import en_US from "antd/lib/locale/en_US";
 import ItemStatus from "./ItemStatus";
 import { useDispatch, useSelector } from "react-redux";
-import { openDashboard } from "../../redux/reducers/all/all.actions";
 
-function Sidebar({
-  handleSearchProducts,
-  handleRemoveFilters,
+
+import { openDashboard } from "../../redux/reducers/all/all.actions"
+
+
+function Sidebar({ handleSearchProducts, handleRemoveFilters,
   Tags,
   handleClose,
   setTags,
@@ -30,6 +31,7 @@ function Sidebar({
   typeCategory,
 }) {
   const { is_Open_Dashboard } = useSelector((state) => state.allReducer);
+
   const dispatch = useDispatch();
   const { RangePicker } = DatePicker;
 
@@ -61,18 +63,19 @@ function Sidebar({
         default:
           break;
       }
-    };
 
-    axios
-      .get(`${BASE_URL}${HOME_AUCITONS}`)
-      .then((res) => {
-        console.log("H ", res.data.data.result);
-        setHomeAuctions(res.data.data.result);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    }
+
+
+    axios.get(`${BASE_URL}${HOME_AUCITONS}`).then(res => {
+      console.log("H ", res.data.data.result);
+      setHomeAuctions(res.data.data.result)
+    }).catch(err => {
+      console.error(err);
+    })
+
+  }, [])
+
 
   function onChange(dates, dateStrings) {
     // console.log('From: ', dates, ', to: ', dates);
@@ -95,6 +98,7 @@ function Sidebar({
 
   return (
     <>
+
       <div
         className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`}
         id="left-side"
@@ -104,17 +108,27 @@ function Sidebar({
           className="btn-getclose d-block d-lg-none"
           onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}
         ></button>
+
         <div className="left-side">
           <div className="result-box">
             <div className="result-title">
               <h6 className="default">نتایج:</h6>
-              <button
-                onClick={handleRemoveFilters}
-                type="button"
-                className="btn-removeall"
-              >
-                پاک کردن همه
-              </button>
+              <button onClick={handleRemoveFilters} type="button" className="btn-removeall">پاک کردن همه</button>
+            </div>
+            {
+              Tags?.length ? Tags?.map(item => (
+                <Tag
+                  closable
+                  onClose={e => {
+                    e.preventDefault();
+                    handleClose(item);
+
+                  }}
+
+                >{item} </Tag>
+              )) : ""
+            }
+            <div className="tags-box" >
             </div>
             {Tags?.length
               ? Tags?.map((item) => (
@@ -138,19 +152,12 @@ function Sidebar({
                 id="product-search"
                 type="text"
                 className="default-input"
-                placeholder="جستجو در بیش از 100 اثر"
-                onChange={(e) =>
-                  handleSearchProducts(
-                    document.querySelector("#product-search").value
-                  )
-                }
+                placeholder="جستجو آثار"
+                onChange={(e) => handleSearchProducts(document.querySelector('#product-search').value)}
               />
               <button
-                onClick={(e) =>
-                  handleSearchProducts(
-                    document.querySelector("#product-search").value
-                  )
-                }
+                onClick={(e) => { handleSearchProducts(document.querySelector('#product-search').value); dispatch(openDashboard(!is_Open_Dashboard)) }}
+
                 type="button"
                 className="btn-search"
               />
@@ -336,7 +343,7 @@ function Sidebar({
                   className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#collapseFive"
+                  data-bs-target="#collapseTwo"
                   aria-expanded="True"
                   aria-controls="collapseThree"
                 >
@@ -344,7 +351,7 @@ function Sidebar({
                 </button>
               </h2>
               <div
-                id="collapseFive"
+                id="collapseTwo"
                 className="accordion-collapse collapse show"
                 aria-labelledby="headingFive"
               >
