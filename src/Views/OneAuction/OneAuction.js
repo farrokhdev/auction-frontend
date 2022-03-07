@@ -466,8 +466,12 @@ function OneAuction(props) {
                                                                                 <div className="db-right ">
                                                                                     <span className="db-title">قیمت فعلی</span>
                                                                                     <div className="price-block">
-                                                                                        <span className="price">{numberWithCommas(item?.bidding_details?.max_bid) || 0}</span>
-                                                                                        <span className="unit"> تومان</span>
+                                                                                        <span className="price">{numberWithCommas(item?.bidding_details?.max_bid) || ""}</span>
+                                                                                        {item?.bidding_details?.max_bid === null ?
+                                                                                            ""
+                                                                                            :
+                                                                                            <span className="unit"> تومان</span>
+                                                                                        }
                                                                                         <span className="unit" style={{ fontSize: '.7rem' }}> ({item?.bidding_details?.total_bids}) پیشنهاد</span>
                                                                                     </div>
                                                                                 </div>

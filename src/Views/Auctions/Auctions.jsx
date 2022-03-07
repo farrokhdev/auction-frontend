@@ -131,6 +131,7 @@ function Auctions() {
     const handleSearchProducts = (value) => {
         setParams({
             ...params, page: 1, search: value
+            , ordering: 'creation_time'
         })
     }
 
@@ -253,8 +254,8 @@ function Auctions() {
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     {
-                                                       item?.status === "ACTIVE" && item?.type === "LIVE" || item?.type === "ONLINE"  ?
-                                                        
+                                                        item?.status === "ACTIVE" && item?.type === "LIVE" || item?.type === "ONLINE" ?
+
                                                             <Link
                                                                 to={`/live-auction/${item?.id}`}
                                                             >

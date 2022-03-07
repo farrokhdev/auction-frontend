@@ -12,10 +12,10 @@ import "antd/dist/antd.css";
 import en_US from "antd/lib/locale/en_US";
 import ItemStatus from "./ItemStatus";
 import { useDispatch, useSelector } from "react-redux";
-import {openDashboard} from "../../redux/reducers/all/all.actions"
+import { openDashboard } from "../../redux/reducers/all/all.actions"
 
 
-function Sidebar({handleSearchProducts,handleRemoveFilters,
+function Sidebar({ handleSearchProducts, handleRemoveFilters,
   Tags,
   handleClose,
   setTags,
@@ -30,7 +30,7 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
 
 
   const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const { RangePicker } = DatePicker;
 
 
@@ -61,8 +61,6 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
     }
 
 
-
-
     axios.get(`${BASE_URL}${HOME_AUCITONS}`).then(res => {
       console.log("H ", res.data.data.result);
       setHomeAuctions(res.data.data.result)
@@ -91,12 +89,12 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
   return (
     <>
       <div className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`} id="left-side">
-        <button type="button" className="btn-getclose d-block d-lg-none"  onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}></button>
+        <button type="button" className="btn-getclose d-block d-lg-none" onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}></button>
         <div className="left-side">
           <div className="result-box">
             <div className="result-title">
               <h6 className="default">نتایج:</h6>
-              <button onClick={handleRemoveFilters}  type="button" className="btn-removeall">پاک کردن همه</button>
+              <button onClick={handleRemoveFilters} type="button" className="btn-removeall">پاک کردن همه</button>
             </div>
             {
               Tags?.length ? Tags?.map(item => (
@@ -122,11 +120,11 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
                 id="product-search"
                 type="text"
                 className="default-input"
-                placeholder="جستجو در بیش از 100 اثر"
+                placeholder="جستجو آثار"
                 onChange={(e) => handleSearchProducts(document.querySelector('#product-search').value)}
               />
               <button
-                onClick={(e) => handleSearchProducts(document.querySelector('#product-search').value)}
+                onClick={(e) => { handleSearchProducts(document.querySelector('#product-search').value); dispatch(openDashboard(!is_Open_Dashboard)) }}
                 type="button"
                 className="btn-search"
               />
@@ -309,7 +307,7 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
                   className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#collapseFive"
+                  data-bs-target="#collapseTwo"
                   aria-expanded="True"
                   aria-controls="collapseThree"
                 >
@@ -317,7 +315,7 @@ function Sidebar({handleSearchProducts,handleRemoveFilters,
                 </button>
               </h2>
               <div
-                id="collapseFive"
+                id="collapseTwo"
                 className="accordion-collapse collapse show"
                 aria-labelledby="headingFive"
               >
