@@ -22,6 +22,7 @@ function UserPanelArtworkList() {
     const [data, setData] = useState([])
     const [dataCount, setDataCount] = useState(0)
     const { role, id } = useSelector((state) => state.profileReducer)
+    
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,

@@ -320,6 +320,8 @@ function UserPanelMessage(props) {
                 </div>
             </div>
 
+{/* details */}
+
             <div className="modal fade" id="readticket-view" tabIndex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div className="modal-dialog w-800" style={{ paddingTop: "6rem" }}>
@@ -422,6 +424,13 @@ function UserPanelMessage(props) {
                     </div>
                 </div>
             </div>
+
+
+            {/* details */}
+
+
+
+            
             <div className="modal fade" id="new-ticket" tabIndex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div className="modal-dialog w-800">

@@ -126,7 +126,7 @@ function Artworks() {
 
     const handleSearchProducts = (value) => {
         setParams({
-            ...params, page: 1, search: value
+            ...params, page: 1, search: value ,  ordering: '-creation_date'
         })
     }
 

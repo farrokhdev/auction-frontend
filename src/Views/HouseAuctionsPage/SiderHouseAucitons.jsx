@@ -12,13 +12,13 @@ function SiderHouseAucitons({ params,
     handleSetCategory,
     categoryActivities,
     handleSetSearchFilter }) {
-    
-        const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
+
+    const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
     const dispatch = useDispatch();
 
     return (
         <div className={`col-sm-3 sidebar ${is_Open_Dashboard && "open"}`} id="left-side">
-            <button type="button" className="btn-getclose d-block d-lg-none" onClick={()=> dispatch(openDashboard(!is_Open_Dashboard))}></button>
+            <button type="button" className="btn-getclose d-block d-lg-none" onClick={() => dispatch(openDashboard(!is_Open_Dashboard))}></button>
             <div className="left-side">
                 <div className="result-box">
                     <div className="result-title">
@@ -46,11 +46,11 @@ function SiderHouseAucitons({ params,
                         <input
                             id="search-house-auction"
                             type="text" className="default-input"
-                            placeholder="جستجو در بیش از 100 اثر"
+                            placeholder="جستجو آثار"
                             onChange={(e) => handleSetSearchFilter(document.querySelector('#search-house-auction').value)}
                         />
                         <button
-                            onClick={(e) => handleSetSearchFilter(document.querySelector('#search-house-auction').value)}
+                            onClick={(e) => { handleSetSearchFilter(document.querySelector('#search-house-auction').value); dispatch(openDashboard(!is_Open_Dashboard)) }}
                             type="button"
                             className="btn-search"
                         />
