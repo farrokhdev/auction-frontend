@@ -19,6 +19,7 @@ import { removeToken } from "../../utils/utils";
 function Header(props) {
   const dispatch = useDispatch()
   const { is_logged_in } = useSelector((state) => state.authReducer)
+  const { check_Language } = useSelector((state) => state.allReducer)
 
   const handleRedirect = () => {
 
@@ -227,7 +228,7 @@ function Header(props) {
                   <li className="nav-item ">
                     {/* window.location.reload();  */}
 
-                    <Link className="nav-link" to="/" onClick={() => {
+                    <Link className="nav-link" to={window.location.href.split("#")[1] === '/' ? window.location.href.split("#")[1] : '/en' + window.location.href.split("#")[1]} onClick={() => {
                       setTimeout(() => {
                         dispatch(changeLanguage('en'))
                         window.location.reload()
