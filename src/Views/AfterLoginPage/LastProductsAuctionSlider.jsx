@@ -14,14 +14,12 @@ function LastProductsAuctionSlider({ setLoading }) {
     const [auctionProduct, setAuctionProduct] = useState([])
     const sliderRef = useRef()
     const [curentIndex, setcurentIndex] = useState(1)
-    // const [auctionProduct, setAuctionProduct] = useState([1,2,3,4,5])
-    // const [count, setCount] = useState(1)
 
 
 
     const getLastAuctionOnStandBy = () => {
         setLoading(true)
-        axios.get(`${BASE_URL}/sale/auctions/on_standby/`)
+        axios.get(`${BASE_URL}/sale/auctions/on_standby/?visible_in_site=true`)
             .then(resp => {
                 setLastAuctionOnStandBy(resp.data.data.result)
                 setAuctionProduct(resp.data.data.result.auction_product)
@@ -120,13 +118,6 @@ function LastProductsAuctionSlider({ setLoading }) {
                                     ? LastAuctionOnStandBy?.description.slice(0, 100) + "..."
                                     : LastAuctionOnStandBy?.description}
                             </p>
-
-                            {AuctionStatusText(
-                                LastAuctionOnStandBy?.status,
-                                LastAuctionOnStandBy?.user_is_enrolled,
-                                LastAuctionOnStandBy.id
-                            )}
-
                             {AuctionStatusText(LastAuctionOnStandBy?.status, LastAuctionOnStandBy?.user_is_enrolled, LastAuctionOnStandBy.id)}
 
                         </div>

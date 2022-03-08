@@ -1,6 +1,7 @@
 import React from "react";
 import img from "../../images/img-1.jpg";
 import momentJalaali from "moment-jalaali";
+import { Link } from "react-router-dom"
 import classnames from "classnames";
 import {
   convertMouthToPersian,
@@ -9,6 +10,7 @@ import {
 } from "../../utils/converTypePersion";
 
 function DetailAboutArtworkInfo({ artwork }) {
+
   return (
     <div className="row">
       <ul
@@ -78,8 +80,8 @@ function DetailAboutArtworkInfo({ artwork }) {
                 <td>
                   {artwork?.category
                     ? artwork?.category?.map((item) => (
-                        <span className="mx-1">{item?.title}</span>
-                      ))
+                      <span className="mx-1">{item?.title}</span>
+                    ))
                     : ""}
                 </td>
               </tr>
@@ -89,20 +91,17 @@ function DetailAboutArtworkInfo({ artwork }) {
                 <td>
                   <span>
                     <div>
-                      {`${
-                        artwork?.artwork_height
-                          ? artwork?.artwork_height + " " + "*"
-                          : ""
-                      }  ${
-                        artwork?.artwork_width ? artwork?.artwork_width : ""
-                      }  ${
-                        artwork?.artwork_length ? artwork?.artwork_length : ""
-                      }`}
+                      {`${artwork?.artwork_height
+                        ? artwork?.artwork_height + " " + "*"
+                        : ""
+                        }  ${artwork?.artwork_width ? artwork?.artwork_width : ""
+                        }  ${artwork?.artwork_length ? artwork?.artwork_length : ""
+                        }`}
                     </div>
                   </span>
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>تاریخ</td>
                 <td>
                   {artwork?.creation_date
@@ -110,6 +109,17 @@ function DetailAboutArtworkInfo({ artwork }) {
                         `jYYYY/jMM/jDD`
                       )
                     : ""}
+                </td>
+              </tr> */}
+              <tr>
+                <td>توضیحات</td>
+
+                <td>
+                  <span>
+                    <div>
+                      {artwork?.persian_description}
+                    </div>
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -125,12 +135,33 @@ function DetailAboutArtworkInfo({ artwork }) {
             <div className="row">
               <div className="col-md-3">
                 <div className="bg-shadow tl-shadow10">
-                  <img
-                    src={artwork?.latest_auction?.media?.exact_url}
-                    width="500"
-                    height="500"
-                    alt=""
-                  />
+                  {(artwork?.latest_auction?.status === "ACTIVE" &&
+                    artwork?.latest_auction?.type === "LIVE") ||
+                    artwork?.latest_auction?.type === "ONLINE" ? (
+                    <Link to={`/live-auction/${artwork?.latest_auction?.id}`}
+                      className="bg-shadow tr-shadow10">
+                      <img
+                        src={artwork?.latest_auction?.media?.exact_url}
+                        width="500"
+                        height="500"
+                        alt=""
+                      />
+
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/one-auction/${artwork?.latest_auction?.id}`}
+                      className="bg-shadow tr-shadow10"
+                    >
+                      <img
+                        src={artwork?.latest_auction?.media?.exact_url}
+                        width="500"
+                        height="500"
+                        alt=""
+                      />
+
+                    </Link>
+                  )}
                 </div>
               </div>
               <div className="col-md-9">
@@ -152,8 +183,8 @@ function DetailAboutArtworkInfo({ artwork }) {
                       <span className="d-none d-md-inline-block">حراج</span>{" "}
                       {artwork?.latest_auction?.type
                         ? convertTypeAuctionToPersian(
-                            artwork?.latest_auction?.type
-                          )
+                          artwork?.latest_auction?.type
+                        )
                         : ""}
                     </span>
                   </div>
@@ -170,18 +201,37 @@ function DetailAboutArtworkInfo({ artwork }) {
                   </div>
                 </div>
                 <div className="block-main">
-                  <h5 className="default">
-                    {artwork?.latest_auction?.title
-                      ? artwork?.latest_auction?.title
-                      : ""}
-                  </h5>
+
+                  {(artwork?.latest_auction?.status === "ACTIVE" &&
+                    artwork?.latest_auction?.type === "LIVE") ||
+                    artwork?.latest_auction?.type === "ONLINE" ? (
+                    <Link to={`/live-auction/${artwork?.latest_auction?.id}`}>
+                      <h5 className="default">
+                        {artwork?.latest_auction?.title
+                          ? artwork?.latest_auction?.title
+                          : ""}
+                      </h5>
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/one-auction/${artwork?.latest_auction?.id}`}
+                    >
+                      <h5 className="default">
+                        {artwork?.latest_auction?.title
+                          ? artwork?.latest_auction?.title
+                          : ""}
+                      </h5>
+                    </Link>
+                  )}
+
                   <div className="block-detail">
-                    {/* <h6 className="default">هنر معاصر</h6> */}
-                    <h6 className=" gray50">
-                      {artwork?.latest_auction?.house?.home_auction_name
-                        ? artwork?.latest_auction?.house?.home_auction_name
-                        : ""}
-                    </h6>
+                    <Link to={`/house-acutions/${artwork?.latest_auction?.house?.id}`}>
+                      <h6 className=" gray50">
+                        {artwork?.latest_auction?.house?.home_auction_name
+                          ? artwork?.latest_auction?.house?.home_auction_name
+                          : ""}
+                      </h6>
+                    </Link>
                   </div>
                 </div>
 
@@ -197,19 +247,19 @@ function DetailAboutArtworkInfo({ artwork }) {
                         <span className="start-date">
                           {artwork?.latest_auction?.start_time
                             ? convertMouthToPersian(
-                                momentJalaali(
-                                  artwork?.latest_auction?.start_time
-                                ).format("MM")
-                              )
+                              momentJalaali(
+                                artwork?.latest_auction?.start_time
+                              ).format("MM")
+                            )
                             : ""}
                         </span>
                         <span className="end-date">
                           {artwork?.latest_auction?.end_time
                             ? convertMouthToPersian(
-                                momentJalaali(
-                                  artwork?.latest_auction?.end_time
-                                ).format("MM")
-                              )
+                              momentJalaali(
+                                artwork?.latest_auction?.end_time
+                              ).format("MM")
+                            )
                             : ""}
                         </span>
                       </div>
@@ -223,15 +273,15 @@ function DetailAboutArtworkInfo({ artwork }) {
                         <span className="start-time">
                           {artwork?.latest_auction?.start_time
                             ? momentJalaali(
-                                artwork?.latest_auction?.start_time
-                              ).format("DD")
+                              artwork?.latest_auction?.start_time
+                            ).format("DD")
                             : ""}
                         </span>
                         <span className="end-time">
                           {artwork?.latest_auction?.end_time
                             ? momentJalaali(
-                                artwork?.latest_auction?.end_time
-                              ).format("DD")
+                              artwork?.latest_auction?.end_time
+                            ).format("DD")
                             : ""}
                         </span>
                       </div>
@@ -256,8 +306,8 @@ function DetailAboutArtworkInfo({ artwork }) {
                     >
                       {artwork?.latest_auction?.type
                         ? convertStatusShowAuctionPersian(
-                            artwork?.latest_auction?.type
-                          )
+                          artwork?.latest_auction?.type
+                        )
                         : null}
                     </button>
 

@@ -203,6 +203,14 @@ function Auctions() {
     });
   };
 
+  const handleSetOrderingPopularity  = () => {
+    setClickDropdown(false);
+    setParams({
+      ...params,
+      ordering: "popularity",
+    });
+  };
+
   const handleSetDate = (dateFrom, dateTo) => {
     setParams({
       ...params,
@@ -252,6 +260,7 @@ function Auctions() {
               handleSetOrderingOld={handleSetOrderingOld}
               clickDropdown={clickDropdown}
               setClickDropdown={setClickDropdown}
+              handleSetOrderingPopularity={handleSetOrderingPopularity}
             />
             <div className="row">
               <Sidebar
