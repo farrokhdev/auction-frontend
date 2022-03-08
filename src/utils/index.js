@@ -10,6 +10,7 @@ const dev = {
 
 const test = {
   BASE_URL: "https://api.beta.smartauctionhouse.com/api",
+  // BASE_URL: "https://70f5-78-38-211-229.ngrok.io/api",
   // PARAMS:
   COOKIE_EXPIRES: 1,
   WEB_SOCKET_BASE_URL: "ws://api.beta.smartauctionhouse.com/ws",

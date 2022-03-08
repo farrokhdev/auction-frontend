@@ -211,7 +211,7 @@ function OneAuction(props) {
                   ? Product[0]?.media[0]?.exact_url
                   : DEFAULT_URL_IMAGE
               }
-              style={{ width: "100%", height: "500px" }}
+              style={{ width: "100%", height: "500px", objectFit:'cover' }}
             />
 
             <div className="flex-row-reverse d-flex over-cover">
@@ -641,7 +641,7 @@ function OneAuction(props) {
                                   ) : (
                                     <div className="db-right ">
                                       <span className="db-title">
-                                        قیمت پایه
+                                        قیمت فعلی
                                       </span>
                                       <div className="price-block">
                                         <span className="price">

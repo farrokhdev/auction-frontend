@@ -33,7 +33,8 @@ function Artworks() {
         home_auction_name: [],
         auctions__type: [],
         auctions__status: [],
-        joined_auction: true
+        joined_auction: true,
+        auctions__visible_in_site: true
     })
 
     const queries = queryString.stringify(params);
@@ -126,7 +127,7 @@ function Artworks() {
 
     const handleSearchProducts = (value) => {
         setParams({
-            ...params, page: 1, search: value ,  ordering: '-creation_date'
+            ...params, page: 1, search: value, ordering: '-creation_date'
         })
     }
 
@@ -178,6 +179,13 @@ function Artworks() {
         })
     }
 
+    const handleSetOrderingPopularity  = () => {
+        setClickDropdown(false);
+        setParams({
+          ...params,
+          ordering: "popularity",
+        });
+      };
 
 
     const handleSetDate = (dateFrom, dateTo) => {
@@ -220,7 +228,8 @@ function Artworks() {
                             handleSetOrdering={handleSetOrdering}
                             handleSetOrderingOld={handleSetOrderingOld}
                             clickDropdown={clickDropdown}
-                            setClickDropdown={setClickDropdown} />
+                            setClickDropdown={setClickDropdown} 
+                            handleSetOrderingPopularity={handleSetOrderingPopularity}/>
                         <div class="row">
                             <Sidebar
                                 handleClose={handleClose}

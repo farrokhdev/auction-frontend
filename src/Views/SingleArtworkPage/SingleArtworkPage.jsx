@@ -1,4 +1,4 @@
-import React , {useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../utils/request";
 import { Link } from "react-router-dom";
 import Footer from "../../components/footer";
@@ -9,7 +9,7 @@ import LastAuctionsSection from "./LastAuctionsSection";
 import MainInfoArtwork from "./MainInfoArtwork";
 import { BASE_URL } from "../../utils";
 import { ONE_PRODUCT } from "../../utils/constant";
-import {Spin} from "antd";
+import { Spin } from "antd";
 import queryString from "query-string";
 
 
@@ -26,9 +26,9 @@ function SigningContract(props) {
     useEffect(() => {
         getProduct();
         getRate();
-    }, [params , props.match.params.id])
+    }, [params, props.match.params.id])
 
-    const getProduct = ()=>{
+    const getProduct = () => {
         setLoading(true)
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}`).then(res => {
             setLoading(false)
@@ -39,24 +39,24 @@ function SigningContract(props) {
         })
     }
 
-    const getRate = ()=>{
+    const getRate = () => {
         axios.get(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}rate/`)
-            .then(res =>{
+            .then(res => {
                 setRate(res.data.data.result)
-        }).catch(err =>{
-            console.log(err)
-        })
+            }).catch(err => {
+                console.log(err)
+            })
     }
-    const updateRate = (value)=>{
+    const updateRate = (value) => {
         let payload = {
             "rate": value
         }
         axios.put(`${BASE_URL}${ONE_PRODUCT(props.match.params.id)}rate/`, payload)
-        .then(res=>{
-            getRate()
-        }).catch(err =>{
+            .then(res => {
+                getRate()
+            }).catch(err => {
 
-        })
+            })
     }
 
     const addBookmark = (data, action) => {
@@ -110,41 +110,42 @@ function SigningContract(props) {
     }
 
 
-  return (
-    <div >
-      <Header />
-        <main className="innercontent" id="oneartwork">
-            <Spin spinning={loading}>
-            <div className="container innercontainer">
+    return (
+        <div >
+            <Header />
+            <main className="innercontent" id="oneartwork">
+                <Spin spinning={loading}>
+                    <div className="container innercontainer">
 
-                <div className="row sm-mrgb50">
-                    <div className="col-12">
-                        <div className="d-inline-flex main-title">
-                            <h2 className="default titr">{artwork?.artwork_title}</h2>
-                            <div className="d-block">
-                                <ul className="breadcrumb-cs ">
-                                    <li><Link to="/">صفحه اصلی</Link></li>
-                                    <li><Link to="/house-acutions" >خانه‌های حراج</Link></li>
-                                    <li><Link to={`/house-acutions/${artwork?.latest_auction?.house?.id}`}>{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</Link></li>
-                                    <li><Link to={`/one-auction/${artwork?.latest_auction?.id}`} > {artwork?.latest_auction?.title} </Link></li>
-                                    <li className="active">{artwork?.artwork_title}</li>
-                                </ul>
+                        <div className="row sm-mrgb50">
+
+                            <div className="col-12">
+                                <div className="d-inline-flex main-title">
+                                    <h2 className="default titr">{artwork?.artwork_title}</h2>
+                                    <div className="d-block">
+                                        <ul className="breadcrumb-cs ">
+                                            <li><Link to="/">صفحه اصلی</Link></li>
+                                            <li><Link to="/house-acutions" >خانه‌های حراج</Link></li>
+                                            <li><Link to={`/house-acutions/${artwork?.latest_auction?.house?.id}`}>{artwork?.latest_auction?.house?.home_auction_name ? artwork?.latest_auction?.house?.home_auction_name : ''}</Link></li>
+                                            <li><Link to={`/one-auction/${artwork?.latest_auction?.id}`} > {artwork?.latest_auction?.title} </Link></li>
+                                            <li className="active">{artwork?.artwork_title}</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <MainInfoArtwork artwork={artwork} rate={Rate} updateRate={updateRate} addBookmark={addBookmark} Follow={Follow} />
+                        <DetailAboutArtworkInfo artwork={artwork} />
+                        <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
+
                     </div>
-                </div>
+                </Spin>
+            </main>
 
-            <MainInfoArtwork artwork={artwork} rate={Rate} updateRate={updateRate} addBookmark={addBookmark} Follow={Follow}/>
-            <DetailAboutArtworkInfo artwork={artwork}/>
-            <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
-
-            </div>
-            </Spin>
-        </main>
-
-      <Footer />
-    </div>
-  );
+            <Footer />
+        </div>
+    );
 }
 
 export default SigningContract;

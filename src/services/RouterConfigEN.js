@@ -44,6 +44,7 @@ import "../assetsEN/styleEN/Main.scss";
 import RequestHouseAuction from "../viewsEN/RequestHouseAuction";
 import EditArtworks from "../viewsEN/EditArtworks";
 import Faq from "../viewsEN/FAQ";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 const RouterConfigEN = (props) => {
   const { check_Language } = useSelector((state) => state.allReducer);
@@ -59,6 +60,7 @@ const RouterConfigEN = (props) => {
     <>
       <HashRouter>
         <Router history={createHashHistory()}>
+        <ScrollToTop>
           <Switch>
             <Route exact path="/en/sign-up" component={SignUp} />
             <Route exact path="/en/login" component={Login} />
@@ -231,6 +233,7 @@ const RouterConfigEN = (props) => {
               <Redirect to={{ pathname: "/en/login" }} />
             )}
           </Switch>
+          </ScrollToTop>
         </Router>
       </HashRouter>
     </>

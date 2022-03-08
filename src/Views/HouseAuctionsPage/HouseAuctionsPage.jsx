@@ -92,6 +92,21 @@ function HouseAuctionsPage() {
         })
     }
 
+    const handleSetOrderingOld = () => {
+        setClickDropdown(false)
+        setParams({
+            ...params, ordering: 'date_joined'
+        })
+    }
+
+    const handleSetOrderingPopularity  = () => {
+        setClickDropdown(false);
+        setParams({
+          ...params,
+          ordering: 'popularity',
+        });
+      };
+    
 
     useEffect(() => {
         getCategoryActivity();
@@ -173,7 +188,8 @@ function HouseAuctionsPage() {
                                 })} 
                                 >
                                         <li onClick={(e) => handleSetOrdering()}>جدیدترین</li>
-                                        {/* <li onClick={(e) => handleSetOrdering()}>قدیمی ترین</li> */}
+                                        <li onClick={(e) => handleSetOrderingOld()}>قدیمی ترین</li>
+                                        <li onClick={(e)=> handleSetOrderingPopularity()}>محبوب‌ترین</li>
                                        
                                     </ul>
                                 </div>
