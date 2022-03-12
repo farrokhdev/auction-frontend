@@ -130,20 +130,6 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
             }
             <div className="tags-box" >
             </div>
-            {Tags?.length
-              ? Tags?.map((item) => (
-                  <Tag
-                    closable
-                    onClose={(e) => {
-                      e.preventDefault();
-                      handleClose(item);
-                    }}
-                  >
-                    {item}{" "}
-                  </Tag>
-                ))
-              : ""}
-            <div className="tags-box"></div>
           </div>
 
           <div className="search-box">

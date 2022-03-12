@@ -11,17 +11,13 @@ import { BASE_URL } from "../../utils";
 import { ONE_PRODUCT } from "../../utils/constant";
 import { Link } from 'react-router-dom';
 
-function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
+function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow ,setArtwork}) {
 
     const { is_logged_in } = useSelector((state) => state.authReducer)
     const [loading, setLoading] = useState(false)
     // const [productList, setProductList] = useState([])
     const [prev, setPrev] = useState(null)
     const [next, setNext] = useState(null)
-
-
-    console.log(next);
-
 
     const getListProducts = () => {
         axios.get(`${BASE_URL}/sale/product/?auctions__id=${artwork?.latest_auction?.id}&ordering=product_auction__lot_num&page=1&page_size=10&search=`).then(res => {
@@ -131,14 +127,9 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
             <div className="col-lg-6">
                 <div className="detail-block">
                     <div class="detail-block-header">
-                        {console.log(prev, next, artwork?.id)}
-
 
                         <Link to={(prev?.id && prev?.id !== artwork?.id) ? `/artworks/${prev?.id}` : '#'} className="btn-lot prev" style={{ cursor: `${(prev?.id && prev?.id !== artwork?.id) ? "pointer" : "not-allowed"}` }}><span class="d-none d-md-block">لت قبلی</span></Link>
-
-
-
-
+                        
                         <div class="search-input my-3 w-50 mx-auto">
                             <input
                                 id="product-searchh"
@@ -194,7 +185,7 @@ function MainInfoArtwork({ artwork, rate, updateRate, addBookmark, Follow }) {
 
 
                                 {((artwork?.latest_auction?.type === 'ONLINE') || (artwork?.latest_auction?.type === 'PERIODIC') || (artwork?.latest_auction?.type === 'LIVE')) ?
-                                    <Bid artwork={artwork} /> : ''}
+                                    <Bid artwork={artwork} setArtwork={setArtwork} /> : ''}
                                 {((artwork?.latest_auction?.type === 'HIDDEN') || (artwork?.latest_auction?.type === 'SECOND_HIDDEN')) ?
                                     <Secret artwork={artwork} /> : ''}
                                 <div className="detail-ah">

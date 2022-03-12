@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openDashboard } from "../../redux/reducers/all/all.actions"
 import classnames from "classnames";
 
-function Maintitle({ handleSetOrdering, handleSetOrderingOld, title, clickDropdown, setClickDropdown,handleSetOrderingPopularity }) {
+function Maintitle({ handleSetOrdering, handleSetOrderingOld, title, clickDropdown, setClickDropdown, handleSetOrderingPopularity, handleSetBestSeller, showFilter }) {
   const { is_Open_Dashboard } = useSelector((state) => state.allReducer)
   const dispatch = useDispatch();
 
@@ -41,9 +41,9 @@ function Maintitle({ handleSetOrdering, handleSetOrderingOld, title, clickDropdo
             })}>
               <li onClick={(e) => handleSetOrdering()} className="">جدیدترین</li>
               <li onClick={(e) => handleSetOrderingOld()}>قدیمی ترین</li>
-              <li  onClick={(e) => handleSetOrderingPopularity()}>محبوب‌ترین</li>
-              {/*// <li disabled>محبوب‌ترین</li>
-              // <li disabled>پرفروش‌ترین</li> */}
+              <li onClick={(e) => handleSetOrderingPopularity()}>محبوب‌ترین</li>
+              {showFilter &&
+                <li onClick={(e) => handleSetBestSeller()}>پرفروش‌ترین</li>}
             </ul>
           </div>
 

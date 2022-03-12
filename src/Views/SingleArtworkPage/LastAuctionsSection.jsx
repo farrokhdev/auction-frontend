@@ -12,8 +12,6 @@ import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 function LastAuctionsSection(props) {
 
     const { id, artwork_id } = props;
-
-    console.log("idddddd===>>>>", id)
     const [is_saved, setIs_saved] = useState(false)
     const [products, setProducts] = useState([])
 

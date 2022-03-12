@@ -34,7 +34,7 @@ function Artworks() {
         auctions__type: [],
         auctions__status: [],
         joined_auction: true,
-        auctions__visible_in_site: true
+        visible_in_site: true
     })
 
     const queries = queryString.stringify(params);
@@ -183,7 +183,7 @@ function Artworks() {
         setClickDropdown(false);
         setParams({
           ...params,
-          ordering: "popularity",
+          ordering: "-popularity",
         });
       };
 
@@ -229,7 +229,8 @@ function Artworks() {
                             handleSetOrderingOld={handleSetOrderingOld}
                             clickDropdown={clickDropdown}
                             setClickDropdown={setClickDropdown} 
-                            handleSetOrderingPopularity={handleSetOrderingPopularity}/>
+                            handleSetOrderingPopularity={handleSetOrderingPopularity}
+                            showFilter={false}/>
                         <div class="row">
                             <Sidebar
                                 handleClose={handleClose}

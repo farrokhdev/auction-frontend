@@ -20,7 +20,7 @@ function Chooseartwork(props) {
   },[auction])
   const getData = (e="") => {
     setLoading(true)
-    axios.get(`${BASE_URL}/sale/product/?auctions__id=${props.id}`)
+    axios.get(`${BASE_URL}/sale/product/?auctions__id=${props.id}&page_size=9999`)
         .then(resp => {
           setLoading(false)
           if ((resp.data.code === 200) && resp.data?.data?.result) {

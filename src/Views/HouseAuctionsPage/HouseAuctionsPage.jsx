@@ -103,9 +103,17 @@ function HouseAuctionsPage() {
         setClickDropdown(false);
         setParams({
           ...params,
-          ordering: 'popularity',
+          ordering: '-popularity',
         });
       };
+
+      const handleSetBestSeller = ()=>{
+        setClickDropdown(false);
+        setParams({
+          ...params,
+          ordering: "-best_seller",
+        });
+      }
     
 
     useEffect(() => {
@@ -190,6 +198,7 @@ function HouseAuctionsPage() {
                                         <li onClick={(e) => handleSetOrdering()}>جدیدترین</li>
                                         <li onClick={(e) => handleSetOrderingOld()}>قدیمی ترین</li>
                                         <li onClick={(e)=> handleSetOrderingPopularity()}>محبوب‌ترین</li>
+                                        <li onClick={(e) => handleSetBestSeller()}>پرفروش‌ترین</li>
                                        
                                     </ul>
                                 </div>

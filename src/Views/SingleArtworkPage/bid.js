@@ -12,7 +12,7 @@ import {
   WEB_SOCKET_BID,
 } from "../../utils/constant";
 
-const Bid = ({ artwork }) => {
+const Bid = ({ artwork, setArtwork }) => {
   let numeral = require("numeral");
   const [loading, setLoading] = useState(false);
   const [auction, setAuction] = useState({});
@@ -21,6 +21,7 @@ const Bid = ({ artwork }) => {
   const [currentPrice, setCurrentVPrice] = useState(0);
   const [currentSuggest, setCurrentSuggest] = useState(0);
   const [maxUserBid, setMaxUserBid] = useState(0);
+  const [firstBid, setfirstBid] = useState(true);
   const [currentSuggestValue, setCurrentSuggestValue] = useState(0);
   const { is_logged_in } = useSelector((state) => state.authReducer);
   const [form] = Form.useForm();
@@ -92,48 +93,60 @@ const Bid = ({ artwork }) => {
   };
 
   const handleIncrease = () => {
-    if (steps.length) {
-      steps.some((item, i, array) => {
-        if (i < array.length - 1) {
-          if (
-            currentValue >= item.threshold &&
-            currentValue < steps[i + 1].threshold
-          ) {
-            setBid(item.step);
-            return true;
-          } else if (currentValue < item.threshold && i === 0) {
-            setBid(item.step);
-            return true;
+    if (firstBid) {
+      setBid(0)
+      setfirstBid(false)
+    } else {
+
+      if (steps.length) {
+        steps.some((item, i, array) => {
+          if (i < array.length - 1) {
+            if (
+              currentValue >= item.threshold &&
+              currentValue < steps[i + 1].threshold
+            ) {
+              setBid(item.step);
+              return true;
+            } else if (currentValue < item.threshold && i === 0) {
+              setBid(item.step);
+              return true;
+            } else {
+              return false;
+            }
           } else {
-            return false;
+            setBid(item.step);
           }
-        } else {
-          setBid(item.step);
-        }
-      });
+        });
+      }
     }
   };
 
   const handleIncreaseminus = () => {
-    if (steps.length) {
-      steps.some((item, i, array) => {
-        if (i < array.length - 1) {
-          if (
-            currentValue > item.threshold &&
-            currentValue <= steps[i + 1].threshold
-          ) {
-            minusBid(item.step);
-            return true;
-          } else if (currentValue < item.threshold && i === 0) {
-            minusBid(item.step);
-            return true;
+    if (firstBid) {
+      setBid(0)
+      setfirstBid(false)
+    } else {
+
+      if (steps.length) {
+        steps.some((item, i, array) => {
+          if (i < array.length - 1) {
+            if (
+              currentValue > item.threshold &&
+              currentValue <= steps[i + 1].threshold
+            ) {
+              minusBid(item.step);
+              return true;
+            } else if (currentValue < item.threshold && i === 0) {
+              minusBid(item.step);
+              return true;
+            } else {
+              return false;
+            }
           } else {
-            return false;
+            minusBid(item.step);
           }
-        } else {
-          minusBid(item.step);
-        }
-      });
+        });
+      }
     }
   };
   const setBid = (value) => {
@@ -146,7 +159,7 @@ const Bid = ({ artwork }) => {
     setCurrentValue(currentValue - value);
   };
 
-  const handleDecrease = () => {};
+  const handleDecrease = () => { };
   const onFinish = (values) => {
     console.log(values);
     if (artwork?.id) sendBid(values);
@@ -161,7 +174,14 @@ const Bid = ({ artwork }) => {
       .post(`${BASE_URL}${BID}`, payload)
       .then((resp) => {
         if (resp.status === 201) {
+          
           setMaxUserBid(values.price);
+          
+          if(artwork?.bidding_details?.max_user_bid === null ){
+            let artBidUser = artwork;
+            artBidUser.bidding_details.max_user_bid = values?.price
+            setArtwork(artBidUser)
+          }
           message.success("درخواست شما با موفقیت ارسال شد");
         }
         setLoading(false);
@@ -217,8 +237,8 @@ const Bid = ({ artwork }) => {
           is_logged_in ? (
             <div className="detail-placebid general-bid">
               {artwork?.product_status === "on_stage" &&
-              artwork?.join_auction_request_state === "approved" &&
-              artwork?.latest_auction?.type !== "LIVE" ? (
+                artwork?.join_auction_request_state === "approved" &&
+                artwork?.latest_auction?.type !== "LIVE" ? (
                 <Form
                   onFinish={onFinish}
                   form={form}
@@ -281,33 +301,33 @@ const Bid = ({ artwork }) => {
                         <div>
                           {artwork?.join_auction_request_state ===
                             "approved" && (
-                            <p className="text-success">
-                              درخواست عضویت شما تایید شده است
-                            </p>
-                          )}
+                              <p className="text-success">
+                                درخواست عضویت شما تایید شده است
+                              </p>
+                            )}
                           {artwork?.join_auction_request_state ===
                             "pending" && (
-                            <p className="text-warning">
-                              درخواست عضویت شما در انتظار تایید حراجی است
-                            </p>
-                          )}
+                              <p className="text-warning">
+                                درخواست عضویت شما در انتظار تایید حراجی است
+                              </p>
+                            )}
                           {artwork?.join_auction_request_state ===
                             "not_selected" && (
-                            <>
-                              <h5 className="text-danger">
-                                برای این اثر نمی توانید پیشنهاد دهید
-                              </h5>
-                              <span>برای ثبت پیشنهاد باید </span>
-                              <Link
-                                to={`/buyer-register/${artwork?.latest_auction?.id}`}
-                                className="d-inline-block"
-                              >
-                                {" "}
-                                عضو حراجی{" "}
-                              </Link>
-                              <span> باشید</span>
-                            </>
-                          )}
+                              <>
+                                <h5 className="text-danger">
+                                  برای این اثر نمی توانید پیشنهاد دهید
+                                </h5>
+                                <span>برای ثبت پیشنهاد باید </span>
+                                <Link
+                                  to={`/buyer-register/${artwork?.latest_auction?.id}`}
+                                  className="d-inline-block"
+                                >
+                                  {" "}
+                                  عضو حراجی{" "}
+                                </Link>
+                                <span> باشید</span>
+                              </>
+                            )}
                           {artwork?.join_auction_request_state ===
                             "rejected" && <p>درخواست عضویت شما رد شده است</p>}
                           <p>
@@ -333,14 +353,20 @@ const Bid = ({ artwork }) => {
                   )}
                 </p>
               )}
-              {artwork?.product_status === "on_stage" &&
-              artwork?.latest_auction?.max_user_bid ? (
-                <span className="alert-success text-center">
-                  آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد
-                </span>
-              ) : (
-                ""
-              )}
+
+              {artwork?.product_status === "on_stage"
+                && artwork?.bidding_details?.max_user_bid
+                ? (
+                  <span className="alert-success text-center">
+                    آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد
+                    {console.log("maxUserBid", maxUserBid)}
+                  </span>
+                ) : (
+                  <span className="alert-success text-center">
+                    {/* تاکنون پیشنهادی برای این اثر ثبت نکرده اید */}
+                    {console.log("maxUserBid", maxUserBid)}
+                  </span>
+                )}
             </div>
           ) : (
             <p className="text-center category-icon">
