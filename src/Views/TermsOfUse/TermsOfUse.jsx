@@ -9,6 +9,7 @@ function TermsOfUse(props) {
     const [loading, setLoading] = useState(false)
 
 
+    console.log("content" , content)
 
     const getContent = () => {
         setLoading(true)

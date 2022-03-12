@@ -135,7 +135,7 @@ function SigningContract(props) {
                             </div>
                         </div>
 
-                        <MainInfoArtwork artwork={artwork} rate={Rate} updateRate={updateRate} addBookmark={addBookmark} Follow={Follow} />
+                        <MainInfoArtwork setArtwork={setArtwork} artwork={artwork} rate={Rate} updateRate={updateRate} addBookmark={addBookmark} Follow={Follow} />
                         <DetailAboutArtworkInfo artwork={artwork} />
                         <LastAuctionsSection id={artwork?.latest_auction?.id} artwork_id={artwork?.id} />
 

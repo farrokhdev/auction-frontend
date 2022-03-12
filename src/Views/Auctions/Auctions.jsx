@@ -42,6 +42,7 @@ function Auctions() {
     status: [],
   });
 
+
   const { type } = useSelector((state) => state.auctionReducer);
 
   const queries = queryString.stringify(params);
@@ -66,6 +67,7 @@ function Auctions() {
   useEffect(() => {
     getProducts();
   }, [params, Tags]);
+
 
   const Follow = (data, action) => {
     if (action) {
@@ -207,9 +209,17 @@ function Auctions() {
     setClickDropdown(false);
     setParams({
       ...params,
-      ordering: "popularity",
+      ordering: "-popularity",
     });
   };
+
+  const handleSetBestSeller = ()=>{
+    setClickDropdown(false);
+    setParams({
+      ...params,
+      ordering: "-best_seller",
+    });
+  }
 
   const handleSetDate = (dateFrom, dateTo) => {
     setParams({
@@ -261,6 +271,8 @@ function Auctions() {
               clickDropdown={clickDropdown}
               setClickDropdown={setClickDropdown}
               handleSetOrderingPopularity={handleSetOrderingPopularity}
+              handleSetBestSeller={handleSetBestSeller}
+              showFilter={true}
             />
             <div className="row">
               <Sidebar
