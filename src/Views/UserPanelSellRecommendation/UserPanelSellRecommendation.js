@@ -26,6 +26,8 @@ function UserPanelSellAdvice() {
 
 
     })
+
+    console.log("Suggestions" , Suggestions)
     let numeral = require('numeral');
     const [Posting, setPosting] = useState(false);
 

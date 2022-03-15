@@ -90,58 +90,70 @@ const Validate = (props) => {
                         </div>
 
                     </div>
-                    {is_send_invitation ? <div className="col-12 mb-4" dir="ltr">
-                        {/*<button type="button" className="btn-outline-pink" >آپلود لیست</button>*/}
-                        <div className="text-end">
-                            <a href={ExampleExel} download={true} className="text-secondary m-0"> نمونه  <DownloadOutlined /></a>
-                            <Upload {...props} className="btn-outline-pink" style={{ color: "#e6007e" }}
-                                customRequest={
-                                    async (e) => {
-                                        const { onSuccess, onError, file, action, onProgress } = e;
-                                        let getDate = new Date();
-                                        let formData = new FormData()
-                                        getDate = moment(getDate).format("YYYY-MM-DDThh:mm")
-                                        onSuccess({ "status": "uploading" })
-                                        await formData.append('file', e?.file)
-                                        if (finalData?.title)
-                                            console.log("formData==>", finalData)
-                                            let payload = { "content_type": "image" }
-                                        await axios.post(`${BASE_URL}/core/upload/`, payload)
-                                            .then(resp => {
-                                                if(resp.data.code === 200){
-                                                    console.log("resp" , resp);
-                                                }
-                                             })
-                                                        .catch(err=>{
-                                                            console.log(err);
-                                                        })
+                    {is_send_invitation ?
+
+                        <>
+                            <div className="col-12 mb-4" dir="ltr">
+                                {/*<button type="button" className="btn-outline-pink" >آپلود لیست</button>*/}
+                                <div className="text-end">
+                                    <a href={ExampleExel} download={true} className="text-secondary m-0"> نمونه  <DownloadOutlined /></a>
+                                    <Upload {...props} className="btn-outline-pink" style={{ color: "#e6007e" }}
+                                        customRequest={
+                                            async (e) => {
+                                                const { onSuccess, onError, file, action, onProgress } = e;
+                                                let getDate = new Date();
+                                                let formData = new FormData()
+                                                getDate = moment(getDate).format("YYYY-MM-DDThh:mm")
+                                                onSuccess({ "status": "uploading" })
+                                                await formData.append('file', e?.file)
+                                                if (finalData?.title)
+                                                    console.log("formData==>", finalData)
+                                                let payload = { "content_type": "image" }
+                                                await axios.post(`${BASE_URL}/core/upload/`, payload)
+                                                    .then(resp => {
+                                                        if (resp.data.code === 200) {
+                                                            console.log("resp", resp);
+                                                        }
+                                                    })
+                                                    .catch(err => {
+                                                        console.log(err);
+                                                    })
                                                 await axios.put(`${BASE_URL}${UPLOAD_EXEL_AUCTION(finalData?.title + getDate)}`, formData)
-                                            .then(r => {
-                                                if (r?.data.code === 201)
-                                                    onSuccess({ "status": "done" })
-                                                else
-                                                    onError(() => {
-                                                    }, { "status": "error" })
-                                            }).catch(e => {
-                                                onError({ "status": "error" })
-                                            })
-                                    }
-                                }>
-                                <Button className="btn-outline-pink border-0 m-0" style={{ color: "#e6007e" }}
-                                    icon={<UploadOutlined />}>آپلود لیست </Button>
+                                                    .then(r => {
+                                                        if (r?.data.code === 201)
+                                                            onSuccess({ "status": "done" })
+                                                        else
+                                                            onError(() => {
+                                                            }, { "status": "error" })
+                                                    }).catch(e => {
+                                                        onError({ "status": "error" })
+                                                    })
+                                            }
+                                        }>
+                                        <Button className="btn-outline-pink border-0 m-0" style={{ color: "#e6007e" }}
+                                            icon={<UploadOutlined />}>آپلود لیست </Button>
 
-                            </Upload>
+                                    </Upload>
 
-                        </div>
-                        {/*<div className="text-end pe-2 mt-2"></div>*/}
+                                    {/*<div className="text-end pe-2 mt-2"></div>*/}
+                                </div>
+                            </div>
+                            <div className="col-12" >
+                                <div className="form-check sm-mrgt35">
+                                    {/*<input className="form-check-input" type="checkbox" value=""*/}
+                                    {/*id="checkbox43"/>*/}
+                                    <label className="form-check-label" htmlFor="checkbox43">
+                                        افزایش اعتبار
+                                    </label>
+                                </div>
+                            </div>
 
-                    </div>
+                            <PriceAddValidate />
+                        </>
                         :
                         <>
                             <div className="col-12">
                                 <div className="form-check sm-mrgt35">
-                                    {/*<input className="form-check-input" type="checkbox" value=""*/}
-                                    {/*id="checkbox43"/>*/}
                                     <label className="form-check-label" htmlFor="checkbox43">
                                         افزایش اعتبار
                                     </label>

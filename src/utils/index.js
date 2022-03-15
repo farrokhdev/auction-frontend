@@ -9,6 +9,7 @@ const dev = {
 };
 
 const test = {
+  // BASE_URL: "http://192.168.0.145:8003/api",
   BASE_URL: "https://api.beta.smartauctionhouse.com/api",
   // BASE_URL: "https://018c-93-117-190-95.ngrok.io/api",
   // PARAMS:
