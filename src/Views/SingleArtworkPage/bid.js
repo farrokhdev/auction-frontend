@@ -361,12 +361,7 @@ const Bid = ({ artwork, setArtwork }) => {
                     آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد
                     {console.log("maxUserBid", maxUserBid)}
                   </span>
-                ) : (
-                  <span className="alert-success text-center">
-                    {/* تاکنون پیشنهادی برای این اثر ثبت نکرده اید */}
-                    {console.log("maxUserBid", maxUserBid)}
-                  </span>
-                )}
+                ) : ""}
             </div>
           ) : (
             <p className="text-center category-icon">

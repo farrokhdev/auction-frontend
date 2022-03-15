@@ -138,8 +138,11 @@ function Index() {
 
         if (!allDataMain?.gallery_start_date) {
             //error from server
-            delete allDataMain["gallery_start_date"]
-            delete allDataMain["gallery_end_date"]
+            // delete allDataMain["gallery_start_date"]
+            // delete allDataMain["gallery_end_date"]
+
+            allDataMain["gallery_start_date"] = null
+            allDataMain["gallery_end_date"] = null
         } else {
             allDataMain["gallery_start_date"] = await moment(allDataMain.gallery_start_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_start_clock).format("HH:mm")
             allDataMain["gallery_end_date"] = await moment(allDataMain.gallery_end_date).format("YYYY-MM-DD ") + moment(allDataMain.gallery_end_clock).format("HH:mm")
@@ -155,7 +158,7 @@ function Index() {
         setLoading(true)
         allData["start_time"] = await moment(allDataMain.start_time).format("YYYY-MM-DD ") + moment(allDataMain.start_clock).format("HH:mm")
         allData["end_time"] = await (allDataMain?.type !== "LIVE") ? moment(allDataMain.end_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm") :
-         moment(allDataMain.start_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm")
+            moment(allDataMain.start_time).format("YYYY-MM-DD ") + moment(allDataMain.end_clock).format("HH:mm")
         allDataMain["bidding_interval"] = await (allDataMain?.type === "ONLINE") ? allDataMain.bidding_interval : null
 
         let auction_product = []
@@ -189,7 +192,7 @@ function Index() {
         }
         let getDate = new Date();
         getDate = await moment(getDate).format("YYYY-MM-DDThh:mm")
-        console.log("allData==>" , allDataMain)
+        console.log("allData==>", allDataMain)
         let file_name = await is_send_invitation ? allDataMain?.title + getDate : "";
 
         if (auctionId !== "new") {

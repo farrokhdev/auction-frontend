@@ -14,14 +14,16 @@ function CardItem(props) {
                     <div className="artwork-img">
                         {/* <img src={props?.exactUrl} width="317" height="280" alt="auction_img" className="img-fluid" /> */}
 
-                        <div className="image-custom-back" 
-                        style={{
-                            backgroundImage: `url(${props?.exactUrl})`,
-                            height: "8rem"
-                        }}
-                        // style={{  backgroundImage: `url(${props?.exactUrl && handleShowImage(props?.exactUrl)})`}}
-                        >
-                        </div>
+                        <Link to={`/artworks/${props?.details?.id}`}>
+                            <div className="image-custom-back"
+                                style={{
+                                    backgroundImage: `url(${props?.exactUrl})`,
+                                    height: "8rem"
+                                }}
+                            // style={{  backgroundImage: `url(${props?.exactUrl && handleShowImage(props?.exactUrl)})`}}
+                            >
+                            </div>
+                        </Link>
                     </div>
                     <div className="artwork-info">
                         <div className="artwork-info-left col-md-6">

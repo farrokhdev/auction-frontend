@@ -64,6 +64,7 @@ const BaseInformation = (props) => {
     const onFinish = (values) => {
         // console.log(values)
         // setFinalData({...finalData, ...values})
+        
         if (media) {
             dispatch(setAUCTION({ ...values, media, has_gallery: has_gallery_state }))
             setSelectComponent(selectComponent + 1)
@@ -311,7 +312,7 @@ const BaseInformation = (props) => {
                                             </div>
                                         </div>
                                         {has_gallery_state && <>
-                                            <div className="col-md-6" />
+                                            {/* <div className="col-md-6" />
                                             <div className="col-md-6">
                                                 <div className="input-group">
                                                     <label className="default-lable"> تاریخ شروع نمایشگاه</label>
@@ -320,13 +321,13 @@ const BaseInformation = (props) => {
                                                         name="gallery_start_date"
                                                         rules={[
                                                             {
-                                                                required: true,
+                                                                required: false,
                                                                 message: "تکمیل این فیلد ضروری است",
                                                             },
                                                         ]}>
                                                         <DatePicker
                                                             className="default-input pr-2 mt-2"
-                                                            // value={this.state.date}
+                                                           
                                                             timePicker={false}
                                                             isGregorian={false}
                                                             onChange={(value) => {
@@ -373,21 +374,20 @@ const BaseInformation = (props) => {
                                                         name="gallery_end_date"
                                                         rules={[
                                                             {
-                                                                required: true,
+                                                                required: false,
                                                                 message: "تکمیل این فیلد ضروری است",
                                                             },
-                                                            {
-                                                                validator: (_, value) =>
-                                                                    value >= todayGallery ? Promise.resolve() : Promise.reject(new Error(` تاریخ بزرگتر از تاریخ شروع وارد کنید `))
-                                                            },
+                                                            // {
+                                                            //     validator: (_, value) =>
+                                                            //         value >= todayGallery ? Promise.resolve() : Promise.reject(new Error(` تاریخ بزرگتر از تاریخ شروع وارد کنید `))
+                                                            // },
                                                         ]}>
                                                         <DatePicker
                                                             className="default-input pr-2 mt-2"
-                                                            // value={this.state.date}
+                                                           
                                                             timePicker={false}
                                                             isGregorian={false}
-                                                            // onChange={this.handleDateChange}
-                                                            // name="gallery_end_date"
+                                                           
                                                             id="gallery_end_date"
                                                             min={momentJalaali().startOf('moment')}
                                                         />
@@ -418,7 +418,7 @@ const BaseInformation = (props) => {
                                                             format={"HH:mm"} showNow={false} className="default-input custom-timePicker mt-2" />
                                                     </Form.Item>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
                                             <div className="col-md-12">
                                                 <div className="input-group">

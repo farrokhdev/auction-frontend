@@ -19,7 +19,7 @@ function MyPurchases() {
     const [params, setParams] = useState({
         page: 1,
         page_size: 10,
-        ordering : '-creation_date'
+        ordering: '-creation_date'
     })
 
     // Get list of Won purchase user
@@ -68,6 +68,7 @@ function MyPurchases() {
                                     {!loading && !!listWonPurchasse?.length ? listWonPurchasse?.map(item =>
 
                                         <CardItem
+                                            details={item}
                                             artist={item?.persian_artist_name}
                                             artworkTitle={item?.artwork_title}
                                             Link={item?.latest_auction?.house?.home_auction_name}

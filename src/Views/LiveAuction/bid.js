@@ -79,7 +79,7 @@ const Bid = ({
                       if (resp.data.code === 200 && resp.data?.data?.result) {
                         const res = resp.data?.data?.result;
 
-                        setProduct(res);
+                        // setProduct(res);
                         setCountProducts(resp.data?.data?.count);
                       }
                     })
@@ -227,6 +227,20 @@ const Bid = ({
       .post(`${BASE_URL}${BID}`, payload)
       .then((resp) => {
         if (resp.status === 201) {
+
+          setMaxUserBid(values.price);
+
+          if (artwork?.bidding_details?.max_user_bid === null) {
+            let artBidUser = Product?.map((productBid) => {
+              if (productBid?.id === artwork?.id) {
+
+                productBid.bidding_details.max_user_bid = values?.price
+              }
+              return productBid
+            });
+            setProduct(artBidUser)
+            console.log("artBidUser", artBidUser)
+          }
           message.success("درخواست شما با موفقیت ارسال شد");
         }
         setLoading(false);
@@ -282,7 +296,7 @@ const Bid = ({
         {is_logged_in ? (
           <div className="detail-placebid general-bid">
             {artwork?.product_status === "on_stage" &&
-            artwork?.join_auction_request_state ? (
+              artwork?.join_auction_request_state ? (
               <Form
                 onFinish={onFinish}
                 form={form}
@@ -372,9 +386,18 @@ const Bid = ({
                 )}
               </p>
             )}
-            <span className="alert-success text-center">
+            {/* <span className="alert-success text-center">
               آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد
-            </span>
+            </span> */}
+
+            {artwork?.product_status === "on_stage"
+              && artwork?.bidding_details?.max_user_bid
+              ? (
+                <span className="alert-success text-center">
+                  آخرین قیمت پیشنهادی شما {maxUserBid} تومان میباشد
+                  {console.log("maxUserBid", maxUserBid)}
+                </span>
+              ) : ""}
           </div>
         ) : (
           <p className="text-center mt-4 ">

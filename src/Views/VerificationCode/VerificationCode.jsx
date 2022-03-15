@@ -30,7 +30,7 @@ function VerificationCode(props) {
         }else{
           setTimeout(() => {
             message.success("لطفا وارد شوید")
-            window.location.href = "#/login"
+            window.location.href = "#/login?next=/#/"
           }, 500);
 
         }
