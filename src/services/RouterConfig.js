@@ -60,6 +60,7 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 import LiveAuction from "../Views/LiveAuction";
 import LiveDetails from "../Views/AuctionsList/LiveDetails";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
+import SingleViewAuctionPageLive from "../Views/AuctionsList/SingleViewAuctionPageLive";
 
 
 const RouterConfig = (props) => {
@@ -110,6 +111,7 @@ const RouterConfig = (props) => {
                                     {role === "home_auction" || role === "admin" ?
                                         <Route exact path="/auctions-list" component={AuctionsList} />
                                         : ''}
+                                    <Route exact path="/auctions/live/:id" component={SingleViewAuctionPageLive} />
 
                                     <Route exact path="/add-artworks" component={AddArtWorks} />
 
