@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -63,6 +63,50 @@ function Auctions() {
         console.error(err);
       });
   };
+
+
+
+  // const [timerDays, setTimerDays] = useState('00');
+  // const [timerHours, setTimerHours] = useState('00');
+  // const [timerMinutes, setTimerMinutes] = useState('00');
+  // const [timerseconds, setTimerseconds] = useState('00');
+
+
+  // let interval = useRef();
+  // const startTimer = (time) => {
+  //   const countdownDate = new Date(time).getTime();
+  //   interval = setInterval(() => {
+  //     const now = new Date().getTime();
+  //     const distance = countdownDate - now;
+
+  //     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //     const hours = Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
+  //     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+  //     if (distance < 0) {
+  //       // stop our timer
+  //       clearInterval(interval.current);
+  //     } else {
+  //       // update timer
+  //       setTimerDays(days);
+  //       setTimerHours(hours);
+  //       setTimerMinutes(minutes);
+  //       setTimerseconds(seconds);
+  //     }
+
+  //   }, 1000);
+  // };
+
+
+  // // component DidMount 
+  // useEffect(() => {
+  //     startTimer();
+  //     return () => {
+  //       clearInterval(interval.current)
+  //     }
+  // })
 
   useEffect(() => {
     getProducts();
@@ -205,7 +249,7 @@ function Auctions() {
     });
   };
 
-  const handleSetOrderingPopularity  = () => {
+  const handleSetOrderingPopularity = () => {
     setClickDropdown(false);
     setParams({
       ...params,
@@ -213,7 +257,7 @@ function Auctions() {
     });
   };
 
-  const handleSetBestSeller = ()=>{
+  const handleSetBestSeller = () => {
     setClickDropdown(false);
     setParams({
       ...params,
@@ -226,15 +270,15 @@ function Auctions() {
       ...params,
       start_date_before: dateTo
         ? moment
-            .from(dateTo, "fa", "YYYY/MM/DD")
-            .locale("en")
-            .format("YYYY-MM-DD")
+          .from(dateTo, "fa", "YYYY/MM/DD")
+          .locale("en")
+          .format("YYYY-MM-DD")
         : "",
       start_date_after: dateFrom
         ? moment
-            .from(dateFrom, "fa", "YYYY/MM/DD")
-            .locale("en")
-            .format("YYYY-MM-DD")
+          .from(dateFrom, "fa", "YYYY/MM/DD")
+          .locale("en")
+          .format("YYYY-MM-DD")
         : "",
       page: 1,
     });
@@ -247,6 +291,7 @@ function Auctions() {
       page: 1,
     });
   };
+
 
   function timeExpire(time) {
     let expire = new Date(time);
@@ -296,149 +341,191 @@ function Auctions() {
               <div className="col-lg-9">
                 {Auctions && Auctions?.length >= 1
                   ? Auctions.map((item, key) => {
-                      return (
-                        <div key={key} className="row-blocks">
-                          <div className="row">
-                            <div className="col-md-4">
-                              {(item?.status === "ACTIVE" &&
-                                item?.type === "LIVE") ||
+                    return (
+                      <div key={key} className="row-blocks">
+                        <div className="row">
+                          <div className="col-md-4">
+                            {(item?.status === "ACTIVE" &&
+                              item?.type === "LIVE") ||
                               item?.type === "ONLINE" ? (
-                                <Link to={`/live-auction/${item?.id}`}>
-                                  <div
-                                    className="image-custom-back"
-                                    style={{
-                                      backgroundImage: `url(${item?.media?.exact_url})`,
-                                      height: "250px",
-                                    }}
-                                  />
-                                </Link>
-                              ) : (
-                                <Link
-                                  to={`/one-auction/${item?.id}`}
-                                  className="bg-shadow tr-shadow10"
+                              <Link to={`/live-auction/${item?.id}`}>
+                                <div
+                                  className="image-custom-back"
+                                  style={{
+                                    backgroundImage: `url(${item?.media?.exact_url})`,
+                                    height: "250px",
+                                  }}
+                                />
+                              </Link>
+                            ) : (
+                              <Link
+                                to={`/one-auction/${item?.id}`}
+                                className="bg-shadow tr-shadow10"
+                              >
+                                {/* <img className="image-auction" src={item?.media?.exact_url}  alt="" /> */}
+                                <div
+                                  className="image-custom-back"
+                                  style={{
+                                    backgroundImage: `url(${item?.media?.exact_url})`,
+                                    height: "250px",
+                                  }}
+                                />
+                              </Link>
+                            )}
+                          </div>
+                          <div className="col-md-8">
+                            <div className="block-head row">
+                              <div className="col-xl-3 col-sm-4 col-3">
+                                <span className="category-icon">
+                                  <span className="d-none d-md-inline-block">
+                                    {" "}
+                                  </span>{" "}
+                                  {convertToEn(item?.type)}
+                                </span>
+                              </div>
+                              <div className="col-xl-9 col-sm-8 col-9 textalign-left">
+                                <button
+                                  onClick={() =>
+                                    Follow(
+                                      item?.following?.follow?.is_active
+                                        ? item?.following?.follow?.id
+                                        : item?.id,
+                                      item?.following?.follow?.is_active
+                                    )
+                                  }
+                                  type="button"
+                                  className={
+                                    " reminder-icon " +
+                                    (item?.following?.follow?.is_active
+                                      ? "active"
+                                      : "")
+                                  }
                                 >
-                                  {/* <img className="image-auction" src={item?.media?.exact_url}  alt="" /> */}
-                                  <div
-                                    className="image-custom-back"
-                                    style={{
-                                      backgroundImage: `url(${item?.media?.exact_url})`,
-                                      height: "250px",
-                                    }}
-                                  />
-                                </Link>
-                              )}
-                            </div>
-                            <div className="col-md-8">
-                              <div className="block-head row">
-                                <div className="col-xl-3 col-sm-4 col-3">
-                                  <span className="category-icon">
-                                    <span className="d-none d-md-inline-block">
-                                      {" "}
-                                    </span>{" "}
-                                    {convertToEn(item?.type)}
-                                  </span>
-                                </div>
-                                <div className="col-xl-9 col-sm-8 col-9 textalign-left">
-                                  <button
-                                    onClick={() =>
-                                      Follow(
-                                        item?.following?.follow?.is_active
-                                          ? item?.following?.follow?.id
-                                          : item?.id,
-                                        item?.following?.follow?.is_active
+                                  یادآوری
+                                </button>
+                                <button type="button" className="link-source">
+                                  {item?.type === "LIVE" ? (
+                                    <Link to={`/live-auction/${item?.id}`}>
+                                      <span className="d-none d-sm-inline-block">
+                                        مشاهده
+                                      </span>
+                                      آثار (
+                                      <span>
+                                        {item?.products_count
+                                          ? item.products_count
+                                          : 0}
+                                      </span>
                                       )
-                                    }
-                                    type="button"
-                                    className={
-                                      " reminder-icon " +
-                                      (item?.following?.follow?.is_active
-                                        ? "active"
-                                        : "")
-                                    }
-                                  >
-                                    یادآوری
-                                  </button>
-                                  <button type="button" className="link-source">
-                                    {item?.type === "LIVE" ? (
-                                      <Link to={`/live-auction/${item?.id}`}>
-                                        <span className="d-none d-sm-inline-block">
-                                          مشاهده
-                                        </span>
-                                        آثار (
-                                        <span>
-                                          {item?.products_count
-                                            ? item.products_count
-                                            : 0}
-                                        </span>
-                                        )
-                                      </Link>
-                                    ) : (
-                                      <Link to={`/one-auction/${item.id}`}>
-                                        <span className="d-none d-sm-inline-block">
-                                          مشاهده
-                                        </span>
-                                        آثار (
-                                        <span>
-                                          {item?.products_count
-                                            ? item.products_count
-                                            : 0}
-                                        </span>
-                                        )
-                                      </Link>
-                                    )}
+                                    </Link>
+                                  ) : (
+                                    <Link to={`/one-auction/${item.id}`}>
+                                      <span className="d-none d-sm-inline-block">
+                                        مشاهده
+                                      </span>
+                                      آثار (
+                                      <span>
+                                        {item?.products_count
+                                          ? item.products_count
+                                          : 0}
+                                      </span>
+                                      )
+                                    </Link>
+                                  )}
 
-                                    {/* <Link to={`/one-auction/${item.id}`}>
+                                  {/* <Link to={`/one-auction/${item.id}`}>
                                                                     <span className="d-none d-sm-inline-block">مشاهده</span>
                                                                     آثار
                                                                     (<span>{item?.products_count ? item.products_count : 0}</span>)
                                                                 </Link> */}
-                                  </button>
-                                </div>
+                                </button>
                               </div>
-                              <div className="block-main">
-                                <Link to={`/one-auction/${item?.id}`}>
-                                  <h5 className="default">
-                                    {item?.title && item?.title.length > 30
-                                      ? item?.title.slice(0, 30) + "..."
-                                      : item?.title}
-                                  </h5>
-                                </Link>
+                            </div>
+                            <div className="block-main">
+                              <Link to={`/one-auction/${item?.id}`}>
+                                <h5 className="default">
+                                  {item?.title && item?.title.length > 30
+                                    ? item?.title.slice(0, 30) + "..."
+                                    : item?.title}
+                                </h5>
+                              </Link>
 
-                                <div className="block-detail">
-                                  <h6 className="default">
-                                    {item?.house_type}
+                              <div className="block-detail">
+                                <h6 className="default">
+                                  {item?.house_type}
+                                </h6>
+
+                                <Link
+                                  to={`/house-acutions/${item?.house_id}`}
+                                >
+                                  <h6 className="default gray50">
+                                    {item?.house}
                                   </h6>
-
-                                  <Link
-                                    to={`/house-acutions/${item?.house_id}`}
-                                  >
-                                    <h6 className="default gray50">
-                                      {item?.house}
-                                    </h6>
-                                  </Link>
-                                </div>
+                                </Link>
                               </div>
-                              <div className="block-footer row">
-                                <div className="col-sm-5">
-                                  <div
-                                    className="jumbotron countdown show end date-show"
-                                    data-Date="2021/06/05 16:09:00"
-                                  >
-                                    {item?.status === "CLOSED" ? (
-                                      <div className="ended">
-                                        <div className="text">
-                                          حراج به پایان رسید
-                                        </div>
+                            </div>
+                            <div className="block-footer row">
+                              <div className="col-sm-5">
+                                <div
+                                  className="jumbotron countdown show end date-show"
+                                  data-Date="2021/06/05 16:09:00"
+                                >
+                                  {item?.status === "CLOSED" ? (
+                                    <div className="ended">
+                                      <div className="text">
+                                        حراج به پایان رسید
                                       </div>
-                                    ) : (
-                                      <div>
-                                        {item?.status === "ACTIVE" && (
-                                          <>
-                                            <p className=" my-0 text-danger">
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      {item?.status === "ACTIVE" && (
+                                        <>
+                                          <p className=" my-0 text-danger">
+                                            {" "}
+                                            تا پایان حراج :
+                                          </p>
+
+                                          {/* <div
+                                            onChange={startTimer(item.end_time)}
+                                            style={{
+                                              direction: "ltr",
+                                              textAlign: "right",
+                                            }}
+                                          >
+                                            <span className="d-inline-block ">
                                               {" "}
-                                              تا پایان حراج :
-                                            </p>
-                                            <Timer
+                                              ساعت{" "}
+                                            </span>
+                                            <span className="d-inline-block">
+                                              {timerHours}
+                                            </span>
+                                            <span className="d-inline-block">
+                                              :
+                                            </span>
+                                            <span className="d-inline-block">
+                                              {timerMinutes}
+                                            </span>
+                                            <span className="d-inline-block">
+                                              :
+                                            </span>
+                                            <span className="d-inline-block ">
+                                              {timerseconds}
+                                            </span>
+
+                                            <span className="d-inline-block mx-2">
+                                              {" "}
+                                              و{" "}
+                                            </span>
+                                            <span className="d-inline-block ">
+                                              {" "}
+                                              روز{" "}
+                                            </span>
+                                            <span className="d-inline-block ">
+                                              {timerDays}
+                                            </span>
+                                          </div>
+ */}
+
+                                           <Timer
                                               initialTime={timeExpire(
                                                 item.end_time
                                               )}
@@ -491,76 +578,118 @@ function Auctions() {
                                                   </span>
                                                 </div>
                                               )}
-                                            </Timer>
-                                          </>
-                                        )}
-                                        {item?.status === "PREPARING" && (
-                                          // <span>درحال آماده سازی</span>
-                                          <>
-                                            <p className="text-success my-0">
-                                              {" "}
-                                              تا شروع حراج :
-                                            </p>
-                                            <Timer
-                                              initialTime={timeExpire(
-                                                item.start_time
-                                              )}
-                                              direction="backward"
-                                            >
-                                              {({
-                                                start,
-                                                resume,
-                                                pause,
-                                                stop,
-                                                reset,
-                                                timerState,
-                                              }) => (
-                                                <div
-                                                  style={{
-                                                    direction: "ltr",
-                                                    textAlign: "right",
-                                                  }}
-                                                >
-                                                  <span className="d-inline-block ">
-                                                    ساعت
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    <Timer.Hours />{" "}
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    :
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    <Timer.Minutes />
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    :
-                                                  </span>
-                                                  <span className="d-inline-block ">
-                                                    <Timer.Seconds />
-                                                  </span>
+                                            </Timer> 
+                                        </>
+                                      )}
+                                      {item?.status === "PREPARING" && (
+                                        // <span>درحال آماده سازی</span>
+                                        <>
+                                          <p className="text-success my-0">
+                                            {" "}
+                                            تا شروع حراج :
+                                          </p>
 
-                                                  <span className="d-inline-block mx-2">
-                                                    {" "}
-                                                    و{" "}
-                                                  </span>
-                                                  <span className="d-inline-block ">
-                                                    {" "}
-                                                    روز{" "}
-                                                  </span>
-                                                  <span className="d-inline-block ">
-                                                    <Timer.Days />
-                                                  </span>
-                                                </div>
-                                              )}
-                                            </Timer>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </div>
+                                          {/* <div
+                                            onChange={startTimer(item.start_time)}
+                                            style={{
+                                              direction: "ltr",
+                                              textAlign: "right",
+                                            }}
+                                          >
+                                            <span className="d-inline-block ">
+                                              {" "}
+                                              ساعت{" "}
+                                            </span>
+                                            <span className="d-inline-block">
+                                              {timerHours}
+                                            </span>
+                                            <span className="d-inline-block">
+                                              :
+                                            </span>
+                                            <span className="d-inline-block">
+                                              {timerMinutes}
+                                            </span>
+                                            <span className="d-inline-block">
+                                              :
+                                            </span>
+                                            <span className="d-inline-block ">
+                                              {timerseconds}
+                                            </span>
+
+                                            <span className="d-inline-block mx-2">
+                                              {" "}
+                                              و{" "}
+                                            </span>
+                                            <span className="d-inline-block ">
+                                              {" "}
+                                              روز{" "}
+                                            </span>
+                                            <span className="d-inline-block ">
+                                              {timerDays}
+                                            </span>
+                                          </div> */}
+
+                                                                                   
+                                          <Timer
+                                            initialTime={timeExpire(
+                                              item.start_time
+                                            )}
+                                            direction="backward"
+                                          >
+                                            {({
+                                              start,
+                                              resume,
+                                              pause,
+                                              stop,
+                                              reset,
+                                              timerState,
+                                            }) => (
+                                              <div
+                                                style={{
+                                                  direction: "ltr",
+                                                  textAlign: "right",
+                                                }}
+                                              >
+                                                <span className="d-inline-block ">
+                                                  ساعت
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  <Timer.Hours />{" "}
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  :
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  <Timer.Minutes />
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  :
+                                                </span>
+                                                <span className="d-inline-block ">
+                                                  <Timer.Seconds />
+                                                </span>
+
+                                                <span className="d-inline-block mx-2">
+                                                  {" "}
+                                                  و{" "}
+                                                </span>
+                                                <span className="d-inline-block ">
+                                                  {" "}
+                                                  روز{" "}
+                                                </span>
+                                                <span className="d-inline-block ">
+                                                  <Timer.Days />
+                                                </span>
+                                              </div>
+                                            )}
+                                          </Timer>
+                                        </>
+                                      )}
+                                    </div>
+                                  )}
                                 </div>
-                                {/* <div className="col-sm-7 textalign-left">
+                              </div>
+                              {/* <div className="col-sm-7 textalign-left">
 
                                                             {item?.status !== "CLOSED" ? <Link to={`/one-auction/${item.id}`}>
                                                                 <button type="button" className="btn btn-gray ms-2">
@@ -574,47 +703,47 @@ function Auctions() {
 
                                                         </div> */}
 
-                                <div className="col-sm-7 textalign-left">
-                                  {item?.type === "LIVE" ? (
-                                    <Link to={`/live-auction/${item?.id}`}>
-                                      <button
-                                        type="button"
-                                        className="btn btn-gray ms-2"
-                                      >
-                                        <FontAwesomeIcon
-                                          className="mx-1"
-                                          icon={faEye}
-                                        />
-                                        {AuctionType(item.type)}
-                                      </button>
-                                    </Link>
-                                  ) : item?.status !== "CLOSED" ? (
-                                    <Link to={`/one-auction/${item.id}`}>
-                                      <button
-                                        type="button"
-                                        className="btn btn-gray ms-2"
-                                      >
-                                        <FontAwesomeIcon
-                                          className="mx-1"
-                                          icon={faEye}
-                                        />
-                                        {AuctionType(item.type)}
-                                      </button>
-                                    </Link>
-                                  ) : null}
+                              <div className="col-sm-7 textalign-left">
+                                {item?.type === "LIVE" ? (
+                                  <Link to={`/live-auction/${item?.id}`}>
+                                    <button
+                                      type="button"
+                                      className="btn btn-gray ms-2"
+                                    >
+                                      <FontAwesomeIcon
+                                        className="mx-1"
+                                        icon={faEye}
+                                      />
+                                      {AuctionType(item.type)}
+                                    </button>
+                                  </Link>
+                                ) : item?.status !== "CLOSED" ? (
+                                  <Link to={`/one-auction/${item.id}`}>
+                                    <button
+                                      type="button"
+                                      className="btn btn-gray ms-2"
+                                    >
+                                      <FontAwesomeIcon
+                                        className="mx-1"
+                                        icon={faEye}
+                                      />
+                                      {AuctionType(item.type)}
+                                    </button>
+                                  </Link>
+                                ) : null}
 
-                                  {AuctionStatusTextBtn(
-                                    item?.status,
-                                    item?.user_is_enrolled,
-                                    item.id
-                                  )}
-                                </div>
+                                {AuctionStatusTextBtn(
+                                  item?.status,
+                                  item?.user_is_enrolled,
+                                  item.id
+                                )}
                               </div>
                             </div>
                           </div>
                         </div>
-                      );
-                    })
+                      </div>
+                    );
+                  })
                   : ""}
 
                 <PaginationComponent

@@ -162,6 +162,7 @@ function AuctionsList() {
                                                 <td>درخواست عضویت</td>
                                                 <td>جزئیات پخش زنده</td>
                                                 <td className="text-center">نمایش درسایت </td>
+                                                <td>مدیریت حراج زنده</td>
                                                 <td>عملیات</td>
                                             </tr>
                                         </thead>
@@ -215,6 +216,13 @@ function AuctionsList() {
                                                         <td className="text-center">
                                                             <ShowCheckbox visible_in_site={item?.visible_in_site} auctionId={item?.id} />
 
+                                                        </td>
+                                                        <td>
+                                                            {item?.type === "LIVE" ?
+                                                                <Link to={item?.type === "LIVE" && `/auctions/live/${item?.id}`}>
+                                                                    <button type="button" className="btn-outline-gray"> مشاهده</button>
+                                                                </Link>
+                                                                : ""}
                                                         </td>
                                                         <td>
                                                             {item.status !== "CLOSED" && item.status !== "ACTIVE" ?
