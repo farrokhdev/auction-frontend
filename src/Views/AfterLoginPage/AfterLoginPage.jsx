@@ -10,8 +10,9 @@ import LastProductsAuctionSlider from "./LastProductsAuctionSlider";
 import LastProducts from "./LastProducts";
 import LastAuctions from "./LastAuctions";
 import { connect } from "react-redux";
-import axios from "../../utils/request";
-// import axios from "axios";
+// import axios from "../../utils/request";
+import {BASE_URL} from "../../utils"
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 function AfterLoginPage(props) {
@@ -49,7 +50,7 @@ function AfterLoginPage(props) {
   //  JOIN MEMERSHIP
   const sendProfile = () => {
     axios.post(
-      "https://api.beta.smartauctionhouse.com/api/account/membership/",
+      `${BASE_URL}/account/membership/`,
       {
         email: memberEmail,
       },

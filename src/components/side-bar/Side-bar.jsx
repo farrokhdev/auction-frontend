@@ -77,6 +77,9 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
   }, [])
 
 
+  console.log(homeAuctions)
+
+
   function onChange(dates, dateStrings) {
     // console.log('From: ', dates, ', to: ', dates);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
@@ -242,7 +245,7 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               </div>
             </div>
 
-            {/* <div className="accordion-item">
+            <div className="accordion-item">
               <h2 className="accordion-header" id="headingThree">
                 <button
                   className="accordion-button"
@@ -279,7 +282,7 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingFour">
