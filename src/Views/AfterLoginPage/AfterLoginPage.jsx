@@ -5,14 +5,15 @@ import slider1 from "../../images/slider1.jpg";
 import slider2 from "../../images/slider2.jpg";
 import slider3 from "../../images/slider3.jpg";
 import { Link } from "react-router-dom";
-import { Spin } from "antd";
+import { message, Spin } from "antd";
 import LastProductsAuctionSlider from "./LastProductsAuctionSlider";
 import LastProducts from "./LastProducts";
 import LastAuctions from "./LastAuctions";
 import { connect } from "react-redux";
 // import axios from "../../utils/request";
-import {BASE_URL} from "../../utils"
+import { BASE_URL } from "../../utils";
 import axios from "axios";
+
 import { useSelector, useDispatch } from "react-redux";
 
 function AfterLoginPage(props) {
@@ -26,36 +27,56 @@ function AfterLoginPage(props) {
   const [memberEmail, setMemberEmail] = useState();
 
   // GET BLOGS
-  const getBlogs = () => {
+  const getBlogs = async () => {
     setLoading(true);
 
-    axios
+    await axios
       .get(blogsUrl, {
         headers: {
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Accept-Language": "en-US,en;q=0.5",
+          Connection: "keep-alive",
+          Host: "artchart.net",
+          "Sec-Fetch-Dest": "document",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-Site": "none",
+          "Sec-Fetch-User": "?1",
+          "Upgrade-Insecure-Requests": "1",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0",
           "Accept-Language": "fa",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },
       })
       .then((res) => {
         console.log(res.status);
-        // setBlogs(res.data);
+        setBlogs(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
   };
 
+  console.log(blogs);
   useEffect(() => {
     getBlogs();
   }, []);
 
+  console.log(BASE_URL);
   //  JOIN MEMERSHIP
   const sendProfile = () => {
-    axios.post(
-      `${BASE_URL}/account/membership/`,
-      {
+    axios
+      .post(`${BASE_URL}/account/membership/`, {
         email: memberEmail,
-      },
-      { header: {} }
-    );
+      })
+      .then((res) => {
+        if (res?.data) {
+          message.success("ایمیل با موفقیت ارسال شد");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

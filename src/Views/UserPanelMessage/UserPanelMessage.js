@@ -109,7 +109,7 @@ function UserPanelMessage(props) {
         let payload = {
             "title": TicketTitle,
             "body": TicketBody,
-            "category": 1
+            // "category": 1
         }
         axios.post(`${BASE_URL}/ticketing/`, payload)
             .then(resp => {
