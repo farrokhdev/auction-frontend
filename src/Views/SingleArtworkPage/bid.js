@@ -121,6 +121,7 @@ const Bid = ({ artwork, setArtwork }) => {
     }
   };
 
+  
   const handleIncreaseminus = () => {
     if (firstBid) {
       setBid(0)

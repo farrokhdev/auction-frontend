@@ -78,11 +78,11 @@ function Header(props) {
               {props?.Auction?.type !== "LIVE" ? (
                 <div className="col col-lg-8">
                   <ul className="navbar-nav mb-2 mb-lg-0" id="mainnav">
-                    <li className="nav-item ps-5">
-                      <Link
-                        className="nav-link active"
+                    <li className="nav-items ps-5 ">
+                      <div
+                        className="nav-link active "
                         aria-current="page"
-                        to="/"
+                        // to="/"
                         data-target="nav-search"
                         id="navsearch"
                       >
@@ -91,9 +91,10 @@ function Header(props) {
                           width="16"
                           height="16"
                           alt="جستجو در اسمارت آکشن"
+                          className=""
                         />
                         جستجو
-                      </Link>
+                      </div>
                       <Search />
                     </li>
                     <li className="nav-item ps-2">
