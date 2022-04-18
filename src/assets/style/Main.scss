@@ -3932,12 +3932,15 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .main-title {
   white-space: nowrap;
+  width: 100%;
+ 
 }
 
 .main-title .titr {
   display: inline-block;
   position: relative;
-  min-width: 120px;
+width:100%;
+  // min-width: 120px;
   // max-width: 34px;
 }
 
@@ -4708,10 +4711,18 @@ address.all-info:before {
 }
 
 .breadcrumb-cs {
-  position: absolute;
-  right: calc(50% + 40px);
-  top: 45px;
+  position: absolute ;
+  // right: calc(50% + 40px);
+  right: 0;
+  top: 60px;
   display: inline-flex;
+
+  @media (max-width: 583px) {
+
+   position: static ;
+
+  }
+
 }
 
 .breadcrumb-cs li:before {
@@ -6944,4 +6955,18 @@ input[type="radio"]:checked{
   color: var(--bs-white) !important;
   border-radius: 20px !important;
   font-size: 13px !important;
+}
+
+
+// NEW ADDED 
+.live-auction-sec{
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width:"586px"){
+  .live-auction-sec{
+    flex-direction: column-reverse;
+  }
+
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 
 function ItemCategory({ params, id, title, handleSetCategory, Tags, setTags }) {
+ 
     return (
         <div class="form-check">
             <input onClick={(e) => {
