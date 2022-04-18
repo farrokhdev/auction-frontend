@@ -139,6 +139,7 @@ function RequestHouseAuction() {
                 }
                
             }).catch(err => {
+                console.log(err)
                 failNotification("خطا در ارسال درخواست",err.response.data.data.error_message[0])
                 
             })

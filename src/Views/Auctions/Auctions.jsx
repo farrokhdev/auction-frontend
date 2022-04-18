@@ -110,7 +110,7 @@ function Auctions() {
 
   useEffect(() => {
     getProducts();
-  }, [params, Tags]);
+  }, [params]);
 
 
   const Follow = (data, action) => {

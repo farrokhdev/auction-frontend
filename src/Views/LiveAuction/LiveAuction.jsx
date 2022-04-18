@@ -163,7 +163,7 @@ function LiveAuction(props) {
                 </li>
               </ul>
             </div>
-            <div className="row row-cols-1 row-cols-md-2">
+            <div className="row row-cols-1 row-cols-md-2 live-auction-sec">
               <div className="col">
                 {Product?.length &&
                   Product?.map((item) => {

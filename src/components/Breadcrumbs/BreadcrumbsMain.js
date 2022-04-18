@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Breadcrumbs(props) {
+function BreadcrumbsMain(props) {
   const More = props.children;
   return (
     <>
-      <div className="row sm-mrgb50">
-        <div className="col ">
-          <div className="main-title d-inline-flex">
-            <h2 className="default titr">{props.title}</h2>
-            <ul className="breadcrumb-cs">
+      <div className="">
+        <div className=" ">
+          <div className="">
+            <h2 className="">{props.title}</h2>
+            <ul className="">
               <li>
                 <Link to="/">صفحه اصلی</Link>
               </li>
@@ -28,4 +28,4 @@ function Breadcrumbs(props) {
   );
 }
 
-export default Breadcrumbs;
+export default BreadcrumbsMain;

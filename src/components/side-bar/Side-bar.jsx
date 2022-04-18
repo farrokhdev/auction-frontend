@@ -265,6 +265,7 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
               >
                 <div className="accordion-body">
                   <div className="list-box">
+
                     {categories?.length >= 1
                       ? categories?.map((category, index) => (
                           <React.Fragment key={category?.id}>
@@ -272,6 +273,7 @@ function Sidebar({ handleSearchProducts, handleRemoveFilters,
                               Tags={Tags}
                               setTags={setTags}
                               title={category?.title}
+                              // catId={category?.id}
                               id={`checkbox2${++index}`}
                               params={params}
                               handleSetCategory={handleSetCategory}
