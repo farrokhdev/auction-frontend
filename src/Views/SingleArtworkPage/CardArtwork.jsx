@@ -49,7 +49,8 @@ function CardArtwork({ price_base, price_range, house_auction, title, lot_num, u
 
             <div className="artwork-img">
                 <Link to={`/artworks/${product?.id}`}>
-                    <img src={url} alt="image-artwork" className="img-fluid image-artwork" />
+                    <img src={url} width="998" height="880" alt="" class="img-fluid" />
+                    {/* <img src={url} alt="image-artwork" className="img-fluid image-artwork" /> */}
                 </Link>
                 {/* <div class="artwork-category">
                     {!is_saved ?
@@ -99,7 +100,7 @@ function CardArtwork({ price_base, price_range, house_auction, title, lot_num, u
                     </div>
                     <span className="seprator brdrbefor"></span>
                     <div className="db-right ">
-                        <span className="db-title">قیمت پایه</span>
+                        <span className="db-title">قیمت فعلی</span>
                         <div className="price-block">
                             <span className="price">{numeral(price_base).format('0,0')}</span>
                             <span className="unit"> تومان</span>

@@ -25,6 +25,7 @@ const Bid = ({
   const [loading, setLoading] = useState(false);
   const [auction, setAuction] = useState({});
   const [steps, setSteps] = useState([]);
+  const [firstBid, setfirstBid] = useState(true);
   const [currentValue, setCurrentValue] = useState(0);
   const [currentPrice, setCurrentVPrice] = useState(0);
   const [currentSuggest, setCurrentSuggest] = useState(0);
@@ -151,6 +152,41 @@ const Bid = ({
       });
   };
 
+  const minusBid = (value) => {
+    form.setFieldsValue({ price: currentValue - value });
+    setCurrentValue(currentValue - value);
+  };
+
+
+  const handleIncreaseminus = () => {
+    if (firstBid) {
+      setBid(0)
+      setfirstBid(false)
+    } else {
+
+      if (steps.length) {
+        steps.some((item, i, array) => {
+          if (i < array.length - 1) {
+            if (
+              currentValue > item.threshold &&
+              currentValue <= steps[i + 1].threshold
+            ) {
+              minusBid(item.step);
+              return true;
+            } else if (currentValue < item.threshold && i === 0) {
+              minusBid(item.step);
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            minusBid(item.step);
+          }
+        });
+      }
+    }
+  };
+
   // const changeProduct = (value) => {
   //     let list = [];
   //     // let onStage = [];
@@ -188,27 +224,34 @@ const Bid = ({
   // }, [Product])
 
   const handleIncrease = () => {
-    if (steps.length) {
-      steps.some((item, i, array) => {
-        if (i !== array.length - 1) {
-          // if (i > 0) {
-          if (
-            currentValue >= item.threshold &&
-            currentValue < steps[i + 1].threshold
-          ) {
+    if (firstBid) {
+      setBid(0)
+      setfirstBid(false)
+    } else {
+
+      if (steps.length) {
+        steps.some((item, i, array) => {
+          if (i < array.length - 1) {
+            if (
+              currentValue >= item.threshold &&
+              currentValue < steps[i + 1].threshold
+            ) {
+              setBid(item.step);
+              return true;
+            } else if (currentValue < item.threshold && i === 0) {
+              setBid(item.step);
+              return true;
+            } else {
+              return false;
+            }
+          } else {
             setBid(item.step);
-            return true;
-          } else if (i === 0) {
-            console.log("It is an error");
-            setBid(item.step);
-            return true;
           }
-        } else {
-          setBid(item.step);
-        }
-      });
+        });
+      }
     }
   };
+
   const setBid = (value) => {
     form.setFieldsValue({ price: currentValue + value });
     setCurrentValue(currentValue + value);
@@ -324,6 +367,11 @@ const Bid = ({
                         placeholder="انتخاب پیشنهاد"
                       />
                     </Form.Item>
+                    <button
+                      onClick={handleIncreaseminus}
+                      type="button"
+                      className="minus"
+                    />
                     <button
                       onClick={handleIncrease}
                       type="button"

@@ -64,7 +64,7 @@ const BaseInformation = (props) => {
     const onFinish = (values) => {
         // console.log(values)
         // setFinalData({...finalData, ...values})
-        
+
         if (media) {
             dispatch(setAUCTION({ ...values, media, has_gallery: has_gallery_state }))
             setSelectComponent(selectComponent + 1)
@@ -208,8 +208,8 @@ const BaseInformation = (props) => {
                                                     }}
                                                     name="start_time"
                                                     id="start_time"
-                                                    min={momentJalaali().add(-1,'days')}
-                                                    // min={momentJalaali().startOf('moment')}
+                                                    min={momentJalaali().add(-1, 'days')}
+                                                // min={momentJalaali().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
@@ -264,8 +264,8 @@ const BaseInformation = (props) => {
                                                     // onChange={handleDateChange}
                                                     name="end_time"
                                                     id="end_time"
-                                                    min={momentJalaali().add(-1,'days')}
-                                                    // min={momentJalaali().startOf('moment')}
+                                                    min={momentJalaali().add(-1, 'days')}
+                                                // min={momentJalaali().startOf('moment')}
                                                 />
                                             </Form.Item>
                                         </div>
@@ -422,7 +422,7 @@ const BaseInformation = (props) => {
 
                                             <div className="col-md-12">
                                                 <div className="input-group">
-                                                    <label className="default-lable"> آدرس</label>
+                                                    <label className="default-lable"> آدرس و زمان </label>
                                                     <Form.Item
                                                         className="w-100"
                                                         name="address"
@@ -437,7 +437,7 @@ const BaseInformation = (props) => {
                                                             },
                                                         ]}>
                                                         <textarea className="default-input"
-                                                            placeholder="آدرس حراج را وارد نمایید." />
+                                                            placeholder="آدرس و زمان حراج را وارد نمایید." />
                                                     </Form.Item>
                                                 </div>
                                             </div>

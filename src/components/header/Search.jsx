@@ -88,7 +88,7 @@ function Search() {
         switch (type) {
             case 'products':
                 return (
-                    <Link to={`/artworks/${item?.id}`} className="artwork-block w-25">
+                    <Link to={`/artworks/${item?.id}`} className="artwork-block w-50">
                         <div className="artwork-img">
                             <div className="bg-shadow tl-shadow10">
                                 <img
@@ -111,12 +111,19 @@ function Search() {
                     <Link to={`/one-auction/${item?.id}`} className="artwork-block w-25">
                         <div className="artwork-img">
                             <div className="bg-shadow tl-shadow10">
-                                <img
+                                {/* <img
                                     src={item.media?.exact_url}
                                     width="493"
                                     height="621"
                                     alt=""
                                     className="img-fluid"
+                                /> */}
+                                <div
+                                    className="image-custom-back"
+                                    style={{
+                                        backgroundImage: `url(${item.media?.exact_url})`,
+                                        height: "250px",
+                                    }}
                                 />
                                 <div className="artwork-category">
                                     {/*<FontAwesomeIcon icon={faBookmark}/>*/}
@@ -278,7 +285,7 @@ function Search() {
         <>
             <div
                 dir="rtl"
-                className="inner-nav"
+                className="inner-navs"
                 id="nav-search"
                 aria-labelledby="#navsearch"
             >
@@ -289,39 +296,11 @@ function Search() {
                                 <div className="main-search">
                                     <input type="text" placeholder="جستجوی اثر، حراج‌، خانه حراج"
                                         onChange={handleSearch} />
-                                    {/*<button type="button" className="btn-view text-muted">*/}
-                                    {/*  جستجو پیشرفته*/}
-                                    {/*</button>*/}
+
                                 </div>
                             </div>
                         </div>
                         <div className="row mrgt30">
-
-                            {/*<div className="col-md-3 col-lg-2 d-none d-md-block">*/}
-                            {/*  <div className="recently-search">*/}
-                            {/*    <h6 className="default">جستجوهای اخیر</h6>*/}
-                            {/*    <ul>*/}
-                            {/*      <li>*/}
-                            {/*        <Link to="/">جواهرات</Link>*/}
-                            {/*        <button type="button" className="btn-remove small"></button>*/}
-                            {/*      </li>*/}
-                            {/*      <li>*/}
-                            {/*        <Link to="/">سهراب سپهری</Link>*/}
-                            {/*        <button type="button" className="btn-remove small"></button>*/}
-                            {/*      </li>*/}
-                            {/*      <li>*/}
-                            {/*        <Link to="/">گالری آرتیبیشن</Link>*/}
-                            {/*        <button type="button" className="btn-remove small"></button>*/}
-                            {/*      </li>*/}
-                            {/*      <li>*/}
-                            {/*        <Link to="/">گالری تهران</Link>*/}
-                            {/*        <button type="button" className="btn-remove small"></button>*/}
-                            {/*      </li>*/}
-                            {/*    </ul>*/}
-                            {/*  </div>*/}
-                            {/*</div>*/}
-
-
                             <div className="col-md-12 col-lg-12">
                                 <div className="category-search">
                                     <ul

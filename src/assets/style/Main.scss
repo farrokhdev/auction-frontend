@@ -1097,12 +1097,34 @@ footer .brdrtop span {
   color: var(--pink);
 }
 
-.inner-nav {
-  display: none;
+.inner-nav:hover {
+  display: block;
 }
 
-.nav-item:hover .inner-nav {
+.nav-item:hover  {
   display: block;
+}
+
+.inner-navs {
+  display: none;
+}
+.nav-items:hover .inner-navs {
+  display: block;
+}
+
+.inner-navs#nav-search {
+  padding: 73px 35px;
+}
+
+.inner-navs {
+  background: #fff;
+  width: calc(100% + 60px);
+  border-top: 1px solid var(--gray95);
+  box-shadow: 0 5px 5px 0 var(--gray90);
+  position: absolute;
+  z-index: 100;
+  top: 83px;
+  left: -30px;
 }
 
 .navbar-toggler-icon {

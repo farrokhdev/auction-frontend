@@ -12,6 +12,7 @@ function LastAuctions({ setLoading }) {
   const [params, setParams] = useState({
     page_size: 8,
     ordering: "-creation_time",
+    visible_in_site: true,
   });
 
   const getLastAuctions = () => {
@@ -42,18 +43,21 @@ function LastAuctions({ setLoading }) {
       <div className="container innercontainer">
         {lastAuctions
           ? lastAuctions.map((item, key) => {
-              return (
-                <div
-                  className={
-                    "row " +
-                    (key % 2 === 0 ? "" : "flex-row-reverse pull-top100")
-                  }
-                  key={key}
-                >
-                  <div className="col-xl-4 col-lg-4 col-sm-5 mt-4">
-                    <div className="bg-shadow tl-shadow20">
-                      <div className="artwork-img">
-                        <Link to={`/one-auction/${item?.id}`}>
+            return (
+              <div
+                className={
+                  "row " +
+                  (key % 2 === 0 ? "" : "flex-row-reverse pull-top100")
+                }
+                key={key}
+              >
+                <div className="col-xl-4 col-lg-4 col-sm-5 mt-4">
+                  <div className="bg-shadow tl-shadow20">
+                    <div className="artwork-img">
+                      {(item?.status === "ACTIVE" &&
+                        item?.type === "LIVE") ||
+                        item?.type === "ONLINE" ? (
+                        <Link to={`/live-auction/${item?.id}`}>
                           <img
                             style={{
                               background: `url(${item?.media?.exact_url})`,
@@ -66,60 +70,74 @@ function LastAuctions({ setLoading }) {
                             className="img-fluid"
                           />
                         </Link>
-                        <div className="auction-category">
-                          <span className="category-save auction-reminder"></span>
-                          {convertToEn(item.type)}
-                        </div>
+                      ) :
+                        <Link to={`/one-auction/${item?.id}`}>
+                          <img
+                            style={{
+                              background: `url(${item?.media?.exact_url})`,
+                              height: "280px",
+                              backgroundSize: "cover",
+                              backgroundRepeat: "no-repeat",
+                              backgroundPosition: "center",
+                            }}
+                            alt=""
+                            className="img-fluid"
+                          />
+                        </Link>}
+                      <div className="auction-category">
+                        <span className="category-save auction-reminder"></span>
+                        {convertToEn(item.type)}
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-xl-4 col-lg-6 col-sm-7">
-                    <div className="auction-info">
-                      <h6 className="auctioninfo location">تهران</h6>
-                      <div className="auction-calender auctioninfo">
-                        <div className="auction-date">
-                          <span className="start-date">
-                            {moment(item.start_time, "YYYY/MM/DD")
-                              .locale("fa")
-                              .format("DD MMMM")}
-                          </span>
-                          <span className="end-date">
-                            {moment(item.end_time, "YYYY/MM/DD")
-                              .locale("fa")
-                              .format("DD MMMM")}
-                          </span>
-                        </div>
-                        <div className="auction-time">
-                          <span className="start-time">
-                            {moment(item.start_time, "YYYY/MM/DD")
-                              .locale("fa")
-                              .format("HH")}
-                          </span>
-                          <span className="end-time">
-                            {moment(item.end_time, "YYYY/MM/DD")
-                              .locale("fa")
-                              .format("HH")}
-                          </span>
-                        </div>
-                      </div>
-                      <h3 className="default">{item.title}</h3>
-                      {item.status === "CLOSED" ? (
-                        <button type="button" class="btn btn-basic">
-                          حراج به پایان رسید
-                        </button>
-                      ) : (
-                        <Link to={`/buyer-register/${item?.id}`}>
-                          <button type="button" className="btn btn-basic join">
-                            {/* عضویت در حراج  */}
-                            {item.status ? "عضویت در حراج" : "ثبت نطر"}
-                          </button>
-                        </Link>
-                      )}
                     </div>
                   </div>
                 </div>
-              );
-            })
+                <div className="col-xl-4 col-lg-6 col-sm-7">
+                  <div className="auction-info">
+                    <h6 className="auctioninfo location">تهران</h6>
+                    <div className="auction-calender auctioninfo">
+                      <div className="auction-date">
+                        <span className="start-date">
+                          {moment(item.start_time, "YYYY/MM/DD")
+                            .locale("fa")
+                            .format("DD MMMM")}
+                        </span>
+                        <span className="end-date">
+                          {moment(item.end_time, "YYYY/MM/DD")
+                            .locale("fa")
+                            .format("DD MMMM")}
+                        </span>
+                      </div>
+                      <div className="auction-time">
+                        <span className="start-time">
+                          {moment(item.start_time, "YYYY/MM/DD")
+                            .locale("fa")
+                            .format("HH")}
+                        </span>
+                        <span className="end-time">
+                          {moment(item.end_time, "YYYY/MM/DD")
+                            .locale("fa")
+                            .format("HH")}
+                        </span>
+                      </div>
+                    </div>
+                    <h3 className="default">{item.title}</h3>
+                    {item.status === "CLOSED" ? (
+                      <button type="button" class="btn btn-basic">
+                        حراج به پایان رسید
+                      </button>
+                    ) : (
+                      <Link to={`/buyer-register/${item?.id}`}>
+                        <button type="button" className="btn btn-basic join">
+                          {/* عضویت در حراج  */}
+                          {item.status ? "عضویت در حراج" : "ثبت نطر"}
+                        </button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })
           : ""}
       </div>
     </>
