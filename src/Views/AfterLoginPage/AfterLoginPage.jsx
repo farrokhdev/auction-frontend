@@ -33,19 +33,19 @@ function AfterLoginPage(props) {
     await axios
       .get(blogsUrl, {
         headers: {
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Accept-Language": "en-US,en;q=0.5",
-          Connection: "keep-alive",
-          Host: "artchart.net",
-          "Sec-Fetch-Dest": "document",
-          "Sec-Fetch-Mode": "navigate",
-          "Sec-Fetch-Site": "none",
-          "Sec-Fetch-User": "?1",
-          "Upgrade-Insecure-Requests": "1",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0",
+          // Accept:
+          //   "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+          // "Accept-Encoding": "gzip, deflate, br",
+          // "Accept-Language": "en-US,en;q=0.5",
+          // Connection: "keep-alive",
+          // Host: "artchart.net",
+          // "Sec-Fetch-Dest": "document",
+          // "Sec-Fetch-Mode": "navigate",
+          // "Sec-Fetch-Site": "none",
+          // "Sec-Fetch-User": "?1",
+          // "Upgrade-Insecure-Requests": "1",
+          // "User-Agent":
+          //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0",
           "Accept-Language": "fa",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -127,6 +127,7 @@ function AfterLoginPage(props) {
                     </div>
                   </div>
                 </div>
+
                 <div
                   id="latest-articles"
                   className="carousel slide carousel-fade"
@@ -135,74 +136,68 @@ function AfterLoginPage(props) {
                   <div className="row">
                     <div className="col-lg-8">
                       <div className="carousel-inner">
-                        <div
+                        {/* <div
                           className="carousel-item active"
                           data-bs-interval="10000"
                         >
-                          <div className="bg-shadow tl-shadow20">
-                            <img
-                              src={slider1}
-                              className="d-block w-100"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="carousel-caption ">
-                            <span className="showdate">7 اردیبهشت 99</span>
-                            <h5 className="default">
-                              سیزدهمین دوره حراج تهران تحت تاثیر کرونا به شیوه
-                              متفاوتی برگزار شد
-                            </h5>
-                            <p className="d-sm-none d-lg-block">
-                              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
-                              صنعت چاپ و با استفاده از طراحان گرافیک است.
-                              چاپگرها و متون بلکه روزنامه و مجله در ستون و
-                              سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
-                              مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                              کاربردی می باشد.
-                            </p>
-                          </div>
-                        </div>
-                        <div className="carousel-item" data-bs-interval="2000">
-                          <div className="bg-shadow tl-shadow20">
-                            <img
-                              src={slider2}
-                              className="d-block w-100"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="carousel-caption ">
-                            <span className="showdate">7 اردیبهشت 99</span>
-                            <h5 className="default">
-                              Consectetuer adipiscing elit, sed diam nonummy
-                              nibh{" "}
-                            </h5>
-                            <p className="d-sm-none d-lg-block">
-                              that perfect piece is just waiting for you, Delve
-                              into our world of unique and amazing finds from
-                              the comfort of your sofa.
-                            </p>
-                          </div>
-                        </div>
-                        <div className="carousel-item">
-                          <div className="bg-shadow tl-shadow20">
-                            <img
-                              src={slider3}
-                              className="d-block w-100"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="carousel-caption ">
-                            <span className="showdate">7 اردیبهشت 99</span>
-                            <h5 className="default">Sed diam nonummy nibh </h5>
-                            <p className="d-sm-none d-lg-block">
-                              Unique and amazing finds from the comfort of your
-                              sofa - that perfect piece is just waiting for you.
-                            </p>
-                          </div>
-                        </div>
+                          {blogs.data && (
+                            <div className="bg-shadow tl-shadow20">
+                              <img
+                                src={blogs.data[0].introImageUrl}
+                                className="d-block w-100"
+                                alt={blogs.data[0].introImageAlt}
+                              />
+                            </div>
+                          )}
+                          {blogs.data && (
+                            <div className="carousel-caption ">
+                              <span className="showdate">
+                                {blogs?.data[0]?.publishedAt}
+                              </span>
+                              <h5 className="default">
+                                {blogs?.data[0]?.title}
+                              </h5>
+                              <p className="d-sm-none d-lg-block">
+                                {blogs?.data[0]?.introDescription}
+                              </p>
+                            </div>
+                          )}
+                        </div> */}
+
+                        {blogs?.data?.map((blog, k) => {
+                          return (
+                            <div
+                              className={`carousel-item ${
+                                blog.title ===
+                                  "موانع سرمایه‌گذاری و جذب سرمایه در برپایی اکسپوها و فعالیت گالری‌ها در ایران" &&
+                                "active"
+                              }`}
+                              data-bs-interval="2000"
+                              key={k}
+                            >
+                              <div className="bg-shadow tl-shadow20">
+                                <img
+                                  src={blog?.introImageUrl}
+                                  className="d-block w-100"
+                                  alt={blog?.introImageAlt}
+                                />
+                              </div>
+                              <div className="carousel-caption ">
+                                <span className="showdate">
+                                  {blog?.publishedAt}
+                                </span>
+                                <h5 className="default">{blog?.title}</h5>
+                                <p className="d-sm-none d-lg-block">
+                                  {blog?.introDescription}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
+
                   <div className="row">
                     <div className="col-lg-5 ">
                       <div className="carousel-controls">
@@ -241,41 +236,22 @@ function AfterLoginPage(props) {
                     <div className="col-lg-6">
                       <div className="carousel-indicators">
                         <div className="row position-relative">
-                          <div className="col-4">
-                            <img
-                              src={slider1}
-                              alt=""
-                              data-bs-target="#latest-articles"
-                              data-bs-slide-to="0"
-                              className="active max-width-180"
-                              aria-current="true"
-                              aria-label="Slide 1"
-                            />
-                          </div>
-                          <div className="col-4">
-                            <img
-                              src={slider2}
-                              alt=""
-                              width="500"
-                              height="390"
-                              data-bs-target="#latest-articles"
-                              data-bs-slide-to="1"
-                              className="max-width-180"
-                              aria-label="Slide 2"
-                            />
-                          </div>
-                          <div className="col-4">
-                            <img
-                              src={slider3}
-                              alt=""
-                              width="500"
-                              height="390"
-                              data-bs-target="#latest-articles"
-                              data-bs-slide-to="2"
-                              className="max-width-180"
-                              aria-label="Slide 3"
-                            />
-                          </div>
+                          {blogs?.data?.map((blog, k) => {
+                            console.log(k);
+                            return (
+                              <div className="col-4" key={k}>
+                                <img
+                                  src={blog?.introImageUrl}
+                                  alt=""
+                                  data-bs-target="#latest-articles"
+                                  data-bs-slide-to={k}
+                                  className="active max-width-180"
+                                  aria-current={k == 1 && "true"}
+                                  aria-label={`Slide${k + 1}`}
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
