@@ -125,11 +125,11 @@ function LastProducts() {
                         <div className=" w-75" key={key}>
                             <div className="artwork-img">
                                 <Link to={`/artworks/${item?.id}`} className="artwork-block ">
-                                    {/* <img style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px", backgroundRepeat: "round" }}
-                                        // width="998" height="880"
-                                        alt="" className="img-fluid" /> */}
+                                    <img style={{ backgroundImage: `url(${item && handleShowImage(item)})`, height: "250px", backgroundRepeat: "round" }}
+                                        width="998" height="880"
+                                        alt="" className="img-fluid" />
 
-                                    <img src={item && handleShowImage(item)} width="998" height="880" alt="" class="img-fluid"/>
+                                    {/* <img src={item && handleShowImage(item)} width="998" height="880" alt="" class="img-fluid"/> */}
 
                                 </Link>
                                 <div className="artwork-category">
