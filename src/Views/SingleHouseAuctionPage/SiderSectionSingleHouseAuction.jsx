@@ -135,15 +135,11 @@ function SiderSectionSingleHouseAuction(props) {
               </p>
             </div>
 
-            {/* <div className="d-flex">
+            <div className="d-flex">
               <FontAwesomeIcon className="mx-2" icon={faMapMarker} />
               <address className="">
                 {HouseDetail?.home_auction_location?.address}
               </address>
-            </div> */}
-            <div className="d-flex">
-              <FontAwesomeIcon className="mx-2" icon={faMapMarker} />
-              <div className="">www.smartauctionhouse.com</div>
             </div>
           </div>
           {/* <div className="info-location">

@@ -37,7 +37,7 @@ function OneAuction(props) {
   const [bookmark, setBookmark] = useState(false);
   const [loading, setLoading] = useState(false);
   const [HouseDetail, setHouseDetail] = useState([]);
-  const [lotNum, setlotNum] = useState("")
+  const [lotNum, setlotNum] = useState("");
   const id = props.match.params.id;
   const [params, setParams] = useState({
     page: 1,
@@ -168,7 +168,6 @@ function OneAuction(props) {
   };
 
   const handleLotNumber = (lotNumber) => {
-
     let value = [];
 
     lotNumber?.filter((lot) => {
@@ -220,7 +219,7 @@ function OneAuction(props) {
                   ? Product[0]?.media[0]?.exact_url
                   : DEFAULT_URL_IMAGE
               }
-              style={{ width: "100%", height: "500px", objectFit: 'cover' }}
+              style={{ width: "100%", height: "500px", objectFit: "cover" }}
             />
 
             <div className="flex-row-reverse d-flex over-cover">
@@ -261,15 +260,15 @@ function OneAuction(props) {
                             <span className="start-date ps-2">
                               {Auction && Auction?.start_time !== "None"
                                 ? moment(Auction?.start_time, "YYYY-MM-DD")
-                                  .locale("fa")
-                                  .format("D MMMM")
+                                    .locale("fa")
+                                    .format("D MMMM")
                                 : ""}
                             </span>
                             <span className="end-date pe-2">
                               {Auction && Auction?.end_time !== "None"
                                 ? moment(Auction?.end_time, "YYYY-MM-DD")
-                                  .locale("fa")
-                                  .format("D MMMM")
+                                    .locale("fa")
+                                    .format("D MMMM")
                                 : ""}
                             </span>
                           </div>
@@ -284,8 +283,8 @@ function OneAuction(props) {
                             <span className="end-time pe-2">
                               {Auction?.end_time !== "None"
                                 ? moment(Auction?.end_time, "YYYY-MM-DD HH:mm")
-                                  .locale("fa")
-                                  .format("HH")
+                                    .locale("fa")
+                                    .format("HH")
                                 : ""}
                             </span>
                           </div>
@@ -501,212 +500,218 @@ function OneAuction(props) {
                   <div className="row mrgt30 all-artwork row-cols-2  row-cols-lg-4">
                     {Product
                       ? Product.map((item, key) => {
-                        return (
-                          <div className="artwork-block" key={key}>
-                            <div className="artwork-img">
-                              <Link to={`/artworks/${item.id}`}>
-                                <div
+                          return (
+                            <div className="artwork-block" key={key}>
+                              <div className="artwork-img">
+                                <Link to={`/artworks/${item.id}`}>
+                                  {/* <div
                                   className="image-custom-back"
                                   style={{
                                     backgroundImage: `url(${item?.media[0]?.exact_url})`,
                                     height: "250px",
                                   }}
-                                />
-                              </Link>
-                              <div
-                                className="artwork-category"
-                                onClick={() => setBookmark(!bookmark)}
-                              >
-                                <span
-                                  onClick={() =>
-                                    addBookmark(
-                                      item?.following?.bookmark?.is_active
-                                        ? item?.following?.bookmark?.id
-                                        : item?.id,
-                                      item?.following?.bookmark?.is_active
-                                    )
-                                  }
-                                  className={
-                                    "category-save artwork-bookmark " +
-                                    (item?.following?.bookmark?.is_active
-                                      ? "active"
-                                      : "")
-                                  }
-                                />
-                              </div>
-                            </div>
-                            <div className="block-body">
-                              <div className="ra-row">
-                                <div className="ra-col">
-                                  {item?.artwork_title?.length > 35 ? (
-                                    <h6 className="default gray50 ">
-                                      {item?.artwork_title.slice(0, 35)}...
-                                    </h6>
-                                  ) : (
-                                    <h6 className="default gray50 ">
-                                      {item?.artwork_title}
-                                    </h6>
-                                  )}
-                                  {item?.persian_artist_name?.length > 35 ? (
-                                    <h4 className="default">
-                                      از{" "}
-                                      {item?.persian_artist_name.slice(0, 35)}
-                                      ...
-                                    </h4>
-                                  ) : (
-                                    <h4 className="default">
-                                      از {item?.persian_artist_name}
-                                    </h4>
-                                  )}
-                                  {/* <h4 className="default">از {Auction?.title}</h4> */}
+                                /> */}
+                                  <img
+                                    src={item?.media[0]?.exact_url}
+                                    width="998"
+                                    height="880"
+                                    alt=""
+                                    class="img-fluid"
+                                  />
+                                </Link>
+                                <div
+                                  className="artwork-category"
+                                  onClick={() => setBookmark(!bookmark)}
+                                >
+                                  <span
+                                    onClick={() =>
+                                      addBookmark(
+                                        item?.following?.bookmark?.is_active
+                                          ? item?.following?.bookmark?.id
+                                          : item?.id,
+                                        item?.following?.bookmark?.is_active
+                                      )
+                                    }
+                                    className={
+                                      "category-save artwork-bookmark " +
+                                      (item?.following?.bookmark?.is_active
+                                        ? "active"
+                                        : "")
+                                    }
+                                  />
                                 </div>
-                                <div className="ra-col">
-                                  {/* <h5 className="default lot-num">{key + 1}</h5> */}
-                                  {/* <h5 className="default lot-num">
+                              </div>
+                              <div className="block-body">
+                                <div className="ra-row">
+                                  <div className="ra-col">
+                                    {item?.artwork_title?.length > 35 ? (
+                                      <h6 className="default gray50 ">
+                                        {item?.artwork_title.slice(0, 35)}...
+                                      </h6>
+                                    ) : (
+                                      <h6 className="default gray50 ">
+                                        {item?.artwork_title}
+                                      </h6>
+                                    )}
+                                    {item?.persian_artist_name?.length > 35 ? (
+                                      <h4 className="default">
+                                        از{" "}
+                                        {item?.persian_artist_name.slice(0, 35)}
+                                        ...
+                                      </h4>
+                                    ) : (
+                                      <h4 className="default">
+                                        از {item?.persian_artist_name}
+                                      </h4>
+                                    )}
+                                    {/* <h4 className="default">از {Auction?.title}</h4> */}
+                                  </div>
+                                  <div className="ra-col">
+                                    {/* <h5 className="default lot-num">{key + 1}</h5> */}
+                                    {/* <h5 className="default lot-num">
                                       {item?.latest_auction?.lot_num}
                                     </h5> */}
 
-                                  <h5 className="default lot-num">
-                                    {handleLotNumber(item?.lot_numbers)}
-                                  </h5>
-
-                                </div>
-                              </div>
-                              <div className="detail-bid">
-                                <div className="db-left">
-                                  <span className="db-title">تخمین</span>
-                                  <div className="price-block">
-                                    <span className="price">
-                                      {numberWithCommas(item?.min_price)} -{" "}
-                                      {numberWithCommas(item?.max_price)}
-                                    </span>
-                                    <span className="unit"> تومان</span>
+                                    <h5 className="default lot-num">
+                                      {handleLotNumber(item?.lot_numbers)}
+                                    </h5>
                                   </div>
                                 </div>
-                                <span className="seprator brdrbefor" />
-                                {Auction?.status === "CLOSED" ? (
-                                  <div>
-                                    {item?.sale_status ? (
-                                      <div className="db-right text-success">
-                                        <span className="db-title">
-                                          {" "}
-                                          پیشنهاد نهایی
-                                        </span>
-                                        <div className="price-block">
-                                          <span className="price text-success">
-                                            {numberWithCommas(
-                                              item?.bidding_details?.max_bid
-                                            ) || 0}
-                                          </span>
-                                          <span className="unit text-success">
-                                            {" "}
-                                            تومان
-                                          </span>
-                                          <span
-                                            className="text-success"
-                                            style={{ fontSize: ".7rem" }}
-                                          >
-                                            {" "}
-                                            (
-                                            {
-                                              item?.bidding_details
-                                                ?.total_bids
-                                            }
-                                            ) پیشنهاد
-                                          </span>
-                                        </div>
-                                      </div>
-                                    ) : (
-                                      <div className="db-right ">
-                                        <span className="db-title">
-                                          قیمت فعلی
-                                        </span>
-                                        <div className="price-block">
-                                          <span className="price">
-                                            {numberWithCommas(
-                                              item?.bidding_details?.max_bid
-                                            ) || ""}
-                                          </span>
-                                          {item?.bidding_details?.max_bid ===
-                                            null ? (
-                                            ""
-                                          ) : (
-                                            <span className="unit">
-                                              {" "}
-                                              تومان
-                                            </span>
-                                          )}
-                                          <span
-                                            className="unit"
-                                            style={{ fontSize: ".7rem" }}
-                                          >
-                                            {" "}
-                                            (
-                                            {
-                                              item?.bidding_details
-                                                ?.total_bids
-                                            }
-                                            ) پیشنهاد
-                                          </span>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                ) : (
-                                  <div className="db-right ">
-                                    <span className="db-title">
-                                      قیمت فعلی
-                                    </span>
+                                <div className="detail-bid">
+                                  <div className="db-left">
+                                    <span className="db-title">تخمین</span>
                                     <div className="price-block">
                                       <span className="price">
-                                        {numberWithCommas(item?.price)}
+                                        {numberWithCommas(item?.min_price)} -{" "}
+                                        {numberWithCommas(item?.max_price)}
                                       </span>
                                       <span className="unit"> تومان</span>
                                     </div>
                                   </div>
-                                )}
-                              </div>
-                              {is_logged_in ? (
-                                <div>
-                                  {item?.sale_status ? (
-                                    <Link
-                                      to={`/artworks/${item?.id}`}
-                                      type="button"
-                                      className="text-center btn-lightgreenbg"
-                                    >
-                                      فروخته شد
-                                    </Link>
-                                  ) : (
+                                  <span className="seprator brdrbefor" />
+                                  {Auction?.status === "CLOSED" ? (
                                     <div>
-                                      {Auction?.status === "CLOSED" ? (
-                                        <Link
-                                          to={`/artworks/${item?.id}`}
-                                          type="button"
-                                          className="text-center btn-lightpink"
-                                        >
-                                          فروخته نشد
-                                        </Link>
+                                      {item?.sale_status ? (
+                                        <div className="db-right text-success">
+                                          <span className="db-title">
+                                            {" "}
+                                            پیشنهاد نهایی
+                                          </span>
+                                          <div className="price-block">
+                                            <span className="price text-success">
+                                              {numberWithCommas(
+                                                item?.bidding_details?.max_bid
+                                              ) || 0}
+                                            </span>
+                                            <span className="unit text-success">
+                                              {" "}
+                                              تومان
+                                            </span>
+                                            <span
+                                              className="text-success"
+                                              style={{ fontSize: ".7rem" }}
+                                            >
+                                              {" "}
+                                              (
+                                              {
+                                                item?.bidding_details
+                                                  ?.total_bids
+                                              }
+                                              ) پیشنهاد
+                                            </span>
+                                          </div>
+                                        </div>
                                       ) : (
-                                        <Link
-                                          to={`/artworks/${item?.id}`}
-                                          type="button"
-                                          className="text-center btn-lightpink"
-                                        >
-                                          {item?.product_status === "on_stage"
-                                            ? "ثبت پیشنهاد"
-                                            : "مشاهده محصول"}
-                                        </Link>
+                                        <div className="db-right ">
+                                          <span className="db-title">
+                                            قیمت فعلی
+                                          </span>
+                                          <div className="price-block">
+                                            <span className="price">
+                                              {numberWithCommas(
+                                                item?.bidding_details?.max_bid
+                                              ) || ""}
+                                            </span>
+                                            {item?.bidding_details?.max_bid ===
+                                            null ? (
+                                              ""
+                                            ) : (
+                                              <span className="unit">
+                                                {" "}
+                                                تومان
+                                              </span>
+                                            )}
+                                            <span
+                                              className="unit"
+                                              style={{ fontSize: ".7rem" }}
+                                            >
+                                              {" "}
+                                              (
+                                              {
+                                                item?.bidding_details
+                                                  ?.total_bids
+                                              }
+                                              ) پیشنهاد
+                                            </span>
+                                          </div>
+                                        </div>
                                       )}
+                                    </div>
+                                  ) : (
+                                    <div className="db-right ">
+                                      <span className="db-title">
+                                        قیمت فعلی
+                                      </span>
+                                      <div className="price-block">
+                                        <span className="price">
+                                          {numberWithCommas(item?.min_price)}
+                                        </span>
+                                        <span className="unit"> تومان</span>
+                                      </div>
                                     </div>
                                   )}
                                 </div>
-                              ) : (
-                                ""
-                              )}
+                                {is_logged_in ? (
+                                  <div>
+                                    {item?.sale_status ? (
+                                      <Link
+                                        to={`/artworks/${item?.id}`}
+                                        type="button"
+                                        className="text-center btn-lightgreenbg"
+                                      >
+                                        فروخته شد
+                                      </Link>
+                                    ) : (
+                                      <div>
+                                        {Auction?.status === "CLOSED" ? (
+                                          <Link
+                                            to={`/artworks/${item?.id}`}
+                                            type="button"
+                                            className="text-center btn-lightpink"
+                                          >
+                                            فروخته نشد
+                                          </Link>
+                                        ) : (
+                                          <Link
+                                            to={`/artworks/${item?.id}`}
+                                            type="button"
+                                            className="text-center btn-lightpink"
+                                          >
+                                            {item?.product_status === "on_stage"
+                                              ? "ثبت پیشنهاد"
+                                              : "مشاهده محصول"}
+                                          </Link>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })
+                          );
+                        })
                       : ""}
                   </div>
                   {countProducts > 10 ? (
@@ -894,22 +899,22 @@ function OneAuction(props) {
               <span>تاریخ و ساعت شروع :</span>
               <span>
                 {Auction &&
-                  !!Auction?.gallery_start_date &&
-                  Auction?.gallery_start_date !== "None"
+                !!Auction?.gallery_start_date &&
+                Auction?.gallery_start_date !== "None"
                   ? moment(Auction?.gallery_start_date, "YYYY-MM-DD")
-                    .locale("fa")
-                    .format("jDD jMMMM jYYYY HH:mm")
+                      .locale("fa")
+                      .format("jDD jMMMM jYYYY HH:mm")
                   : ""}
               </span>
             </address>
             <address>
               <span>تاریخ و ساعت پایان :</span>
               {Auction &&
-                !!Auction?.gallery_start_date &&
-                Auction?.gallery_end_date !== "None"
+              !!Auction?.gallery_start_date &&
+              Auction?.gallery_end_date !== "None"
                 ? moment(Auction?.gallery_end_date, "YYYY-MM-DD")
-                  .locale("fa")
-                  .format("jDD jMMMM jYYYY HH:mm")
+                    .locale("fa")
+                    .format("jDD jMMMM jYYYY HH:mm")
                 : ""}
             </address>
           </div>
