@@ -14,10 +14,12 @@ function CardAucitonInfo({ auction, Follow }) {
                 <div className="col-md-4">
                     <div className="bg-shadow tr-shadow10">
                         <Link to={`/one-auction/${auction?.id}`}>
-                            <div
+                            {/* <div
                                 style={{ backgroundImage: `url(${auction.media.exact_url})`, height: "250px" }}
                                 // src={auction.media.exact_url} 
-                                className="image-custom-back" alt="" />
+                                className="image-custom-back" alt="" /> */}
+                            <img src={auction.media.exact_url} width="998" height="880" alt="" class="img-fluid" />
+
                         </Link>
                     </div>
                 </div>

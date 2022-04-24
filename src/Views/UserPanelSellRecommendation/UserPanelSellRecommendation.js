@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderPanel from '../../components/HeaderPanel';
 import PanelSidebar from '../../components/PanelSidebar';
 import axios from "../../utils/request";
-import {BASE_URL} from "../../utils";
+import { BASE_URL } from "../../utils";
 import moment from "jalali-moment";
-import {message, Pagination, Spin} from "antd";
+import { message, Pagination, Spin } from "antd";
 import 'antd/dist/antd.css';
 import queryString from "query-string";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { isApproved } from '../../utils/converTypePersion';
 import { DEFAULT_URL_IMAGE } from '../../utils/defaultImage';
 
@@ -22,12 +22,12 @@ function UserPanelSellAdvice() {
         page: 1,
         page_size: 10,
         product__is_approve: "",
-        ordering: '-creation_time'
+        ordering: '-creation_time',
 
 
     })
 
-    console.log("Suggestions" , Suggestions)
+    console.log("Suggestions", Suggestions)
     let numeral = require('numeral');
     const [Posting, setPosting] = useState(false);
 
@@ -121,15 +121,15 @@ function UserPanelSellAdvice() {
 
     const handleApproved = (e) => {
         setParams({
-            ...params, product__is_approve: e
+            ...params, product__is_approve: e, page: 1
         })
     }
 
     const handleShowImage = (item) => {
         return (
-            (item?.product?.media?.length && item?.product?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?  
-            item?.product?.media?.filter(item => item?.is_default === true)[0]?.exact_url : 
-            DEFAULT_URL_IMAGE
+            (item?.product?.media?.length && item?.product?.media?.filter(item => item?.is_default === true)[0]?.exact_url) ?
+                item?.product?.media?.filter(item => item?.is_default === true)[0]?.exact_url :
+                DEFAULT_URL_IMAGE
         )
     }
 
@@ -139,12 +139,12 @@ function UserPanelSellAdvice() {
                 return (
                     <tr key={key}>
                         <td className="artwork-img">
-                        <div className="image-custom-back" style={{
-                            backgroundImage: `url(${item && handleShowImage(item)})`,
-                            height: "7rem",
-                            width: "7rem"
-                        }}>
-                        </div>
+                            <div className="image-custom-back" style={{
+                                backgroundImage: `url(${item && handleShowImage(item)})`,
+                                height: "7rem",
+                                width: "7rem"
+                            }}>
+                            </div>
                         </td>
                         <td>{item.product.artwork_title}</td>
                         <td>{item.product.persian_artist_name}</td>
@@ -159,9 +159,9 @@ function UserPanelSellAdvice() {
                         </td>
                         <td>
                             <button type="button" className="btn-outline-gray"
-                                    data-bs-toggle="modal"
-                                    onClick={() => getSuggest(item?.id)}
-                                    data-bs-target="#recommend-detail">جزئیات
+                                data-bs-toggle="modal"
+                                onClick={() => getSuggest(item?.id)}
+                                data-bs-target="#recommend-detail">جزئیات
                             </button>
                         </td>
                         <td>
@@ -172,7 +172,7 @@ function UserPanelSellAdvice() {
                                     className="btn-outline-pink"
                                     data-bs-toggle="modal"
                                     data-bs-target="#uploadinauction">آپلود <span
-                                    className="d-lg-inline-block d-none">در حراج</span></button>
+                                        className="d-lg-inline-block d-none">در حراج</span></button>
                                 : ""
                             }
                         </td>
@@ -185,9 +185,9 @@ function UserPanelSellAdvice() {
 
     return (
         <>
-            <HeaderPanel titlePage={'پیشنهاد فروش'}/>
+            <HeaderPanel titlePage={'پیشنهاد فروش'} />
             <div className="panel-main">
-                <PanelSidebar/>
+                <PanelSidebar />
 
 
                 <div className="panel-body">
@@ -197,44 +197,75 @@ function UserPanelSellAdvice() {
                                 role="tablist">
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link active" id="tab-11" data-bs-toggle="tab"
-                                            data-bs-target="#profiletab1"
-                                            type="button" role="tab" aria-controls="profiletab1"
-                                            onClick={() => handleApproved("")}
-                                            aria-selected="true">همه
+                                        data-bs-target="#profiletab1"
+                                        type="button" role="tab" aria-controls="profiletab1"
+                                        onClick={() => handleApproved("")}
+                                        aria-selected="true">همه
                                     </button>
                                 </li>
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link" id="tab-21" data-bs-toggle="tab"
-                                            data-bs-target="#profiletab2"
-                                            type="button" role="tab" aria-controls="profiletab2"
-                                            onClick={() => handleApproved("waiting")}
-                                            aria-selected="false">در انتظار بررسی
+                                        data-bs-target="#profiletab2"
+                                        type="button" role="tab" aria-controls="profiletab2"
+                                        onClick={() => handleApproved("waiting")}
+                                        aria-selected="false">در انتظار بررسی
                                     </button>
                                 </li>
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link" id="tab-31" data-bs-toggle="tab"
-                                            data-bs-target="#profiletab3"
-                                            type="button" role="tab" aria-controls="profiletab3"
-                                            onClick={() => handleApproved("accept")}
-                                            aria-selected="false">تایید شده
+                                        data-bs-target="#profiletab3"
+                                        type="button" role="tab" aria-controls="profiletab3"
+                                        onClick={() => handleApproved("accept")}
+                                        aria-selected="false">تایید شده
                                     </button>
                                 </li>
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link" id="tab-41" data-bs-toggle="tab"
-                                            data-bs-target="#profiletab4"
-                                            type="button" role="tab" aria-controls="profiletab4"
-                                            onClick={() => handleApproved("reject")}
-                                            aria-selected="false">رد شده
+                                        data-bs-target="#profiletab4"
+                                        type="button" role="tab" aria-controls="profiletab4"
+                                        onClick={() => handleApproved("reject")}
+                                        aria-selected="false">رد شده
                                     </button>
                                 </li>
                             </ul>
                             <Spin spinning={loading}>
                                 <div className="tab-content" id="profile-tab-content">
                                     <div className="tab-pane fade show active" id="profiletab1" role="tabpanel"
-                                         aria-labelledby="profiletab1-tab">
+                                        aria-labelledby="profiletab1-tab">
                                         <div className="table-responsive">
                                             <table className="panel-table sellrecommand ">
                                                 <thead>
+                                                    <tr>
+                                                        <td>تصویر</td>
+                                                        <td>نام</td>
+                                                        <td>هنرمند</td>
+                                                        <td>وضعیت</td>
+                                                        <td>تخمین قیمت</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <SuggestList />
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <Pagination
+                                            style={{ direction: 'ltr', textAlign: 'center', marginTop: 5 }}
+                                            responsive
+                                            onChange={(e) => handeSelectPage(e)}
+                                            defaultCurrent={1}
+                                            total={SuggestionsCount}
+                                            defaultPageSize={10}
+                                        />
+                                    </div>
+                                    <div className="tab-pane fade" id="profiletab2" role="tabpanel"
+                                        aria-labelledby="profiletab2-tab">
+                                        <table className="panel-table sellrecommand ">
+                                            <thead>
                                                 <tr>
                                                     <td>تصویر</td>
                                                     <td>نام</td>
@@ -244,45 +275,14 @@ function UserPanelSellAdvice() {
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                <SuggestList/>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <Pagination
-                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
-                                            responsive
-                                            onChange={(e) => handeSelectPage(e)}
-                                            defaultCurrent={1}
-                                            total={SuggestionsCount}
-                                            defaultPageSize={10}
-                                        />
-                                    </div>
-                                    <div className="tab-pane fade" id="profiletab2" role="tabpanel"
-                                         aria-labelledby="profiletab2-tab">
-                                        <table className="panel-table sellrecommand ">
-                                            <thead>
-                                            <tr>
-                                                <td>تصویر</td>
-                                                <td>نام</td>
-                                                <td>هنرمند</td>
-                                                <td>وضعیت</td>
-                                                <td>تخمین قیمت</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
                                             </thead>
                                             <tbody>
-                                            <SuggestList/>
+                                                <SuggestList />
                                             </tbody>
                                         </table>
 
                                         <Pagination
-                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            style={{ direction: 'ltr', textAlign: 'center', marginTop: 5 }}
                                             responsive
                                             onChange={(e) => handeSelectPage(e)}
                                             defaultCurrent={1}
@@ -291,26 +291,26 @@ function UserPanelSellAdvice() {
                                         />
                                     </div>
                                     <div className="tab-pane fade" id="profiletab3" role="tabpanel"
-                                         aria-labelledby="profiletab3-tab">
+                                        aria-labelledby="profiletab3-tab">
                                         <table className="panel-table sellrecommand ">
                                             <thead>
-                                            <tr>
-                                                <td>تصویر</td>
-                                                <td>نام</td>
-                                                <td>هنرمند</td>
-                                                <td>وضعیت</td>
-                                                <td>تخمین قیمت</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
+                                                <tr>
+                                                    <td>تصویر</td>
+                                                    <td>نام</td>
+                                                    <td>هنرمند</td>
+                                                    <td>وضعیت</td>
+                                                    <td>تخمین قیمت</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <SuggestList/>
+                                                <SuggestList />
                                             </tbody>
                                         </table>
 
                                         <Pagination
-                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            style={{ direction: 'ltr', textAlign: 'center', marginTop: 5 }}
                                             responsive
                                             onChange={(e) => handeSelectPage(e)}
                                             defaultCurrent={1}
@@ -319,26 +319,26 @@ function UserPanelSellAdvice() {
                                         />
                                     </div>
                                     <div className="tab-pane fade" id="profiletab4" role="tabpanel"
-                                         aria-labelledby="profiletab3-tab">
+                                        aria-labelledby="profiletab3-tab">
                                         <table className="panel-table sellrecommand ">
                                             <thead>
-                                            <tr>
-                                                <td>تصویر</td>
-                                                <td>نام</td>
-                                                <td>هنرمند</td>
-                                                <td>وضعیت</td>
-                                                <td>تخمین قیمت</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
+                                                <tr>
+                                                    <td>تصویر</td>
+                                                    <td>نام</td>
+                                                    <td>هنرمند</td>
+                                                    <td>وضعیت</td>
+                                                    <td>تخمین قیمت</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <SuggestList/>
+                                                <SuggestList />
                                             </tbody>
                                         </table>
 
                                         <Pagination
-                                            style={{direction: 'ltr', textAlign: 'center', marginTop: 5}}
+                                            style={{ direction: 'ltr', textAlign: 'center', marginTop: 5 }}
                                             responsive
                                             onChange={(e) => handeSelectPage(e)}
                                             defaultCurrent={1}
@@ -355,7 +355,7 @@ function UserPanelSellAdvice() {
             </div>
 
             <div className="modal fade" id="recommend-detail" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+                aria-hidden="true">
                 <div className="modal-dialog w-800">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -366,14 +366,14 @@ function UserPanelSellAdvice() {
                                     </h2>
                                 </div>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"/>
+                                    aria-label="Close" />
                             </div>
                         </div>
                         <div className="modal-body">
                             <div className="d-flex flex-row row">
                                 <div className="artwork-img col-3">
                                     <img src={handleShowImage(SuggestDetail)} width="317" height="280" alt=""
-                                         className="img-fluid"/>
+                                        className="img-fluid" />
                                 </div>
                                 <div className="artwork-info-left col-lg-6 col-9">
                                     <div>
@@ -403,29 +403,29 @@ function UserPanelSellAdvice() {
                             <div className="input-group mrgt50">
                                 <label className="default-lable">توضیحات</label>
                                 <textarea rows="4" className="default-input"
-                                          onChange={(e) => {
-                                              setSuggestDescription(e.target.value)
-                                          }}
-                                          placeholder="توضیحات را وارد نمایید."/>
+                                    onChange={(e) => {
+                                        setSuggestDescription(e.target.value)
+                                    }}
+                                    placeholder="توضیحات را وارد نمایید." />
                             </div>
                         </div>
                         {((SuggestDetail?.homeauction_sugesstion_status !== "accept") && (SuggestDetail?.homeauction_sugesstion_status !== "reject")) &&
-                        <div className="modal-footer">
-                            <button
-                                disabled={Posting}
-                                type="button" className="btn btn-gray "
-                                data-bs-dismiss="modal"
-                                onClick={() => approvedSuggest(SuggestDetail?.id, false)}
-                            >رد کردن
-                            </button>
-                            <button
-                                disabled={Posting}
-                                data-bs-dismiss="modal"
-                                onClick={() => approvedSuggest(SuggestDetail?.id, true)}
-                                type="button" className="btn btn-default">تایید
-                            </button>
+                            <div className="modal-footer">
+                                <button
+                                    disabled={Posting}
+                                    type="button" className="btn btn-gray "
+                                    data-bs-dismiss="modal"
+                                    onClick={() => approvedSuggest(SuggestDetail?.id, false)}
+                                >رد کردن
+                                </button>
+                                <button
+                                    disabled={Posting}
+                                    data-bs-dismiss="modal"
+                                    onClick={() => approvedSuggest(SuggestDetail?.id, true)}
+                                    type="button" className="btn btn-default">تایید
+                                </button>
 
-                        </div>}
+                            </div>}
                         {
                             (SuggestDetail?.homeauction_sugesstion_status === "accept") &&
                             <p className="text-success text-center mb-4">این پیشنهاد توسط شما تایید شد</p>
@@ -439,7 +439,7 @@ function UserPanelSellAdvice() {
             </div>
 
             <div className="modal fade" id="uploadinauction" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+                aria-hidden="true">
                 <div className="modal-dialog w-600">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -450,7 +450,7 @@ function UserPanelSellAdvice() {
                                     </h2>
                                 </div>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"/>
+                                    aria-label="Close" />
                             </div>
                         </div>
                         <div className="modal-body">
@@ -469,17 +469,17 @@ function UserPanelSellAdvice() {
                             <div className="table-responsive mrgt30">
                                 <table className="panel-table">
                                     <tbody>
-                                    {SuggestsList ? SuggestsList.map((item, key) => {
-                                        return (
-                                            <tr key={key}>
-                                                <td><a href="#" className="default-link">{item.title}</a></td>
-                                                <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
-                                                <td>
-                                                    <button type="button" className="btn-outline-pink">عضویت</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    }) : ""}
+                                        {SuggestsList ? SuggestsList.map((item, key) => {
+                                            return (
+                                                <tr key={key}>
+                                                    <td><a href="#" className="default-link">{item.title}</a></td>
+                                                    <td>{moment(item.start_time, 'YYYY/MM/DD').locale('fa').format('DD MMMM YYYY')}</td>
+                                                    <td>
+                                                        <button type="button" className="btn-outline-pink">عضویت</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }) : ""}
                                     </tbody>
                                 </table>
                             </div>

@@ -286,14 +286,14 @@ function Artworks() {
                                 to={`/artworks/${item?.id}`}
                                 className="artwork-block"
                               >
-                                <img
+                                {/* <img
                                   src={item && handleShowImage(item)}
                                   width="998"
                                   height="880"
                                   alt=""
                                   class="img-fluid"
-                                />
-                                {/* <img src={item && handleShowImage(item)} width="998" height="880" alt="" className="img-fluid" style={{ height: '15rem' }} /> */}
+                                /> */}
+                                <img src={item && handleShowImage(item)} width="998" height="880" alt="" className="img-fluid" style={{ height: '15rem' }} />
                               </Link>
 
                               {/* <Link to={`/artworks/${item?.id}`} class="artwork-block">

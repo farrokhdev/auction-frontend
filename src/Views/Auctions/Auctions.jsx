@@ -345,17 +345,20 @@ function Auctions() {
                       <div key={key} className="row-blocks">
                         <div className="row">
                           <div className="col-md-4">
+                          <div className="bg-shadow tr-shadow10">
                             {(item?.status === "ACTIVE" &&
                               item?.type === "LIVE") ||
                               item?.type === "ONLINE" ? (
                               <Link to={`/live-auction/${item?.id}`}>
-                                <div
+                                {/* <div
                                   className="image-custom-back"
                                   style={{
                                     backgroundImage: `url(${item?.media?.exact_url})`,
                                     height: "250px",
                                   }}
-                                />
+                                /> */}
+                                <img src={item?.media?.exact_url} width="998" height="880" alt="" class="img-fluid" />
+
                               </Link>
                             ) : (
                               <Link
@@ -363,15 +366,18 @@ function Auctions() {
                                 className="bg-shadow tr-shadow10"
                               >
                                 {/* <img className="image-auction" src={item?.media?.exact_url}  alt="" /> */}
-                                <div
+                                {/* <div
                                   className="image-custom-back"
                                   style={{
                                     backgroundImage: `url(${item?.media?.exact_url})`,
                                     height: "250px",
                                   }}
-                                />
+                                /> */}
+                                <img src={item?.media?.exact_url} width="998" height="880" alt="" class="img-fluid" />
+
                               </Link>
                             )}
+                            </div>
                           </div>
                           <div className="col-md-8">
                             <div className="block-head row">
@@ -525,60 +531,60 @@ function Auctions() {
                                           </div>
  */}
 
-                                           <Timer
-                                              initialTime={timeExpire(
-                                                item.end_time
-                                              )}
-                                              direction="backward"
-                                            >
-                                              {({
-                                                start,
-                                                resume,
-                                                pause,
-                                                stop,
-                                                reset,
-                                                timerState,
-                                              }) => (
-                                                <div
-                                                  style={{
-                                                    direction: "ltr",
-                                                    textAlign: "right",
-                                                  }}
-                                                >
-                                                  <span className="d-inline-block ">
-                                                    {" "}
-                                                    ساعت{" "}
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    <Timer.Hours />{" "}
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    :
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    <Timer.Minutes />
-                                                  </span>
-                                                  <span className="d-inline-block">
-                                                    :
-                                                  </span>
-                                                  <span className="d-inline-block ">
-                                                    <Timer.Seconds />
-                                                  </span>
+                                          <Timer
+                                            initialTime={timeExpire(
+                                              item.end_time
+                                            )}
+                                            direction="backward"
+                                          >
+                                            {({
+                                              start,
+                                              resume,
+                                              pause,
+                                              stop,
+                                              reset,
+                                              timerState,
+                                            }) => (
+                                              <div
+                                                style={{
+                                                  direction: "ltr",
+                                                  textAlign: "right",
+                                                }}
+                                              >
+                                                <span className="d-inline-block ">
+                                                  {" "}
+                                                  ساعت{" "}
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  <Timer.Hours />{" "}
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  :
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  <Timer.Minutes />
+                                                </span>
+                                                <span className="d-inline-block">
+                                                  :
+                                                </span>
+                                                <span className="d-inline-block ">
+                                                  <Timer.Seconds />
+                                                </span>
 
-                                                  <span className="d-inline-block mx-2">
-                                                    {" "}
-                                                    و{" "}
-                                                  </span>
-                                                  <span className="d-inline-block ">
-                                                    {" "}
-                                                    روز{" "}
-                                                  </span>
-                                                  <span className="d-inline-block ">
-                                                    <Timer.Days />
-                                                  </span>
-                                                </div>
-                                              )}
-                                            </Timer> 
+                                                <span className="d-inline-block mx-2">
+                                                  {" "}
+                                                  و{" "}
+                                                </span>
+                                                <span className="d-inline-block ">
+                                                  {" "}
+                                                  روز{" "}
+                                                </span>
+                                                <span className="d-inline-block ">
+                                                  <Timer.Days />
+                                                </span>
+                                              </div>
+                                            )}
+                                          </Timer>
                                         </>
                                       )}
                                       {item?.status === "PREPARING" && (
@@ -629,7 +635,7 @@ function Auctions() {
                                             </span>
                                           </div> */}
 
-                                                                                   
+
                                           <Timer
                                             initialTime={timeExpire(
                                               item.start_time
