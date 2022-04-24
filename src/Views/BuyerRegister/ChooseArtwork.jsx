@@ -53,6 +53,9 @@ function Chooseartwork(props) {
     }
   };
 
+
+  console.log(checkedBox)
+
   return (
     <>
       <Spin spinning={loading}>
@@ -86,7 +89,7 @@ function Chooseartwork(props) {
                       <div
                         key={i}
                         className="col-12 col-md-6 col-lg-4 col-xl-3"
-                        onClick={() => handleCheck(item)}
+                  
                       >
                         <div className="my-3">
                           <Card
@@ -100,6 +103,12 @@ function Chooseartwork(props) {
                                   })`,
                                   height: "250px",
                                 }}
+                                onClick={
+                                  () => {
+                                    
+                                    setCheckedBox(!checkedBox)
+                                }
+                              }
                               />
                             }
                             // actions={[

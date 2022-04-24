@@ -6,7 +6,7 @@ function Breadcrumbs(props) {
   return (
     <>
       <div className="row sm-mrgb50">
-        <div className="col ">
+        <div className="col-6 ">
           <div className="main-title d-inline-flex">
             <h2 className="default titr">{props.title}</h2>
             <ul className="breadcrumb-cs">

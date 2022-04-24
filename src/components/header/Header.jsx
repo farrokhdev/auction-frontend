@@ -245,7 +245,7 @@ function Header(props) {
                       setTimeout(() => {
                         dispatch(changeLanguage('en'))
                         window.location.reload()
-                      }, 300);
+                      }, 700);
                     }}>
 
                       EN
