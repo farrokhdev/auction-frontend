@@ -204,6 +204,7 @@ function OneAuction(props) {
                     // onClick={executeScroll}
                     data-bs-target="#auction-links"
                     data-bs-toggle="modal"
+                    style={{cursor:"pointer"}}
                   >
                     {" "}
                     برای کسب اطلاعات بیشتر در مورد این حراج، اینجا کلیک کنید.{" "}

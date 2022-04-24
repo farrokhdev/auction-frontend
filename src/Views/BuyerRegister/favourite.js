@@ -53,8 +53,8 @@ const Favourite = (props) => {
         id={props.id}
       />
 
-      <div className="mobile-v">
-        <div className="row mt-3">
+      <div>
+        {/* <div className="mobile-v row mt-3 ">
           {selectProduct && selectProduct.length
             ? selectProduct.map((item, i) => (
                 <div className="col-12 col-md-6 col-lg-4 col-xl-3 ">
@@ -82,7 +82,7 @@ const Favourite = (props) => {
                 </div>
               ))
             : ""}
-        </div>
+        </div> */}
 
         <div>
           {selectProduct && selectProduct.length >= 1 ? (

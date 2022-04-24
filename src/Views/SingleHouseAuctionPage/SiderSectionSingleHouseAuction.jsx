@@ -11,7 +11,7 @@ import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import "../../assets/style/leaflet.scss";
-import { Spin } from "antd";
+
 
 function SiderSectionSingleHouseAuction(props) {
   const [HouseDetail, setHouseDetail] = useState([]);
@@ -114,12 +114,12 @@ function SiderSectionSingleHouseAuction(props) {
 
         <div className="d-sm-flex d-lg-block justify-content-sm-between">
           <div className="">
-            <div className="d-flex mt-3">
+            {/* <div className="d-flex mt-3">
               <FontAwesomeIcon className="mx-2" icon={faGlobe} />
               <a href={parseWebSite(HouseDetail.info_link, "website")}>
                 {parseWebSite(HouseDetail.info_link, "website")}
               </a>
-            </div>
+            </div> */}
 
             <div className="d-flex my-2">
               <FontAwesomeIcon className="mx-2" icon={faEnvelope} />
@@ -142,7 +142,7 @@ function SiderSectionSingleHouseAuction(props) {
               </address>
             </div>
           </div>
-          {/* <div className="info-location">
+          <div className="info-location">
             <Map
               center={
                 location.length > 0 ? location : ["35.790655", "51.420518"]
@@ -160,7 +160,7 @@ function SiderSectionSingleHouseAuction(props) {
                 <Popup>موقعیت خانه حراجی</Popup>
               </Marker>
             </Map>
-          </div> */}
+          </div>
         </div>
 
         {/* <ul className="social">
