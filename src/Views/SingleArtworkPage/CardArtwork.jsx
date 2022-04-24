@@ -49,8 +49,8 @@ function CardArtwork({ price_base, price_range, house_auction, title, lot_num, u
 
             <div className="artwork-img">
                 <Link to={`/artworks/${product?.id}`}>
-                    <img src={url} width="998" height="880" alt="" class="img-fluid" />
-                    {/* <img src={url} alt="image-artwork" className="img-fluid image-artwork" /> */}
+                    {/* <img src={url} width="998" height="880" alt="" class="img-fluid" /> */}
+                    <img src={url} alt="image-artwork" className="img-fluid image-artwork" />
                 </Link>
                 {/* <div class="artwork-category">
                     {!is_saved ?

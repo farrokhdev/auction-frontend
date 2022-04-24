@@ -58,7 +58,7 @@ function LastAuctions({ setLoading }) {
                         item?.type === "LIVE") ||
                         item?.type === "ONLINE" ? (
                         <Link to={`/live-auction/${item?.id}`}>
-                          <img
+                          {/* <img
                             style={{
                               background: `url(${item?.media?.exact_url})`,
                               height: "280px",
@@ -68,11 +68,13 @@ function LastAuctions({ setLoading }) {
                             }}
                             alt=""
                             className="img-fluid"
-                          />
+                          /> */}
+                          
+                          <img src={item?.media?.exact_url} width="998" height="880" alt="" class="img-fluid" />
                         </Link>
                       ) :
                         <Link to={`/one-auction/${item?.id}`}>
-                          <img
+                          {/* <img
                             style={{
                               background: `url(${item?.media?.exact_url})`,
                               height: "280px",
@@ -82,7 +84,9 @@ function LastAuctions({ setLoading }) {
                             }}
                             alt=""
                             className="img-fluid"
-                          />
+                          /> */}
+                          <img src={item?.media?.exact_url} width="998" height="880" alt="" class="img-fluid" />
+
                         </Link>}
                       <div className="auction-category">
                         <span className="category-save auction-reminder"></span>
