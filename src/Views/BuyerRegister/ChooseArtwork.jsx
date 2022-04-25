@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import axios from "../../utils/request";
 import { BASE_URL } from "../../utils";
 import { LIST_PRODUCTS } from "../../utils/constant";
@@ -15,6 +15,9 @@ function Chooseartwork(props) {
   const { selectProduct, setSelectProduct, auction } = props;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
+  
+
+
   const [dataCount, setDataCount] = useState(0);
 
   useEffect(() => {
@@ -54,7 +57,46 @@ function Chooseartwork(props) {
   };
 
 
-  console.log(checkedBox)
+  // for checkbox 
+  const dataLength=data.length
+  console.log(Array(dataLength).fill)
+  const[arrayRefs,setArrayRefs]=useState([])
+
+  useEffect(() => {
+    // add or remove refs
+    setArrayRefs((arrayRefs) =>
+      Array(dataLength)
+        .fill()
+        .map((_, i) => arrayRefs[i] || createRef()),
+    );
+  }, [dataLength]);
+
+const checkArray=(item,index)=>{
+
+// console.log(arrayRefs[index].current)
+
+if(!arrayRefs[index].current.state.checked){
+  arrayRefs[index].current.state.checked =true
+}else{
+  arrayRefs[index].current.state.checked =false
+}
+
+if (arrayRefs[index].current.state.checked) {
+  message.success("به لیست اضافه شد");
+  setSelectProduct([
+    ...selectProduct,
+    item,
+  ]);
+} else {
+  message.error("از لیست حذف شد");
+  let t = selectProduct.filter(
+    (t) => t?.id !== item?.id
+  );
+  setSelectProduct(t);
+}
+}
+
+
 
   return (
     <>
@@ -89,10 +131,16 @@ function Chooseartwork(props) {
                       <div
                         key={i}
                         className="col-12 col-md-6 col-lg-4 col-xl-3"
-                  
+               
                       >
                         <div className="my-3">
                           <Card
+                                   onClick={
+                                    () => {
+                                      
+                                      checkArray(item,i)
+                                  }
+                                }
                             style={{ width: "100%" }}
                             cover={
                               <div
@@ -103,12 +151,7 @@ function Chooseartwork(props) {
                                   })`,
                                   height: "250px",
                                 }}
-                                onClick={
-                                  () => {
-                                    
-                                    setCheckedBox(!checkedBox)
-                                }
-                              }
+                         
                               />
                             }
                             // actions={[
@@ -121,22 +164,11 @@ function Chooseartwork(props) {
                               className="custom-checkbox"
                               avatar={
                                 <Checkbox
+                                ref={arrayRefs[i]}
                                   checked={handleCheck(item)}
-                                  onChange={(e) => {
-                                    if (e.target.checked) {
-                                      message.success("به لیست اضافه شد");
-                                      setSelectProduct([
-                                        ...selectProduct,
-                                        item,
-                                      ]);
-                                    } else {
-                                      message.error("از لیست حذف شد");
-                                      let t = selectProduct.filter(
-                                        (t) => t?.id !== item?.id
-                                      );
-                                      setSelectProduct(t);
-                                    }
-                                  }}
+                                  // onChange={(e) => {
+                                  //   checkArray(item,i)
+                                  // }}
                                 />
                               }
                               title={item.artwork_title}
